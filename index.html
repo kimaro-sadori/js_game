@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+
+<div id="lobby">
+  <p>Add player name:</p>
+  <input id="nameInput" type="text">
+  <button id="addBtn">Add</button>
+  <button id="startBtn">Start</button>
+  <p id="error" style="color:red;"></p>
+  <p id="list"></p>
+</div>
+
+<div id="game" style="display:none;">
+  
+  <p id="playerName"></p>
+  <p id="hint"></p>
+  <p id="word"></p>
+  <button id="nextBtn">Next</button>
+</div>
+
+
+<div id="round" style="display:none;">
+  <h2 id="roundText"></h2>
+  <h1 id="timer">02:00</h1>
+</div>
+<audio id="alarm" src="alarm.mp3"></audio>
+
+
+
+    <script src="words.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
