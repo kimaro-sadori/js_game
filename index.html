@@ -1,41 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Imposter - A social deduction game where players try to find the imposter among them">
+  <link rel="stylesheet" href="style.css" />
+  <title>Imposter - Social Deduction Game</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
 </head>
 <body>
-    
+  <!-- HEADER -->
+  <header id="appHeader">
+    <a href="index.html">
+      <h1>🕵️ IMPOSTER</h1>
+      <span>The social deduction party game</span>
+    </a>
+  </header>
 
-<div id="lobby">
-  <p>Add player name:</p>
-  <input id="nameInput" type="text">
-  <button id="addBtn">Add</button>
-  <button id="startBtn">Start</button>
-  <p id="error" style="color:red;"></p>
-  <p id="list"></p>
-</div>
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- LOBBY SECTION -->
+    <section id="lobby">
+      <h2>Create Your Team</h2>
+      <p class="subtitle">Add at least 3 players to start the game</p>
+      
+      <div class="add-row">
+        <input id="nameInput" type="text" placeholder="Enter player name" />
+        <button id="addBtn">Add Player</button>
+      </div>
+      
+      <div id="playerListSection">
+        <p class="list-title">Current Players:</p>
+        <div id="list"></div>
+      </div>
+      
+      <button id="saveTeamBtn">Save Team & Start Game</button>
+      <p id="error"></p>
+    </section>
 
-<div id="game" style="display:none;">
-  
-  <p id="playerName"></p>
-  <p id="hint"></p>
-  <p id="word"></p>
-  <button id="nextBtn">Next</button>
-</div>
+    <!-- GAME SECTION (Hidden initially) -->
+    <section id="game" style="display:none;">
+      <div class="player-turn">
+        <p class="turn-label">Current Player:</p>
+        <h2 id="playerName"></h2>
+      </div>
+      
+      <div id="revealCard">
+        <p id="hint"></p>
+        <p id="word"></p>
+        <div class="click-hint">Tap to reveal your role</div>
+      </div>
+      
+      <button id="nextBtn">Next Player →</button>
+    </section>
 
+    <!-- HANDOVER SCREEN (Hidden initially) -->
+    <section id="handover" style="display:none;">
+      <div class="handover-content">
+        <p>🎮 Pass the phone to:</p>
+        <h1 id="handoverName"></h1>
+        <p class="instruction">Tap anywhere to continue</p>
+      </div>
+    </section>
 
-<div id="round" style="display:none;">
-  <h2 id="roundText"></h2>
-  <h1 id="timer">02:00</h1>
-</div>
-<audio id="alarm" src="alarm.mp3"></audio>
+    <!-- ROUND SECTION (Hidden initially) -->
+    <section id="round" style="display:none;">
+      <div class="round-content">
+        <h2>🎯 Find the Imposter!</h2>
+        <p id="roundText"></p>
+        
+        <div class="timer-container">
+          <p>Time Remaining:</p>
+          <h1 id="timer">2:00</h1>
+        </div>
+        
+        <div id="roundActions">
+          <button id="restartBtn" class="secondary">Play Again</button>
+          <button id="homeBtn">Back to Lobby</button>
+        </div>
+      </div>
+    </section>
 
+    <!-- TEAMS SECTION -->
+    <section id="teamsSection">
+      <h2>📋 Saved Teams</h2>
+      <p class="subtitle">Click "Start" to play with a saved team</p>
+      
+      <p id="noTeamsMsg">No teams saved yet. Create your first team above!</p>
+      
+      <div id="teamsTable">
+        <!-- Teams will be added here by JavaScript -->
+      </div>
+    </section>
+  </main>
 
+  <!-- FOOTER -->
+  <footer>
+    <p>Imposter Game • Pass & Play • For 3+ Players</p>
+    <p class="small">Tap cards to reveal roles • Discuss to find the imposter!</p>
+  </footer>
 
-    <script src="words.js"></script>
-    <script src="script.js"></script>
+  <!-- GAME INSTRUCTIONS MODAL -->
+  <div id="instructionsModal">
+    <div class="modal-content">
+      <h2>🎮 How to Play</h2>
+      <ol>
+        <li><strong>Add 3+ players</strong> to create a team</li>
+        <li><strong>Tap "Save Team & Start Game"</strong></li>
+        <li><strong>Pass the phone</strong> - each player sees their role secretly</li>
+        <li><strong>One player is the Imposter</strong> - they see a hint instead of the real word</li>
+        <li><strong>After all players see their roles</strong>, you have 2 minutes to discuss</li>
+        <li><strong>Find the Imposter</strong> through questions and deduction!</li>
+      </ol>
+      <button id="closeInstructions">Got it! Let's Play</button>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="words.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
