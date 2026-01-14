@@ -192,23 +192,16 @@ h2 {
   backdrop-filter: blur(10px);
 }
 
-#revealCard.revealed .click-hint {
-  opacity: 0;
-  pointer-events: none;
-}
-
 #hint, #word {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease;
+  display: none; /* Hide completely, not just opacity */
 }
 
 #revealCard.revealed #hint,
 #revealCard.revealed #word {
+  display: block; /* Show instantly */
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
-
 #hint {
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.2rem;
@@ -223,6 +216,7 @@ h2 {
 }
 
 /* NEXT BUTTON */
+/* NEXT BUTTON */
 #nextBtn {
   background: #10b981;
   color: white;
@@ -235,8 +229,8 @@ h2 {
   display: block;
   width: 100%;
   max-width: 300px;
-  margin: 30px auto;
-  transition: transform 0.2s, background 0.2s;
+  margin: 30px auto; /* Keep it centered, not fixed */
+  /* REMOVE position: fixed, etc. */
 }
 
 #nextBtn:hover {
@@ -556,4 +550,28 @@ footer .small {
 }
 #instructionsModal {
   display: none; /* Hide by default */
+}
+
+
+#revealCard.revealed #hint,
+#revealCard.revealed #word {
+  opacity: 1;
+  transition: none; /* No animation */
+}
+#showInstructionsBtn {
+  /* ... */
+  background: #665c23; /* Change this to match theme */
+  background: #4f46e5; /* Use your main color */
+}
+/* Make sure card resets instantly */
+#revealCard:not(.revealed) {
+  cursor: pointer;
+}
+
+#revealCard.revealed {
+  cursor: default;
+}
+#revealCard.revealed .click-hint {
+  opacity: 0;
+  pointer-events: none;
 }

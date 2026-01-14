@@ -226,13 +226,17 @@ function removeTeam(teamId) {
 
 // ================= GAME FLOW =================
 function showPlayer() {
-  // Reset reveal card
+  // Hide the text COMPLETELY
+  hintEl.style.display = "none";
+  wordEl.style.display = "none";
+  
+  // Reset card state
   revealCard.classList.remove("revealed");
   
-  // Show current player name
+  // Update player name
   playerNameEl.textContent = names[currentPlayer];
   
-  // Set role text
+  // Update role text
   if (currentPlayer === imposterIndex) {
     hintEl.textContent = "You are the IMPOSTER!";
     wordEl.textContent = `Hint: ${gameHint}`;
@@ -242,41 +246,22 @@ function showPlayer() {
   }
 }
 
-// When player clicks reveal card - ONE TIME ONLY
 revealCard.onclick = () => {
   revealCard.classList.add("revealed");
+  // Show the text instantly
+  hintEl.style.display = "block";
+  wordEl.style.display = "block";
 };
+
 
 // Next button - go to next player or start round
 nextBtn.onclick = () => {
   currentPlayer++;
   
   if (currentPlayer < names.length) {
-    // Show handover screen
-    game.style.display = "none";
-    handover.style.display = "block";
-    handoverName.textContent = names[currentPlayer];
-    
-    // // Auto-advance after 3 seconds or on click
-    // const autoNext = setTimeout(() => {
-    //   handover.style.display = "none";
-    //   game.style.display = "block";
-    //   showPlayer();
-    // }, 3000);
-    
-    // handover.onclick = () => {
-    //   clearTimeout(autoNext);
-    //   handover.style.display = "none";
-    //   game.style.display = "block";
-    //   showPlayer();
-    // };
-
-    // Go immediately to next player
-handover.style.display = "none";
-game.style.display = "block";
-showPlayer();
+    // DIRECTLY show next player's role
+    showPlayer();
   } else {
-    // All players have seen roles - start the round
     startRound();
   }
 };
