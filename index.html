@@ -6,37 +6,25 @@
   <meta name="description" content="Imposter - A social deduction game where players try to find the imposter among them">
   <link rel="stylesheet" href="style.css" />
   <title>Imposter - Social Deduction Game</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕵️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
 </head>
 <body>
   <!-- HEADER -->
   <header id="appHeader">
     <a href="index.html">
-      <h1>🕵️ IMPOSTER</h1>
+ <h1><i class="fa-solid fa-house"></i> IMPOSTER</h1>      
       <span>The social deduction party game</span>
     </a>
+    <button id="showInstructionsBtn">How to Play</button>
   </header>
 
   <!-- MAIN CONTENT -->
   <main>
-    <!-- LOBBY SECTION -->
-    <section id="lobby">
-      <h2>Create Your Team</h2>
-      <p class="subtitle">Add at least 3 players to start the game</p>
-      
-      <div class="add-row">
-        <input id="nameInput" type="text" placeholder="Enter player name" />
-        <button id="addBtn">Add Player</button>
-      </div>
-      
-      <div id="playerListSection">
-        <p class="list-title">Current Players:</p>
-        <div id="list"></div>
-      </div>
-      
-      <button id="saveTeamBtn">Save Team & Start Game</button>
-      <p id="error"></p>
-    </section>
+   
 
     <!-- GAME SECTION (Hidden initially) -->
     <section id="game" style="display:none;">
@@ -66,7 +54,7 @@
     <!-- ROUND SECTION (Hidden initially) -->
     <section id="round" style="display:none;">
       <div class="round-content">
-        <h2>🎯 Find the Imposter!</h2>
+        <h2>Find the Imposter!</h2>
         <p id="roundText"></p>
         
         <div class="timer-container">
@@ -83,7 +71,7 @@
 
     <!-- TEAMS SECTION -->
     <section id="teamsSection">
-      <h2>📋 Saved Teams</h2>
+      <h2>Saved Teams</h2>
       <p class="subtitle">Click "Start" to play with a saved team</p>
       
       <p id="noTeamsMsg">No teams saved yet. Create your first team above!</p>
@@ -93,7 +81,24 @@
       </div>
     </section>
   </main>
-
+ <!-- LOBBY SECTION -->
+    <section id="lobby">
+      <h2>Create Your Team</h2>
+      <p class="subtitle">Add at least 3 players to start the game</p>
+      
+      <div class="add-row">
+        <input id="nameInput" type="text" placeholder="Enter player name" />
+        <button id="addBtn">Add Player</button>
+      </div>
+      
+      <div id="playerListSection">
+        <p class="list-title">Current Players:</p>
+        <div id="list"></div>
+      </div>
+      
+      <button id="saveTeamBtn">Save Team & Start Game</button>
+      <p id="error"></p>
+    </section>
   <!-- FOOTER -->
   <footer>
     <p>Imposter Game • Pass & Play • For 3+ Players</p>
@@ -101,8 +106,8 @@
   </footer>
 
   <!-- GAME INSTRUCTIONS MODAL -->
-  <div id="instructionsModal">
-    <div class="modal-content">
+  <div id="instructionsModal" style="display: none;">
+  <div class="modal-content">
       <h2>🎮 How to Play</h2>
       <ol>
         <li><strong>Add 3+ players</strong> to create a team</li>

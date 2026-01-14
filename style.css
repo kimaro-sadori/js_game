@@ -539,3 +539,21 @@ footer .small {
     padding: 30px 20px;
   }
 }
+/* How to Play button - Fixed position */
+#showInstructionsBtn {
+  position: fixed;          /* Changed from absolute to fixed */
+  top: 10px;
+  right: 10px;
+  background: #665c23;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  z-index: 1000;
+}
+#instructionsModal {
+  display: none; /* Hide by default */
+}

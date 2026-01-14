@@ -44,9 +44,14 @@ let timerInterval; // Store timer interval
 
 // ================= INITIALIZE =================
 // Show instructions on first visit
-if (!localStorage.getItem("hasSeenInstructions")) {
+// if (!localStorage.getItem("hasSeenInstructions")) {
+//   instructionsModal.style.display = "flex";
+// }
+//button how to play
+const showInstructionsBtn = document.getElementById("showInstructionsBtn");
+showInstructionsBtn.onclick = () => {
   instructionsModal.style.display = "flex";
-}
+};
 
 closeInstructions.onclick = () => {
   instructionsModal.style.display = "none";
@@ -252,19 +257,24 @@ nextBtn.onclick = () => {
     handover.style.display = "block";
     handoverName.textContent = names[currentPlayer];
     
-    // Auto-advance after 3 seconds or on click
-    const autoNext = setTimeout(() => {
-      handover.style.display = "none";
-      game.style.display = "block";
-      showPlayer();
-    }, 3000);
+    // // Auto-advance after 3 seconds or on click
+    // const autoNext = setTimeout(() => {
+    //   handover.style.display = "none";
+    //   game.style.display = "block";
+    //   showPlayer();
+    // }, 3000);
     
-    handover.onclick = () => {
-      clearTimeout(autoNext);
-      handover.style.display = "none";
-      game.style.display = "block";
-      showPlayer();
-    };
+    // handover.onclick = () => {
+    //   clearTimeout(autoNext);
+    //   handover.style.display = "none";
+    //   game.style.display = "block";
+    //   showPlayer();
+    // };
+
+    // Go immediately to next player
+handover.style.display = "none";
+game.style.display = "block";
+showPlayer();
   } else {
     // All players have seen roles - start the round
     startRound();
@@ -291,7 +301,7 @@ function startRound() {
 
 function startTimer(seconds) {
   let time = seconds;
-  roundActions.style.display = "none";
+ roundActions.style.display = "flex";
   timerEl.style.color = "#10b981"; // Green color
   
   updateTimerDisplay(time);
