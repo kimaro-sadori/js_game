@@ -21,7 +21,7 @@ let gameState = {
 const JSONBIN_CONFIG = {
     API_KEY: '$2a$10$gFVqUzzSAOQUgLJc42CpWeGT33e40Nwki66XGI6x/R.uCj6m/8XHe',
     BASE_URL: 'https://api.jsonbin.io/v3/b',
-    SHARED_BIN_ID: '696a609a43b1c97be934eac1' // Your Imposter Game Stats bin
+    SHARED_BIN_ID: '696a646ad0ea881f40704b06' // Use the NEWEST Imposter Game Stats bin
 };
 
 // ================= PLAY COUNT FUNCTIONS =================
@@ -91,7 +91,7 @@ async function createOrFixBin() {
             totalPlayers: 0
         };
         
-        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}`, {
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHared_BIN_ID}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -334,7 +334,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ================= REST OF YOUR CODE (UNCHANGED) =================
 function loadSettings() {
     const saved = localStorage.getItem('imposterSettings');
     if (saved) {
@@ -1149,31 +1148,6 @@ function formatTime(seconds) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-// ================= DEBUG FUNCTIONS =================
-async function checkBinStatus() {
-    console.log('🔍 Checking bin status...');
-    try {
-        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
-            headers: {
-                'X-Master-Key': JSONBIN_CONFIG.API_KEY
-            }
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            console.log('✅ Bin is accessible');
-            console.log('Current data:', data);
-            return true;
-        } else {
-            console.error('❌ Bin access failed:', response.status);
-            return false;
-        }
-    } catch (error) {
-        console.error('❌ Bin check error:', error);
-        return false;
-    }
-}
-
 // Global functions
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
@@ -1181,4 +1155,3 @@ window.restartGame = restartGame;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
-window.checkBinStatus = checkBinStatus; // For debugging
