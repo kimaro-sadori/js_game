@@ -1163,3 +1163,10 @@ img, video {
     box-shadow: none !important;
     backdrop-filter: none !important;
 }
+#playCount {
+    transition: opacity 0.3s ease;
+}
+
+#playCount.loading {
+    opacity: 0.5;
+}

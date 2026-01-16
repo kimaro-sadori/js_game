@@ -17,45 +17,227 @@ let gameState = {
     gamesPlayed: 0
 };
 
+// ================= JSONBin CONFIG =================
+const JSONBIN_CONFIG = {
+    API_KEY: '$2a$10$gFVqUzzSAOQUgLJc42CpWeGT33e40Nwki66XGI6x/R.uCj6m/8XHe',
+    BASE_URL: 'https://api.jsonbin.io/v3/b'
+};
+
+// We'll create a bin on first use and store its ID
+let currentBinId = localStorage.getItem('jsonbin_id') || '';
+
 // ================= PLAY COUNT FUNCTIONS =================
 async function loadPlayCount() {
     try {
-        const response = await fetch('https://api.countapi.xyz/get/imposter-game/plays');
-        const data = await response.json();
-        gameState.gamesPlayed = data.value;
-        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+        console.log('Loading play count...');
+        
+        // Try to get from our existing bin first
+        if (currentBinId) {
+            console.log('Using existing bin ID:', currentBinId);
+            const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}/latest`, {
+                headers: {
+                    'X-Master-Key': JSONBIN_CONFIG.API_KEY
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                const binData = data.record;
+                
+                if (binData && typeof binData.playCount === 'number') {
+                    gameState.gamesPlayed = binData.playCount;
+                    console.log('Loaded from JSONBin:', gameState.gamesPlayed);
+                    
+                    // Update localStorage backup
+                    localStorage.setItem('imposterGamePlayCount', gameState.gamesPlayed.toString());
+                    localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
+                    
+                    updatePlayCountDisplay();
+                    return;
+                }
+            }
+        }
+        
+        // If we get here, either no bin or bin fetch failed
+        throw new Error('No valid bin found');
+        
     } catch (error) {
-        console.error('Failed to load play count:', error);
-        gameState.gamesPlayed = 0;
-        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+        console.log('JSONBin load failed, trying to create new bin:', error);
+        
+        // Try to create a new bin
+        try {
+            const initialData = {
+                playCount: 0,
+                createdAt: new Date().toISOString(),
+                lastGame: null
+            };
+            
+            const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': JSONBIN_CONFIG.API_KEY,
+                    'X-Bin-Name': 'Imposter Game Stats',
+                    'X-Bin-Private': 'false'
+                },
+                body: JSON.stringify(initialData)
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                currentBinId = data.metadata.id;
+                localStorage.setItem('jsonbin_id', currentBinId);
+                console.log('Created new JSONBin with ID:', currentBinId);
+                
+                gameState.gamesPlayed = 0;
+            } else {
+                throw new Error('Failed to create bin');
+            }
+            
+        } catch (createError) {
+            console.log('Bin creation failed, using localStorage:', createError);
+            
+            // Fallback to localStorage
+            const savedCount = localStorage.getItem('imposterGamePlayCount');
+            gameState.gamesPlayed = savedCount ? parseInt(savedCount) : 0;
+        }
     }
+    
+    // Update localStorage backup
+    localStorage.setItem('imposterGamePlayCount', gameState.gamesPlayed.toString());
+    localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
+    
+    updatePlayCountDisplay();
 }
 
 async function incrementPlayCount() {
+    const previousCount = gameState.gamesPlayed;
+    const newCount = previousCount + 1;
+    
+    console.log('Incrementing play count to:', newCount);
+    
+    // Immediately update local state
+    gameState.gamesPlayed = newCount;
+    localStorage.setItem('imposterGamePlayCount', newCount.toString());
+    localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
+    
+    updatePlayCountDisplay();
+    
+    // Try to update JSONBin in background
+    updateJSONBinBackground(newCount);
+}
+
+async function updateJSONBinBackground(count) {
+    if (!currentBinId) {
+        console.log('No bin ID, skipping JSONBin update');
+        return;
+    }
+    
     try {
-        const response = await fetch('https://api.countapi.xyz/hit/imposter-game/plays');
-        const data = await response.json();
-        gameState.gamesPlayed = data.value;
-        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+        const updateData = {
+            playCount: count,
+            lastUpdated: new Date().toISOString(),
+            lastGame: new Date().toISOString()
+        };
+        
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+            },
+            body: JSON.stringify(updateData)
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('JSONBin updated successfully:', data.record.playCount);
+            
+            // Check if someone else updated it
+            if (data.record.playCount > count) {
+                gameState.gamesPlayed = data.record.playCount;
+                localStorage.setItem('imposterGamePlayCount', data.record.playCount.toString());
+                updatePlayCountDisplay();
+                console.log('Updated to global count:', data.record.playCount);
+            }
+        }
     } catch (error) {
-        console.error('Failed to increment play count:', error);
-        // Fallback: increment locally
-        gameState.gamesPlayed++;
-        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+        console.log('Background JSONBin update failed:', error);
+        // Don't worry - we'll sync on next load
     }
 }
 
+async function syncPlayCount() {
+    if (!currentBinId) return;
+    
+    try {
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}/latest`, {
+            headers: {
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            const binCount = data.record.playCount || 0;
+            const localCount = gameState.gamesPlayed;
+            
+            // Use the larger value
+            const maxCount = Math.max(binCount, localCount);
+            
+            if (maxCount > localCount) {
+                gameState.gamesPlayed = maxCount;
+                localStorage.setItem('imposterGamePlayCount', maxCount.toString());
+                updatePlayCountDisplay();
+                console.log('Synced with global count:', maxCount);
+            }
+        }
+    } catch (error) {
+        console.log('Sync failed:', error);
+    }
+}
+
+function updatePlayCountDisplay() {
+    const playCountElement = document.getElementById('playCount');
+    if (playCountElement) {
+        playCountElement.textContent = gameState.gamesPlayed;
+    }
+}
+
+// Sync every minute
+setInterval(syncPlayCount, 60000);
+
 // ================= INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', function() {
-    loadSettings();
-    loadSavedTeams();
-    setupEventListeners();
-    updateUI();
-    updateCategoriesDisplay();
+    // Show loading state for play count
+    const playCountElement = document.getElementById('playCount');
+    if (playCountElement) {
+        playCountElement.textContent = '...';
+    }
     
-    // Update play count
-    document.getElementById('playCount').textContent = gameState.gamesPlayed;
+    // Load play count first
+    loadPlayCount().then(() => {
+        console.log('Initialization complete. Play count:', gameState.gamesPlayed);
+        
+        // Load other settings
+        loadSettings();
+        loadSavedTeams();
+        setupEventListeners();
+        updateUI();
+        updateCategoriesDisplay();
+    }).catch(error => {
+        console.error('Initialization error:', error);
+        // Continue anyway
+        loadSettings();
+        loadSavedTeams();
+        setupEventListeners();
+        updateUI();
+        updateCategoriesDisplay();
+    });
 });
+
+// [REST OF YOUR CODE REMAINS EXACTLY THE SAME]
+// =================================================
 
 function loadSettings() {
     const saved = localStorage.getItem('imposterSettings');
@@ -208,22 +390,21 @@ function setupEventListeners() {
     });
     
     // Select All button functionality
-    // Select All button functionality
-document.getElementById('selectAllBtn').addEventListener('click', function() {
-    const checkboxes = document.querySelectorAll('.category-checkbox');
-    const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-    
-    // Toggle all checkboxes
-    checkboxes.forEach(cb => {
-        cb.checked = !allChecked;
+    document.getElementById('selectAllBtn').addEventListener('click', function() {
+        const checkboxes = document.querySelectorAll('.category-checkbox');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        
+        // Toggle all checkboxes
+        checkboxes.forEach(cb => {
+            cb.checked = !allChecked;
+        });
+        
+        // Update button text
+        this.textContent = allChecked ? 'Select All' : 'Deselect All';
+        
+        // Update categories state
+        updateCategories();
     });
-    
-    // Update button text
-    this.textContent = allChecked ? 'Select All' : 'Deselect All';
-    
-    // Update categories state
-    updateCategories();
-});
     
     // Expand/Collapse sections - simple unified approach
     document.querySelectorAll('.setting-group').forEach(group => {
@@ -444,6 +625,9 @@ function updateUI() {
     } else {
         document.getElementById('startGameBtn').innerHTML = '<i class="fas fa-play"></i> START GAME';
     }
+    
+    // Always update play count display
+    updatePlayCountDisplay();
 }
 
 // ================= GAME START =================
@@ -467,7 +651,7 @@ function startGame() {
         updateCategoriesDisplay();
     }
     
-    // Update stats
+    // Update stats - increment play count
     incrementPlayCount();
     
     // Hide UI
@@ -507,7 +691,6 @@ function startGame() {
         startDescribeGame();
     }
 }
-      
 
 // ================= CLASSIC GAME =================
 function startClassicGame() {
