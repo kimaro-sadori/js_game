@@ -20,127 +20,211 @@ let gameState = {
 // ================= JSONBin CONFIG =================
 const JSONBIN_CONFIG = {
     API_KEY: '$2a$10$gFVqUzzSAOQUgLJc42CpWeGT33e40Nwki66XGI6x/R.uCj6m/8XHe',
-    BASE_URL: 'https://api.jsonbin.io/v3/b'
+    BASE_URL: 'https://api.jsonbin.io/v3/b',
+    SHARED_BIN_ID: '696a609a43b1c97be934eac1' // Your Imposter Game Stats bin
 };
-
-// We'll create a bin on first use and store its ID
-let currentBinId = localStorage.getItem('jsonbin_id') || '';
 
 // ================= PLAY COUNT FUNCTIONS =================
 async function loadPlayCount() {
-    try {
-        console.log('Loading play count...');
-        
-        // Try to get from our existing bin first
-        if (currentBinId) {
-            console.log('Using existing bin ID:', currentBinId);
-            const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}/latest`, {
-                headers: {
-                    'X-Master-Key': JSONBIN_CONFIG.API_KEY
-                }
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                const binData = data.record;
-                
-                if (binData && typeof binData.playCount === 'number') {
-                    gameState.gamesPlayed = binData.playCount;
-                    console.log('Loaded from JSONBin:', gameState.gamesPlayed);
-                    
-                    // Update localStorage backup
-                    localStorage.setItem('imposterGamePlayCount', gameState.gamesPlayed.toString());
-                    localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
-                    
-                    updatePlayCountDisplay();
-                    return;
-                }
-            }
-        }
-        
-        // If we get here, either no bin or bin fetch failed
-        throw new Error('No valid bin found');
-        
-    } catch (error) {
-        console.log('JSONBin load failed, trying to create new bin:', error);
-        
-        // Try to create a new bin
-        try {
-            const initialData = {
-                playCount: 0,
-                createdAt: new Date().toISOString(),
-                lastGame: null
-            };
-            
-            const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Master-Key': JSONBIN_CONFIG.API_KEY,
-                    'X-Bin-Name': 'Imposter Game Stats',
-                    'X-Bin-Private': 'false'
-                },
-                body: JSON.stringify(initialData)
-            });
-            
-            if (response.ok) {
-                const data = await response.json();
-                currentBinId = data.metadata.id;
-                localStorage.setItem('jsonbin_id', currentBinId);
-                console.log('Created new JSONBin with ID:', currentBinId);
-                
-                gameState.gamesPlayed = 0;
-            } else {
-                throw new Error('Failed to create bin');
-            }
-            
-        } catch (createError) {
-            console.log('Bin creation failed, using localStorage:', createError);
-            
-            // Fallback to localStorage
-            const savedCount = localStorage.getItem('imposterGamePlayCount');
-            gameState.gamesPlayed = savedCount ? parseInt(savedCount) : 0;
-        }
+    console.log('🔄 Loading play count from shared JSONBin...');
+    
+    // Show loading state
+    const playCountElement = document.getElementById('playCount');
+    if (playCountElement) {
+        playCountElement.textContent = '...';
+        playCountElement.classList.add('loading');
     }
     
-    // Update localStorage backup
+    // Try JSONBin first
+    try {
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
+            headers: {
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY,
+                'X-Bin-Meta': 'false'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ JSONBin response:', data);
+            
+            if (data && typeof data.playCount === 'number') {
+                gameState.gamesPlayed = data.playCount;
+                console.log('✅ Loaded from JSONBin:', gameState.gamesPlayed);
+                
+                // Update localStorage backup
+                localStorage.setItem('imposterGamePlayCount', gameState.gamesPlayed.toString());
+                localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
+                
+                updatePlayCountDisplay();
+                return;
+            } else {
+                console.warn('⚠️ Invalid data format from JSONBin');
+                // Try to fix the bin data
+                await fixBinData();
+            }
+        } else {
+            console.warn('⚠️ JSONBin fetch failed:', response.status);
+            if (response.status === 404) {
+                // Bin doesn't exist or is private
+                await createOrFixBin();
+            } else {
+                throw new Error(`HTTP ${response.status}`);
+            }
+        }
+    } catch (error) {
+        console.log('⚠️ JSONBin failed, using fallback:', error.message);
+        useLocalStorageFallback();
+    }
+    
+    updatePlayCountDisplay();
+}
+
+async function createOrFixBin() {
+    try {
+        console.log('🔧 Creating/fixing bin data...');
+        
+        const initialData = {
+            playCount: 0,
+            createdAt: new Date().toISOString(),
+            lastUpdated: new Date().toISOString(),
+            totalPlayers: 0
+        };
+        
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+            },
+            body: JSON.stringify(initialData)
+        });
+        
+        if (response.ok) {
+            console.log('✅ Bin created/fixed successfully');
+            gameState.gamesPlayed = 0;
+        } else {
+            console.error('❌ Failed to create/fix bin');
+            throw new Error('Bin creation failed');
+        }
+    } catch (error) {
+        console.error('❌ Error creating/fixing bin:', error);
+        gameState.gamesPlayed = 0;
+    }
+}
+
+async function fixBinData() {
+    try {
+        console.log('🔧 Fixing bin data structure...');
+        
+        const currentResponse = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
+            headers: {
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY,
+                'X-Bin-Meta': 'false'
+            }
+        });
+        
+        let currentData = {};
+        if (currentResponse.ok) {
+            currentData = await currentResponse.json();
+        }
+        
+        // Ensure proper data structure
+        const fixedData = {
+            playCount: currentData.playCount || 0,
+            createdAt: currentData.createdAt || new Date().toISOString(),
+            lastUpdated: new Date().toISOString(),
+            totalPlayers: currentData.totalPlayers || 0
+        };
+        
+        const updateResponse = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+            },
+            body: JSON.stringify(fixedData)
+        });
+        
+        if (updateResponse.ok) {
+            const updated = await updateResponse.json();
+            gameState.gamesPlayed = updated.playCount || 0;
+            console.log('✅ Bin data fixed, count:', gameState.gamesPlayed);
+        }
+    } catch (error) {
+        console.error('Error fixing bin data:', error);
+        gameState.gamesPlayed = 0;
+    }
+}
+
+function useLocalStorageFallback() {
+    const savedCount = localStorage.getItem('imposterGamePlayCount');
+    const savedTime = localStorage.getItem('lastPlayCountUpdate');
+    
+    if (savedCount) {
+        const timeDiff = savedTime ? Date.now() - parseInt(savedTime) : Infinity;
+        
+        // Use local data if it's less than 10 minutes old
+        if (timeDiff < 10 * 60 * 1000) {
+            gameState.gamesPlayed = parseInt(savedCount);
+            console.log('📁 Using localStorage value:', gameState.gamesPlayed);
+        } else {
+            console.log('📁 LocalStorage data is old, using 0');
+            gameState.gamesPlayed = 0;
+        }
+    } else {
+        gameState.gamesPlayed = 0;
+        console.log('📁 No localStorage data, using 0');
+    }
+}
+
+async function incrementPlayCount() {
+    console.log('📈 Incrementing play count...');
+    
+    // First update local display immediately for better UX
+    gameState.gamesPlayed++;
     localStorage.setItem('imposterGamePlayCount', gameState.gamesPlayed.toString());
     localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
     
     updatePlayCountDisplay();
+    
+    // Then update JSONBin in background
+    updateJSONBinInBackground(gameState.gamesPlayed);
 }
 
-async function incrementPlayCount() {
-    const previousCount = gameState.gamesPlayed;
-    const newCount = previousCount + 1;
-    
-    console.log('Incrementing play count to:', newCount);
-    
-    // Immediately update local state
-    gameState.gamesPlayed = newCount;
-    localStorage.setItem('imposterGamePlayCount', newCount.toString());
-    localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
-    
-    updatePlayCountDisplay();
-    
-    // Try to update JSONBin in background
-    updateJSONBinBackground(newCount);
-}
-
-async function updateJSONBinBackground(count) {
-    if (!currentBinId) {
-        console.log('No bin ID, skipping JSONBin update');
-        return;
-    }
-    
+async function updateJSONBinInBackground(newCount) {
     try {
+        console.log('☁️ Updating JSONBin...');
+        
+        // Get current data first
+        const getResponse = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
+            headers: {
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY,
+                'X-Bin-Meta': 'false'
+            }
+        });
+        
+        let currentData = { playCount: 0 };
+        if (getResponse.ok) {
+            currentData = await getResponse.json();
+        }
+        
+        const currentBinCount = currentData.playCount || 0;
+        console.log('Current bin count:', currentBinCount, 'Our new count:', newCount);
+        
+        // Always increment from bin's current count to avoid conflicts
+        const finalCount = Math.max(currentBinCount + 1, newCount);
+        
         const updateData = {
-            playCount: count,
+            playCount: finalCount,
             lastUpdated: new Date().toISOString(),
-            lastGame: new Date().toISOString()
+            lastGame: new Date().toISOString(),
+            totalPlayers: currentData.totalPlayers || 0
         };
         
-        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}`, {
+        console.log('Setting bin count to:', finalCount);
+        
+        const putResponse = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -149,51 +233,57 @@ async function updateJSONBinBackground(count) {
             body: JSON.stringify(updateData)
         });
         
-        if (response.ok) {
-            const data = await response.json();
-            console.log('JSONBin updated successfully:', data.record.playCount);
+        if (putResponse.ok) {
+            const updatedData = await putResponse.json();
+            console.log('✅ JSONBin updated to:', updatedData.playCount);
             
-            // Check if someone else updated it
-            if (data.record.playCount > count) {
-                gameState.gamesPlayed = data.record.playCount;
-                localStorage.setItem('imposterGamePlayCount', data.record.playCount.toString());
+            // Update local if bin has higher count
+            if (updatedData.playCount > gameState.gamesPlayed) {
+                gameState.gamesPlayed = updatedData.playCount;
+                localStorage.setItem('imposterGamePlayCount', updatedData.playCount.toString());
                 updatePlayCountDisplay();
-                console.log('Updated to global count:', data.record.playCount);
+                console.log('📱 Updated local to match cloud:', updatedData.playCount);
             }
+        } else {
+            console.warn('⚠️ JSONBin update failed');
         }
     } catch (error) {
-        console.log('Background JSONBin update failed:', error);
-        // Don't worry - we'll sync on next load
+        console.error('❌ Error updating JSONBin:', error);
     }
 }
 
-async function syncPlayCount() {
-    if (!currentBinId) return;
-    
+async function syncWithJSONBin() {
     try {
-        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${currentBinId}/latest`, {
+        console.log('🔄 Syncing with cloud...');
+        
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
             headers: {
-                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY,
+                'X-Bin-Meta': 'false'
             }
         });
         
         if (response.ok) {
             const data = await response.json();
-            const binCount = data.record.playCount || 0;
+            const binCount = data.playCount || 0;
             const localCount = gameState.gamesPlayed;
             
-            // Use the larger value
-            const maxCount = Math.max(binCount, localCount);
+            console.log('Local:', localCount, 'Cloud:', binCount);
             
-            if (maxCount > localCount) {
-                gameState.gamesPlayed = maxCount;
-                localStorage.setItem('imposterGamePlayCount', maxCount.toString());
+            if (binCount > localCount) {
+                gameState.gamesPlayed = binCount;
+                localStorage.setItem('imposterGamePlayCount', binCount.toString());
+                localStorage.setItem('lastPlayCountUpdate', Date.now().toString());
                 updatePlayCountDisplay();
-                console.log('Synced with global count:', maxCount);
+                console.log('✅ Synced to cloud count:', binCount);
+            } else if (localCount > binCount) {
+                // Our local is higher - update cloud
+                console.log('Local > Cloud, updating cloud...');
+                await updateJSONBinInBackground(localCount);
             }
         }
     } catch (error) {
-        console.log('Sync failed:', error);
+        console.log('⚠️ Sync failed:', error.message);
     }
 }
 
@@ -201,23 +291,27 @@ function updatePlayCountDisplay() {
     const playCountElement = document.getElementById('playCount');
     if (playCountElement) {
         playCountElement.textContent = gameState.gamesPlayed;
+        playCountElement.classList.remove('loading');
     }
 }
 
-// Sync every minute
-setInterval(syncPlayCount, 60000);
+// Start periodic sync (every 20 seconds)
+setInterval(syncWithJSONBin, 20000);
+
+// Sync when page becomes visible
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        syncWithJSONBin();
+    }
+});
 
 // ================= INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', function() {
-    // Show loading state for play count
-    const playCountElement = document.getElementById('playCount');
-    if (playCountElement) {
-        playCountElement.textContent = '...';
-    }
+    console.log('🚀 Initializing Imposter Game...');
     
     // Load play count first
     loadPlayCount().then(() => {
-        console.log('Initialization complete. Play count:', gameState.gamesPlayed);
+        console.log('✅ Play count loaded:', gameState.gamesPlayed);
         
         // Load other settings
         loadSettings();
@@ -225,8 +319,12 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEventListeners();
         updateUI();
         updateCategoriesDisplay();
+        
+        // Initial sync after 3 seconds
+        setTimeout(syncWithJSONBin, 3000);
+        
     }).catch(error => {
-        console.error('Initialization error:', error);
+        console.error('❌ Initialization error:', error);
         // Continue anyway
         loadSettings();
         loadSavedTeams();
@@ -236,9 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// [REST OF YOUR CODE REMAINS EXACTLY THE SAME]
-// =================================================
-
+// ================= REST OF YOUR CODE (UNCHANGED) =================
 function loadSettings() {
     const saved = localStorage.getItem('imposterSettings');
     if (saved) {
@@ -372,7 +468,7 @@ function setupEventListeners() {
         });
     });
     
-    // FIXED: Timer button click handler with auto-close
+    // Timer button click handler with auto-close
     document.querySelectorAll('.timer-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             selectTimer(parseInt(this.dataset.time));
@@ -406,7 +502,7 @@ function setupEventListeners() {
         updateCategories();
     });
     
-    // Expand/Collapse sections - simple unified approach
+    // Expand/Collapse sections
     document.querySelectorAll('.setting-group').forEach(group => {
         if (group.querySelector('#timerButtons') || group.querySelector('#categoriesGrid')) {
             group.addEventListener('click', function(e) {
@@ -1053,6 +1149,31 @@ function formatTime(seconds) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
+// ================= DEBUG FUNCTIONS =================
+async function checkBinStatus() {
+    console.log('🔍 Checking bin status...');
+    try {
+        const response = await fetch(`${JSONBIN_CONFIG.BASE_URL}/${JSONBIN_CONFIG.SHARED_BIN_ID}/latest`, {
+            headers: {
+                'X-Master-Key': JSONBIN_CONFIG.API_KEY
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ Bin is accessible');
+            console.log('Current data:', data);
+            return true;
+        } else {
+            console.error('❌ Bin access failed:', response.status);
+            return false;
+        }
+    } catch (error) {
+        console.error('❌ Bin check error:', error);
+        return false;
+    }
+}
+
 // Global functions
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
@@ -1060,3 +1181,4 @@ window.restartGame = restartGame;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
+window.checkBinStatus = checkBinStatus; // For debugging
