@@ -14,8 +14,36 @@ let gameState = {
     hintAr: '',
     
     // Stats
-    gamesPlayed: parseInt(localStorage.getItem('gamesPlayed') || '0')
+    gamesPlayed: 0
 };
+
+// ================= PLAY COUNT FUNCTIONS =================
+async function loadPlayCount() {
+    try {
+        const response = await fetch('https://api.countapi.xyz/get/imposter-game/plays');
+        const data = await response.json();
+        gameState.gamesPlayed = data.value;
+        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+    } catch (error) {
+        console.error('Failed to load play count:', error);
+        gameState.gamesPlayed = 0;
+        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+    }
+}
+
+async function incrementPlayCount() {
+    try {
+        const response = await fetch('https://api.countapi.xyz/hit/imposter-game/plays');
+        const data = await response.json();
+        gameState.gamesPlayed = data.value;
+        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+    } catch (error) {
+        console.error('Failed to increment play count:', error);
+        // Fallback: increment locally
+        gameState.gamesPlayed++;
+        document.getElementById('playCount').textContent = gameState.gamesPlayed;
+    }
+}
 
 // ================= INITIALIZATION =================
 document.addEventListener('DOMContentLoaded', function() {
@@ -440,9 +468,7 @@ function startGame() {
     }
     
     // Update stats
-    gameState.gamesPlayed++;
-    document.getElementById('playCount').textContent = gameState.gamesPlayed;
-    localStorage.setItem('gamesPlayed', gameState.gamesPlayed.toString());
+    incrementPlayCount();
     
     // Hide UI
     document.querySelector('.dashboard').style.display = 'none';
