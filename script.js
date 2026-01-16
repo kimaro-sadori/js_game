@@ -1098,10 +1098,13 @@ function hideModal(modal) {
 }
 
 function copyGameLink() {
-    navigator.clipboard.writeText(window.location.href)
+    const gameLink = 'https://kimaro-sadori.github.io/js_game/';
+    
+    navigator.clipboard.writeText(gameLink)
         .then(() => alert('Link copied!'))
         .catch(() => {
             const input = document.getElementById('gameLink');
+            input.value = gameLink; // Make sure it has the right link
             input.select();
             document.execCommand('copy');
             alert('Link copied!');
@@ -1109,7 +1112,7 @@ function copyGameLink() {
 }
 
 function shareGame(platform) {
-    const url = window.location.href;
+    const url = 'https://kimaro-sadori.github.io/js_game/'; // Your actual URL
     const text = "🎭 Play Imposter Game with me!";
     
     if (platform === 'whatsapp') {

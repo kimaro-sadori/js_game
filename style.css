@@ -123,6 +123,7 @@ body {
 
 .input-row {
     display: flex;
+    justify-content:center;
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -963,11 +964,11 @@ body {
 
 /* ===== SOCIAL BUTTONS ===== */
 .social-buttons {
-    display: flex;
+    position: relative;  /* ← This fixed it! */
+    display: flex !important; /* ← Force display */
     justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 150px; /* Add space below */
 }
 
 .social-btn {
