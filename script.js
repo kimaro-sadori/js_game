@@ -955,8 +955,10 @@ function stopNameRoller() {
 
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
-    document.getElementById('describerWord').textContent = 'Word is hidden';
-    document.getElementById('describerHint').textContent = gameState.hint;
+    document.getElementById('describerWord').textContent = 'Your Mission';
+    //document.getElementById('describerHint').textContent = gameState.hint;
+document.getElementById('describerHint').innerHTML =
+  'Reveal the word below<br>Describe it to your team without saying it';
     
     // FIXED: Show the actual word in a separate display
     document.getElementById('describerActualWord').textContent = gameState.word;
@@ -1087,7 +1089,12 @@ function revealImposter() {
 }
 
 function playAgain() {
-    // Reset current player index
+    // CLEAR THE TIMER FIRST
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+    }
+    
+    // Rest of your existing code...
     gameState.currentPlayer = 0;
     
     // Get NEW random word for the new game
