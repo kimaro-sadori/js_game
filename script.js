@@ -452,6 +452,8 @@ function updateSavedTeamsList() {
 
 // ================= EVENT LISTENERS =================
 function setupEventListeners() {
+    console.log('Setting up event listeners...');
+    
     // Player Management
     document.getElementById('addPlayerBtn').addEventListener('click', addPlayer);
     document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
@@ -460,87 +462,108 @@ function setupEventListeners() {
     document.getElementById('clearPlayersBtn').addEventListener('click', clearPlayers);
     document.getElementById('saveTeamBtn').addEventListener('click', saveTeam);
     
-    // Game Settings
+    // Game Settings - MODE
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', function() {
+            console.log('Mode clicked:', this.dataset.mode);
             selectGameMode(this.dataset.mode);
         });
     });
-    // Feedback button
-    const feedbackBtn = document.getElementById('feedbackBtn');
-    if (feedbackBtn) {
-        feedbackBtn.addEventListener('click', showFeedbackModal);
-    }
     
-    // Setup feedback listeners
-    setupFeedbackListeners();
-    // Timer button click handler with auto-close
-    document.querySelectorAll('.timer-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            selectTimer(parseInt(this.dataset.time));
-            
-            // Auto-close the timer options after selection
-            const buttons = document.getElementById('timerButtons');
-            const expandIcon = document.getElementById('timerExpand');
-            buttons.style.display = 'none';
-            expandIcon.classList.remove('expanded');
+    // Timer buttons - SETUP CORRECTLY
+    setTimeout(() => {
+        const timerBtns = document.querySelectorAll('.timer-btn');
+        console.log('Timer buttons found:', timerBtns.length);
+        
+        timerBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent event bubbling
+                console.log('Timer clicked:', this.dataset.time);
+                selectTimer(parseInt(this.dataset.time));
+                
+                // Auto-close the timer options after selection
+                const buttons = document.getElementById('timerButtons');
+                const expandIcon = document.getElementById('timerExpand');
+                buttons.style.display = 'none';
+                expandIcon.classList.remove('expanded');
+            });
         });
-    });
-    // Feedback button
-    document.getElementById('feedbackBtn').addEventListener('click', showFeedbackModal);
+    }, 100); // Small delay to ensure DOM is ready
     
-    // Setup feedback listeners
-    setupFeedbackListeners();
-    document.querySelectorAll('.category-checkbox').forEach(cb => {
+    // Categories checkboxes
+    const checkboxes = document.querySelectorAll('.category-checkbox');
+    console.log('Category checkboxes found:', checkboxes.length);
+    
+    checkboxes.forEach(cb => {
         cb.addEventListener('change', updateCategories);
     });
     
     // Select All button functionality
-    document.getElementById('selectAllBtn').addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('.category-checkbox');
-        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-        
-        // Toggle all checkboxes
-        checkboxes.forEach(cb => {
-            cb.checked = !allChecked;
-        });
-        
-        // Update button text
-        this.textContent = allChecked ? 'Select All' : 'Deselect All';
-        
-        // Update categories state
-        updateCategories();
-    });
-    
-    // Expand/Collapse sections
-    document.querySelectorAll('.setting-group').forEach(group => {
-        if (group.querySelector('#timerButtons') || group.querySelector('#categoriesGrid')) {
-            group.addEventListener('click', function(e) {
-                // Only block if clicking directly on checkbox input or button
-                if (e.target.type === 'checkbox' || e.target.tagName === 'BUTTON') {
-                    return;
-                }
-                
-                // Timer group
-                if (this.querySelector('#timerButtons')) {
-                    const buttons = document.getElementById('timerButtons');
-                    const expandIcon = document.getElementById('timerExpand');
-                    const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
-                    buttons.style.display = isHidden ? 'grid' : 'none';
-                    expandIcon.classList.toggle('expanded', isHidden);
-                }
-                
-                // Categories group
-                if (this.querySelector('#categoriesGrid')) {
-                    const grid = document.getElementById('categoriesGrid');
-                    const expandIcon = document.getElementById('categoriesExpand');
-                    const isHidden = grid.style.display === 'none' || grid.style.display === '';
-                    grid.style.display = isHidden ? 'grid' : 'none';
-                    expandIcon.classList.toggle('expanded', isHidden);
-                }
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.category-checkbox');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            // Toggle all checkboxes
+            checkboxes.forEach(cb => {
+                cb.checked = !allChecked;
             });
-        }
-    });
+            
+            // Update button text
+            this.textContent = allChecked ? 'Select All' : 'Deselect All';
+            
+            // Update categories state
+            updateCategories();
+        });
+    }
+    
+    // Expand/Collapse sections - FIXED CLICK HANDLER
+    const timerGroup = document.querySelector('.setting-group:nth-child(2)'); // Timer group
+    const categoriesGroup = document.querySelector('.setting-group:nth-child(3)'); // Categories group
+    
+    if (timerGroup) {
+        timerGroup.addEventListener('click', function(e) {
+            // Don't trigger if clicking on a timer button or checkbox
+            if (e.target.classList.contains('timer-btn') || 
+                e.target.closest('.timer-btn') || 
+                e.target.type === 'checkbox') {
+                return;
+            }
+            
+            console.log('Timer group clicked');
+            const buttons = document.getElementById('timerButtons');
+            const expandIcon = document.getElementById('timerExpand');
+            const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
+            buttons.style.display = isHidden ? 'grid' : 'none';
+            expandIcon.classList.toggle('expanded', isHidden);
+            
+            // Scroll to make expanded content visible
+            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
+        });
+    }
+    
+    if (categoriesGroup) {
+        categoriesGroup.addEventListener('click', function(e) {
+            // Don't trigger if clicking on checkbox or select all button
+            if (e.target.type === 'checkbox' || 
+                e.target.closest('.category-option') ||
+                e.target.id === 'selectAllBtn' || 
+                e.target.closest('#selectAllBtn')) {
+                return;
+            }
+            
+            console.log('Categories group clicked');
+            const grid = document.getElementById('categoriesGrid');
+            const expandIcon = document.getElementById('categoriesExpand');
+            const isHidden = grid.style.display === 'none' || grid.style.display === '';
+            grid.style.display = isHidden ? 'grid' : 'none';
+            expandIcon.classList.toggle('expanded', isHidden);
+            
+            // Scroll to make expanded content visible
+            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
+        });
+    }
     
     // Start Game
     document.getElementById('startGameBtn').addEventListener('click', startGame);
@@ -567,13 +590,25 @@ function setupEventListeners() {
     
     // Modals
     document.getElementById('shareBtn').addEventListener('click', showShareModal);
-    document.getElementById('feedbackBtn').addEventListener('click', showFeedbackModal);
-    document.getElementById('copyLinkBtn').addEventListener('click', copyGameLink);
-    document.getElementById('submitFeedbackBtn').addEventListener('click', submitFeedback);
     
+    // Feedback button - ONLY ONCE
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener('click', showFeedbackModal);
+    }
+    
+    document.getElementById('copyLinkBtn').addEventListener('click', copyGameLink);
+    
+    // Setup feedback listeners
+    setupFeedbackListeners();
+    
+    // Close modal buttons
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.addEventListener('click', function() {
-            hideModal(this.closest('.modal'));
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
         });
     });
     
@@ -594,6 +629,8 @@ function setupEventListeners() {
             revealImposter();
         }
     });
+    
+    console.log('Event listeners setup complete');
 }
 
 // ================= PLAYER MANAGEMENT =================
@@ -690,19 +727,22 @@ function updateTimerDisplay() {
 }
 
 function updateCategories() {
-    const checkboxes = document.querySelectorAll('.category-checkbox');
+    const checkboxes = document.querySelectorAll('.category-checkbox:checked');
     
     // Update categories state
-    gameState.categories = Array.from(checkboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
+    gameState.categories = Array.from(checkboxes).map(cb => cb.value);
     
     console.log('Selected categories:', gameState.categories);
     console.log('Selected count:', gameState.categories.length);
     
     // Update Select All button text
-    const allChecked = gameState.categories.length === checkboxes.length;
-    document.getElementById('selectAllBtn').textContent = allChecked ? 'Deselect All' : 'Select All';
+    const allCheckboxes = document.querySelectorAll('.category-checkbox');
+    const allChecked = gameState.categories.length === allCheckboxes.length;
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    
+    if (selectAllBtn) {
+        selectAllBtn.textContent = allChecked ? 'Deselect All' : 'Select All';
+    }
     
     updateCategoriesDisplay();
     saveSettings();

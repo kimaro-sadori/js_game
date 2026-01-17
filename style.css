@@ -1363,3 +1363,17 @@ img, video {
     /* Prevent click propagation */
     pointer-events: auto;
 }
+#timerButtons, #categoriesGrid {
+    display: none;
+}
+
+.expand-toggle:not(.expanded)::before {
+    content: "▼";
+}
+
+.expand-toggle.expanded::before {
+    content: "▲";
+}
+
+
+
