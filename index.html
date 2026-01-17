@@ -12,8 +12,8 @@
     <!-- Header - Removed sticky positioning -->
     <header class="header">
         <div class="logo">
-            <div class="logo-icon">🎭</div>
-            <h1>IMPOSTER</h1>
+            
+            <h1>IMPOSTER 🎭</h1>
             <p class="play-count" id="playCountContainer">
     <i class="fas fa-gamepad"></i>
     This game has been played 
@@ -450,33 +450,35 @@
         </div>
     </div>
 
-    <div id="feedbackModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">
-                    <i class="fas fa-comment"></i>
-                    <span>Feedback</span>
-                </div>
-                <button class="close-modal">&times;</button>
+    <!-- Updated Feedback Modal for Google Form -->
+
+ <!-- Feedback Modal - Simple Version -->
+<div id="feedbackModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-comment"></i>
+                <span>Feedback</span>
             </div>
             
-            <p>We'd love to hear your thoughts!</p>
+            <button class="close-modal" onclick="hideModal('feedbackModal')">&times;</button>
+        </div>
+        
+        <div style="padding: 20px; text-align: center;">
+            <p style="margin-bottom: 25px; color: var(--text);">
+                Help us improve the game by sharing your thoughts!
+            </p>
             
-            <div style="margin: 20px 0;">
-                <textarea id="feedbackMessage" placeholder="Your feedback..." rows="3" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text);"></textarea>
-            </div>
+            <button id="openGoogleFormBtn" class="btn btn-primary" style="padding: 12px 24px; font-size: 1rem;">
+                <i class="fab fa-google"></i> Open Feedback Form
+            </button>
             
-            <div class="results-buttons">
-                <button id="submitFeedbackBtn" class="btn btn-primary">
-                    Submit
-                </button>
-                <button class="btn btn-secondary close-modal">
-                    Cancel
-                </button>
-            </div>
+            <p style="margin-top: 15px; color: #94a3b8; font-size: 0.9rem;">
+                <i class="fas fa-external-link-alt"></i> Opens in new tab
+            </p>
         </div>
     </div>
-
+</div>
     <!-- Scripts -->
     <script src="words.js"></script>
     <script src="script.js"></script>

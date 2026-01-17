@@ -466,7 +466,14 @@ function setupEventListeners() {
             selectGameMode(this.dataset.mode);
         });
     });
+    // Feedback button
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener('click', showFeedbackModal);
+    }
     
+    // Setup feedback listeners
+    setupFeedbackListeners();
     // Timer button click handler with auto-close
     document.querySelectorAll('.timer-btn').forEach(btn => {
         btn.addEventListener('click', function() {
@@ -479,7 +486,11 @@ function setupEventListeners() {
             expandIcon.classList.remove('expanded');
         });
     });
+    // Feedback button
+    document.getElementById('feedbackBtn').addEventListener('click', showFeedbackModal);
     
+    // Setup feedback listeners
+    setupFeedbackListeners();
     document.querySelectorAll('.category-checkbox').forEach(cb => {
         cb.addEventListener('change', updateCategories);
     });
@@ -1083,18 +1094,27 @@ function showShareModal() {
 }
 
 function showFeedbackModal() {
-    showModal('feedbackModal');
-}
-
-function showModal(id) {
-    document.getElementById(id).style.display = 'flex';
-}
-
-function hideModal(modal) {
-    if (typeof modal === 'string') {
-        modal = document.getElementById(modal);
+    const modal = document.getElementById('feedbackModal');
+    if (modal) {
+        modal.style.display = 'flex';
     }
-    modal.style.display = 'none';
+}
+
+// Make sure hideModal function exists and works
+// Close modal function
+function hideModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+// Make sure showModal function exists
+function showModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+    }
 }
 
 function copyGameLink() {
@@ -1158,3 +1178,126 @@ window.restartGame = restartGame;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
+// ================= GOOGLE FORM FEEDBACK =================
+// ================= FEEDBACK SYSTEM =================
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd4iWPkTWr_2p1UhqwHs4pnZqNAg8XU8zXdJKBDZvY7dv1YzA/viewform?usp=pp_url';
+
+// Show feedback modal
+function showFeedbackModal() {
+    // Update display with current game info
+    document.getElementById('feedbackModeDisplay').textContent = 
+        gameState.gameMode === 'classic' ? 'Classic' : 'Describe It';
+    document.getElementById('feedbackPlayersDisplay').textContent = gameState.players.length;
+    document.getElementById('feedbackGamesDisplay').textContent = gameState.gamesPlayed;
+    
+    showModal('feedbackModal');
+}
+
+// Open Google Form
+function openGoogleForm() {
+    // Your Google Form URL
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd4iWPkTWr_2p1UhqwHs4pnZqNAg8XU8zXdJKBDZvY7dv1YzA/viewform';
+    
+    // Open in new tab
+    window.open(GOOGLE_FORM_URL, '_blank');
+    
+    // Close modal
+    hideModal('feedbackModal');
+}
+// Also add this for the share modal close button
+function closeAllModals() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+}
+// Log feedback events locally
+function logFeedbackEvent(action) {
+    const events = JSON.parse(localStorage.getItem('feedbackLog') || '[]');
+    events.push({
+        action: action,
+        timestamp: new Date().toISOString(),
+        gameState: {
+            mode: gameState.gameMode,
+            players: gameState.players.length,
+            gamesPlayed: gameState.gamesPlayed
+        }
+    });
+    localStorage.setItem('feedbackLog', JSON.stringify(events));
+}
+
+// Show toast notification (optional)
+function showToast(message) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--primary);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: fadeInOut 3s ease;
+    `;
+    
+    // Add styles for animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(toast);
+    
+    // Remove toast after animation
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+        if (style.parentNode) {
+            style.parentNode.removeChild(style);
+        }
+    }, 3000);
+}
+
+// Setup feedback event listeners
+function setupFeedbackListeners() {
+    // Open Google Form button
+    const openFormBtn = document.getElementById('openGoogleFormBtn');
+    if (openFormBtn) {
+        openFormBtn.addEventListener('click', openGoogleForm);
+    }
+}
+//close the share
+// Close modal when clicking X or outside
+function setupModalClose() {
+    // Close when clicking X
+    document.querySelectorAll('.close-modal').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+    
+    // Close when clicking outside modal content
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Call this after DOM loads
+document.addEventListener('DOMContentLoaded', setupModalClose);
