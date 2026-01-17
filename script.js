@@ -1089,16 +1089,23 @@ function backToLobby() {
 }
 
 // ================= MODALS =================
+// ================= MODALS =================
 function showShareModal() {
-    showModal('shareModal');
+    const modal = document.getElementById('shareModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
 }
 
+// ADD THIS FUNCTION BACK
 function showFeedbackModal() {
     const modal = document.getElementById('feedbackModal');
     if (modal) {
         modal.style.display = 'flex';
     }
 }
+
+
 
 // Make sure hideModal function exists and works
 // Close modal function
@@ -1182,16 +1189,7 @@ window.deleteTeam = deleteTeam;
 // ================= FEEDBACK SYSTEM =================
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd4iWPkTWr_2p1UhqwHs4pnZqNAg8XU8zXdJKBDZvY7dv1YzA/viewform?usp=pp_url';
 
-// Show feedback modal
-function showFeedbackModal() {
-    // Update display with current game info
-    document.getElementById('feedbackModeDisplay').textContent = 
-        gameState.gameMode === 'classic' ? 'Classic' : 'Describe It';
-    document.getElementById('feedbackPlayersDisplay').textContent = gameState.players.length;
-    document.getElementById('feedbackGamesDisplay').textContent = gameState.gamesPlayed;
-    
-    showModal('feedbackModal');
-}
+
 
 // Open Google Form
 function openGoogleForm() {
