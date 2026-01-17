@@ -306,6 +306,7 @@ document.addEventListener('visibilitychange', function() {
 });
 
 // ================= INITIALIZATION =================
+//text in payers list
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Initializing Imposter Game...');
     
@@ -320,6 +321,9 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUI();
         updateCategoriesDisplay();
         
+        // ADD THIS LINE to show the players list placeholder
+        updatePlayersList();
+        
         // Initial sync after 3 seconds
         setTimeout(syncWithJSONBin, 3000);
         
@@ -331,6 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
         setupEventListeners();
         updateUI();
         updateCategoriesDisplay();
+        // ADD THIS LINE here too
+        updatePlayersList();
     });
 });
 
@@ -675,8 +681,14 @@ function clearPlayers() {
 function updatePlayersList() {
     const list = document.getElementById('playersList');
     
+    if (!list) {
+        console.error('playersList element not found!');
+        return;
+    }
+    
     if (gameState.players.length === 0) {
-        list.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 20px;">No players yet</p>';
+        // THIS IS THE MESSAGE THAT SHOULD APPEAR
+        list.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 20px;">👤 Enter player names above<br><small>Players will appear here</small></p>';
         return;
     }
     
