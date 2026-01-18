@@ -1378,11 +1378,20 @@ function nextPlayer() {
 }
 
 // ================= DESCRIBE GAME =================
+
+
+// ================= DESCRIBE GAME =================
 function startDescribeGame() {
     const shuffled = [...gameState.players].sort(() => Math.random() - 0.5);
     const half = Math.ceil(shuffled.length / 2);
     gameState.redTeam = shuffled.slice(0, half);
     gameState.blueTeam = shuffled.slice(half);
+    
+    console.log('Teams created:', {
+        redTeam: gameState.redTeam,
+        blueTeam: gameState.blueTeam,
+        totalPlayers: gameState.players.length
+    });
     
     document.getElementById('describeGame').style.display = 'block';
     updateTeamsDisplay();
@@ -1390,33 +1399,58 @@ function startDescribeGame() {
     startNameRoller();
 }
 
-function updateTeamsDisplay() {
-    document.getElementById('redTeamPlayers').innerHTML = gameState.redTeam.map(p => 
-        `<div class="team-player">${p}</div>`
-    ).join('');
-    
-    document.getElementById('blueTeamPlayers').innerHTML = gameState.blueTeam.map(p => 
-        `<div class="team-player">${p}</div>`
-    ).join('');
-}
-
 function startNameRoller() {
     let index = 0;
-    const allPlayers = [...gameState.redTeam, ...gameState.blueTeam];
+    
+    // Create a pool of eligible players (only from teams with at least 2 players)
+    let eligiblePlayers = [];
+    
+    if (gameState.redTeam.length >= 2) {
+        eligiblePlayers = eligiblePlayers.concat(gameState.redTeam);
+    }
+    
+    if (gameState.blueTeam.length >= 2) {
+        eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
+    }
+    
+    // Fallback: if somehow all teams have 1 player, use all players
+    if (eligiblePlayers.length === 0) {
+        eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
+        console.warn('All teams have only 1 player, using all players as eligible');
+    }
+    
+    console.log('Eligible players for describer:', eligiblePlayers);
     
     gameState.rollerInterval = setInterval(() => {
-        document.getElementById('rollingName').textContent = allPlayers[index];
-        index = (index + 1) % allPlayers.length;
+        document.getElementById('rollingName').textContent = eligiblePlayers[index];
+        index = (index + 1) % eligiblePlayers.length;
     }, 100);
 }
 
 function stopNameRoller() {
     clearInterval(gameState.rollerInterval);
     
-    const allPlayers = [...gameState.redTeam, ...gameState.blueTeam];
-    const describerIndex = Math.floor(Math.random() * allPlayers.length);
-    const describer = allPlayers[describerIndex];
+    // Determine eligible players (same logic as startNameRoller)
+    let eligiblePlayers = [];
     
+    if (gameState.redTeam.length >= 2) {
+        eligiblePlayers = eligiblePlayers.concat(gameState.redTeam);
+    }
+    
+    if (gameState.blueTeam.length >= 2) {
+        eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
+    }
+    
+    // Fallback
+    if (eligiblePlayers.length === 0) {
+        eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
+    }
+    
+    // Select random describer from eligible players
+    const describerIndex = Math.floor(Math.random() * eligiblePlayers.length);
+    const describer = eligiblePlayers[describerIndex];
+    
+    // Determine which team the describer is from
     gameState.describerTeam = gameState.redTeam.includes(describer) ? 'Red Team' : 'Blue Team';
     
     document.getElementById('rollingName').textContent = describer;
@@ -1429,15 +1463,144 @@ function stopNameRoller() {
 
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
-    document.getElementById('describerWord').textContent = 'Your Mission';
-    document.getElementById('describerHint').innerHTML =
-  'Reveal the word below<br>Describe it to your team without saying it';
     
+    // Show "Your Mission" text
+    document.getElementById('describerWord').textContent = 'Your Mission';
+    document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+    
+    // Set up the word display (but keep it hidden initially)
     document.getElementById('describerActualWord').textContent = gameState.word;
+    document.getElementById('describerArabicWord').textContent = gameState.wordAr;
     document.getElementById('describerWordDisplay').style.display = 'none';
     
     document.getElementById('describeWordScreen').style.display = 'block';
 }
+
+function updateTeamsDisplay() {
+    document.getElementById('redTeamPlayers').innerHTML = gameState.redTeam.map(p => 
+        `<div class="team-player">${p}</div>`
+    ).join('');
+    
+    document.getElementById('blueTeamPlayers').innerHTML = gameState.blueTeam.map(p => 
+        `<div class="team-player">${p}</div>`
+    ).join('');
+}
+
+// Update the showWordBtn event listener
+document.getElementById('showWordBtn').addEventListener('click', function() {
+    const wordDisplay = document.getElementById('describerWordDisplay');
+    
+    if (wordDisplay.style.display === 'none') {
+        // Show the word in both languages
+        wordDisplay.style.display = 'block';
+        this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Word';
+        
+        // Update the main display to show the actual word
+        document.getElementById('describerWord').textContent = gameState.word;
+        document.getElementById('describerHint').innerHTML = 
+            `<strong>Arabic:</strong> ${gameState.wordAr}`;
+    } else {
+        // Hide the word
+        wordDisplay.style.display = 'none';
+        this.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        
+        // Return to the mission text
+        document.getElementById('describerWord').textContent = 'Your Mission';
+        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+    }
+});
+
+
+// ================= DESCRIBE GAME =================
+function validateTeamsForDescribe() {
+    // For 3 players: teams will be 2 vs 1
+    // For 4 players: teams will be 2 vs 2  
+    // For 5 players: teams will be 3 vs 2
+    // etc.
+    
+    const redCount = gameState.redTeam.length;
+    const blueCount = gameState.blueTeam.length;
+    
+    console.log('Team validation:', {
+        redTeamCount: redCount,
+        blueTeamCount: blueCount,
+        isValid: redCount >= 2 || blueCount >= 2
+    });
+    
+    // Return true if at least one team has 2+ players
+    return redCount >= 2 || blueCount >= 2;
+}
+
+function startDescribeGame() {
+    const shuffled = [...gameState.players].sort(() => Math.random() - 0.5);
+    const half = Math.ceil(shuffled.length / 2);
+    gameState.redTeam = shuffled.slice(0, half);
+    gameState.blueTeam = shuffled.slice(half);
+    
+    // Validate teams
+    if (!validateTeamsForDescribe()) {
+        console.error('Invalid team configuration for Describe It mode');
+        // This shouldn't happen with 3+ players, but just in case
+        alert('Teams need to be reconfigured. Please add more players.');
+        backToLobby();
+        return;
+    }
+    
+    console.log('Teams created:', {
+        redTeam: gameState.redTeam,
+        blueTeam: gameState.blueTeam,
+        totalPlayers: gameState.players.length
+    });
+    
+    document.getElementById('describeGame').style.display = 'block';
+    updateTeamsDisplay();
+    
+    startNameRoller();
+}
+
+
+
+
+
+// Update the showWordBtn event listener
+function showDescriberWord() {
+    document.getElementById('describerTeam').textContent = gameState.describerTeam;
+    
+    // Show "Your Mission" text
+    document.getElementById('describerWord').textContent = 'Your Mission';
+    document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+    
+    // Set up the word display (but keep it hidden initially)
+    document.getElementById('describerActualWord').textContent = gameState.word;
+    document.getElementById('describerArabicWord').textContent = gameState.wordAr;
+    document.getElementById('describerWordDisplay').style.display = 'none';
+    
+    document.getElementById('describeWordScreen').style.display = 'block';
+}
+
+// Update the showWordBtn event listener
+document.getElementById('showWordBtn').addEventListener('click', function() {
+    const wordDisplay = document.getElementById('describerWordDisplay');
+    
+    if (wordDisplay.style.display === 'none') {
+        // Show the word in both languages
+        wordDisplay.style.display = 'block';
+        this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Word';
+        
+        // Update the main display to show the actual word
+        document.getElementById('describerWord').textContent = gameState.word;
+        document.getElementById('describerHint').innerHTML = 
+            `<strong>Arabic:</strong> ${gameState.wordAr}`;
+    } else {
+        // Hide the word
+        wordDisplay.style.display = 'none';
+        this.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        
+        // Return to the mission text
+        document.getElementById('describerWord').textContent = 'Your Mission';
+        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+    }
+});
 
 function startDescribing() {
     document.getElementById('describeWordScreen').style.display = 'none';
@@ -1542,11 +1705,11 @@ function revealImposter() {
         const imposter = gameState.players[gameState.imposter];
         document.getElementById('imposterName').textContent = imposter;
         document.getElementById('correctWord').textContent = gameState.word;
-        document.getElementById('imposterHint').textContent = `Hint: ${gameState.hint}`;
+        document.getElementById('arabicWord').textContent = gameState.wordAr; // Changed from imposterHint to arabicWord
     } else {
         document.getElementById('imposterName').textContent = gameState.describerTeam;
         document.getElementById('correctWord').textContent = gameState.word;
-        document.getElementById('imposterHint').textContent = `Hint: ${gameState.hint}`;
+         document.getElementById('arabicWord').textContent = gameState.wordAr; // Changed from imposterHint to arabicWord
     }
     
     document.getElementById('secretCard').style.display = 'none';

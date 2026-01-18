@@ -368,60 +368,73 @@
     </div>
 
     <!-- Describe Word -->
-    <div id="describeWordScreen" class="game-screen">
-        <div class="game-container">
-            <div class="game-header">
-                <div class="game-title">
-                    <i class="fas fa-microphone-alt"></i>
-                    <span>Describe the Word</span>
-                </div>
+<div id="describeWordScreen" class="game-screen">
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-title">
+                <i class="fas fa-microphone-alt"></i>
+                <span>Describe the Word</span>
             </div>
-            
-            <div class="player-turn">
-                <h2 id="describerTeam">Red Team</h2>
-                <p>You're the describer!</p>
-            </div>
-            
-            <div class="role-card">
-                <div class="card-content">
-                    <div class="role-word" id="describerWord">WORD</div>
-                    <div class="role-hint" id="describerHint">Hint appears here</div>
-                    <!-- Added word display for describe game -->
-                    <div class="word-display" id="describerWordDisplay" style="display: none; margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
-                        <strong>Word to describe:</strong>
-                        <div style="font-size: 2rem; font-weight: bold; color: var(--accent); margin: 10px 0;" id="describerActualWord"></div>
+        </div>
+        
+        <div class="player-turn">
+            <h2 id="describerTeam">Red Team</h2>
+            <p>You're the describer!</p>
+        </div>
+        
+        <div class="role-card">
+            <div class="card-content">
+                <div class="role-word" id="describerWord">Your Mission</div>
+                <div class="role-hint" id="describerHint">Describe it to your team without saying the word</div>
+                
+                <!-- Added word display for describe game -->
+                <div class="word-display" id="describerWordDisplay" style="display: none; margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 8px; text-align: center;">
+                    <div style="margin-bottom: 15px;">
+                        <strong style="color: var(--text-secondary);">English:</strong>
+                        <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent); margin: 10px 0;" id="describerActualWord"></div>
+                    </div>
+                    <div>
+                       <div style="color: var(--text-secondary); margin: 10px 0;" id="describerArabicWord"></div>
+
                     </div>
                 </div>
             </div>
-           <button id="showWordBtn" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 20px; width: 100%;">
-    <i class="fas fa-eye"></i> Show Word
-</button>
-            
-            <div class="setting-group">
-                <div class="setting-title">
-                    <i class="fas fa-comment"></i>
-                    <h3>Description Method</h3>
-                </div>
-                <div class="mode-buttons">
-                    <button class="mode-btn active" data-mode="speech">
-                        <div class="mode-icon">🗣️</div>
-                        <div class="mode-label">Speech</div>
-                        <small>Talk to describe</small>
-                    </button>
-                    <button class="mode-btn" data-mode="speechless">
-                        <div class="mode-icon">🤐</div>
-                        <div class="mode-label">Speechless</div>
-                        <small>Gestures only</small>
-                    </button>
-                </div>
-            </div>
-              
-            <button id="startDescribeBtn" class="next-btn">
-                <i class="fas fa-play"></i> Start Describing
-            </button>
-          
         </div>
+        
+        <button id="showWordBtn" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 20px; width: 100%;">
+            <i class="fas fa-eye"></i> Show Word
+        </button>
+        
+        <div class="setting-group">
+            <div class="setting-title">
+                <i class="fas fa-comment"></i>
+                <h3>Description Method</h3>
+            </div>
+            <div class="mode-buttons">
+                <button class="mode-btn active" data-mode="speech">
+                    <div class="mode-icon">🗣️</div>
+                    <div class="mode-label">Speech</div>
+                    <small>Talk to describe</small>
+                </button>
+                <button class="mode-btn" data-mode="speechless">
+                    <div class="mode-icon">🤐</div>
+                    <div class="mode-label">Speechless</div>
+                    <small>Gestures only</small>
+                </button>
+            </div>
+        </div>
+        
+        <button id="startDescribeBtn" class="next-btn">
+            <i class="fas fa-play"></i> Start Describing
+        </button>
     </div>
+</div>
+
+
+
+
+
+
 
     <!-- Discussion Round -->
     <div id="discussionRound" class="game-screen">
@@ -470,7 +483,7 @@
                 <div class="word-reveal">
                     <div class="word-label">The word was:</div>
                     <div class="word-value" id="correctWord"></div>
-                    <div class="hint-value" id="imposterHint"></div>
+                    <div class="hint-value" id="arabicWord"></div>
                 </div>
             </div>
             
