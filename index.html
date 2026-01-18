@@ -79,7 +79,7 @@
     <div class="mode-buttons">
         <!-- Classic Mode -->
         <div class="mode-container">
-            <button class="mode-btn active" data-mode="classic">
+            <button class="mode-btn" data-mode="classic"> <!-- No "active" class -->
                 <div class="mode-icon">🎭</div>
                 <div class="mode-label">Classic</div>
                 <small>Find the imposter</small>
@@ -91,7 +91,7 @@
         
         <!-- Describe It Mode -->
         <div class="mode-container">
-            <button class="mode-btn" data-mode="describe">
+            <button class="mode-btn" data-mode="describe"> <!-- No "active" class -->
                 <div class="mode-icon">🎤</div>
                 <div class="mode-label">Describe It</div>
                 <small>Team competition</small>
@@ -103,7 +103,7 @@
         
         <!-- Image Match Mode -->
         <div class="mode-container">
-            <button class="mode-btn" data-mode="images">
+            <button class="mode-btn active" data-mode="images"> <!-- HAS "active" class -->
                 <div class="mode-icon">🖼️</div>
                 <div class="mode-label">Guess the image</div>
                 <small>Who / What Am I?</small>
@@ -255,7 +255,8 @@
             <div class="summary-item">
                 <i class="fas fa-gamepad"></i>
                 <span>Mode:</span>
-                <span class="summary-value" id="gameModeText">Classic</span>
+                    <span class="summary-value" id="gameModeText">Guess the Image</span> <!-- Changed from "Classic" -->
+
             </div>
             
             <div class="summary-item">
