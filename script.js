@@ -3,7 +3,7 @@ let gameState = {
     players: [],
     gameMode: 'classic',
     timer: 120,
-    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'funny'], // NEW - all 10 categories
+    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'football'], // NEW - all 10 categories
 
     // Current game
     currentPlayer: 0,
@@ -347,7 +347,7 @@ function loadSettings() {
   const ALL_CATEGORIES = [
     'animals', 'food', 'movies', 'places', 
     'objects', 'celebrities', 'flags', 
-    'sports', 'anime', 'skills'
+    'sports', 'anime', 'football'
 ];
     
     if (saved) {
@@ -589,52 +589,52 @@ document.querySelectorAll('.mode-btn').forEach(btn => {
     }
     
     // Expand/Collapse sections - FIXED CLICK HANDLER
-    const timerGroup = document.querySelector('.setting-group:nth-child(2)'); // Timer group
-    const categoriesGroup = document.querySelector('.setting-group:nth-child(3)'); // Categories group
-    
-    if (timerGroup) {
-        timerGroup.addEventListener('click', function(e) {
-            // Don't trigger if clicking on a timer button or checkbox
-            if (e.target.classList.contains('timer-btn') || 
-                e.target.closest('.timer-btn') || 
-                e.target.type === 'checkbox') {
-                return;
-            }
-            
-            console.log('Timer group clicked');
-            const buttons = document.getElementById('timerButtons');
-            const expandIcon = document.getElementById('timerExpand');
-            const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
-            buttons.style.display = isHidden ? 'grid' : 'none';
-            expandIcon.classList.toggle('expanded', isHidden);
-            
-            // Scroll to make expanded content visible
-            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
-        });
-    }
-    
-    if (categoriesGroup) {
-        categoriesGroup.addEventListener('click', function(e) {
-            // Don't trigger if clicking on checkbox or select all button
-            if (e.target.type === 'checkbox' || 
-                e.target.closest('.category-option') ||
-                e.target.id === 'selectAllBtn' || 
-                e.target.closest('#selectAllBtn')) {
-                return;
-            }
-            
-            console.log('Categories group clicked');
-            const grid = document.getElementById('categoriesGrid');
-            const expandIcon = document.getElementById('categoriesExpand');
-            const isHidden = grid.style.display === 'none' || grid.style.display === '';
-            grid.style.display = isHidden ? 'grid' : 'none';
-            expandIcon.classList.toggle('expanded', isHidden);
-            
-            // Scroll to make expanded content visible
-            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
-        });
-    }
-    
+   // Expand/Collapse sections - FIXED CLICK HANDLER
+const timerGroup = document.querySelector('.setting-group:nth-child(2)'); // Timer group
+const categoriesGroup = document.querySelector('.setting-group:nth-child(3)'); // Categories group
+
+if (timerGroup) {
+    timerGroup.addEventListener('click', function(e) {
+        // Don't trigger if clicking on a timer button or checkbox
+        if (e.target.classList.contains('timer-btn') || 
+            e.target.closest('.timer-btn') || 
+            e.target.type === 'checkbox') {
+            return;
+        }
+        
+        console.log('Timer group clicked');
+        const buttons = document.getElementById('timerButtons');
+        const expandIcon = document.getElementById('timerExpand');
+        const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
+        buttons.style.display = isHidden ? 'grid' : 'none';
+        expandIcon.classList.toggle('expanded', isHidden);
+        
+        // Scroll to make expanded content visible
+        if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
+    });
+}
+
+if (categoriesGroup) {
+    categoriesGroup.addEventListener('click', function(e) {
+        // Don't trigger if clicking on checkbox or select all button
+        if (e.target.type === 'checkbox' || 
+            e.target.closest('.category-option') ||
+            e.target.id === 'selectAllBtn' || 
+            e.target.closest('#selectAllBtn')) {
+            return;
+        }
+        
+        console.log('Categories group clicked');
+        const grid = document.getElementById('categoriesGrid');
+        const expandIcon = document.getElementById('categoriesExpand');
+        const isHidden = grid.style.display === 'none' || grid.style.display === '';
+        grid.style.display = isHidden ? 'grid' : 'none';
+        expandIcon.classList.toggle('expanded', isHidden);
+        
+        // Scroll to make expanded content visible
+        if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
+    });
+}
     // Start Game
     document.getElementById('startGameBtn').addEventListener('click', startGame);
     
@@ -854,6 +854,18 @@ function updateUI() {
 
 // ================= GAME START =================
 function startGame() {
+    if (gameState.gameMode === 'images') {
+        // Check if ONLY football category is selected
+        if (gameState.categories.length !== 1 || gameState.categories[0] !== 'football') {
+            alert('Guess the Image mode requires ONLY Football Players category!\n\nPlease:\n1. Deselect ALL other categories\n2. Select ONLY Football Players category');
+            backToLobby();
+            return;
+        }
+        
+        startImageMatch();
+        return;
+    }
+    
     if (gameState.players.length < 3) {
         alert('Need at least 3 players!');
         return;
@@ -868,7 +880,8 @@ function startGame() {
         document.querySelectorAll('.category-checkbox').forEach(cb => {
             cb.checked = true;
         });
-gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'skills'];        console.log('Reset to default categories:', gameState.categories);
+        gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'football'];
+        console.log('Reset to default categories:', gameState.categories);
         updateCategoriesDisplay();
     }
     
@@ -911,6 +924,16 @@ gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celeb
     } else {
         startDescribeGame();
     }
+}
+
+// images game
+function startImageMatch() {
+    gameState.players = gameState.players.sort(() => Math.random() - 0.5);
+    gameState.currentRound = 0;
+    gameState.activePlayers = [...gameState.players];
+    
+    // Show first image pair
+    showImagePair();
 }
 
 // ================= CLASSIC GAME =================
@@ -1019,8 +1042,7 @@ function stopNameRoller() {
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
     document.getElementById('describerWord').textContent = 'Your Mission';
-    //document.getElementById('describerHint').textContent = gameState.hint;
-document.getElementById('describerHint').innerHTML =
+    document.getElementById('describerHint').innerHTML =
   'Reveal the word below<br>Describe it to your team without saying it';
     
     // FIXED: Show the actual word in a separate display
@@ -1211,7 +1233,6 @@ function backToLobby() {
 }
 
 // ================= MODALS =================
-// ================= MODALS =================
 function showShareModal() {
     const modal = document.getElementById('shareModal');
     if (modal) {
@@ -1226,8 +1247,6 @@ function showFeedbackModal() {
         modal.style.display = 'flex';
     }
 }
-
-
 
 // Make sure hideModal function exists and works
 // Close modal function
@@ -1307,11 +1326,10 @@ window.restartGame = restartGame;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
+
 // ================= GOOGLE FORM FEEDBACK =================
 // ================= FEEDBACK SYSTEM =================
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd4iWPkTWr_2p1UhqwHs4pnZqNAg8XU8zXdJKBDZvY7dv1YzA/viewform?usp=pp_url';
-
-
 
 // Open Google Form
 function openGoogleForm() {
@@ -1324,12 +1342,14 @@ function openGoogleForm() {
     // Close modal
     hideModal('feedbackModal');
 }
+
 // Also add this for the share modal close button
 function closeAllModals() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.style.display = 'none';
     });
 }
+
 // Log feedback events locally
 function logFeedbackEvent(action) {
     const events = JSON.parse(localStorage.getItem('feedbackLog') || '[]');
@@ -1399,6 +1419,7 @@ function setupFeedbackListeners() {
         openFormBtn.addEventListener('click', openGoogleForm);
     }
 }
+
 //close the share
 // Close modal when clicking X or outside
 function setupModalClose() {
@@ -1421,18 +1442,34 @@ function setupModalClose() {
 
 // Call this after DOM loads
 document.addEventListener('DOMContentLoaded', setupModalClose);
+
 // ================= HELP MODAL FUNCTIONS =================//
 function showHelp(mode) {
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.style.display = 'flex';
     
-    const content = mode === 'classic' ? getClassicHelp() : getDescribeHelp();
+    let content;
+    let title;
+    
+    if (mode === 'classic') {
+        content = getClassicHelp();
+        title = '🎭 Classic Mode';
+    } else if (mode === 'describe') {
+        content = getDescribeHelp();
+        title = '🎤 Describe It Mode';
+    } else if (mode === 'images') {
+        content = getImagesHelp();
+        title = '🖼️ Guess the Image';
+    } else {
+        content = getClassicHelp(); // fallback
+        title = 'Game Help';
+    }
     
     modal.innerHTML = `
         <div class="modal-content help-modal">
             <div class="modal-header">
-                <h2>${mode === 'classic' ? '🎭 Classic Mode' : '🎤 Describe It Mode'}</h2>
+                <h2>${title}</h2>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="modal-body">
@@ -1506,6 +1543,38 @@ function getDescribeHelp() {
             <div class="step">
                 <div class="step-num">5</div>
                 <div class="step-text">Teams race to guess the word first!</div>
+            </div>
+        </div>
+    `;
+}
+
+// Add to showHelp() function
+function getImagesHelp() {
+    return `
+        <div class="help-steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">All players see a <strong>list of images</strong> from selected categories</div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">Race to <strong>guess what's in the image</strong> first</div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">Correct guess <strong>eliminates</strong> another player</div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">Eliminated players sit out, <strong>circle continues</strong> with remaining players</div>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-text">Last player standing <strong>wins!</strong></div>
+            </div>
+            <div class="step">
+                <div class="step-num">☆</div>
+                <div class="step-text"><strong>Required categories:</strong> Flags, Anime, Celebrities</div>
             </div>
         </div>
     `;

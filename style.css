@@ -730,25 +730,22 @@ body {
 }
 
 .card-hidden {
-     position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0); /*alla dont Make it more opaque */
+    background: rgba(0, 0, 0, 1); /* 90% black - very dark */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* Remove transition completely */
-    /* transition: opacity 0.3s; */
-  
+    z-index: 2; /* Make sure it's above the card content */
 }
 
 .card-hidden.hidden {
     opacity: 0;
     pointer-events: none;
-    /* Add display:none when hidden */
     display: none;
 }
 

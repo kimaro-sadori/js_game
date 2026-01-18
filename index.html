@@ -77,6 +77,7 @@
         <h3>Game Mode</h3>
     </div>
     <div class="mode-buttons">
+        <!-- Classic Mode -->
         <div class="mode-container">
             <button class="mode-btn active" data-mode="classic">
                 <div class="mode-icon">🎭</div>
@@ -88,6 +89,7 @@
             </button>
         </div>
         
+        <!-- Describe It Mode -->
         <div class="mode-container">
             <button class="mode-btn" data-mode="describe">
                 <div class="mode-icon">🎤</div>
@@ -98,8 +100,21 @@
                 <i class="fas fa-question-circle"></i>
             </button>
         </div>
+        
+        <!-- Image Match Mode -->
+        <div class="mode-container">
+            <button class="mode-btn" data-mode="images">
+                <div class="mode-icon">🖼️</div>
+                <div class="mode-label">Guess the image</div>
+                <small>Who / What Am I?</small>
+            </button>
+            <button class="mode-help-btn" data-help="images">
+                <i class="fas fa-question-circle"></i>
+            </button>
+        </div>
     </div>
 </div>
+   
                 
                 <!-- Timer - Minimal with expand option -->
                 <div class="setting-group">
@@ -196,7 +211,7 @@
     <label class="category-option">
         <input type="checkbox" class="category-checkbox" name="category" value="sports" checked>
         <div class="category-label">
-            <span class="category-icon">⚽</span>
+            <span class="category-icon">🏅</span>
             <span class="category-text">Sports</span>
         </div>
     </label>
@@ -210,10 +225,10 @@
     </label>
     
     <label class="category-option">
-        <input type="checkbox" class="category-checkbox" name="category" value="skills" checked>
+        <input type="checkbox" class="category-checkbox" name="category" value="football" checked>
         <div class="category-label">
-            <span class="category-icon">🎯</span>
-            <span class="category-text">Skills & Hobbies</span>
+            <span class="category-icon">⚽</span>
+            <span class="category-text">Football Players</span>
         </div>
     </label>
   

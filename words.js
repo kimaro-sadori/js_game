@@ -957,164 +957,165 @@ const words = [
     category: "anime",
     image: "👊"
 },
-// ===================== Skills & Hobbies =====================
+///////
 {
-    word: "PAINTING",
-    wordAr: "رسم",
-    hints: ["Brush strokes", "Canvas art", "Creative expression"],
-    hintsAr: ["ضربات فرشاة", "فن على القماش", "تعبير إبداعي"],
-    category: "skills",
-    image: "🎨"
+    word: "KARIM BENZEMA",
+    wordAr: "كريم بنزيما",
+    hints: ["French striker", "Real Madrid legend", "Ballon d'Or 2022"],
+    hintsAr: ["مهاجم فرنسي", "أسطورة ريال مدريد", "الكرة الذهبية 2022"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Karim_Benzema_2021.jpg"
 },
 {
-    word: "COOKING",
-    wordAr: "طبخ",
-    hints: ["Recipe following", "Kitchen mastery", "Culinary arts"],
-    hintsAr: ["اتباع وصفة", "إتقان المطبخ", "فنون الطهي"],
-    category: "skills",
-    image: "👨‍🍳"
+    word: "MO SALAH",
+    wordAr: "محمد صلاح",
+    hints: ["Egyptian king", "Liverpool winger", "Premier League top scorer"],
+    hintsAr: ["الملك المصري", "جناح ليفربول", "هداف الدوري الإنجليزي"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mohamed_Salah_2018.jpg"
 },
 {
-    word: "PHOTOGRAPHY",
-    wordAr: "تصوير",
-    hints: ["Camera lens", "Composition rules", "Light capturing"],
-    hintsAr: ["عدسة الكاميرا", "قواعد التكوين", "التقاط الضوء"],
-    category: "skills",
-    image: "📷"
+    word: "KYLIAN MBAPPE",
+    wordAr: "كيليان مبابي",
+    hints: ["French speedster", "PSG star", "World Cup winner 2018"],
+    hintsAr: ["الفرنسي السريع", "نجم باريس", "بطل كأس العالم 2018"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Kylian_Mbapp%C3%A9_2021.jpg"
 },
 {
-    word: "GARDENING",
-    wordAr: "بستنة",
-    hints: ["Plant care", "Soil cultivation", "Green thumb"],
-    hintsAr: ["رعاية النباتات", "زراعة التربة", "إبهام أخضر"],
-    category: "skills",
-    image: "🌱"
+    word: "ROBERT LEWANDOWSKI",
+    wordAr: "روبرت ليفاندوفسكي",
+    hints: ["Polish striker", "Barcelona forward", "Goal machine"],
+    hintsAr: ["مهاجم بولندي", "مهاجم برشلونة", "آلة التهديف"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/9/93/Robert_Lewandowski_2021.jpg"
 },
 {
-    word: "CODING",
-    wordAr: "برمجة",
-    hints: ["Programming languages", "Debugging process", "Algorithm design"],
-    hintsAr: ["لغات البرمجة", "عملية تصحيح الأخطاء", "تصميم الخوارزميات"],
-    category: "skills",
-    image: "💻"
+    word: "KEVIN DE BRUYNE",
+    wordAr: "كيفين دي بروين",
+    hints: ["Belgian midfielder", "Manchester City", "Passing master"],
+    hintsAr: ["لاعب وسط بلجيكي", "مانشستر سيتي", "سيد التمريرات"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Kevin_De_Bruyne_2021.jpg"
 },
 {
-    word: "DANCING",
-    wordAr: "رقص",
-    hints: ["Rhythm movement", "Choreography steps", "Body expression"],
-    hintsAr: ["حركة الإيقاع", "خطوات الرقص", "تعبير الجسد"],
-    category: "skills",
-    image: "💃"
+    word: "ERLING HAALAND",
+    wordAr: "إرلينغ هالاند",
+    hints: ["Norwegian giant", "Manchester City", "Goal scoring record"],
+    hintsAr: ["العملاق النرويجي", "مانشستر سيتي", "سجل هدافي"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/07/Erling_Haaland_2023.jpg"
 },
 {
-    word: "SINGING",
-    wordAr: "غناء",
-    hints: ["Vocal range", "Pitch control", "Breath support"],
-    hintsAr: ["مدى صوتي", "تحكم في النغمة", "دعم التنفس"],
-    category: "skills",
-    image: "🎤"
+    word: "VINICIUS JR",
+    wordAr: "فينيسيوس جونيور",
+    hints: ["Brazilian winger", "Real Madrid", "Dribbling skills"],
+    hintsAr: ["جناح برازيلي", "ريال مدريد", "مهارات المراوغة"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Vinicius_Junior_2021.jpg"
 },
 {
-    word: "WRITING",
-    wordAr: "كتابة",
-    hints: ["Storytelling craft", "Grammar rules", "Creative prose"],
-    hintsAr: ["حرفة سرد القصص", "قواعد النحو", "نثر إبداعي"],
-    category: "skills",
-    image: "✍️"
+    word: "HARRY KANE",
+    wordAr: "هاري كين",
+    hints: ["English captain", "Bayern Munich", "Tottenham legend"],
+    hintsAr: ["قائد إنجليزي", "بايرن ميونخ", "أسطورة توتنهام"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/65/Harry_Kane_2021.jpg"
 },
 {
-    word: "WOODWORKING",
-    wordAr: "نجارة",
-    hints: ["Carpentry tools", "Joinery techniques", "Furniture making"],
-    hintsAr: ["أدوات النجارة", "تقنيات الربط", "صناعة الأثاث"],
-    category: "skills",
-    image: "🪚"
+    word: "MANUEL NEUER",
+    wordAr: "مانويل نوير",
+    hints: ["German goalkeeper", "Bayern Munich", "Sweeper keeper"],
+    hintsAr: ["حارس مرمى ألماني", "بايرن ميونخ", "حارس متقدم"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/11/Manuel_Neuer_2021.jpg"
 },
 {
-    word: "KNITTING",
-    wordAr: "حياكة",
-    hints: ["Yarn craft", "Needle work", "Pattern reading"],
-    hintsAr: ["حرفة الخيوط", "عمل الإبرة", "قراءة النمط"],
-    category: "skills",
-    image: "🧶"
+    word: "LUKA MODRIC",
+    wordAr: "لوكا مودريتش",
+    hints: ["Croatian midfielder", "Real Madrid", "Ballon d'Or 2018"],
+    hintsAr: ["لاعب وسط كرواتي", "ريال مدريد", "الكرة الذهبية 2018"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Luka_Modri%C4%87_2021.jpg"
 },
 {
-    word: "CHESS",
-    wordAr: "شطرنج",
-    hints: ["Strategy game", "Checkmate goal", "Piece movement"],
-    hintsAr: ["لعبة استراتيجية", "هدف كش ملك", "حركة القطع"],
-    category: "skills",
-    image: "♟️"
+    word: "THIBAUT COURTOIS",
+    wordAr: "تيبو كورتوا",
+    hints: ["Belgian goalkeeper", "Real Madrid", "Tall keeper"],
+    hintsAr: ["حارس مرمى بلجيكي", "ريال مدريد", "حارس طويل القامة"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Thibaut_Courtois_2021.jpg"
 },
 {
-    word: "YOGA",
-    wordAr: "يوجا",
-    hints: ["Pose holding", "Breath control", "Mindfulness practice"],
-    hintsAr: ["حمل الوضعية", "تحكم في التنفس", "ممارسة اليقظة"],
-    category: "skills",
-    image: "🧘"
+    word: "VIRGIL VAN DIJK",
+    wordAr: "فيرجيل فان دايك",
+    hints: ["Dutch defender", "Liverpool captain", "Strong in air"],
+    hintsAr: ["مدافع هولندي", "قائد ليفربول", "قوي في الهواء"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Virgil_van_Dijk_2021.jpg"
 },
 {
-    word: "DIY",
-    wordAr: "اصنعها بنفسك",
-    hints: ["Home projects", "Creative repairs", "Handmade crafts"],
-    hintsAr: ["مشاريع منزلية", "إصلاحات إبداعية", "حرف يدوية"],
-    category: "skills",
-    image: "🔧"
+    word: "JOSHUA KIMMICH",
+    wordAr: "يوشوا كيميش",
+    hints: ["German midfielder", "Bayern Munich", "Versatile player"],
+    hintsAr: ["لاعب وسط ألماني", "بايرن ميونخ", "لاعب متعدد المهارات"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Joshua_Kimmich_2021.jpg"
 },
 {
-    word: "MUSIC",
-    wordAr: "موسيقى",
-    hints: ["Instrument playing", "Sheet music", "Harmony creation"],
-    hintsAr: ["عزف الآلات", "نوتة موسيقية", "خلق الانسجام"],
-    category: "skills",
-    image: "🎵"
+    word: "SADIO MANE",
+    wordAr: "ساديو ماني",
+    hints: ["Senegalese forward", "Al Nassr", "Liverpool legend"],
+    hintsAr: ["مهاجم سنغالي", "النصر", "أسطورة ليفربول"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Sadio_Man%C3%A9_2021.jpg"
 },
 {
-    word: "FISHING",
-    wordAr: "صيد سمك",
-    hints: ["Rod casting", "Bait selection", "Patience sport"],
-    hintsAr: ["صب القضيب", "اختيار الطعم", "رياضة الصبر"],
-    category: "skills",
-    image: "🎣"
+    word: "EDERSON",
+    wordAr: "إيدرسون",
+    hints: ["Brazilian goalkeeper", "Manchester City", "Good with feet"],
+    hintsAr: ["حارس مرمى برازيلي", "مانشستر سيتي", "جيد باستخدام قدميه"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Ederson_2021.jpg"
 },
 {
-    word: "HIKING",
-    wordAr: "مشي في الطبيعة",
-    hints: ["Trail walking", "Nature exploration", "Backpack essentials"],
-    hintsAr: ["المشي في المسار", "استكشاف الطبيعة", "أساسيات الحقيبة"],
-    category: "skills",
-    image: "🥾"
+    word: "TONI KROOS",
+    wordAr: "توني كروس",
+    hints: ["German midfielder", "Real Madrid", "Passing accuracy"],
+    hintsAr: ["لاعب وسط ألماني", "ريال مدريد", "دقة التمرير"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/72/Toni_Kroos_2021.jpg"
 },
 {
-    word: "MEDITATION",
-    wordAr: "تأمل",
-    hints: ["Mind clearing", "Focus practice", "Stress reduction"],
-    hintsAr: ["تطهير العقل", "ممارسة التركيز", "تقليل التوتر"],
-    category: "skills",
-    image: "🕉️"
+    word: "CASEMIRO",
+    wordAr: "كاسيميرو",
+    hints: ["Brazilian defensive midfielder", "Manchester United", "Real Madrid legend"],
+    hintsAr: ["لاعب وسط دفاعي برازيلي", "مانشستر يونايتد", "أسطورة ريال مدريد"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Casemiro_2021.jpg"
 },
 {
-    word: "BAKING",
-    wordAr: "خبز",
-    hints: ["Oven timing", "Recipe precision", "Dough rising"],
-    hintsAr: ["توقيت الفرن", "دقة الوصفة", "ارتفاع العجين"],
-    category: "skills",
-    image: "🍰"
+    word: "RAHEEM STERLING",
+    wordAr: "راهيم ستيرلينغ",
+    hints: ["English winger", "Chelsea", "Manchester City legend"],
+    hintsAr: ["جناح إنجليزي", "تشيلسي", "أسطورة مانشستر سيتي"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/41/Raheem_Sterling_2021.jpg"
 },
 {
-    word: "LANGUAGE LEARNING",
-    wordAr: "تعلم لغة",
-    hints: ["Vocabulary building", "Grammar study", "Accent practice"],
-    hintsAr: ["بناء المفردات", "دراسة القواعد", "ممارجة اللكنة"],
-    category: "skills",
-    image: "🗣️"
+    word: "JAN OBLAK",
+    wordAr: "يان أوبلاك",
+    hints: ["Slovenian goalkeeper", "Atletico Madrid", "Shot stopping"],
+    hintsAr: ["حارس مرمى سلوفيني", "أتلتيكو مدريد", "صد الكرات"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Jan_Oblak_2021.jpg"
 },
 {
-    word: "PUBLIC SPEAKING",
-    wordAr: "خطابة",
-    hints: ["Audience engagement", "Speech delivery", "Confidence building"],
-    hintsAr: ["تفاعل الجمهور", "تقديم الخطاب", "بناء الثقة"],
-    category: "skills",
-    image: "🎙️"
-} ];
+    word: "MARQUINHOS",
+    wordAr: "ماركينيوس",
+    hints: ["Brazilian defender", "PSG captain", "Central defender"],
+    hintsAr: ["مدافع برازيلي", "قائد باريس", "مدافع مركزي"],
+    category: "football",
+    image: "https://upload.wikimedia.org/wikipedia/commons/1/18/Marquinhos_2021.jpg"
+}
+];
