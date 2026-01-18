@@ -543,6 +543,142 @@
         </div>
     </div>
 </div>
+<!-- Image Match Game Screen -->
+<div id="imageMatchScreen" class="game-screen" style="display: none;">
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-title">
+                <i class="fas fa-images"></i>
+                <span>Who/What Am I?</span>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="backToLobby()">
+                    <i class="fas fa-home"></i>&nbsp;Home
+                </button>
+                <button class="action-btn" onclick="restartImageGame()">
+                    <i class="fas fa-redo"></i>&nbsp;New Images
+                </button>
+            </div>
+        </div>
+        
+        <div class="image-match-header">
+    <div class="player-info">
+        <div class="player-counter" id="imagePlayerCounter">1/4</div>
+        <div class="player-name-section">
+            <h2 id="currentImagePlayerName">Player Name</h2>
+            <p class="turn-instruction" id="turnInstruction">It's your turn!</p>
+        </div>
+    </div>
+    <div class="timer-display" id="imageTimerDisplay">∞</div>
+</div>
+        
+        
+        
+        <div class="game-phase" id="gamePhase" style="display: none;">
+            <div class="phase-buttons">
+                <button id="askQuestionBtn" class="phase-btn">
+                    <i class="fas fa-question"></i> Ask Question
+                </button>
+                <button id="makeGuessBtn" class="phase-btn">
+                    <i class="fas fa-search"></i> Make Guess
+                </button>
+                <button id="endTurnBtn" class="phase-btn">
+                    <i class="fas fa-forward"></i> Pass Turn
+                </button>
+            </div>
+            
+            <div class="question-interface" id="questionInterface" style="display: none;">
+                <div class="input-row">
+                    <input type="text" id="questionInput" placeholder="Ask a question about someone's image...">
+                    <button id="submitQuestionBtn" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Ask
+                    </button>
+                </div>
+                <p class="hint-text">Example: "Is it related to sports?" or "Is it red?"</p>
+            </div>
+            
+            <div class="guess-interface" id="guessInterface" style="display: none;">
+                <div class="guess-instruction">
+                    <p>Select a player and point to an image you think they chose:</p>
+                </div>
+                <div class="input-row">
+                    <select id="playerSelect" class="player-select">
+                        <!-- Players will be populated here -->
+                    </select>
+                    <button id="submitGuessBtn" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Guess
+                    </button>
+                </div>
+                <p class="hint-text">Point to the image on your screen when asked</p>
+            </div>
+        </div>
+       
+        
+        <!-- Replace your existing image grid section with this: -->
+<div class="image-grid-container">
+    <h3>Choose And Guess</h3>
+   
+    <div id="imageGrid" class="image-grid">
+        <!-- Images will be loaded here -->
+    </div>
+    <p class="grid-note">Scroll if needed. Tap/click on images to view larger.</p>
+</div>
+
+<div class="secret-selection" id="secretSelection">
+            
+            <button id="confirmSecretBtn" class="btn btn-primary">
+                <i class="fas fa-check"></i> Next player >>>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Question/Answer Modal -->
+<div id="questionModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="questionText">Question will appear here</h2>
+            <button class="close-modal" onclick="hideModal('questionModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="questionTarget">Asking: Player Name</p>
+            <div class="answer-buttons" style="margin: 20px 0;">
+                <button class="answer-btn yes-btn" data-answer="yes">
+                    <i class="fas fa-check"></i> YES
+                </button>
+                <button class="answer-btn no-btn" data-answer="no">
+                    <i class="fas fa-times"></i> NO
+                </button>
+                <button class="answer-btn maybe-btn" data-answer="maybe">
+                    <i class="fas fa-question"></i> MAYBE
+                </button>
+            </div>
+            <div class="skip-section">
+                <button id="skipAnswerBtn" class="btn btn-secondary">
+                    <i class="fas fa-forward"></i> Skip / Can't Answer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Guess Result Modal -->
+<div id="guessResultModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="guessResultTitle">Guess Result</h2>
+            <button class="close-modal" onclick="hideModal('guessResultModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="guessResultText">Result will appear here</p>
+            <div class="result-buttons" style="margin-top: 20px;">
+                <button id="nextTurnBtn" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i> Continue Game
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Scripts -->
     <script src="words.js"></script>
     <script src="script.js"></script>

@@ -16,7 +16,205 @@ let gameState = {
     // Stats
     gamesPlayed: 0
 };
+// ================= FOOTBALL PLAYERS IMAGES =================
+// Add this array of actual football player images (21 players for 3×7 grid)
+const FOOTBALL_PLAYERS = [
+    // Modern Players
+    { name: "Lionel Messi", image: "images/images.jpg" },
+    { name: "Cristiano Ronaldo", image: "images/images.jpg" },
+    { name: "Kylian Mbappé", image: "images/images.jpg" },
+    { name: "Erling Haaland", image: "images/images.jpg" },
+    { name: "Kevin De Bruyne", image: "images/images.jpg" },
+    { name: "Mohamed Salah", image: "images/images.jpg" },
+    { name: "Virgil van Dijk", image: "images/images.jpg" },
+    { name: "Harry Kane", image: "images/images.jpg" },
+    { name: "Neymar Jr", image: "images/images.jpg" },
+    { name: "Robert Lewandowski", image: "images/images.jpg" },
+    
+    // Legends
+    { name: "Pelé", image: "images/images.jpg" },
+    { name: "Diego Maradona", image: "images/images.jpg" },
+    { name: "Johan Cruyff", image: "images/images.jpg" },
+    { name: "Zinedine Zidane", image: "images/images.jpg" },
+    { name: "Ronaldo Nazário", image: "images/images.jpg" },
+    
+    // Midfielders/Defenders
+    { name: "Luka Modrić", image: "images/images.jpg" },
+    { name: "Toni Kroos", image: "images/images.jpg" },
+    { name: "Sergio Ramos", image: "images/images.jpg" },
+    { name: "Manuel Neuer", image: "images/images.jpg" },
+    { name: "Karim Benzema", image: "images/images.jpg" },
+    { name: "Son Heung-min", image: "images/images.jpg" }
+];
 
+// Update the generateImageGrid function to use actual images
+function generateImageGrid() {
+    const imageGrid = document.getElementById('imageGrid');
+    
+    // Clear loading message
+    imageGrid.innerHTML = '<div class="loading-images">Loading player images...</div>';
+    
+    // Use football players if that category is selected
+    const useFootballPlayers = gameState.categories.includes('football');
+    
+    if (useFootballPlayers) {
+        // Generate 3×7 grid (21 images)
+        const numImages = 21;
+        const playersToShow = [...FOOTBALL_PLAYERS]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, numImages);
+        
+        // Preload images first
+        const imageUrls = playersToShow.map(p => p.image);
+        
+        preloadImages(imageUrls, () => {
+            // Images loaded, display them
+            imageGrid.innerHTML = '';
+            
+            playersToShow.forEach((player, index) => {
+                const imageCell = document.createElement('div');
+                imageCell.className = 'image-cell-simple';
+                imageCell.dataset.index = index;
+                imageCell.title = player.name;
+                
+                // Create image element
+                const img = document.createElement('img');
+                img.src = player.image;
+                img.alt = player.name;
+                img.className = 'player-image';
+                img.loading = 'lazy'; // For better performance
+                
+                // Add error handling
+                img.onerror = function() {
+                    console.error('Failed to load image:', player.image);
+                    this.style.display = 'none';
+                    
+                    // Create fallback with player name
+                    const fallback = document.createElement('div');
+                    fallback.className = 'player-fallback';
+                    fallback.innerHTML = `
+                        <div>⚽</div>
+                        <div style="font-size: 0.7rem; margin-top: 5px;">${player.name.split(' ')[0]}</div>
+                    `;
+                    imageCell.appendChild(fallback);
+                };
+                
+                // Add number label
+                const numberLabel = document.createElement('div');
+                numberLabel.className = 'image-number';
+                numberLabel.textContent = index + 1;
+                
+                // Add player name label (optional)
+                const nameLabel = document.createElement('div');
+                nameLabel.className = 'player-name-label';
+                nameLabel.textContent = player.name;
+                
+                imageCell.appendChild(img);
+                imageCell.appendChild(numberLabel);
+                imageCell.appendChild(nameLabel);
+                imageGrid.appendChild(imageCell);
+            });
+        });
+    } else {
+        // Use regular words/images from words.js (fallback)
+        const filteredWords = words.filter(w => gameState.categories.includes(w.category));
+        
+        if (filteredWords.length === 0) {
+            imageGrid.innerHTML = '<div class="loading-images" style="color: #ef4444;">No images available! Select Football Players category.</div>';
+            return;
+        }
+        
+        // Select 21 random words/images
+        const numImages = 21;
+        const shuffledWords = [...filteredWords].sort(() => Math.random() - 0.5);
+        const wordsToShow = shuffledWords.slice(0, Math.min(numImages, shuffledWords.length));
+        
+        // Pad if needed
+        while (wordsToShow.length < numImages) {
+            wordsToShow.push({
+                word: `Image ${wordsToShow.length + 1}`,
+                image: "🖼️",
+                category: "objects"
+            });
+        }
+        
+        // Display grid
+        imageGrid.innerHTML = '';
+        
+        wordsToShow.forEach((wordObj, index) => {
+            const imageCell = document.createElement('div');
+            imageCell.className = 'image-cell-simple';
+            imageCell.dataset.index = index;
+            imageCell.title = `Image ${index + 1}`;
+            
+            // Show emoji if no image URL
+            if (!wordObj.image || wordObj.image.startsWith('http')) {
+                // Try to use actual image if available
+                const img = document.createElement('img');
+                img.src = wordObj.image || 'https://via.placeholder.com/150/1e293b/f8fafc?text=⚽';
+                img.alt = wordObj.word;
+                img.className = 'player-image';
+                
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.className = 'image-fallback';
+                    fallback.textContent = wordObj.emoji || '🖼️';
+                    fallback.style.cssText = 'font-size: 2rem; color: var(--text); display: flex; align-items: center; justify-content: center; height: 100%;';
+                    imageCell.appendChild(fallback);
+                };
+                
+                imageCell.appendChild(img);
+            } else {
+                // Show emoji directly
+                imageCell.textContent = wordObj.image || '🖼️';
+                imageCell.style.fontSize = '2rem';
+                imageCell.style.display = 'flex';
+                imageCell.style.alignItems = 'center';
+                imageCell.style.justifyContent = 'center';
+            }
+            
+            const numberLabel = document.createElement('div');
+            numberLabel.className = 'image-number';
+            numberLabel.textContent = index + 1;
+            
+            imageCell.appendChild(numberLabel);
+            imageGrid.appendChild(imageCell);
+        });
+    }
+}
+
+// Update the preloadImages function to handle errors better
+function preloadImages(imageUrls, callback) {
+    let loadedCount = 0;
+    let errorCount = 0;
+    const totalImages = imageUrls.length;
+    
+    if (totalImages === 0) {
+        callback();
+        return;
+    }
+    
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.onload = () => {
+            loadedCount++;
+            if (loadedCount + errorCount === totalImages) {
+                callback();
+            }
+        };
+        img.onerror = () => {
+            errorCount++;
+            console.warn('Failed to preload image:', url);
+            if (loadedCount + errorCount === totalImages) {
+                callback();
+            }
+        };
+        img.src = url;
+    });
+}
+
+// Also update your CSS to make sure images display properly:
 // ================= JSONBin CONFIG =================
 const JSONBIN_CONFIG = {
     API_KEY: '$2a$10$gFVqUzzSAOQUgLJc42CpWeGT33e40Nwki66XGI6x/R.uCj6m/8XHe',
@@ -1577,5 +1775,868 @@ function getImagesHelp() {
                 <div class="step-text"><strong>Required categories:</strong> Football Players</div>
             </div>
         </div>
-    `;
+    
+        `;
 }
+
+// ================= IMAGE MATCH MODE =================
+function startImageMatch() {
+    console.log('Starting Image Match mode...');
+    
+    // Check if players are added
+    if (gameState.players.length < 2) {
+        alert('Need at least 2 players for Guess the Image!');
+        backToLobby();
+        return;
+    }
+    
+    // Update stats
+    incrementPlayCount();
+    
+    // Hide UI
+    document.querySelector('.dashboard').style.display = 'none';
+    document.querySelector('.start-section').style.display = 'none';
+    document.querySelector('.social-buttons').style.display = 'none';
+    
+    // Set up game state for image match
+    gameState.players = gameState.players.sort(() => Math.random() - 0.5);
+    gameState.currentRound = 0;
+    gameState.activePlayers = [...gameState.players];
+    gameState.playerScores = {};
+    gameState.players.forEach(player => {
+        gameState.playerScores[player] = 0;
+    });
+    gameState.currentImageIndex = 0;
+    
+    // Show image match screen
+    showImageMatchScreen();
+}
+
+function updatePlayerDisplay() {
+    const game = gameState.imageGame;
+    const currentPlayer = game.players[game.currentPlayerIndex];
+    
+    document.getElementById('currentImagePlayerName').textContent = currentPlayer;
+    document.getElementById('imagePlayerCounter').textContent = 
+        `${game.currentPlayerIndex + 1}/${game.players.length}`;
+    
+    // Update player select dropdown for guesses
+    const playerSelect = document.getElementById('playerSelect');
+    playerSelect.innerHTML = '';
+    
+    game.players.forEach((player, index) => {
+        if (index !== game.currentPlayerIndex && !game.revealedPlayers.includes(player)) {
+            const option = document.createElement('option');
+            option.value = player;
+            option.textContent = player;
+            playerSelect.appendChild(option);
+        }
+    });
+    
+    // Update turn instruction - THIS IS WHAT'S OVERRIDING YOUR HTML
+    let instruction = '';
+    if (game.turnPhase === 'selection') {
+        instruction = 'Choose your secret image!'; // ← Change this text
+    } else if (game.turnPhase === 'playing') {
+        instruction = 'Ask a question or make a guess!';
+    } else if (game.turnPhase === 'answering') {
+        instruction = 'Answer the question!';
+    }
+    
+    document.getElementById('turnInstruction').textContent = instruction;
+}
+
+function generateImageGrid() {
+    // Filter words based on selected categories
+    const filteredWords = words.filter(w => gameState.categories.includes(w.category));
+    
+    if (filteredWords.length === 0) {
+        alert('No images available in selected categories!');
+        backToLobby();
+        return;
+    }
+    
+    // Select random words for the grid (35 images or less)
+    const numImages = Math.min(35, filteredWords.length);
+    const shuffledWords = [...filteredWords].sort(() => Math.random() - 0.5);
+    gameState.imageGame.images = shuffledWords.slice(0, numImages);
+    
+    // Display the grid
+    const imageGrid = document.getElementById('imageGrid');
+    imageGrid.innerHTML = '';
+    
+    gameState.imageGame.images.forEach((wordObj, index) => {
+        const imageCell = document.createElement('div');
+        imageCell.className = 'image-cell-simple';
+        imageCell.dataset.index = index;
+        imageCell.title = `Image ${index + 1}`;
+        
+        // CREATE IMAGE ELEMENT instead of showing URL text
+        const img = document.createElement('img');
+        img.src = wordObj.image; // This is the URL from words.js
+        img.alt = wordObj.word;
+        img.className = 'player-image';
+        
+        // Add number label
+        const numberLabel = document.createElement('div');
+        numberLabel.className = 'image-number';
+        numberLabel.textContent = index + 1;
+        
+        imageCell.appendChild(img);
+        imageCell.appendChild(numberLabel);
+        imageGrid.appendChild(imageCell);
+    });
+}
+// Add this function to handle image loading
+function preloadImages(imageUrls, callback) {
+    let loadedCount = 0;
+    const totalImages = imageUrls.length;
+    
+    if (totalImages === 0) {
+        callback();
+        return;
+    }
+    
+    imageUrls.forEach(url => {
+        const img = new Image();
+        img.onload = img.onerror = () => {
+            loadedCount++;
+            if (loadedCount === totalImages) {
+                callback();
+            }
+        };
+        img.src = url;
+    });
+}
+
+// Update generateImageGrid to preload images
+function generateImageGrid() {
+    // ... [previous code] ...
+    
+    // Display loading message
+    const imageGrid = document.getElementById('imageGrid');
+    imageGrid.innerHTML = '<div class="loading-images">Loading images...</div>';
+    
+    // Preload images first
+    const imageUrls = gameState.imageGame.images.map(img => img.image);
+    
+    preloadImages(imageUrls, () => {
+        // Images loaded, now display them
+        imageGrid.innerHTML = '';
+        
+        gameState.imageGame.images.forEach((wordObj, index) => {
+            const imageCell = document.createElement('div');
+            imageCell.className = 'image-cell-simple';
+            imageCell.dataset.index = index;
+            imageCell.title = `Image ${index + 1}`;
+            
+            const img = document.createElement('img');
+            img.src = wordObj.image;
+            img.alt = wordObj.word;
+            img.className = 'player-image';
+            
+            // Add loading error handling
+            img.onerror = function() {
+                // If image fails to load, show emoji fallback
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'image-fallback';
+                fallback.textContent = '⚽';
+                fallback.style.cssText = 'font-size: 2rem; color: var(--text);';
+                imageCell.appendChild(fallback);
+            };
+            
+            const numberLabel = document.createElement('div');
+            numberLabel.className = 'image-number';
+            numberLabel.textContent = index + 1;
+            
+            imageCell.appendChild(img);
+            imageCell.appendChild(numberLabel);
+            imageGrid.appendChild(imageCell);
+        });
+    });
+}
+
+function showCurrentImage(index) {
+    gameState.currentImageIndex = index;
+    const wordObj = gameState.imageWords[index];
+    const currentImageDisplay = document.getElementById('currentImageDisplay');
+    
+    currentImageDisplay.innerHTML = `
+        <div class="current-image-content">
+            <div class="current-image-emoji">${wordObj.image || '🖼️'}</div>
+            <div class="current-image-label">Image ${index + 1} of ${gameState.imageWords.length}</div>
+        </div>
+    `;
+    
+    // Set hint
+    document.getElementById('imageHint').textContent = `Hint: ${wordObj.hints[0]}`;
+}
+
+function startImageTimer() {
+    if (gameState.timer > 0) {
+        let timeLeft = gameState.timer;
+        const timerDisplay = document.getElementById('imageTimerDisplay');
+        
+        gameState.imageTimerInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = formatTime(timeLeft);
+            
+            if (timeLeft <= 30) {
+                timerDisplay.style.color = '#ef4444';
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(gameState.imageTimerInterval);
+                timeUp();
+            }
+        }, 1000);
+    } else {
+        document.getElementById('imageTimerDisplay').textContent = '∞';
+    }
+}
+
+function updateCurrentPlayer() {
+    if (!gameState.currentPlayerIndex) {
+        gameState.currentPlayerIndex = 0;
+    }
+    
+    const player = gameState.activePlayers[gameState.currentPlayerIndex];
+    document.getElementById('currentImagePlayer').textContent = player;
+}
+
+function attemptGuess(imageIndex) {
+    if (imageIndex === gameState.currentImageIndex) {
+        // Player is trying to guess the current image
+        const guessModal = document.createElement('div');
+        guessModal.className = 'modal';
+        guessModal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Make Your Guess</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div style="padding: 20px;">
+                    <p>What do you think this image represents?</p>
+                    <input type="text" id="guessInput" placeholder="Enter your guess..." style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button id="submitGuessBtn" class="btn btn-primary">Submit</button>
+                        <button id="cancelGuessBtn" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(guessModal);
+        guessModal.style.display = 'flex';
+        
+        guessModal.querySelector('.close-modal').addEventListener('click', () => {
+            document.body.removeChild(guessModal);
+        });
+        
+        document.getElementById('cancelGuessBtn').addEventListener('click', () => {
+            document.body.removeChild(guessModal);
+        });
+        
+        document.getElementById('submitGuessBtn').addEventListener('click', () => {
+            const guess = document.getElementById('guessInput').value.trim().toUpperCase();
+            const correctWord = gameState.imageWords[imageIndex].word.toUpperCase();
+            
+            if (guess === correctWord) {
+                alert('Correct!');
+                revealImage(imageIndex);
+                gameState.playerScores[gameState.activePlayers[gameState.currentPlayerIndex]]++;
+                document.body.removeChild(guessModal);
+            } else {
+                alert('Wrong guess! Try again.');
+            }
+        });
+    } else {
+        alert("You can only guess the current highlighted image!");
+    }
+}
+
+function revealImage(index) {
+    gameState.revealedImages[index] = true;
+    
+    // Update the specific image cell
+    const imageCell = document.querySelector(`.image-cell[data-index="${index}"]`);
+    const wordObj = gameState.imageWords[index];
+    
+    imageCell.innerHTML = `
+        <div class="image-revealed">
+            <div class="image-emoji">${wordObj.image || '🖼️'}</div>
+            <div class="image-word">${wordObj.word}</div>
+        </div>
+    `;
+    
+    // Check if all images are revealed
+    if (gameState.revealedImages.every(revealed => revealed)) {
+        setTimeout(showImageMatchResults, 1000);
+    } else {
+        // Find next unrevealed image
+        const nextIndex = gameState.revealedImages.findIndex(revealed => !revealed);
+        if (nextIndex !== -1) {
+            showCurrentImage(nextIndex);
+        }
+    }
+}
+
+function correctGuess() {
+    const player = gameState.activePlayers[gameState.currentPlayerIndex];
+    gameState.playerScores[player]++;
+    revealImage(gameState.currentImageIndex);
+}
+
+function nextPlayerImage() {
+    gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % gameState.activePlayers.length;
+    updateCurrentPlayer();
+}
+
+function skipImage() {
+    // Find next unrevealed image
+    const currentIndex = gameState.currentImageIndex;
+    let nextIndex = (currentIndex + 1) % gameState.imageWords.length;
+    
+    // Look for next unrevealed image
+    while (nextIndex !== currentIndex && gameState.revealedImages[nextIndex]) {
+        nextIndex = (nextIndex + 1) % gameState.imageWords.length;
+    }
+    
+    showCurrentImage(nextIndex);
+}
+
+function shuffleImages() {
+    clearInterval(gameState.imageTimerInterval);
+    generateImageGrid();
+    startImageTimer();
+}
+
+function revealImageWord() {
+    const wordObj = gameState.imageWords[gameState.currentImageIndex];
+    alert(`The correct answer is: ${wordObj.word}\n\n${wordObj.wordAr}`);
+}
+
+function timeUp() {
+    alert('Time\'s up!');
+    // Auto-reveal current image
+    revealImage(gameState.currentImageIndex);
+}
+
+function showImageMatchResults() {
+    clearInterval(gameState.imageTimerInterval);
+    
+    const resultsScreen = document.createElement('div');
+    resultsScreen.className = 'game-screen';
+    resultsScreen.id = 'imageResultsScreen';
+    resultsScreen.innerHTML = `
+        <div class="game-container">
+            <div class="results-header">
+                <div class="results-title">Game Results</div>
+            </div>
+            
+            <div class="score-board">
+                <h3>Scores</h3>
+                <div id="scoreList" style="margin: 20px 0;">
+                    <!-- Scores will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="results-buttons">
+                <button id="playAgainImageBtn" class="btn btn-primary">
+                    <i class="fas fa-redo"></i> Play Again
+                </button>
+                <button id="backToLobbyImageBtn" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Back to Menu
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Hide other screens
+    document.querySelectorAll('.game-screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+    
+    // Add to body and show
+    document.body.appendChild(resultsScreen);
+    resultsScreen.style.display = 'block';
+    
+    // Display scores
+    const scoreList = document.getElementById('scoreList');
+    const sortedPlayers = Object.entries(gameState.playerScores)
+        .sort((a, b) => b[1] - a[1]);
+    
+    scoreList.innerHTML = sortedPlayers.map(([player, score], index) => `
+        <div class="score-item" style="display: flex; justify-content: space-between; padding: 10px; background: ${index === 0 ? 'rgba(245, 158, 11, 0.1)' : 'rgba(255,255,255,0.05)'}; border-radius: 8px; margin: 5px 0;">
+            <span>${index + 1}. ${player}</span>
+            <span style="font-weight: bold; color: var(--accent);">${score} points</span>
+        </div>
+    `).join('');
+    
+    // Add event listeners
+    document.getElementById('playAgainImageBtn').addEventListener('click', () => {
+        document.body.removeChild(resultsScreen);
+        startImageMatch();
+    });
+    
+    document.getElementById('backToLobbyImageBtn').addEventListener('click', () => {
+        document.body.removeChild(resultsScreen);
+        backToLobby();
+    });
+}
+
+// Add this to the startGame function to handle image mode
+function startGame() {
+    if (gameState.gameMode === 'images') {
+        startImageMatch();
+        return;
+    }
+    
+    // ... rest of your existing startGame code ...
+}
+// ================= IMAGE MATCH MODE - Social Deduction =================
+function startImageMatch() {
+    console.log('Starting Image Match (Who/What Am I?) mode...');
+    
+    // Check if players are added
+    if (gameState.players.length < 2) {
+        alert('Need at least 2 players for Guess the Image!');
+        backToLobby();
+        return;
+    }
+    
+    // Update stats
+    incrementPlayCount();
+    
+    // Hide UI
+    document.querySelector('.dashboard').style.display = 'none';
+    document.querySelector('.start-section').style.display = 'none';
+    document.querySelector('.social-buttons').style.display = 'none';
+    
+    // Set up game state
+    gameState.imageGame = {
+        players: [...gameState.players],
+        currentPlayerIndex: 0,
+        playerSecrets: {}, // Stores each player's chosen image index
+        revealedPlayers: [], // Players who have been guessed correctly
+        turnPhase: 'selection', // 'selection', 'playing', 'ended'
+        currentQuestion: null,
+        timer: gameState.timer
+    };
+    
+    // Show image match screen
+    showImageMatchScreen();
+}
+
+function showImageMatchScreen() {
+    // Show the screen
+    document.querySelectorAll('.game-screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+    
+    document.getElementById('imageMatchScreen').style.display = 'block';
+    
+    // Initialize screen
+    generateImageGrid();
+    updatePlayerDisplay();
+    
+    // Show selection phase
+    document.getElementById('secretSelection').style.display = 'block';
+    document.getElementById('gamePhase').style.display = 'none';
+    
+    // Set up event listeners if not already done
+    setupImageGameListeners();
+    
+    // Start timer if enabled
+    if (gameState.timer > 0) {
+        startImageGameTimer();
+    } else {
+        document.getElementById('imageTimerDisplay').textContent = '∞';
+    }
+}
+
+function setupImageGameListeners() {
+    // Confirm secret button
+    document.getElementById('confirmSecretBtn').addEventListener('click', confirmSecret);
+    
+    // Phase buttons
+    document.getElementById('askQuestionBtn').addEventListener('click', showQuestionInterface);
+    document.getElementById('makeGuessBtn').addEventListener('click', showGuessInterface);
+    document.getElementById('endTurnBtn').addEventListener('click', endTurn);
+    
+    // Question interface
+    document.getElementById('submitQuestionBtn').addEventListener('click', submitQuestion);
+    
+    // Guess interface
+    document.getElementById('submitGuessBtn').addEventListener('click', submitGuess);
+    
+    // Question modal buttons
+    document.querySelectorAll('.answer-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            answerQuestion(this.dataset.answer);
+        });
+    });
+    
+    document.getElementById('skipAnswerBtn').addEventListener('click', skipAnswer);
+    
+    // Guess result modal
+    document.getElementById('nextTurnBtn').addEventListener('click', continueAfterGuess);
+}
+
+function generateImageGrid() {
+    const imageGrid = document.getElementById('imageGrid');
+    
+    // Clear loading message
+    imageGrid.innerHTML = '<div class="loading-images">Loading player images...</div>';
+    
+    // Use football players (this mode only works with football category)
+    const playersToShow = [...FOOTBALL_PLAYERS]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 21); // 3×7 = 21 images
+    
+    // Preload images first
+    const imageUrls = playersToShow.map(p => p.image);
+    
+    preloadImages(imageUrls, () => {
+        // Images loaded, display them
+        imageGrid.innerHTML = '';
+        
+        playersToShow.forEach((player, index) => {
+            const imageCell = document.createElement('div');
+            imageCell.className = 'image-cell-simple';
+            imageCell.dataset.index = index;
+            imageCell.title = player.name;
+            
+            // Create image element
+            const img = document.createElement('img');
+            img.src = player.image;
+            img.alt = player.name;
+            img.className = 'player-image';
+            img.loading = 'lazy'; // For better performance
+            
+            // Add error handling
+            img.onerror = function() {
+                console.error('Failed to load image:', player.image);
+                this.style.display = 'none';
+                
+                // Create fallback with player name
+                const fallback = document.createElement('div');
+                fallback.className = 'player-fallback';
+                fallback.innerHTML = `
+                    <div>⚽</div>
+                    <div style="font-size: 0.7rem; margin-top: 5px;">${player.name.split(' ')[0]}</div>
+                `;
+                imageCell.appendChild(fallback);
+            };
+            
+            // Add number label
+            const numberLabel = document.createElement('div');
+            numberLabel.className = 'image-number';
+            numberLabel.textContent = index + 1;
+            
+            // Add player name label
+            const nameLabel = document.createElement('div');
+            nameLabel.className = 'player-name-label';
+            nameLabel.textContent = player.name;
+            
+            // Append everything in correct order
+            imageCell.appendChild(img);
+            imageCell.appendChild(numberLabel);
+            imageCell.appendChild(nameLabel);
+            imageGrid.appendChild(imageCell);
+        });
+    });
+}
+
+function updatePlayerDisplay() {
+    const game = gameState.imageGame;
+    const currentPlayer = game.players[game.currentPlayerIndex];
+    
+    document.getElementById('currentImagePlayerName').textContent = currentPlayer;
+    document.getElementById('imagePlayerCounter').textContent = 
+        `${game.currentPlayerIndex + 1}/${game.players.length}`;
+    
+    // Update player select dropdown for guesses
+    const playerSelect = document.getElementById('playerSelect');
+    playerSelect.innerHTML = '';
+    
+    game.players.forEach((player, index) => {
+        if (index !== game.currentPlayerIndex && !game.revealedPlayers.includes(player)) {
+            const option = document.createElement('option');
+            option.value = player;
+            option.textContent = player;
+            playerSelect.appendChild(option);
+        }
+    });
+    
+    // Update turn instruction - CHANGE THIS LINE
+    let instruction = '';
+    if (game.turnPhase === 'selection') {
+        instruction = "It's your turn!"; // ← Changed to "It's your turn!"
+    } else if (game.turnPhase === 'playing') {
+        instruction = 'Ask a question or make a guess!';
+    } else if (game.turnPhase === 'answering') {
+        instruction = 'Answer the question!';
+    }
+    
+    document.getElementById('turnInstruction').textContent = instruction;
+}
+
+function confirmSecret() {
+    const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    
+    // In a real game, each player would secretly choose an image
+    // For this demo, we'll assign a random image to each player
+    const randomIndex = Math.floor(Math.random() * gameState.imageGame.images.length);
+    gameState.imageGame.playerSecrets[currentPlayer] = randomIndex;
+    
+    // Move to next player for selection
+    gameState.imageGame.currentPlayerIndex++;
+    
+    if (gameState.imageGame.currentPlayerIndex < gameState.imageGame.players.length) {
+        // Still players selecting
+        updatePlayerDisplay();
+        alert(`${currentPlayer} has chosen their secret! Pass to next player.`);
+    } else {
+        // All players have selected, start game
+        gameState.imageGame.currentPlayerIndex = 0;
+        gameState.imageGame.turnPhase = 'playing';
+        
+        document.getElementById('secretSelection').style.display = 'none';
+        document.getElementById('gamePhase').style.display = 'block';
+        
+        updatePlayerDisplay();
+        alert('All players have chosen their secrets! Game begins.');
+    }
+}
+
+function showQuestionInterface() {
+    document.getElementById('questionInterface').style.display = 'block';
+    document.getElementById('guessInterface').style.display = 'none';
+    document.getElementById('questionInput').focus();
+}
+
+function showGuessInterface() {
+    document.getElementById('guessInterface').style.display = 'block';
+    document.getElementById('questionInterface').style.display = 'none';
+    updatePlayerSelect();
+}
+
+function updatePlayerSelect() {
+    const game = gameState.imageGame;
+    const playerSelect = document.getElementById('playerSelect');
+    playerSelect.innerHTML = '<option value="">Select a player...</option>';
+    
+    game.players.forEach((player, index) => {
+        if (index !== game.currentPlayerIndex && !game.revealedPlayers.includes(player)) {
+            const option = document.createElement('option');
+            option.value = player;
+            option.textContent = player;
+            playerSelect.appendChild(option);
+        }
+    });
+}
+
+function submitQuestion() {
+    const question = document.getElementById('questionInput').value.trim();
+    
+    if (!question) {
+        alert('Please enter a question!');
+        return;
+    }
+    
+    // Store the question
+    gameState.imageGame.currentQuestion = {
+        text: question,
+        askingPlayer: gameState.imageGame.players[gameState.imageGame.currentPlayerIndex]
+    };
+    
+    // Hide question interface
+    document.getElementById('questionInterface').style.display = 'none';
+    document.getElementById('questionInput').value = '';
+    
+    // Show question to all players (in real game, this would be shown to everyone)
+    alert(`Question for the group: "${question}"`);
+    
+    // For demo, we'll ask the next player to answer
+    const nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
+    const answeringPlayer = gameState.imageGame.players[nextPlayerIndex];
+    
+    showQuestionModal(question, answeringPlayer);
+}
+
+function showQuestionModal(question, targetPlayer) {
+    gameState.imageGame.turnPhase = 'answering';
+    
+    document.getElementById('questionText').textContent = question;
+    document.getElementById('questionTarget').textContent = `Asking: ${targetPlayer}`;
+    
+    // In real game, this modal would appear on target player's device
+    // For this demo, we show it to everyone
+    document.getElementById('questionModal').style.display = 'flex';
+    
+    // Set up answer handlers
+    gameState.imageGame.currentQuestion.targetPlayer = targetPlayer;
+}
+
+function answerQuestion(answer) {
+    const question = gameState.imageGame.currentQuestion;
+    const targetPlayer = question.targetPlayer;
+    
+    // Record the answer (in real game, this would be broadcast to all players)
+    alert(`${targetPlayer} answers: ${answer.toUpperCase()}`);
+    
+    // Hide modal
+    document.getElementById('questionModal').style.display = 'none';
+    
+    // Return to playing phase
+    gameState.imageGame.turnPhase = 'playing';
+    
+    // End turn after asking question
+    endTurn();
+}
+
+function skipAnswer() {
+    alert('Question skipped / cannot be answered');
+    document.getElementById('questionModal').style.display = 'none';
+    gameState.imageGame.turnPhase = 'playing';
+    endTurn();
+}
+
+function submitGuess() {
+    const targetPlayer = document.getElementById('playerSelect').value;
+    
+    if (!targetPlayer) {
+        alert('Please select a player to guess!');
+        return;
+    }
+    
+    // In real game, the guessing player would point to an image on their screen
+    // For this demo, we'll prompt for image number
+    const imageNumber = prompt(`What image number do you think ${targetPlayer} chose? (1-${gameState.imageGame.images.length})`);
+    
+    if (!imageNumber || isNaN(imageNumber)) {
+        alert('Please enter a valid image number!');
+        return;
+    }
+    
+    const guessedIndex = parseInt(imageNumber) - 1;
+    
+    if (guessedIndex < 0 || guessedIndex >= gameState.imageGame.images.length) {
+        alert(`Please enter a number between 1 and ${gameState.imageGame.images.length}!`);
+        return;
+    }
+    
+    // Check if guess is correct
+    const actualIndex = gameState.imageGame.playerSecrets[targetPlayer];
+    const isCorrect = (guessedIndex === actualIndex);
+    
+    // Show result
+    showGuessResult(targetPlayer, isCorrect, guessedIndex, actualIndex);
+}
+
+function showGuessResult(targetPlayer, isCorrect, guessedIndex, actualIndex) {
+    const guesser = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    
+    if (isCorrect) {
+        document.getElementById('guessResultTitle').textContent = 'Correct Guess! 🎉';
+        document.getElementById('guessResultText').innerHTML = `
+            <p><strong>${guesser}</strong> correctly guessed that <strong>${targetPlayer}</strong> chose:</p>
+            <div style="font-size: 2rem; margin: 15px 0;">${gameState.imageGame.images[actualIndex].image}</div>
+            <p><strong>${gameState.imageGame.images[actualIndex].word}</strong></p>
+            <p style="color: var(--text-secondary); margin-top: 10px;">${targetPlayer} is now revealed!</p>
+        `;
+        
+        // Mark player as revealed
+        gameState.imageGame.revealedPlayers.push(targetPlayer);
+        
+        // Check if game should end
+        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
+            setTimeout(() => {
+                endImageGame();
+            }, 3000);
+        }
+    } else {
+        document.getElementById('guessResultTitle').textContent = 'Wrong Guess! ❌';
+        document.getElementById('guessResultText').innerHTML = `
+            <p><strong>${guesser}</strong> guessed wrong!</p>
+            <p>${targetPlayer}'s secret remains hidden.</p>
+            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                <p><small>You guessed: Image ${guessedIndex + 1}</small></p>
+                <p><small>${targetPlayer} chose a different image</small></p>
+            </div>
+        `;
+    }
+    
+    document.getElementById('guessInterface').style.display = 'none';
+    document.getElementById('guessResultModal').style.display = 'flex';
+}
+
+function continueAfterGuess() {
+    document.getElementById('guessResultModal').style.display = 'none';
+    endTurn();
+}
+
+function endTurn() {
+    // Move to next player who hasn't been revealed
+    let nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
+    let attempts = 0;
+    
+    while (gameState.imageGame.revealedPlayers.includes(gameState.imageGame.players[nextPlayerIndex]) && attempts < gameState.imageGame.players.length) {
+        nextPlayerIndex = (nextPlayerIndex + 1) % gameState.imageGame.players.length;
+        attempts++;
+    }
+    
+    gameState.imageGame.currentPlayerIndex = nextPlayerIndex;
+    updatePlayerDisplay();
+}
+
+function startImageGameTimer() {
+    let timeLeft = gameState.timer;
+    const timerDisplay = document.getElementById('imageTimerDisplay');
+    
+    gameState.imageGame.timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = formatTime(timeLeft);
+        
+        if (timeLeft <= 30) {
+            timerDisplay.style.color = '#ef4444';
+        }
+        
+        if (timeLeft <= 0) {
+            clearInterval(gameState.imageGame.timerInterval);
+            timeUpInImageGame();
+        }
+    }, 1000);
+}
+
+function timeUpInImageGame() {
+    alert('Time\'s up! Game ends.');
+    endImageGame();
+}
+
+function endImageGame() {
+    clearInterval(gameState.imageGame.timerInterval);
+    
+    // Show results
+    alert('Game Over! Here are the results:\n\n' + 
+        gameState.imageGame.players.map(player => {
+            const isRevealed = gameState.imageGame.revealedPlayers.includes(player);
+            return `${player}: ${isRevealed ? 'REVEALED' : 'STILL HIDDEN'}`;
+        }).join('\n'));
+    
+    // Ask to play again or go to lobby
+    if (confirm('Play another round?')) {
+        restartImageGame();
+    } else {
+        backToLobby();
+    }
+}
+
+function restartImageGame() {
+    clearInterval(gameState.imageGame.timerInterval);
+    startImageMatch();
+}
+
+// Add this to global functions
+window.restartImageGame = restartImageGame;

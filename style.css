@@ -96,8 +96,6 @@ body {
     color: var(--primary);
 }
 
-
-
 .expand-toggle {
     cursor: pointer;
     color: var(--primary);
@@ -107,6 +105,7 @@ body {
     /* Remove pointer events so parent gets the click */
     pointer-events: none;
 }
+
 /* Hide the arrow characters when expanded */
 .expand-toggle:not(.expanded)::before {
     content: "▼";
@@ -115,13 +114,14 @@ body {
 .expand-toggle.expanded::before {
     content: "▲";
 }
+
 #timerButtons, #categoriesGrid {
     display: none;
 }
 
 .input-row {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -274,7 +274,6 @@ body {
 }
 
 /* ===== GAME SETTINGS - SIMPLE ===== */
-/* ===== GAME SETTINGS - SIMPLE ===== */
 .settings-grid {
     display: grid;
     gap: 20px;
@@ -286,11 +285,11 @@ body {
     padding: 15px;
     border: 1px solid var(--border);
     cursor: pointer;
-    /* NO transitions, NO hover effects */
+    /* Disable all transitions */
     transition: none !important;
 }
 
-/* NO hover effect - keep everything exactly the same */
+/* Completely disable hover effects */
 .setting-group:hover,
 .setting-group:active,
 .setting-group:focus {
@@ -326,51 +325,6 @@ body {
 
 .setting-title h3 span {
     flex-shrink: 0;
-}
-
-.setting-title h3 span {
-    flex-shrink: 0;
-}
-/* Setting group styles - NO HOVER EFFECT */
-.setting-group {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    /* Remove transition that causes color change */
-    transition: none;
-}
-
-/* Remove hover effect completely */
-.setting-group:hover {
-    /* Keep everything the same - no changes */
-    background: rgba(255, 255, 255, 0.03); /* Same as normal */
-    border-color: var(--border); /* Keep original border */
-}
-
-/* Remove active state color change too */
-.setting-group:active {
-    background: rgba(255, 255, 255, 0.03); /* Same as normal */
-}
-.setting-group {
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    /* Disable all transitions */
-    transition: none !important;
-}
-
-/* Completely disable hover effects */
-.setting-group:hover,
-.setting-group:active,
-.setting-group:focus {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border-color: var(--border) !important;
-    transform: none !important;
-    box-shadow: none !important;
 }
 
 .setting-title i {
@@ -444,6 +398,7 @@ body {
     font-weight: 600;
     color: var(--text);
 }
+
 /* Category option with right checkbox */
 .category-option {
     position: relative;
@@ -465,11 +420,13 @@ body {
     gap: 10px;
     flex: 1; /* Take available space */
 }
+
 /* Categories */
 /* Make entire categories group clickable like timer */
 .setting-group[data-has-grid="true"] {
     cursor: pointer;
 }
+
 .category-checkbox {
     /* Checkbox stays on right */
     margin-left: 10px;
@@ -477,7 +434,6 @@ body {
     height: 18px;
     cursor: pointer;
 }
-
 
 /* Right-aligned checkboxes */
 .category-option {
@@ -507,6 +463,7 @@ body {
 .category-option:hover {
     border-color: var(--border);
 }
+
 .timer-btn:hover,
 .mode-btn:hover {
     /* Remove border color change */
@@ -537,7 +494,6 @@ body {
     border: 1px solid var(--border);
     grid-column: 1 / -1; /* Span across both columns */
 }
-/* Add to your CSS file */
 
 .select-all-btn {
     padding: 8px 15px;
@@ -754,8 +710,6 @@ body {
     color: var(--primary);
     margin-bottom: 15px;
 }
-
-
 
 .card-content.visible {
     opacity: 1;
@@ -1111,7 +1065,7 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
-     .social-buttons {
+    .social-buttons {
         padding-left: 15px;
         padding-right: 15px;
         box-sizing: border-box;
@@ -1208,6 +1162,7 @@ img, video {
     box-shadow: none !important;
     backdrop-filter: none !important;
 }
+
 #playCount {
     transition: opacity 0.3s ease;
 }
@@ -1215,6 +1170,7 @@ img, video {
 #playCount.loading {
     opacity: 0.5;
 }
+
 /* Feedback Modal Styles */
 .feedback-options {
     display: flex;
@@ -1298,6 +1254,7 @@ img, video {
     max-height: 80vh;
     overflow-y: auto;
 }
+
 /* Simple Modal Styles */
 .modal {
     display: none;
@@ -1384,6 +1341,7 @@ img, video {
     background: #3a82e6;
     transform: translateY(-2px);
 }
+
 .modal {
     /* Ensure it covers everything */
     position: fixed;
@@ -1407,19 +1365,8 @@ img, video {
     /* Prevent click propagation */
     pointer-events: auto;
 }
-#timerButtons, #categoriesGrid {
-    display: none;
-}
 
-.expand-toggle:not(.expanded)::before {
-    content: "▼";
-}
-
-.expand-toggle.expanded::before {
-    content: "▲";
-}
-
-/* Add this to your existing CSS */
+/* Flag option */
 .flag-option {
     position: relative;
     display: flex;
@@ -1584,6 +1531,7 @@ img, video {
     color: white;
     transform: scale(1.1);
 }
+
 /* Help Modal Styles */
 .help-content {
     padding: 10px 0;
@@ -1632,6 +1580,7 @@ img, video {
 .step strong {
     color: var(--primary);
 }
+
 /* Help Modal Specific Styles */
 .help-modal {
     max-width: 450px;
@@ -1725,4 +1674,663 @@ img, video {
 
 .step-text .blue {
     color: #3b82f6;
+}
+
+/* ===== IMAGE MATCH MODE STYLES ===== */
+.image-match-timer {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: monospace;
+}
+
+.current-turn {
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.current-turn h3 {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.image-display-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.current-image-display {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.current-image-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.current-image-emoji {
+    font-size: 5rem;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-10px); }
+}
+
+.current-image-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.image-table-container {
+    margin: 25px 0;
+}
+
+.image-table-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.images-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.image-cell {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 10px;
+}
+
+.image-cell:hover {
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.image-hidden {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-hidden i {
+    font-size: 2rem;
+    color: var(--text-secondary);
+}
+
+.image-hidden span {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.image-revealed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.image-emoji {
+    font-size: 1.8rem;
+}
+
+.image-word {
+    font-size: 0.7rem;
+    color: var(--text);
+    font-weight: bold;
+    text-align: center;
+    word-break: break-word;
+    width: 100%;
+}
+
+.game-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.game-controls .btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 0.9rem;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #16a34a;
+}
+
+/* Action buttons with text */
+.action-buttons .action-btn {
+    width: auto;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.score-board {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.score-board h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text);
+}
+
+.score-item {
+    transition: all 0.3s ease;
+}
+
+.score-item:hover {
+    transform: translateX(5px);
+}
+
+/* Responsive design for images */
+@media (max-width: 768px) {
+    .images-table {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 300px;
+    }
+    
+    .current-image-emoji {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .images-table {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 250px;
+    }
+    
+    .current-image-emoji {
+        font-size: 3rem;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+    }
+}
+
+/* ===== IMAGE MATCH MODE - Social Deduction Version ===== */
+.image-match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.image-match-header .player-turn {
+    flex: 1;
+    min-width: 200px;
+}
+.player-turn {
+    /* Remove or adjust these if they're affecting the layout */
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.image-match-header .timer-display {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    font-family: monospace;
+}
+
+.turn-instruction {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.secret-selection {
+    background: rgba(99, 102, 241, 0.1);
+    border: 2px dashed rgba(99, 102, 241, 0.5);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.selection-instruction {
+    margin-bottom: 20px;
+}
+
+.selection-instruction i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+    display: block;
+}
+
+.selection-instruction h3 {
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.selection-instruction p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.game-phase {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.phase-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.phase-btn {
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.phase-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.phase-btn i {
+    font-size: 1.5rem;
+}
+
+.question-interface, .guess-interface {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hint-text {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.player-select {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+/* Image Grid Container */
+.image-grid-container {
+    margin-top: 25px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--border);
+}
+
+.image-grid-container h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.grid-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 20px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.grid-info span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* 3 columns × 7 rows grid - FIXED VERSION */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 8px;
+    margin: 0 auto 15px;
+    max-width: 100%;
+    height: 500px; /* Increased from 450px */
+    overflow-y: auto;
+    padding: 5px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Image cell - FIXED VERSION */
+/* Image cell - Increase height */
+.image-cell-simple {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 150px; /* Add fixed height for better control */
+}
+
+/* Image will fit perfectly */
+/* Make image fill the cell better */
+.player-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    flex-grow: 1;
+}
+
+.image-cell-simple:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.image-cell-simple:hover .player-image {
+    transform: scale(1.05);
+}
+/* Add hover effect to make name more visible */
+.image-cell-simple:hover .player-name-label {
+    background: linear-gradient(to top, rgba(99, 102, 241, 0.9), rgba(99, 102, 241, 0.6));
+    color: white;
+    font-weight: 700;
+}
+/* Number label */
+/* Number label - Adjust position */
+.image-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px 12px; /* Slightly larger */
+    border-radius: 12px;
+    z-index: 3; /* Higher than name label */
+}
+
+/* Player name label - FIXED POSITION */
+/* Player name label - Make it taller and more prominent */
+/* Alternative: Banner-style label that covers bottom third */
+.player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%; /* Covers bottom 35% of the image */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: white;
+    font-size: 0.9rem;
+    padding: 15px 5px 5px;
+    text-align: center;
+    font-weight: 600;
+    z-index: 2;
+    word-break: break-word;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.loading-images {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+.loading-images:before {
+    content: "🔄";
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.grid-note {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Loading state */
+.image-loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Error fallback */
+.player-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.player-fallback:before {
+    content: "⚽";
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+/* Scrollbar styling */
+.image-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.image-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.image-grid::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+/* Responsive design */
+/* For larger screens */
+@media (min-width: 768px) {
+    .image-cell-simple {
+        height: 160px; /* Slightly taller on larger screens */
+    }
+    
+    .player-name-label {
+        font-size: 0.9rem; /* Larger font on bigger screens */
+        padding: 30px 10px 10px;
+        min-height: 55px;
+    }
+    
+    .image-grid {
+        height: 550px;
+    }
+}
+@media (max-width: 768px) {
+    .image-grid {
+        height: 400px;
+        grid-template-columns: repeat(3, 1fr); /* Keep 3 columns on mobile */
+        gap: 6px;
+    }
+    
+    .player-name-label {
+        font-size: 0.65rem;
+        padding: 15px 4px 4px;
+    }
+    
+    .image-number {
+        font-size: 0.8rem;
+        padding: 3px 8px;
+    }
+}
+
+/* For smaller screens */
+@media (max-width: 480px) {
+    .image-cell-simple {
+        height: 130px; /* Adjust for mobile */
+    }
+    
+    .player-name-label {
+        font-size: 0.8rem;
+        padding: 20px 6px 6px;
+        min-height: 45px;
+    }
+    
+    .image-grid {
+        height: 450px;
+    }
+}
+
+/* Answer Buttons */
+.answer-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.answer-btn {
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.answer-btn:hover {
+    transform: translateY(-2px);
+}
+
+.yes-btn {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border: 2px solid #22c55e;
+}
+
+.no-btn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 2px solid #ef4444;
+}
+
+.maybe-btn {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+    border: 2px solid #f59e0b;
+}
+
+.skip-section {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+/* Responsive Design for Answer Buttons */
+@media (max-width: 768px) {
+    .answer-buttons {
+        grid-template-columns: 1fr;
+    }
 }

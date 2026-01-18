@@ -957,14 +957,14 @@ const words = [
     category: "anime",
     image: "👊"
 },
-///////
+////// FOOTBALL PLAYERS - USING images/images.jpg FOR TESTING //////
 {
     word: "KARIM BENZEMA",
     wordAr: "كريم بنزيما",
     hints: ["French striker", "Real Madrid legend", "Ballon d'Or 2022"],
     hintsAr: ["مهاجم فرنسي", "أسطورة ريال مدريد", "الكرة الذهبية 2022"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Karim_Benzema_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "MO SALAH",
@@ -972,7 +972,7 @@ const words = [
     hints: ["Egyptian king", "Liverpool winger", "Premier League top scorer"],
     hintsAr: ["الملك المصري", "جناح ليفربول", "هداف الدوري الإنجليزي"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Mohamed_Salah_2018.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "KYLIAN MBAPPE",
@@ -980,7 +980,7 @@ const words = [
     hints: ["French speedster", "PSG star", "World Cup winner 2018"],
     hintsAr: ["الفرنسي السريع", "نجم باريس", "بطل كأس العالم 2018"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Kylian_Mbapp%C3%A9_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "ROBERT LEWANDOWSKI",
@@ -988,7 +988,7 @@ const words = [
     hints: ["Polish striker", "Barcelona forward", "Goal machine"],
     hintsAr: ["مهاجم بولندي", "مهاجم برشلونة", "آلة التهديف"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/93/Robert_Lewandowski_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "KEVIN DE BRUYNE",
@@ -996,7 +996,7 @@ const words = [
     hints: ["Belgian midfielder", "Manchester City", "Passing master"],
     hintsAr: ["لاعب وسط بلجيكي", "مانشستر سيتي", "سيد التمريرات"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Kevin_De_Bruyne_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "ERLING HAALAND",
@@ -1004,7 +1004,7 @@ const words = [
     hints: ["Norwegian giant", "Manchester City", "Goal scoring record"],
     hintsAr: ["العملاق النرويجي", "مانشستر سيتي", "سجل هدافي"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/0/07/Erling_Haaland_2023.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "VINICIUS JR",
@@ -1012,7 +1012,7 @@ const words = [
     hints: ["Brazilian winger", "Real Madrid", "Dribbling skills"],
     hintsAr: ["جناح برازيلي", "ريال مدريد", "مهارات المراوغة"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Vinicius_Junior_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "HARRY KANE",
@@ -1020,7 +1020,7 @@ const words = [
     hints: ["English captain", "Bayern Munich", "Tottenham legend"],
     hintsAr: ["قائد إنجليزي", "بايرن ميونخ", "أسطورة توتنهام"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/65/Harry_Kane_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "MANUEL NEUER",
@@ -1028,15 +1028,15 @@ const words = [
     hints: ["German goalkeeper", "Bayern Munich", "Sweeper keeper"],
     hintsAr: ["حارس مرمى ألماني", "بايرن ميونخ", "حارس متقدم"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/11/Manuel_Neuer_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "LUKA MODRIC",
     wordAr: "لوكا مودريتش",
     hints: ["Croatian midfielder", "Real Madrid", "Ballon d'Or 2018"],
-    hintsAr: ["لاعب وسط كرواتي", "ريال مدريد", "الكرة الذهبية 2018"],
+    hintsAr: ["لاعب وسط كرواتي", "ريال مدريد", "الكرة الذهبية 2022"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Luka_Modri%C4%87_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "THIBAUT COURTOIS",
@@ -1044,7 +1044,7 @@ const words = [
     hints: ["Belgian goalkeeper", "Real Madrid", "Tall keeper"],
     hintsAr: ["حارس مرمى بلجيكي", "ريال مدريد", "حارس طويل القامة"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Thibaut_Courtois_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "VIRGIL VAN DIJK",
@@ -1052,7 +1052,7 @@ const words = [
     hints: ["Dutch defender", "Liverpool captain", "Strong in air"],
     hintsAr: ["مدافع هولندي", "قائد ليفربول", "قوي في الهواء"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Virgil_van_Dijk_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "JOSHUA KIMMICH",
@@ -1060,7 +1060,7 @@ const words = [
     hints: ["German midfielder", "Bayern Munich", "Versatile player"],
     hintsAr: ["لاعب وسط ألماني", "بايرن ميونخ", "لاعب متعدد المهارات"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/3f/Joshua_Kimmich_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "SADIO MANE",
@@ -1068,7 +1068,7 @@ const words = [
     hints: ["Senegalese forward", "Al Nassr", "Liverpool legend"],
     hintsAr: ["مهاجم سنغالي", "النصر", "أسطورة ليفربول"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/7d/Sadio_Man%C3%A9_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "EDERSON",
@@ -1076,7 +1076,7 @@ const words = [
     hints: ["Brazilian goalkeeper", "Manchester City", "Good with feet"],
     hintsAr: ["حارس مرمى برازيلي", "مانشستر سيتي", "جيد باستخدام قدميه"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Ederson_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "TONI KROOS",
@@ -1084,7 +1084,7 @@ const words = [
     hints: ["German midfielder", "Real Madrid", "Passing accuracy"],
     hintsAr: ["لاعب وسط ألماني", "ريال مدريد", "دقة التمرير"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/7/72/Toni_Kroos_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "CASEMIRO",
@@ -1092,7 +1092,7 @@ const words = [
     hints: ["Brazilian defensive midfielder", "Manchester United", "Real Madrid legend"],
     hintsAr: ["لاعب وسط دفاعي برازيلي", "مانشستر يونايتد", "أسطورة ريال مدريد"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Casemiro_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "RAHEEM STERLING",
@@ -1100,7 +1100,7 @@ const words = [
     hints: ["English winger", "Chelsea", "Manchester City legend"],
     hintsAr: ["جناح إنجليزي", "تشيلسي", "أسطورة مانشستر سيتي"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/4/41/Raheem_Sterling_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "JAN OBLAK",
@@ -1108,7 +1108,7 @@ const words = [
     hints: ["Slovenian goalkeeper", "Atletico Madrid", "Shot stopping"],
     hintsAr: ["حارس مرمى سلوفيني", "أتلتيكو مدريد", "صد الكرات"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8f/Jan_Oblak_2021.jpg"
+    image: "images/images.jpg"
 },
 {
     word: "MARQUINHOS",
@@ -1116,6 +1116,6 @@ const words = [
     hints: ["Brazilian defender", "PSG captain", "Central defender"],
     hintsAr: ["مدافع برازيلي", "قائد باريس", "مدافع مركزي"],
     category: "football",
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/18/Marquinhos_2021.jpg"
+    image: "images/images.jpg"
 }
 ];
