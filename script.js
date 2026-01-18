@@ -1574,7 +1574,7 @@ function getImagesHelp() {
             </div>
             <div class="step">
                 <div class="step-num">☆</div>
-                <div class="step-text"><strong>Required categories:</strong> Flags, Anime, Celebrities</div>
+                <div class="step-text"><strong>Required categories:</strong> Football Players</div>
             </div>
         </div>
     `;
