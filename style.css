@@ -735,7 +735,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.95); /* Make it more opaque */
+    background: rgba(0, 0, 0, 0); /*alla dont Make it more opaque */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1533,4 +1533,199 @@ img, video {
 .action-btn,
 .social-btn {
     cursor: pointer;
+}
+
+/* Keep your original .mode-buttons styles */
+.mode-buttons {
+    display: flex;
+    gap: 10px; /* This should already be in your CSS */
+}
+
+/* Make containers flex: 1 to take equal width like before */
+.mode-container {
+    position: relative;
+    flex: 1; /* This makes them take equal width like your original buttons */
+}
+
+/* Keep your original .mode-btn styles exactly as they are */
+.mode-btn {
+    /* Your existing styles - DO NOT CHANGE THESE */
+    flex: 1;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    width: 100%; /* Keep this if it was there */
+    height: auto; /* Keep this */
+}
+
+/* Add help button - positioned absolutely so it doesn't affect layout */
+.mode-help-btn {
+    position: absolute;
+    top: -10px; /* Position above the button */
+    right: -10px; /* Position outside to the right */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 100; /* Make sure it's above everything */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.mode-help-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+/* Help Modal Styles */
+.help-content {
+    padding: 10px 0;
+}
+
+.help-content h2 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.help-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.step {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.step-num {
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.step p {
+    color: var(--text);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.step strong {
+    color: var(--primary);
+}
+/* Help Modal Specific Styles */
+.help-modal {
+    max-width: 450px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.help-modal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.help-modal .modal-header h2 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.help-modal .close-modal {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 28px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.help-modal .close-modal:hover {
+    color: var(--danger);
+}
+
+.help-modal .modal-body {
+    padding: 20px;
+}
+
+/* Help steps styling */
+.help-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.step-num {
+    background: var(--primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.step-text {
+    color: var(--text);
+    line-height: 1.5;
+    font-size: 15px;
+    padding-top: 5px;
+}
+
+.step-text strong {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.step-text .red {
+    color: #ef4444;
+}
+
+.step-text .blue {
+    color: #3b82f6;
 }

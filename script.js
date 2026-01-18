@@ -522,6 +522,23 @@ function setupEventListeners() {
             selectGameMode(this.dataset.mode);
         });
     });
+    // Help buttons for game modes
+document.querySelectorAll('.mode-help-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent triggering mode selection
+        showHelp(this.dataset.help);
+    });
+});
+
+// Make sure mode buttons still work properly
+document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        // Only trigger if not clicking on help button
+        if (!e.target.closest('.mode-help-btn')) {
+            selectGameMode(this.dataset.mode);
+        }
+    });
+});
     
     // Timer buttons - SETUP CORRECTLY
     setTimeout(() => {
@@ -1404,3 +1421,92 @@ function setupModalClose() {
 
 // Call this after DOM loads
 document.addEventListener('DOMContentLoaded', setupModalClose);
+// ================= HELP MODAL FUNCTIONS =================//
+function showHelp(mode) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    
+    const content = mode === 'classic' ? getClassicHelp() : getDescribeHelp();
+    
+    modal.innerHTML = `
+        <div class="modal-content help-modal">
+            <div class="modal-header">
+                <h2>${mode === 'classic' ? '🎭 Classic Mode' : '🎤 Describe It Mode'}</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close when clicking X
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+    
+    // Close when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+    
+    // Prevent clicks inside modal from closing it
+    modal.querySelector('.modal-content').addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+}
+
+function getClassicHelp() {
+    return `
+        <div class="help-steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">One player is secretly the <strong>Imposter</strong></div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">Innocents see the <strong>word</strong>, Imposter sees a <strong>hint</strong></div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">All players describe the word (Imposter tries to blend in)</div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">Discuss and vote to find the Imposter!</div>
+            </div>
+        </div>
+    `;
+}
+
+function getDescribeHelp() {
+    return `
+        <div class="help-steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">Players split into <strong class="red">Red</strong> and <strong class="blue">Blue</strong> teams</div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">A <strong>Describer</strong> is randomly chosen from a team</div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">Describer sees a secret word</div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text">Describer explains the word (speech or gestures only)</div>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <div class="step-text">Teams race to guess the word first!</div>
+            </div>
+        </div>
+    `;
+}

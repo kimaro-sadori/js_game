@@ -70,25 +70,36 @@
             </div>
             
             <div class="settings-grid">
-                <!-- Game Mode -->
-                <div class="setting-group">
-                    <div class="setting-title">
-                        <i class="fas fa-gamepad"></i>
-                        <h3>Game Mode</h3>
-                    </div>
-                    <div class="mode-buttons">
-                        <button class="mode-btn active" data-mode="classic">
-                            <div class="mode-icon">🎭</div>
-                            <div class="mode-label">Classic</div>
-                            <small>Find the imposter</small>
-                        </button>
-                        <button class="mode-btn" data-mode="describe">
-                            <div class="mode-icon">🎤</div>
-                            <div class="mode-label">Describe It</div>
-                            <small>Team competition</small>
-                        </button>
-                    </div>
-                </div>
+              <!-- Game Mode -->
+<div class="setting-group">
+    <div class="setting-title">
+        <i class="fas fa-gamepad"></i>
+        <h3>Game Mode</h3>
+    </div>
+    <div class="mode-buttons">
+        <div class="mode-container">
+            <button class="mode-btn active" data-mode="classic">
+                <div class="mode-icon">🎭</div>
+                <div class="mode-label">Classic</div>
+                <small>Find the imposter</small>
+            </button>
+            <button class="mode-help-btn" data-help="classic">
+                <i class="fas fa-question-circle"></i>
+            </button>
+        </div>
+        
+        <div class="mode-container">
+            <button class="mode-btn" data-mode="describe">
+                <div class="mode-icon">🎤</div>
+                <div class="mode-label">Describe It</div>
+                <small>Team competition</small>
+            </button>
+            <button class="mode-help-btn" data-help="describe">
+                <i class="fas fa-question-circle"></i>
+            </button>
+        </div>
+    </div>
+</div>
                 
                 <!-- Timer - Minimal with expand option -->
                 <div class="setting-group">
@@ -231,10 +242,12 @@
                 <span>Mode:</span>
                 <span class="summary-value" id="gameModeText">Classic</span>
             </div>
+            
             <div class="summary-item">
                 <i class="fas fa-clock"></i>
                 <span>Timer:</span>
                 <span class="summary-value" id="timerText">2:00</span>
+                <!--should i add it here -->
             </div>
         </div>
         <button id="startGameBtn" class="btn-primary">
