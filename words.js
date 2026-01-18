@@ -713,5 +713,408 @@ const words = [
         hintsAr: ["علامة Yeezy", "جوائز Grammy", "شخصية مثيرة للجدل"],
         category: "celebrities",
         image: "🎧"
-    }
-];
+    },
+    // ===================== Flags =====================
+{
+    word: "USA FLAG",
+    wordAr: "علم الولايات المتحدة",
+    hints: ["Stars and Stripes", "Red, white, and blue", "50 states represented"],
+    hintsAr: ["النجوم والمشارب", "أحمر، أبيض، وأزرق", "تمثيل 50 ولاية"],
+    category: "flags",
+    image: "🇺🇸"
+},
+{
+    word: "UK FLAG",
+    wordAr: "علم المملكة المتحدة",
+    hints: ["Union Jack", "Combined crosses", "Royal standard"],
+    hintsAr: ["يونيون جاك", "صلبان مجتمعة", "المعيار الملكي"],
+    category: "flags",
+    image: "🇬🇧"
+},
+{
+    word: "FRANCE FLAG",
+    wordAr: "علم فرنسا",
+    hints: ["Tricolor", "Blue, white, red", "Liberty, Equality, Fraternity"],
+    hintsAr: ["ثلاثي الألوان", "أزرق، أبيض، أحمر", "حرية، مساواة، أخوة"],
+    category: "flags",
+    image: "🇫🇷"
+},
+{
+    word: "GERMANY FLAG",
+    wordAr: "علم ألمانيا",
+    hints: ["Black, red, gold", "Horizontal stripes", "Federal Republic"],
+    hintsAr: ["أسود، أحمر، ذهبي", "خطوط أفقية", "جمهورية اتحادية"],
+    category: "flags",
+    image: "🇩🇪"
+},
+{
+    word: "JAPAN FLAG",
+    wordAr: "علم اليابان",
+    hints: ["Red circle on white", "Rising Sun", "Land of the Rising Sun"],
+    hintsAr: ["دائرة حمراء على أبيض", "الشمس المشرقة", "أرض الشمس المشرقة"],
+    category: "flags",
+    image: "🇯🇵"
+},
+{
+    word: "CANADA FLAG",
+    wordAr: "علم كندا",
+    hints: ["Red with white square", "Maple leaf", "Red and white"],
+    hintsAr: ["أحمر مع مربع أبيض", "ورقة القيقب", "أحمر وأبيض"],
+    category: "flags",
+    image: "🇨🇦"
+},
+{
+    word: "BRAZIL FLAG",
+    wordAr: "علم البرازيل",
+    hints: ["Green with yellow diamond", "Blue globe with stars", "Order and Progress"],
+    hintsAr: ["أخضر مع معين أصفر", "كرة أرضية زرقاء بنجوم", "نظام وتقدم"],
+    category: "flags",
+    image: "🇧🇷"
+},
+{
+    word: "ITALY FLAG",
+    wordAr: "علم إيطاليا",
+    hints: ["Green, white, red", "Vertical stripes", "Tricolore"],
+    hintsAr: ["أخضر، أبيض، أحمر", "خطوط عمودية", "تريكولور"],
+    category: "flags",
+    image: "🇮🇹"
+},
+{
+    word: "SAUDI ARABIA FLAG",
+    wordAr: "علم السعودية",
+    hints: ["Green with Arabic script", "Sword below Shahada", "No crescent"],
+    hintsAr: ["أخضر مع نص عربي", "سيف تحت الشهادة", "لا هلال"],
+    category: "flags",
+    image: "🇸🇦"
+},
+{
+    word: "EGYPT FLAG",
+    wordAr: "علم مصر",
+    hints: ["Red, white, black", "Eagle of Saladin", "Arabic Republic"],
+    hintsAr: ["أحمر، أبيض، أسود", "نسر صلاح الدين", "جمهورية عربية"],
+    category: "flags",
+    image: "🇪🇬"
+},
+// ===================== Sports =====================
+{
+    word: "FOOTBALL",
+    wordAr: "كرة القدم",
+    hints: ["11 players per team", "90 minutes match", "World Cup tournament"],
+    hintsAr: ["11 لاعب في كل فريق", "مباراة 90 دقيقة", "بطولة كأس العالم"],
+    category: "sports",
+    image: "⚽"
+},
+{
+    word: "BASKETBALL",
+    wordAr: "كرة السلة",
+    hints: ["5 players per team", "NBA championship", "Dribbling required"],
+    hintsAr: ["5 لاعبين في كل فريق", "بطولة NBA", "تنطيط الكرة ضروري"],
+    category: "sports",
+    image: "🏀"
+},
+{
+    word: "TENNIS",
+    wordAr: "تنس",
+    hints: ["Love means zero", "Grand Slam events", "Racket sport"],
+    hintsAr: ["الحب يعني صفر", "بطولات الجراند سلام", "رياضة مضرب"],
+    category: "sports",
+    image: "🎾"
+},
+{
+    word: "SWIMMING",
+    wordAr: "سباحة",
+    hints: ["Four strokes", "Olympic pool", "Butterfly stroke"],
+    hintsAr: ["أربع ضربات", "حوض أولمبي", "سباحة الفراشة"],
+    category: "sports",
+    image: "🏊"
+},
+{
+    word: "BOXING",
+    wordAr: "ملاكمة",
+    hints: ["12-round fights", "Heavyweight division", "Knockout victory"],
+    hintsAr: ["مباريات 12 جولة", "فئة الوزن الثقيل", "فوز بالضربة القاضية"],
+    category: "sports",
+    image: "🥊"
+},
+{
+    word: "CRICKET",
+    wordAr: "كريكيت",
+    hints: ["Test matches", "Ashes series", "Batsman and bowler"],
+    hintsAr: ["مباريات تجريبية", "سلسلة الرماد", "ضارب الكرة وراميها"],
+    category: "sports",
+    image: "🏏"
+},
+{
+    word: "VOLLEYBALL",
+    wordAr: "كرة طائرة",
+    hints: ["Three hits per side", "Net separation", "Beach version"],
+    hintsAr: ["ثلاث ضربات لكل جانب", "فصل الشبكة", "نسخة الشاطئ"],
+    category: "sports",
+    image: "🏐"
+},
+{
+    word: "GOLF",
+    wordAr: "جولف",
+    hints: ["18 holes", "Par score", "Tiger Woods legend"],
+    hintsAr: ["18 حفرة", "درجة بار", "أسطورة تايجر وودز"],
+    category: "sports",
+    image: "⛳"
+},
+{
+    word: "F1 RACING",
+    wordAr: "سباق سيارات",
+    hints: ["Grand Prix", "Pit stops", "Formula One cars"],
+    hintsAr: ["جائزة كبرى", "توقف الحفرة", "سيارات فورمولا واحد"],
+    category: "sports",
+    image: "🏎️"
+},
+{
+    word: "SKIING",
+    wordAr: "تزلج",
+    hints: ["Winter Olympics", "Downhill speed", "Slalom course"],
+    hintsAr: ["الألعاب الأولمبية الشتوية", "سرعة النزول", "مسار التعرج"],
+    category: "sports",
+    image: "⛷️"
+},
+// ===================== Anime =====================
+{
+    word: "DRAGON BALL",
+    wordAr: "دراغون بول",
+    hints: ["Goku protagonist", "Super Saiyan", "Dragon Balls wish"],
+    hintsAr: ["بطل غوكو", "سوبر سايان", "أمنية كرات التنين"],
+    category: "anime",
+    image: "🐉"
+},
+{
+    word: "NARUTO",
+    wordAr: "ناروتو",
+    hints: ["Ninja academy", "Rasengan technique", "Hokage dream"],
+    hintsAr: ["أكاديمية النينجا", "تقنية الراسينغان", "حلم الهوكاجي"],
+    category: "anime",
+    image: "🍥"
+},
+{
+    word: "ONE PIECE",
+    wordAr: "ون بيس",
+    hints: ["Straw Hat crew", "Devil Fruits", "Finding One Piece"],
+    hintsAr: ["طاقم قبعة القش", "فواكه الشيطان", "البحث عن الكنز"],
+    category: "anime",
+    image: "🏴‍☠️"
+},
+{
+    word: "ATTACK ON TITAN",
+    wordAr: "هجوم العمالقة",
+    hints: ["Eren Yeager", "Titan shifters", "Wall Maria"],
+    hintsAr: ["إيرين ييغر", "محوّلو العمالقة", "جدار ماريا"],
+    category: "anime",
+    image: "👹"
+},
+{
+    word: "DEATH NOTE",
+    wordAr: "دفتر الموت",
+    hints: ["Light Yagami", "Shinigami Ryuk", "Write names to kill"],
+    hintsAr: ["لايت ياغامي", "شينغامي ريو", "كتابة الأسماء للقتل"],
+    category: "anime",
+    image: "📓"
+},
+{
+    word: "DEMON SLAYER",
+    wordAr: "قاتل الشياطين",
+    hints: ["Tanjiro Kamado", "Breathing techniques", "Nezuko sister"],
+    hintsAr: ["تانجيرو كامادو", "تقنيات التنفس", "الأخت نيزوكو"],
+    category: "anime",
+    image: "🗡️"
+},
+{
+    word: "MY HERO ACADEMIA",
+    wordAr: "أكاديميتي للأبطال",
+    hints: ["Izuku Midoriya", "One For All quirk", "U.A. High School"],
+    hintsAr: ["إيزوكو ميدوريا", "قوة ون فور أول", "مدرسة يو أيه الثانوية"],
+    category: "anime",
+    image: "🎓"
+},
+{
+    word: "POKEMON",
+    wordAr: "بوكيمون",
+    hints: ["Ash Ketchum", "Gotta catch 'em all", "Pikachu mascot"],
+    hintsAr: ["آش كاتشوم", "اصطدهم جميعًا", "تميمة بيكاتشو"],
+    category: "anime",
+    image: "⚡"
+},
+{
+    word: "SPY X FAMILY",
+    wordAr: "جاسوس × عائلة",
+    hints: ["Loid Forger", "Anya mind-reading", "Found family comedy"],
+    hintsAr: ["لُويد فورجر", "أنيا قارئة الأفكار", "كوميديا عائلة"],
+    category: "anime",
+    image: "👨‍👩‍👧"
+},
+{
+    word: "JUJUTSU KAISEN",
+    wordAr: "جوجوتسو كايسن",
+    hints: ["Yuji Itadori", "Sukuna fingers", "Cursed energy"],
+    hintsAr: ["يوجي إيتادوري", "أصابع سكونا", "الطاقة الملعونة"],
+    category: "anime",
+    image: "👊"
+},
+// ===================== Skills & Hobbies =====================
+{
+    word: "PAINTING",
+    wordAr: "رسم",
+    hints: ["Brush strokes", "Canvas art", "Creative expression"],
+    hintsAr: ["ضربات فرشاة", "فن على القماش", "تعبير إبداعي"],
+    category: "skills",
+    image: "🎨"
+},
+{
+    word: "COOKING",
+    wordAr: "طبخ",
+    hints: ["Recipe following", "Kitchen mastery", "Culinary arts"],
+    hintsAr: ["اتباع وصفة", "إتقان المطبخ", "فنون الطهي"],
+    category: "skills",
+    image: "👨‍🍳"
+},
+{
+    word: "PHOTOGRAPHY",
+    wordAr: "تصوير",
+    hints: ["Camera lens", "Composition rules", "Light capturing"],
+    hintsAr: ["عدسة الكاميرا", "قواعد التكوين", "التقاط الضوء"],
+    category: "skills",
+    image: "📷"
+},
+{
+    word: "GARDENING",
+    wordAr: "بستنة",
+    hints: ["Plant care", "Soil cultivation", "Green thumb"],
+    hintsAr: ["رعاية النباتات", "زراعة التربة", "إبهام أخضر"],
+    category: "skills",
+    image: "🌱"
+},
+{
+    word: "CODING",
+    wordAr: "برمجة",
+    hints: ["Programming languages", "Debugging process", "Algorithm design"],
+    hintsAr: ["لغات البرمجة", "عملية تصحيح الأخطاء", "تصميم الخوارزميات"],
+    category: "skills",
+    image: "💻"
+},
+{
+    word: "DANCING",
+    wordAr: "رقص",
+    hints: ["Rhythm movement", "Choreography steps", "Body expression"],
+    hintsAr: ["حركة الإيقاع", "خطوات الرقص", "تعبير الجسد"],
+    category: "skills",
+    image: "💃"
+},
+{
+    word: "SINGING",
+    wordAr: "غناء",
+    hints: ["Vocal range", "Pitch control", "Breath support"],
+    hintsAr: ["مدى صوتي", "تحكم في النغمة", "دعم التنفس"],
+    category: "skills",
+    image: "🎤"
+},
+{
+    word: "WRITING",
+    wordAr: "كتابة",
+    hints: ["Storytelling craft", "Grammar rules", "Creative prose"],
+    hintsAr: ["حرفة سرد القصص", "قواعد النحو", "نثر إبداعي"],
+    category: "skills",
+    image: "✍️"
+},
+{
+    word: "WOODWORKING",
+    wordAr: "نجارة",
+    hints: ["Carpentry tools", "Joinery techniques", "Furniture making"],
+    hintsAr: ["أدوات النجارة", "تقنيات الربط", "صناعة الأثاث"],
+    category: "skills",
+    image: "🪚"
+},
+{
+    word: "KNITTING",
+    wordAr: "حياكة",
+    hints: ["Yarn craft", "Needle work", "Pattern reading"],
+    hintsAr: ["حرفة الخيوط", "عمل الإبرة", "قراءة النمط"],
+    category: "skills",
+    image: "🧶"
+},
+{
+    word: "CHESS",
+    wordAr: "شطرنج",
+    hints: ["Strategy game", "Checkmate goal", "Piece movement"],
+    hintsAr: ["لعبة استراتيجية", "هدف كش ملك", "حركة القطع"],
+    category: "skills",
+    image: "♟️"
+},
+{
+    word: "YOGA",
+    wordAr: "يوجا",
+    hints: ["Pose holding", "Breath control", "Mindfulness practice"],
+    hintsAr: ["حمل الوضعية", "تحكم في التنفس", "ممارسة اليقظة"],
+    category: "skills",
+    image: "🧘"
+},
+{
+    word: "DIY",
+    wordAr: "اصنعها بنفسك",
+    hints: ["Home projects", "Creative repairs", "Handmade crafts"],
+    hintsAr: ["مشاريع منزلية", "إصلاحات إبداعية", "حرف يدوية"],
+    category: "skills",
+    image: "🔧"
+},
+{
+    word: "MUSIC",
+    wordAr: "موسيقى",
+    hints: ["Instrument playing", "Sheet music", "Harmony creation"],
+    hintsAr: ["عزف الآلات", "نوتة موسيقية", "خلق الانسجام"],
+    category: "skills",
+    image: "🎵"
+},
+{
+    word: "FISHING",
+    wordAr: "صيد سمك",
+    hints: ["Rod casting", "Bait selection", "Patience sport"],
+    hintsAr: ["صب القضيب", "اختيار الطعم", "رياضة الصبر"],
+    category: "skills",
+    image: "🎣"
+},
+{
+    word: "HIKING",
+    wordAr: "مشي في الطبيعة",
+    hints: ["Trail walking", "Nature exploration", "Backpack essentials"],
+    hintsAr: ["المشي في المسار", "استكشاف الطبيعة", "أساسيات الحقيبة"],
+    category: "skills",
+    image: "🥾"
+},
+{
+    word: "MEDITATION",
+    wordAr: "تأمل",
+    hints: ["Mind clearing", "Focus practice", "Stress reduction"],
+    hintsAr: ["تطهير العقل", "ممارسة التركيز", "تقليل التوتر"],
+    category: "skills",
+    image: "🕉️"
+},
+{
+    word: "BAKING",
+    wordAr: "خبز",
+    hints: ["Oven timing", "Recipe precision", "Dough rising"],
+    hintsAr: ["توقيت الفرن", "دقة الوصفة", "ارتفاع العجين"],
+    category: "skills",
+    image: "🍰"
+},
+{
+    word: "LANGUAGE LEARNING",
+    wordAr: "تعلم لغة",
+    hints: ["Vocabulary building", "Grammar study", "Accent practice"],
+    hintsAr: ["بناء المفردات", "دراسة القواعد", "ممارجة اللكنة"],
+    category: "skills",
+    image: "🗣️"
+},
+{
+    word: "PUBLIC SPEAKING",
+    wordAr: "خطابة",
+    hints: ["Audience engagement", "Speech delivery", "Confidence building"],
+    hintsAr: ["تفاعل الجمهور", "تقديم الخطاب", "بناء الثقة"],
+    category: "skills",
+    image: "🎙️"
+} ];

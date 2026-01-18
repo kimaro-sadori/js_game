@@ -3,8 +3,8 @@ let gameState = {
     players: [],
     gameMode: 'classic',
     timer: 120,
-    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities'],
-    
+    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'funny'], // NEW - all 10 categories
+
     // Current game
     currentPlayer: 0,
     imposter: -1,
@@ -342,14 +342,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadSettings() {
     const saved = localStorage.getItem('imposterSettings');
+    
+    // ALL 10 categories should always be the default
+  const ALL_CATEGORIES = [
+    'animals', 'food', 'movies', 'places', 
+    'objects', 'celebrities', 'flags', 
+    'sports', 'anime', 'skills'
+];
+    
     if (saved) {
         const settings = JSON.parse(saved);
-        gameState.timer = settings.timer || 120;
-        gameState.categories = settings.categories || ['animals', 'food', 'movies', 'places', 'objects', 'celebrities'];
         
-        // Timer button
+        // FIX: Properly check if timer exists (even if it's 0)
+        if (typeof settings.timer === 'number') {
+            gameState.timer = settings.timer; // Keep the saved value, even if it's 0
+        } else {
+            gameState.timer = 120; // Default only if timer doesn't exist
+        }
+        
+        // Load saved categories if they exist
+        gameState.categories = settings.categories || [];
+        
+        // CRITICAL FIX: If user has OLD saved categories (less than 10),
+        // we need to ADD the new categories to their saved settings
+        if (gameState.categories.length < ALL_CATEGORIES.length) {
+            console.log('🔄 Upgrading old categories to include new ones...');
+            
+            // Add any missing categories
+            ALL_CATEGORIES.forEach(category => {
+                if (!gameState.categories.includes(category)) {
+                    gameState.categories.push(category);
+                }
+            });
+            
+            // Save the updated categories
+            saveSettings();
+        }
+        
+        // Timer button - IMPORTANT: Remove active class from ALL timer buttons first
+        document.querySelectorAll('.timer-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Then add active class to the correct timer button
         const timerBtn = document.querySelector(`.timer-btn[data-time="${gameState.timer}"]`);
-        if (timerBtn) timerBtn.classList.add('active');
+        if (timerBtn) {
+            timerBtn.classList.add('active');
+        }
         
         // Categories checkboxes - update all checkboxes
         const checkboxes = document.querySelectorAll('.category-checkbox');
@@ -366,17 +405,25 @@ function loadSettings() {
         updateTimerDisplay();
         updateCategoriesDisplay();
     } else {
-        // No saved settings, use defaults
-        gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celebrities'];
+        // No saved settings, use defaults with ALL 10 CATEGORIES
+        gameState.categories = ALL_CATEGORIES;
         saveSettings();
+        
+        // Check all checkboxes by default
+        const checkboxes = document.querySelectorAll('.category-checkbox');
+        checkboxes.forEach(cb => {
+            cb.checked = true;
+        });
         
         // Update Select All button
         if (document.getElementById('selectAllBtn')) {
             document.getElementById('selectAllBtn').textContent = 'Deselect All';
         }
+        
+        updateTimerDisplay();
+        updateCategoriesDisplay();
     }
 }
-
 function saveSettings() {
     const settings = {
         timer: gameState.timer,
@@ -804,8 +851,7 @@ function startGame() {
         document.querySelectorAll('.category-checkbox').forEach(cb => {
             cb.checked = true;
         });
-        gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celebrities'];
-        console.log('Reset to default categories:', gameState.categories);
+gameState.categories = ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'skills'];        console.log('Reset to default categories:', gameState.categories);
         updateCategoriesDisplay();
     }
     

@@ -96,9 +96,7 @@ body {
     color: var(--primary);
 }
 
-.setting-title:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
+
 
 .expand-toggle {
     cursor: pointer;
@@ -276,6 +274,7 @@ body {
 }
 
 /* ===== GAME SETTINGS - SIMPLE ===== */
+/* ===== GAME SETTINGS - SIMPLE ===== */
 .settings-grid {
     display: grid;
     gap: 20px;
@@ -286,11 +285,21 @@ body {
     border-radius: 10px;
     padding: 15px;
     border: 1px solid var(--border);
-    cursor: pointer; /* Add this */
+    cursor: pointer;
+    /* NO transitions, NO hover effects */
+    transition: none !important;
 }
 
-/* Remove cursor from title since group has it now */
-/* Ensure title items are aligned properly */
+/* NO hover effect - keep everything exactly the same */
+.setting-group:hover,
+.setting-group:active,
+.setting-group:focus {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: var(--border) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
 .setting-title {
     display: flex;
     align-items: center;
@@ -298,10 +307,10 @@ body {
     margin-bottom: 15px;
     color: var(--text);
     cursor: default;
-    /* Add these to prevent line breaks */
     flex-wrap: nowrap;
     white-space: nowrap;
 }
+
 .setting-title h3 {
     display: flex;
     align-items: center;
@@ -310,24 +319,58 @@ body {
     gap: 10px;
 }
 
-/* Ensure icon and text stay on same line */
 .setting-title i {
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+.setting-title h3 span {
     flex-shrink: 0;
 }
 
 .setting-title h3 span {
     flex-shrink: 0;
 }
-/* Add hover effect to entire group */
-
-    .setting-group:hover {
-    border-color: var(--primary);
-    /* Remove background color change */
-    /* background: rgba(255, 255, 255, 0.05); */
+/* Setting group styles - NO HOVER EFFECT */
+.setting-group {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    /* Remove transition that causes color change */
+    transition: none;
 }
-/* Remove any color changes on click */
+
+/* Remove hover effect completely */
+.setting-group:hover {
+    /* Keep everything the same - no changes */
+    background: rgba(255, 255, 255, 0.03); /* Same as normal */
+    border-color: var(--border); /* Keep original border */
+}
+
+/* Remove active state color change too */
 .setting-group:active {
-    background: rgba(255, 255, 255, 0.03); /* Keep original */
+    background: rgba(255, 255, 255, 0.03); /* Same as normal */
+}
+.setting-group {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    /* Disable all transitions */
+    transition: none !important;
+}
+
+/* Completely disable hover effects */
+.setting-group:hover,
+.setting-group:active,
+.setting-group:focus {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: var(--border) !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .setting-title i {
@@ -435,10 +478,7 @@ body {
     cursor: pointer;
 }
 
-/* Remove any blocking styles from categories-specific elements */
-#categoriesGrid {
-    /* No special styles needed */
-}
+
 /* Right-aligned checkboxes */
 .category-option {
     display: flex;
@@ -465,7 +505,12 @@ body {
 }
 
 .category-option:hover {
-    border-color: var(--primary);
+    border-color: var(--border);
+}
+.timer-btn:hover,
+.mode-btn:hover {
+    /* Remove border color change */
+    border-color: var(--border); /* Keep original border color */
 }
 
 .category-checkbox:checked + .category-label {
@@ -713,10 +758,7 @@ body {
     margin-bottom: 15px;
 }
 
-.card-content {
-    /* Remove transition completely */
-    /* transition: opacity 0.3s; */
-}
+
 
 .card-content.visible {
     opacity: 1;
@@ -1072,6 +1114,11 @@ body {
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+     .social-buttons {
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+    }
     .dashboard {
         padding: 10px;
     }
@@ -1375,5 +1422,115 @@ img, video {
     content: "▲";
 }
 
+/* Add this to your existing CSS */
+.flag-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 50px;
+}
 
+.flag-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
 
+.flag-icon {
+    font-size: 1.2rem;
+}
+
+.flag-text {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+/* For flag display in game */
+.flag-display {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Make categories grid responsive for new category */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Update categories grid to handle more categories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Make sure categories display shows all selected */
+.categories-display-mini {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+/* ===== REMOVE ALL BACKGROUND COLOR CHANGES ON HOVER ===== */
+.setting-group,
+.setting-title,
+.category-option,
+.timer-btn,
+.mode-btn {
+    transition: none !important;
+}
+
+.setting-group:hover,
+.setting-group:active,
+.setting-group:focus,
+.setting-title:hover,
+.setting-title:active,
+.category-option:hover,
+.category-option:active,
+.timer-btn:hover,
+.timer-btn:active,
+.mode-btn:hover,
+.mode-btn:active {
+    background: inherit !important;
+    background-color: inherit !important;
+    border-color: var(--border) !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Keep cursor pointer for clickable elements */
+.setting-group,
+.category-option,
+.timer-btn,
+.mode-btn,
+.btn,
+.action-btn,
+.social-btn {
+    cursor: pointer;
+}
