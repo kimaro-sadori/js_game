@@ -21,29 +21,53 @@ let gameState = {
 };
 
 // ================= FOOTBALL PLAYERS IMAGES =================
+// const FOOTBALL_PLAYERS = [
+//     { name: "Lionel Messi", image: "images/lionel-messi.jpeg" },
+//     { name: "Cristiano Ronaldo", image: "images/cristiano-ronaldo.jpeg" },
+//     { name: "Kylian Mbappé", image: "images/kylian-mbappe.jpeg" },
+//     { name: "Erling Haaland", image: "images/erling-haaland.jpeg" },
+//     { name: "Kevin De Bruyne", image: "images/kevin-de-bruyne.jpeg" },
+//     { name: "Mohamed Salah", image: "images/mohamed-salah.jpeg" },
+//     { name: "Virgil van Dijk", image: "images/virgil-van-dijk.jpeg" },
+//     { name: "Harry Kane", image: "images/harry-kane.jpeg" },
+//     { name: "Neymar Jr", image: "images/neymar-jr.jpeg" },
+//     { name: "Robert Lewandowski", image: "images/robert-lewandowski.jpeg" },
+//     { name: "Pelé", image: "images/pele.jpeg" },
+//     { name: "Diego Maradona", image: "images/diego-maradona.jpeg" },
+//     { name: "Johan Cruyff", image: "images/johan-cruyff.jpeg" },
+//     { name: "Zinedine Zidane", image: "images/zinedine-zidane.jpeg" },
+//     { name: "Ronaldo Nazário", image: "images/ronaldo-nazario.jpeg" },
+//     { name: "Luka Modrić", image: "images/luka-modric.jpeg" },
+//     { name: "Toni Kroos", image: "images/toni-kroos.jpeg" },
+//     { name: "Sergio Ramos", image: "images/sergio-ramos.jpeg" },
+//     { name: "Manuel Neuer", image: "images/manuel-neuer.jpeg" },
+//     { name: "Karim Benzema", image: "images/karim-benzema.jpeg" },
+//     { name: "Son Heung-min", image: "images/son-heung-min.jpeg" }
+// ];
 const FOOTBALL_PLAYERS = [
-    { name: "Lionel Messi", image: "images/images.jpg" },
-    { name: "Cristiano Ronaldo", image: "images/images.jpg" },
-    { name: "Kylian Mbappé", image: "images/images.jpg" },
-    { name: "Erling Haaland", image: "images/images.jpg" },
-    { name: "Kevin De Bruyne", image: "images/images.jpg" },
-    { name: "Mohamed Salah", image: "images/images.jpg" },
-    { name: "Virgil van Dijk", image: "images/images.jpg" },
-    { name: "Harry Kane", image: "images/images.jpg" },
-    { name: "Neymar Jr", image: "images/images.jpg" },
-    { name: "Robert Lewandowski", image: "images/images.jpg" },
-    { name: "Pelé", image: "images/images.jpg" },
-    { name: "Diego Maradona", image: "images/images.jpg" },
-    { name: "Johan Cruyff", image: "images/images.jpg" },
-    { name: "Zinedine Zidane", image: "images/images.jpg" },
-    { name: "Ronaldo Nazário", image: "images/images.jpg" },
-    { name: "Luka Modrić", image: "images/images.jpg" },
-    { name: "Toni Kroos", image: "images/images.jpg" },
-    { name: "Sergio Ramos", image: "images/images.jpg" },
-    { name: "Manuel Neuer", image: "images/images.jpg" },
-    { name: "Karim Benzema", image: "images/images.jpg" },
-    { name: "Son Heung-min", image: "images/images.jpg" }
+    { name: "Karim Benzema", image: "images/karim-benzema.jpeg" },
+    { name: "Mohamed Salah", image: "images/mohamed-salah.jpeg" },
+    { name: "Kylian Mbappé", image: "images/kylian-mbappe.jpeg" },
+    { name: "Robert Lewandowski", image: "images/robert-lewandowski.jpeg" },
+    { name: "Kevin De Bruyne", image: "images/kevin-de-bruyne.jpeg" },
+    { name: "Erling Haaland", image: "images/erling-haaland.jpeg" },
+    { name: "Vinícius Júnior", image: "images/vinicius-junior.jpeg" },
+    { name: "Harry Kane", image: "images/harry-kane.jpeg" },
+    { name: "Manuel Neuer", image: "images/manuel-neuer.jpeg" },
+    { name: "Luka Modrić", image: "images/luka-modric.jpeg" },
+    { name: "Thibaut Courtois", image: "images/thibaut-courtois.jpeg" },
+    { name: "Virgil van Dijk", image: "images/virgil-van-dijk.jpeg" },
+    { name: "Joshua Kimmich", image: "images/joshua-kimmich.jpeg" },
+    { name: "Sadio Mané", image: "images/sadio-mane.jpeg" },
+    { name: "Ederson", image: "images/ederson.jpeg" },
+    { name: "Toni Kroos", image: "images/toni-kroos.jpeg" },
+    { name: "Casemiro", image: "images/casemiro.jpeg" },
+    { name: "Raheem Sterling", image: "images/raheem-sterling.jpeg" },
+    { name: "Jan Oblak", image: "images/jan-oblak.jpeg" },
+    { name: "Marquinhos", image: "images/marquinhos.jpeg" }
 ];
+
+
 
 // ================= IMAGE MATCH FUNCTIONS =================
 function generateImageGrid() {
