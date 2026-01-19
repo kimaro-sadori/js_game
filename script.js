@@ -48,26 +48,100 @@ const FOOTBALL_PLAYERS = [
 // ================= IMAGE MATCH FUNCTIONS =================
 function generateImageGrid() {
     const imageGrid = document.getElementById('imageGrid');
-    imageGrid.innerHTML = '<div class="loading-images">Loading player images...</div>';
+    imageGrid.innerHTML = '<div class="loading-images">Loading images...</div>';
     
-    const playersToShow = [...FOOTBALL_PLAYERS]
+    // Create a pool from ALL selected categories
+    let imagePool = [];
+    
+    // Check each selected category and add appropriate items
+    gameState.categories.forEach(category => {
+        if (category === 'football') {
+            // Add football players with real images
+            FOOTBALL_PLAYERS.forEach(player => {
+                imagePool.push({
+                    type: 'football',
+                    name: player.name,
+                    image: player.image,
+                    category: 'football',
+                    displayName: player.name
+                });
+            });
+        } else {
+            // Add words from other categories with emojis
+            const categoryWords = words.filter(w => w.category === category);
+            categoryWords.forEach(word => {
+                imagePool.push({
+                    type: 'emoji',
+                    name: word.word,
+                    image: word.image || '❓', // Use emoji from words.js
+                    arabic: word.wordAr,
+                    category: category,
+                    displayName: `${word.word} (${word.wordAr})` // Show both languages
+                });
+            });
+        }
+    });
+    
+    // If no items found (shouldn't happen with category check above)
+    if (imagePool.length === 0) {
+        imageGrid.innerHTML = '<div class="no-images">No images available. Try selecting different categories.</div>';
+        return;
+    }
+    
+    // Shuffle and select 21 items
+    const selectedItems = [...imagePool]
         .sort(() => Math.random() - 0.5)
         .slice(0, 21);
     
-    const imageUrls = playersToShow.map(p => p.image);
+    // Store in game state
+    if (gameState.imageGame) {
+        gameState.imageGame.images = selectedItems;
+    }
     
-    preloadImages(imageUrls, () => {
-        imageGrid.innerHTML = '';
+    // Preload only football images
+    const footballImageUrls = selectedItems
+        .filter(item => item.type === 'football')
+        .map(item => item.image);
+    
+    preloadImages(footballImageUrls, () => {
+        renderImageGrid(selectedItems);
+    });
+}
+
+function renderImageGrid(items) {
+    const imageGrid = document.getElementById('imageGrid');
+    imageGrid.innerHTML = '';
+    
+    items.forEach((item, index) => {
+        const imageCell = document.createElement('div');
+        imageCell.className = 'image-cell-simple';
+        imageCell.dataset.index = index;
+        imageCell.dataset.category = item.category;
+        imageCell.title = item.displayName || item.name;
         
-        playersToShow.forEach((player, index) => {
-            const imageCell = document.createElement('div');
-            imageCell.className = 'image-cell-simple';
-            imageCell.dataset.index = index;
-            imageCell.title = player.name;
-            
+        const numberLabel = document.createElement('div');
+        numberLabel.className = 'image-number';
+        numberLabel.textContent = index + 1;
+        
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'player-name-label';
+        
+        if (item.type === 'emoji') {
+            // For emoji categories, show name in both languages
+            nameLabel.innerHTML = `
+                <strong>${item.name}</strong><br>
+                <small>${item.arabic}</small>
+            `;
+        } else {
+            // For football, just show name
+            nameLabel.textContent = item.name;
+        }
+        
+        if (item.type === 'football') {
+            // Football: show real image
             const img = document.createElement('img');
-            img.src = player.image;
-            img.alt = player.name;
+            img.src = item.image;
+            img.alt = item.name;
             img.className = 'player-image';
             img.loading = 'lazy';
             
@@ -77,24 +151,24 @@ function generateImageGrid() {
                 fallback.className = 'player-fallback';
                 fallback.innerHTML = `
                     <div>⚽</div>
-                    <div style="font-size: 0.7rem; margin-top: 5px;">${player.name.split(' ')[0]}</div>
+                    <div style="font-size: 0.7rem; margin-top: 5px;">${item.name.split(' ')[0]}</div>
                 `;
                 imageCell.appendChild(fallback);
             };
             
-            const numberLabel = document.createElement('div');
-            numberLabel.className = 'image-number';
-            numberLabel.textContent = index + 1;
-            
-            const nameLabel = document.createElement('div');
-            nameLabel.className = 'player-name-label';
-            nameLabel.textContent = player.name;
-            
             imageCell.appendChild(img);
-            imageCell.appendChild(numberLabel);
-            imageCell.appendChild(nameLabel);
-            imageGrid.appendChild(imageCell);
-        });
+        } else {
+            // Other categories: show large emoji
+            const emojiDisplay = document.createElement('div');
+            emojiDisplay.className = 'emoji-display';
+            emojiDisplay.textContent = item.image;
+            
+            imageCell.appendChild(emojiDisplay);
+        }
+        
+        imageCell.appendChild(numberLabel);
+        imageCell.appendChild(nameLabel);
+        imageGrid.appendChild(imageCell);
     });
 }
 
@@ -227,7 +301,8 @@ function setupImageGameListeners() {
     document.getElementById('makeGuessBtn').addEventListener('click', showGuessInterface);
     document.getElementById('endTurnBtn').addEventListener('click', endTurn);
     document.getElementById('submitQuestionBtn').addEventListener('click', submitQuestion);
-    document.getElementById('submitGuessBtn').addEventListener('click', submitGuess);
+    
+
     
     // Question modal
     document.querySelectorAll('.answer-btn').forEach(btn => {
@@ -343,33 +418,7 @@ function skipAnswer() {
     endTurn();
 }
 
-function submitGuess() {
-    const targetPlayer = document.getElementById('playerSelect').value;
-    
-    if (!targetPlayer) {
-        alert('Please select a player to guess!');
-        return;
-    }
-    
-    const imageNumber = prompt(`What image number do you think ${targetPlayer} chose? (1-21)`);
-    
-    if (!imageNumber || isNaN(imageNumber)) {
-        alert('Please enter a valid image number!');
-        return;
-    }
-    
-    const guessedIndex = parseInt(imageNumber) - 1;
-    
-    if (guessedIndex < 0 || guessedIndex >= 21) {
-        alert('Please enter a number between 1 and 21!');
-        return;
-    }
-    
-    const actualIndex = gameState.imageGame.playerSecrets[targetPlayer];
-    const isCorrect = (guessedIndex === actualIndex);
-    
-    showGuessResult(targetPlayer, isCorrect, guessedIndex, actualIndex);
-}
+
 
 function showGuessResult(targetPlayer, isCorrect, guessedIndex, actualIndex) {
     const guesser = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
@@ -1272,20 +1321,21 @@ function startGame() {
     
     // Check mode-specific player requirements
     if (gameState.gameMode === 'images') {
-        // Image mode needs at least 2 players
-        if (gameState.players.length < 2) {
-            alert('Guess the Image mode needs at least 2 players!');
-            return;
-        }
-        
-        if (!gameState.categories.includes('football')) {
-            alert('Guess the Image mode requires Football Players category!');
-            return;
-        }
-        
-        startImageMatch();
+    // Image mode needs at least 2 players
+    if (gameState.players.length < 2) {
+        alert('Guess the Image mode needs at least 2 players!');
         return;
-    } 
+    }
+    
+    // Check if ANY categories are selected
+    if (gameState.categories.length === 0) {
+        alert('Please select at least one category for Guess the Image mode!');
+        return;
+    }
+    
+    startImageMatch();
+    return;
+}
     else if (gameState.gameMode === 'classic' || gameState.gameMode === 'describe') {
         // Classic and Describe modes need at least 3 players
         if (gameState.players.length < 3) {
@@ -2015,7 +2065,7 @@ function getImagesHelp() {
             </div>
             <div class="step">
                 <div class="step-num">☆</div>
-                <div class="step-text"><strong>Required categories:</strong> Football Players</div>
+                <div class="step-text"><strong>Minimum players: </strong> two</div>
             </div>
         </div>
     `;
