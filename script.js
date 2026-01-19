@@ -117,59 +117,104 @@ function renderImageGrid(items) {
         imageCell.className = 'image-cell-simple';
         imageCell.dataset.index = index;
         imageCell.dataset.category = item.category;
-        imageCell.title = item.displayName || item.name;
         
-        const numberLabel = document.createElement('div');
-        numberLabel.className = 'image-number';
-        numberLabel.textContent = index + 1;
-        
-        const nameLabel = document.createElement('div');
-        nameLabel.className = 'player-name-label';
-        
-        if (item.type === 'emoji') {
-            // For emoji categories, show name in both languages
-            nameLabel.innerHTML = `
-                <strong>${item.name}</strong><br>
-                <small>${item.arabic}</small>
-            `;
-        } else {
-            // For football, just show name
-            nameLabel.textContent = item.name;
-        }
+        // Create content container
+        const content = document.createElement('div');
         
         if (item.type === 'football') {
             // Football: show real image
             const img = document.createElement('img');
             img.src = item.image;
             img.alt = item.name;
-            img.className = 'player-image';
-            img.loading = 'lazy';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.display = 'block';
             
             img.onerror = function() {
                 this.style.display = 'none';
                 const fallback = document.createElement('div');
-                fallback.className = 'player-fallback';
-                fallback.innerHTML = `
-                    <div>⚽</div>
-                    <div style="font-size: 0.7rem; margin-top: 5px;">${item.name.split(' ')[0]}</div>
-                `;
-                imageCell.appendChild(fallback);
+                fallback.style.width = '100%';
+                fallback.style.height = '100%';
+                fallback.style.display = 'flex';
+                fallback.style.alignItems = 'center';
+                fallback.style.justifyContent = 'center';
+                fallback.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
+                fallback.style.color = 'white';
+                fallback.style.fontWeight = 'bold';
+                fallback.style.fontSize = '0.8rem';
+                fallback.style.padding = '10px';
+                fallback.style.textAlign = 'center';
+                fallback.textContent = item.name.split(' ')[0];
+                content.appendChild(fallback);
             };
             
-            imageCell.appendChild(img);
+            content.appendChild(img);
         } else {
-            // Other categories: show large emoji
+            // Other categories: show emoji
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
-            emojiDisplay.textContent = item.image;
-            
-            imageCell.appendChild(emojiDisplay);
+            emojiDisplay.textContent = item.image || '❓';
+            content.appendChild(emojiDisplay);
         }
         
+        // Number label
+        const numberLabel = document.createElement('div');
+        numberLabel.className = 'image-number';
+        numberLabel.textContent = index + 1;
+        
+        // Name label
+        const nameLabel = document.createElement('div');
+        nameLabel.className = 'player-name-label';
+        
+        if (item.type === 'emoji') {
+            const englishText = document.createElement('div');
+            englishText.className = 'english-text';
+            let displayName = item.name;
+            if (item.category === 'flags') {
+                displayName = item.name.replace(' FLAG', '');
+            }
+            englishText.textContent = displayName;
+            
+            const arabicText = document.createElement('div');
+            arabicText.className = 'arabic-text';
+            arabicText.textContent = item.arabic;
+            
+            nameLabel.appendChild(englishText);
+            nameLabel.appendChild(arabicText);
+        } else {
+            // For football, just show name
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'english-text';
+            nameDiv.textContent = item.name;
+            nameLabel.appendChild(nameDiv);
+        }
+        
+        // Append everything
+        imageCell.appendChild(content);
         imageCell.appendChild(numberLabel);
         imageCell.appendChild(nameLabel);
         imageGrid.appendChild(imageCell);
     });
+}
+
+// Function to adjust label height based on content
+function adjustNameLabelHeight(label) {
+    const textHeight = label.scrollHeight;
+    const lines = Math.ceil(textHeight / 16); // Approximate line height
+    
+    // Set minimum height, adjust based on line count
+    let minHeight = 40; // Default for 1-2 lines
+    
+    if (lines > 2) {
+        minHeight = 60; // Taller for 3+ lines
+    }
+    if (lines > 3) {
+        minHeight = 80; // Even taller for 4+ lines
+    }
+    
+    label.style.minHeight = `${minHeight}px`;
+    label.style.padding = '8px 4px';
 }
 
 function preloadImages(imageUrls, callback) {

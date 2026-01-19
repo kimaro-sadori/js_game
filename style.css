@@ -1893,6 +1893,89 @@ img, video {
         flex-direction: column;
     }
 }
+/* Better text layout for image labels */
+.player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+    color: white;
+    font-size: 0.8rem;
+    padding: 8px 4px;
+    text-align: center;
+    z-index: 2;
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 40px; /* Adjusts dynamically via JS */
+    transition: min-height 0.2s ease;
+}
+
+/* English text styling */
+.english-text {
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+/* Arabic text styling */
+.arabic-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+/* Space between texts */
+.text-separator {
+    height: 4px;
+}
+
+/* Flag indicator */
+.flag-indicator {
+    margin-top: 4px;
+    font-size: 1.2rem;
+}
+
+
+
+
+/* Category-specific backgrounds */
+.image-cell-simple[data-category="flags"] {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));
+}
+
+.image-cell-simple[data-category="animals"] {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(21, 128, 61, 0.1));
+}
+
+.image-cell-simple[data-category="food"] {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
+}
+
+/* Add other category styles as needed... */
+
+/* Better hover effects */
+.image-cell-simple:hover .player-name-label {
+    background: linear-gradient(to top, rgba(99, 102, 241, 0.9), rgba(99, 102, 241, 0.6));
+}
+
+.image-cell-simple:hover .arabic-text {
+    color: white;
+}
+.support-title {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
 .emoji-display {
     font-size: 3.5rem;
     width: 100%;
@@ -2070,33 +2153,61 @@ img, video {
 }
 
 /* 3 columns × 7 rows grid - FIXED VERSION */
+/* Image Grid - make cells touch each other */
+/* Fix the image grid layout */
 .image-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 1fr;
-    gap: 8px;
+    grid-auto-rows: minmax(120px, auto); /* This is KEY */
+    gap: 4px; /* Small gap between cells */
     margin: 0 auto 15px;
-    max-width: 100%;
-    height: 500px; /* Increased from 450px */
+    width: 100%;
+    max-height: 500px;
     overflow-y: auto;
-    padding: 5px;
+    padding: 2px;
     border-radius: 8px;
     background: rgba(0, 0, 0, 0.1);
 }
 
+/* Add to your CSS */
+
+
+/* Ensure image container fills the cell */
+.image-cell-simple > div:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Make sure the name label doesn't cover too much */
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .image-cell-simple {
+        min-height: 100px;
+    }
+    
+    /* Make name label small at bottom */
+.image-cell-simple .player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%; /* Only 30% height */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: white;
+    padding: 5px;
+    z-index: 2;
+}
+
+}
 /* Image cell - FIXED VERSION */
 /* Image cell - Increase height */
-.image-cell-simple {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    border: 2px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    height: 150px; /* Add fixed height for better control */
-}
+
 
 /* Image will fit perfectly */
 /* Make image fill the cell better */
@@ -2108,11 +2219,7 @@ img, video {
     flex-grow: 1;
 }
 
-.image-cell-simple:hover {
-    border-color: var(--primary);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
+
 
 .image-cell-simple:hover .player-image {
     transform: scale(1.05);
@@ -2123,20 +2230,7 @@ img, video {
     color: white;
     font-weight: 700;
 }
-/* Number label */
-/* Number label - Adjust position */
-.image-number {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 5px 12px; /* Slightly larger */
-    border-radius: 12px;
-    z-index: 3; /* Higher than name label */
-}
+
 
 /* Player name label - FIXED POSITION */
 /* Player name label - Make it taller and more prominent */
@@ -2349,4 +2443,128 @@ img, video {
     .answer-buttons {
         grid-template-columns: 1fr;
     }
+}
+
+/* Image cell labels - SINGLE VERSION (replace all others) */
+.image-cell-simple {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    height: 100%; /* Fill the grid cell */
+    min-height: 120px;
+}
+
+.image-cell-simple:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10; /* Bring to front on hover */
+}
+
+/* Number label - keep this */
+.image-number {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 12px;
+    z-index: 3;
+}
+
+/* Player name label - FIXED VERSION */
+.image-cell-simple .player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: 30px; /* Small height */
+    max-height: 40px; /* Don't let it grow too much */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: white;
+    font-size: 0.7rem; /* Smaller font */
+    padding: 5px 4px; /* Less padding */
+    text-align: center;
+    font-weight: 600;
+    z-index: 2;
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    pointer-events: none; /* Allow clicks through */
+}
+
+/* Text inside the label */
+.image-cell-simple .player-name-label .english-text {
+    font-weight: bold;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.image-cell-simple .player-name-label .arabic-text {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.1;
+    margin-top: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/* Image container should fill the cell */
+/* Ensure image/emoji takes most space */
+.image-cell-simple > div:first-child:not(.image-number):not(.player-name-label) {
+    width: 100%;
+    height: 70%; /* 70% for image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Emoji display styling */
+.emoji-display {
+    font-size: 3rem !important;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+/* For flags, make emoji larger */
+.image-cell-simple[data-category="flags"] .emoji-display {
+    font-size: 4rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .image-cell-simple {
+        min-height: 100px;
+    }
+    
+   /* Make name label small at bottom */
+.image-cell-simple .player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%; /* Only 30% height */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: white;
+    padding: 5px;
+    z-index: 2;
 }

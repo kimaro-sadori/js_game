@@ -716,87 +716,409 @@ const words = [
     },
     // ===================== Flags =====================
 {
-    word: "USA FLAG",
-    wordAr: "علم الولايات المتحدة",
-    hints: ["Stars and Stripes", "Red, white, and blue", "50 states represented"],
-    hintsAr: ["النجوم والمشارب", "أحمر، أبيض، وأزرق", "تمثيل 50 ولاية"],
-    category: "flags",
-    image: "🇺🇸"
+  word: "BOLIVIA FLAG",
+  wordAr: "علم بوليفيا",
+  hints: ["Red yellow green", "Horizontal stripes", "South America"],
+  hintsAr: ["أحمر أصفر أخضر", "خطوط أفقية", "أمريكا الجنوبية"],
+  category: "flags",
+  image: "🇧🇴"
 },
 {
-    word: "UK FLAG",
-    wordAr: "علم المملكة المتحدة",
-    hints: ["Union Jack", "Combined crosses", "Royal standard"],
-    hintsAr: ["يونيون جاك", "صلبان مجتمعة", "المعيار الملكي"],
-    category: "flags",
-    image: "🇬🇧"
+  word: "BOSNIA FLAG",
+  wordAr: "علم البوسنة والهرسك",
+  hints: ["Blue yellow", "Stars diagonal", "Balkans"],
+  hintsAr: ["أزرق أصفر", "نجوم مائلة", "البلقان"],
+  category: "flags",
+  image: "🇧🇦"
 },
 {
-    word: "FRANCE FLAG",
-    wordAr: "علم فرنسا",
-    hints: ["Tricolor", "Blue, white, red", "Liberty, Equality, Fraternity"],
-    hintsAr: ["ثلاثي الألوان", "أزرق، أبيض، أحمر", "حرية، مساواة، أخوة"],
-    category: "flags",
-    image: "🇫🇷"
+  word: "BOTSWANA FLAG",
+  wordAr: "علم بوتسوانا",
+  hints: ["Light blue", "Black white stripe", "Southern Africa"],
+  hintsAr: ["أزرق فاتح", "خط أسود أبيض", "جنوب أفريقيا"],
+  category: "flags",
+  image: "🇧🇼"
 },
 {
-    word: "GERMANY FLAG",
-    wordAr: "علم ألمانيا",
-    hints: ["Black, red, gold", "Horizontal stripes", "Federal Republic"],
-    hintsAr: ["أسود، أحمر، ذهبي", "خطوط أفقية", "جمهورية اتحادية"],
-    category: "flags",
-    image: "🇩🇪"
+  word: "BULGARIA FLAG",
+  wordAr: "علم بلغاريا",
+  hints: ["White green red", "Horizontal stripes", "Eastern Europe"],
+  hintsAr: ["أبيض أخضر أحمر", "خطوط أفقية", "أوروبا الشرقية"],
+  category: "flags",
+  image: "🇧🇬"
 },
 {
-    word: "JAPAN FLAG",
-    wordAr: "علم اليابان",
-    hints: ["Red circle on white", "Rising Sun", "Land of the Rising Sun"],
-    hintsAr: ["دائرة حمراء على أبيض", "الشمس المشرقة", "أرض الشمس المشرقة"],
-    category: "flags",
-    image: "🇯🇵"
+  word: "CAMBODIA FLAG",
+  wordAr: "علم كمبوديا",
+  hints: ["Blue red", "Angkor Wat", "Southeast Asia"],
+  hintsAr: ["أزرق أحمر", "أنغكور وات", "جنوب شرق آسيا"],
+  category: "flags",
+  image: "🇰🇭"
 },
 {
-    word: "CANADA FLAG",
-    wordAr: "علم كندا",
-    hints: ["Red with white square", "Maple leaf", "Red and white"],
-    hintsAr: ["أحمر مع مربع أبيض", "ورقة القيقب", "أحمر وأبيض"],
-    category: "flags",
-    image: "🇨🇦"
+  word: "CHILE FLAG",
+  wordAr: "علم تشيلي",
+  hints: ["Blue white red", "Single star", "South America"],
+  hintsAr: ["أزرق أبيض أحمر", "نجمة واحدة", "أمريكا الجنوبية"],
+  category: "flags",
+  image: "🇨🇱"
 },
 {
-    word: "BRAZIL FLAG",
-    wordAr: "علم البرازيل",
-    hints: ["Green with yellow diamond", "Blue globe with stars", "Order and Progress"],
-    hintsAr: ["أخضر مع معين أصفر", "كرة أرضية زرقاء بنجوم", "نظام وتقدم"],
-    category: "flags",
-    image: "🇧🇷"
+  word: "COSTA RICA FLAG",
+  wordAr: "علم كوستاريكا",
+  hints: ["Blue white red", "Central America", "Horizontal stripes"],
+  hintsAr: ["أزرق أبيض أحمر", "أمريكا الوسطى", "خطوط أفقية"],
+  category: "flags",
+  image: "🇨🇷"
 },
 {
-    word: "ITALY FLAG",
-    wordAr: "علم إيطاليا",
-    hints: ["Green, white, red", "Vertical stripes", "Tricolore"],
-    hintsAr: ["أخضر، أبيض، أحمر", "خطوط عمودية", "تريكولور"],
-    category: "flags",
-    image: "🇮🇹"
+  word: "CROATIA FLAG",
+  wordAr: "علم كرواتيا",
+  hints: ["Red white blue", "Checkered shield", "Balkans"],
+  hintsAr: ["أحمر أبيض أزرق", "درع مربعات", "البلقان"],
+  category: "flags",
+  image: "🇭🇷"
 },
 {
-    word: "SAUDI ARABIA FLAG",
-    wordAr: "علم السعودية",
-    hints: ["Green with Arabic script", "Sword below Shahada", "No crescent"],
-    hintsAr: ["أخضر مع نص عربي", "سيف تحت الشهادة", "لا هلال"],
-    category: "flags",
-    image: "🇸🇦"
+  word: "CUBA FLAG",
+  wordAr: "علم كوبا",
+  hints: ["Red triangle", "Blue white stripes", "Caribbean"],
+  hintsAr: ["مثلث أحمر", "خطوط زرقاء بيضاء", "الكاريبي"],
+  category: "flags",
+  image: "🇨🇺"
 },
 {
-    word: "EGYPT FLAG",
-    wordAr: "علم مصر",
-    hints: ["Red, white, black", "Eagle of Saladin", "Arabic Republic"],
-    hintsAr: ["أحمر، أبيض، أسود", "نسر صلاح الدين", "جمهورية عربية"],
-    category: "flags",
-    image: "🇪🇬"
+  word: "CZECH REPUBLIC FLAG",
+  wordAr: "علم التشيك",
+  hints: ["Blue triangle", "Red white", "Central Europe"],
+  hintsAr: ["مثلث أزرق", "أحمر أبيض", "أوروبا الوسطى"],
+  category: "flags",
+  image: "🇨🇿"
 },
+{
+  word: "DENMARK FLAG",
+  wordAr: "علم الدنمارك",
+  hints: ["White cross", "Red background", "Nordic"],
+  hintsAr: ["صليب أبيض", "خلفية حمراء", "إسكندنافيا"],
+  category: "flags",
+  image: "🇩🇰"
+},
+{
+  word: "DOMINICAN REPUBLIC FLAG",
+  wordAr: "علم جمهورية الدومينيكان",
+  hints: ["White cross", "Red blue", "Caribbean"],
+  hintsAr: ["صليب أبيض", "أحمر أزرق", "الكاريبي"],
+  category: "flags",
+  image: "🇩🇴"
+},
+{
+  word: "ECUADOR FLAG",
+  wordAr: "علم الإكوادور",
+  hints: ["Yellow blue red", "Coat of arms", "Equator"],
+  hintsAr: ["أصفر أزرق أحمر", "شعار", "خط الاستواء"],
+  category: "flags",
+  image: "🇪🇨"
+},
+{
+  word: "EL SALVADOR FLAG",
+  wordAr: "علم السلفادور",
+  hints: ["Blue white blue", "Central America", "Coat of arms"],
+  hintsAr: ["أزرق أبيض أزرق", "أمريكا الوسطى", "شعار"],
+  category: "flags",
+  image: "🇸🇻"
+},
+{
+  word: "ESTONIA FLAG",
+  wordAr: "علم إستونيا",
+  hints: ["Blue black white", "Baltic state", "Northern Europe"],
+  hintsAr: ["أزرق أسود أبيض", "دولة بلطيق", "شمال أوروبا"],
+  category: "flags",
+  image: "🇪🇪"
+},
+{
+  word: "FINLAND FLAG",
+  wordAr: "علم فنلندا",
+  hints: ["Blue cross", "White background", "Nordic"],
+  hintsAr: ["صليب أزرق", "خلفية بيضاء", "إسكندنافيا"],
+  category: "flags",
+  image: "🇫🇮"
+},
+{
+  word: "GEORGIA FLAG",
+  wordAr: "علم جورجيا",
+  hints: ["Five crosses", "White background", "Caucasus"],
+  hintsAr: ["خمسة صلبان", "خلفية بيضاء", "القوقاز"],
+  category: "flags",
+  image: "🇬🇪"
+},
+{
+  word: "GREECE FLAG",
+  wordAr: "علم اليونان",
+  hints: ["Blue white", "Cross", "Mediterranean"],
+  hintsAr: ["أزرق أبيض", "صليب", "البحر المتوسط"],
+  category: "flags",
+  image: "🇬🇷"
+},
+{
+  word: "HUNGARY FLAG",
+  wordAr: "علم المجر",
+  hints: ["Red white green", "Horizontal stripes", "Central Europe"],
+  hintsAr: ["أحمر أبيض أخضر", "خطوط أفقية", "أوروبا الوسطى"],
+  category: "flags",
+  image: "🇭🇺"
+},
+{
+  word: "ICELAND FLAG",
+  wordAr: "علم آيسلندا",
+  hints: ["Red cross", "Blue background", "Nordic island"],
+  hintsAr: ["صليب أحمر", "خلفية زرقاء", "جزيرة إسكندنافية"],
+  category: "flags",
+  image: "🇮🇸"
+},
+{
+  word: "IRELAND FLAG",
+  wordAr: "علم إيرلندا",
+  hints: ["Green white orange", "Vertical stripes", "Western Europe"],
+  hintsAr: ["أخضر أبيض برتقالي", "خطوط عمودية", "أوروبا الغربية"],
+  category: "flags",
+  image: "🇮🇪"
+},
+{
+  word: "ISRAEL FLAG",
+  wordAr: "علم إسرائيل",
+  hints: ["Blue white", "Star of David", "Middle East"],
+  hintsAr: ["أزرق أبيض", "نجمة داوود", "الشرق الأوسط"],
+  category: "flags",
+  image: "🇮🇱"
+},
+{
+  word: "JAMAICA FLAG",
+  wordAr: "علم جامايكا",
+  hints: ["Green yellow black", "Diagonal cross", "Caribbean"],
+  hintsAr: ["أخضر أصفر أسود", "صليب مائل", "الكاريبي"],
+  category: "flags",
+  image: "🇯🇲"
+},
+{
+  word: "JORDAN FLAG",
+  wordAr: "علم الأردن",
+  hints: ["Red triangle", "White star", "Arab colors"],
+  hintsAr: ["مثلث أحمر", "نجمة بيضاء", "ألوان عربية"],
+  category: "flags",
+  image: "🇯🇴"
+},
+{
+  word: "KAZAKHSTAN FLAG",
+  wordAr: "علم كازاخستان",
+  hints: ["Light blue", "Sun and eagle", "Central Asia"],
+  hintsAr: ["أزرق فاتح", "شمس ونسر", "آسيا الوسطى"],
+  category: "flags",
+  image: "🇰🇿"
+},
+{
+  word: "KUWAIT FLAG",
+  wordAr: "علم الكويت",
+  hints: ["Black trapezoid", "Arab colors", "Gulf state"],
+  hintsAr: ["شكل أسود", "ألوان عربية", "دولة خليجية"],
+  category: "flags",
+  image: "🇰🇼"
+},
+{
+  word: "KYRGYZSTAN FLAG",
+  wordAr: "علم قيرغيزستان",
+  hints: ["Red background", "Yellow sun", "Central Asia"],
+  hintsAr: ["خلفية حمراء", "شمس صفراء", "آسيا الوسطى"],
+  category: "flags",
+  image: "🇰🇬"
+},
+{
+  word: "LAOS FLAG",
+  wordAr: "علم لاوس",
+  hints: ["Blue red", "White circle", "Southeast Asia"],
+  hintsAr: ["أزرق أحمر", "دائرة بيضاء", "جنوب شرق آسيا"],
+  category: "flags",
+  image: "🇱🇦"
+},
+{
+  word: "LATVIA FLAG",
+  wordAr: "علم لاتفيا",
+  hints: ["Maroon white", "Horizontal stripes", "Baltic"],
+  hintsAr: ["خمري أبيض", "خطوط أفقية", "البلطيق"],
+  category: "flags",
+  image: "🇱🇻"
+},
+{
+  word: "LEBANON FLAG",
+  wordAr: "علم لبنان",
+  hints: ["Red white", "Cedar tree", "Levant"],
+  hintsAr: ["أحمر أبيض", "شجرة الأرز", "بلاد الشام"],
+  category: "flags",
+  image: "🇱🇧"
+},
+{
+  word: "LIBYA FLAG",
+  wordAr: "علم ليبيا",
+  hints: ["Red black green", "Crescent and star", "North Africa"],
+  hintsAr: ["أحمر أسود أخضر", "هلال ونجمة", "شمال أفريقيا"],
+  category: "flags",
+  image: "🇱🇾"
+},
+{
+  word: "LITHUANIA FLAG",
+  wordAr: "علم ليتوانيا",
+  hints: ["Yellow green red", "Horizontal stripes", "Baltic"],
+  hintsAr: ["أصفر أخضر أحمر", "خطوط أفقية", "البلطيق"],
+  category: "flags",
+  image: "🇱🇹"
+},
+{
+  word: "LUXEMBOURG FLAG",
+  wordAr: "علم لوكسمبورغ",
+  hints: ["Red white blue", "Horizontal stripes", "Western Europe"],
+  hintsAr: ["أحمر أبيض أزرق", "خطوط أفقية", "أوروبا الغربية"],
+  category: "flags",
+  image: "🇱🇺"
+},
+{
+  word: "MADAGASCAR FLAG",
+  wordAr: "علم مدغشقر",
+  hints: ["Red green white", "Vertical band", "Island nation"],
+  hintsAr: ["أحمر أخضر أبيض", "شريط عمودي", "دولة جزر"],
+  category: "flags",
+  image: "🇲🇬"
+},
+{
+  word: "MALAWI FLAG",
+  wordAr: "علم مالاوي",
+  hints: ["Black red green", "Rising sun", "East Africa"],
+  hintsAr: ["أسود أحمر أخضر", "شمس مشرقة", "شرق أفريقيا"],
+  category: "flags",
+  image: "🇲🇼"
+},{
+  word: "MALI FLAG",
+  wordAr: "علم مالي",
+  hints: ["Green yellow red", "Vertical stripes", "West Africa"],
+  hintsAr: ["أخضر أصفر أحمر", "خطوط عمودية", "غرب أفريقيا"],
+  category: "flags",
+  image: "🇲🇱"
+},
+{
+  word: "MAURITANIA FLAG",
+  wordAr: "علم موريتانيا",
+  hints: ["Green background", "Crescent and star", "West Africa"],
+  hintsAr: ["خلفية خضراء", "هلال ونجمة", "غرب أفريقيا"],
+  category: "flags",
+  image: "🇲🇷"
+},
+{
+  word: "MONGOLIA FLAG",
+  wordAr: "علم منغوليا",
+  hints: ["Red blue yellow", "Soyombo symbol", "East Asia"],
+  hintsAr: ["أحمر أزرق أصفر", "رمز سويمبو", "شرق آسيا"],
+  category: "flags",
+  image: "🇲🇳"
+},
+{
+  word: "MONTENEGRO FLAG",
+  wordAr: "علم الجبل الأسود",
+  hints: ["Red with gold border", "Double-headed eagle", "Balkans"],
+  hintsAr: ["أحمر مع إطار ذهبي", "نسر برأسين", "البلقان"],
+  category: "flags",
+  image: "🇲🇪"
+},
+{
+  word: "NAMIBIA FLAG",
+  wordAr: "علم ناميبيا",
+  hints: ["Blue red green", "Diagonal stripe", "Southern Africa"],
+  hintsAr: ["أزرق أحمر أخضر", "خط مائل", "جنوب أفريقيا"],
+  category: "flags",
+  image: "🇳🇦"
+},
+{
+  word: "NETHERLANDS FLAG",
+  wordAr: "علم هولندا",
+  hints: ["Red white blue", "Horizontal stripes", "Western Europe"],
+  hintsAr: ["أحمر أبيض أزرق", "خطوط أفقية", "أوروبا الغربية"],
+  category: "flags",
+  image: "🇳🇱"
+},
+{
+  word: "NEW ZEALAND FLAG",
+  wordAr: "علم نيوزيلندا",
+  hints: ["Southern Cross", "Union Jack", "Oceania"],
+  hintsAr: ["الصليب الجنوبي", "علم بريطانيا", "أوقيانوسيا"],
+  category: "flags",
+  image: "🇳🇿"
+},
+{
+  word: "NICARAGUA FLAG",
+  wordAr: "علم نيكاراغوا",
+  hints: ["Blue white blue", "Triangle emblem", "Central America"],
+  hintsAr: ["أزرق أبيض أزرق", "شعار مثلث", "أمريكا الوسطى"],
+  category: "flags",
+  image: "🇳🇮"
+},
+{
+  word: "NIGER FLAG",
+  wordAr: "علم النيجر",
+  hints: ["Orange white green", "Orange circle", "West Africa"],
+  hintsAr: ["برتقالي أبيض أخضر", "دائرة برتقالية", "غرب أفريقيا"],
+  category: "flags",
+  image: "🇳🇪"
+},
+{
+  word: "NORTH MACEDONIA FLAG",
+  wordAr: "علم مقدونيا الشمالية",
+  hints: ["Red yellow", "Sun rays", "Balkans"],
+  hintsAr: ["أحمر أصفر", "أشعة الشمس", "البلقان"],
+  category: "flags",
+  image: "🇲🇰"
+},
+{
+  word: "NORWAY FLAG",
+  wordAr: "علم النرويج",
+  hints: ["Blue cross", "Red background", "Nordic"],
+  hintsAr: ["صليب أزرق", "خلفية حمراء", "إسكندنافيا"],
+  category: "flags",
+  image: "🇳🇴"
+},
+{
+  word: "OMAN FLAG",
+  wordAr: "علم عمان",
+  hints: ["White red green", "National emblem", "Arabian Peninsula"],
+  hintsAr: ["أبيض أحمر أخضر", "شعار وطني", "شبه الجزيرة العربية"],
+  category: "flags",
+  image: "🇴🇲"
+},
+{
+  word: "PANAMA FLAG",
+  wordAr: "علم بنما",
+  hints: ["Red blue white", "Two stars", "Central America"],
+  hintsAr: ["أحمر أزرق أبيض", "نجمتان", "أمريكا الوسطى"],
+  category: "flags",
+  image: "🇵🇦"
+},
+{
+  word: "PARAGUAY FLAG",
+  wordAr: "علم باراغواي",
+  hints: ["Red white blue", "Coat of arms", "South America"],
+  hintsAr: ["أحمر أبيض أزرق", "شعار", "أمريكا الجنوبية"],
+  category: "flags",
+  image: "🇵🇾"
+},
+{
+  word: "POLAND FLAG",
+  wordAr: "علم بولندا",
+  hints: ["White red", "Horizontal bicolor", "Central Europe"],
+  hintsAr: ["أبيض أحمر", "لونان أفقيان", "أوروبا الوسطى"],
+  category: "flags",
+  image: "🇵🇱"
+}
+
+
+
 // ===================== Sports =====================
-{
+,{
     word: "FOOTBALL",
     wordAr: "كرة القدم",
     hints: ["11 players per team", "90 minutes match", "World Cup tournament"],
