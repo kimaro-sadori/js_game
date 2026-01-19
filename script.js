@@ -50,13 +50,11 @@ function generateImageGrid() {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '<div class="loading-images">Loading images...</div>';
     
-    // Create a pool from ALL selected categories
     let imagePool = [];
     
-    // Check each selected category and add appropriate items
+    // Create image pool
     gameState.categories.forEach(category => {
         if (category === 'football') {
-            // Add football players with real images
             FOOTBALL_PLAYERS.forEach(player => {
                 imagePool.push({
                     type: 'football',
@@ -67,50 +65,36 @@ function generateImageGrid() {
                 });
             });
         } else {
-            // Add words from other categories with emojis
             const categoryWords = words.filter(w => w.category === category);
             categoryWords.forEach(word => {
                 imagePool.push({
                     type: 'emoji',
                     name: word.word,
-                    image: word.image || '❓', // Use emoji from words.js
+                    image: word.image || '❓',
                     arabic: word.wordAr,
                     category: category,
-                    displayName: `${word.word} (${word.wordAr})` // Show both languages
+                    displayName: `${word.word} (${word.wordAr})`
                 });
             });
         }
     });
     
-    // If no items found (shouldn't happen with category check above)
-    if (imagePool.length === 0) {
-        imageGrid.innerHTML = '<div class="no-images">No images available. Try selecting different categories.</div>';
-        return;
-    }
+    // Get 16 random items
+    const selectedItems = [...imagePool].sort(() => Math.random() - 0.5).slice(0, 16);
     
-    // Shuffle and select 21 items
-    const selectedItems = [...imagePool]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 21);
+    // Initialize game state
+    gameState.imageGame = gameState.imageGame || {};
+    gameState.imageGame.images = selectedItems;
+    gameState.imageGame.selections = {};
+    gameState.imageGame.guesses = {};
     
-    // Store in game state
-    if (gameState.imageGame) {
-        gameState.imageGame.images = selectedItems;
-    }
-    
-    // Preload only football images
-    const footballImageUrls = selectedItems
-        .filter(item => item.type === 'football')
-        .map(item => item.image);
-    
-    preloadImages(footballImageUrls, () => {
-        renderImageGrid(selectedItems);
-    });
+    renderImageGrid(selectedItems);
 }
 
 function renderImageGrid(items) {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '';
+    imageGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
     
     items.forEach((item, index) => {
         const imageCell = document.createElement('div');
@@ -118,85 +102,117 @@ function renderImageGrid(items) {
         imageCell.dataset.index = index;
         imageCell.dataset.category = item.category;
         
-        // Create content container
+        // Image content
         const content = document.createElement('div');
+        content.className = 'image-content';
         
         if (item.type === 'football') {
-            // Football: show real image
             const img = document.createElement('img');
             img.src = item.image;
             img.alt = item.name;
-            img.style.width = '100%';
-            img.style.height = '100%';
-            img.style.objectFit = 'cover';
-            img.style.display = 'block';
-            
-            img.onerror = function() {
-                this.style.display = 'none';
-                const fallback = document.createElement('div');
-                fallback.style.width = '100%';
-                fallback.style.height = '100%';
-                fallback.style.display = 'flex';
-                fallback.style.alignItems = 'center';
-                fallback.style.justifyContent = 'center';
-                fallback.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-dark))';
-                fallback.style.color = 'white';
-                fallback.style.fontWeight = 'bold';
-                fallback.style.fontSize = '0.8rem';
-                fallback.style.padding = '10px';
-                fallback.style.textAlign = 'center';
-                fallback.textContent = item.name.split(' ')[0];
-                content.appendChild(fallback);
-            };
-            
+            img.className = 'player-image';
             content.appendChild(img);
         } else {
-            // Other categories: show emoji
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
-            emojiDisplay.textContent = item.image || '❓';
+            emojiDisplay.textContent = item.image;
             content.appendChild(emojiDisplay);
         }
         
-        // Number label
+        // Number
         const numberLabel = document.createElement('div');
         numberLabel.className = 'image-number';
         numberLabel.textContent = index + 1;
         
-        // Name label
+        // Name
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
+        nameLabel.innerHTML = `<div class="english-text">${item.type === 'emoji' ? item.name : item.name}</div>`;
         
-        if (item.type === 'emoji') {
-            const englishText = document.createElement('div');
-            englishText.className = 'english-text';
-            let displayName = item.name;
-            if (item.category === 'flags') {
-                displayName = item.name.replace(' FLAG', '');
-            }
-            englishText.textContent = displayName;
-            
-            const arabicText = document.createElement('div');
-            arabicText.className = 'arabic-text';
-            arabicText.textContent = item.arabic;
-            
-            nameLabel.appendChild(englishText);
-            nameLabel.appendChild(arabicText);
-        } else {
-            // For football, just show name
-            const nameDiv = document.createElement('div');
-            nameDiv.className = 'english-text';
-            nameDiv.textContent = item.name;
-            nameLabel.appendChild(nameDiv);
-        }
+        // Selection indicator
+        const selectionIndicator = document.createElement('div');
+        selectionIndicator.className = 'selection-indicator';
+        selectionIndicator.style.display = 'none';
         
-        // Append everything
+        // Player marks
+        const playerMarks = document.createElement('div');
+        playerMarks.className = 'player-marks';
+        
         imageCell.appendChild(content);
         imageCell.appendChild(numberLabel);
         imageCell.appendChild(nameLabel);
+        imageCell.appendChild(selectionIndicator);
+        imageCell.appendChild(playerMarks);
         imageGrid.appendChild(imageCell);
+        
+        imageCell.addEventListener('click', handleImageClick);
     });
 }
+
+function handleImageClick(event) {
+    if (!gameState.imageGame) return;
+    
+    const cell = event.currentTarget;
+    const index = parseInt(cell.dataset.index);
+    const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    
+    // SELECTION PHASE
+    if (gameState.imageGame.turnPhase === 'selection') {
+        const selectedIndex = gameState.imageGame.selections[currentPlayer];
+        
+        if (selectedIndex === index) {
+            // Deselect
+            delete gameState.imageGame.selections[currentPlayer];
+            cell.querySelector('.selection-indicator').style.display = 'none';
+        } else {
+            // Select new image
+            gameState.imageGame.selections[currentPlayer] = index;
+            
+            // Clear all indicators
+            document.querySelectorAll('.selection-indicator').forEach(ind => {
+                ind.style.display = 'none';
+            });
+            
+            // Show this one
+            const indicator = cell.querySelector('.selection-indicator');
+            indicator.textContent = '✔';
+            indicator.style.display = 'block';
+            indicator.className = 'selection-indicator selected';
+        }
+    }
+    // GUESSING PHASE
+    else if (gameState.imageGame.turnPhase === 'guessing') {
+        const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+        
+        if (!gameState.imageGame.guesses[guessingPlayer]) {
+            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
+        }
+        
+        const playerGuesses = gameState.imageGame.guesses[guessingPlayer];
+        const cellIndex = cell.dataset.index;
+        const playerMarks = cell.querySelector('.player-marks');
+        
+        // Toggle X mark
+        if (playerGuesses.marks.includes(cellIndex)) {
+            // Remove X
+            const markIndex = playerGuesses.marks.indexOf(cellIndex);
+            playerGuesses.marks.splice(markIndex, 1);
+            playerMarks.textContent = '';
+        } else {
+            // Add X (max 5)
+            if (playerGuesses.marks.length < 5) {
+                playerGuesses.marks.push(cellIndex);
+                playerMarks.textContent = '❌';
+                playerMarks.className = 'player-marks guess-mark';
+            }
+        }
+    }
+}
+// ================= UPDATED IMAGE MATCH FUNCTIONS =================
+
+
+
+
 
 // Function to adjust label height based on content
 function adjustNameLabelHeight(label) {
@@ -246,10 +262,11 @@ function preloadImages(imageUrls, callback) {
     });
 }
 
-// ================= IMAGE MATCH MODE =================
+
+// ================= UPDATED GAME FLOW =================
+
+// ================= START IMAGE GAME =================
 function startImageMatch() {
-    console.log('Starting Image Match (Who/What Am I?) mode...');
-    
     if (gameState.players.length < 2) {
         alert('Need at least 2 players for Guess the Image!');
         backToLobby();
@@ -258,19 +275,20 @@ function startImageMatch() {
     
     incrementPlayCount();
     
+    // Hide lobby
     document.querySelector('.dashboard').style.display = 'none';
     document.querySelector('.start-section').style.display = 'none';
     document.querySelector('.social-buttons').style.display = 'none';
     
+    // Initialize game
     gameState.imageGame = {
         players: [...gameState.players],
         currentPlayerIndex: 0,
-        playerSecrets: {},
-        revealedPlayers: [],
         turnPhase: 'selection',
-        currentQuestion: null,
-        timer: gameState.timer,
-        images: FOOTBALL_PLAYERS.slice(0, 21)
+        selections: {},
+        guesses: {},
+        revealedPlayers: [],
+        timer: gameState.timer
     };
     
     showImageMatchScreen();
@@ -286,16 +304,30 @@ function showImageMatchScreen() {
     generateImageGrid();
     updatePlayerDisplay();
     
-    document.getElementById('secretSelection').style.display = 'block';
-    document.getElementById('gamePhase').style.display = 'none';
+    // Show selection phase
+    const secretSection = document.getElementById('secretSelection');
+    const gamePhase = document.getElementById('gamePhase');
+    
+    if (gameState.imageGame.turnPhase === 'selection') {
+        secretSection.style.display = 'block';
+        gamePhase.style.display = 'none';
+        
+        // Update instruction
+        const instructionEl = document.querySelector('.selection-instruction');
+        if (instructionEl) {
+            instructionEl.innerHTML = `
+                <i class="fas fa-user-secret"></i>
+                <h3>Choose Your Secret Image!</h3>
+                <p><strong>${gameState.imageGame.players[gameState.imageGame.currentPlayerIndex]}</strong>, tap an image to select it.</p>
+                <p>✔ will appear. Pass to next player when done.</p>
+            `;
+        }
+    } else {
+        secretSection.style.display = 'none';
+        gamePhase.style.display = 'block';
+    }
     
     setupImageGameListeners();
-    
-    if (gameState.timer > 0) {
-        startImageGameTimer();
-    } else {
-        document.getElementById('imageTimerDisplay').textContent = '∞';
-    }
 }
 
 function updatePlayerDisplay() {
@@ -305,84 +337,231 @@ function updatePlayerDisplay() {
     const currentPlayer = game.players[game.currentPlayerIndex];
     
     document.getElementById('currentImagePlayerName').textContent = currentPlayer;
-    document.getElementById('imagePlayerCounter').textContent = 
-        `${game.currentPlayerIndex + 1}/${game.players.length}`;
+    document.getElementById('imagePlayerCounter').textContent = `${game.currentPlayerIndex + 1}/${game.players.length}`;
     
-    const playerSelect = document.getElementById('playerSelect');
-    playerSelect.innerHTML = '';
-    
-    game.players.forEach((player, index) => {
-        if (index !== game.currentPlayerIndex && !game.revealedPlayers.includes(player)) {
-            const option = document.createElement('option');
-            option.value = player;
-            option.textContent = player;
-            playerSelect.appendChild(option);
-        }
-    });
-    
-    let instruction = '';
-    if (game.turnPhase === 'selection') {
-        instruction = 'Choose your secret image!';
-    } else if (game.turnPhase === 'playing') {
-        instruction = 'Ask a question or make a guess!';
-    } else if (game.turnPhase === 'answering') {
-        instruction = 'Answer the question!';
-    }
+    // Update instruction
+    let instruction = game.turnPhase === 'selection' 
+        ? 'Tap an image to choose your secret!' 
+        : 'Tap images to mark with ❌, then guess!';
     
     document.getElementById('turnInstruction').textContent = instruction;
-}
-
-function setupImageGameListeners() {
-    // Remove existing listeners first
-    const confirmBtn = document.getElementById('confirmSecretBtn');
-    const newConfirmBtn = confirmBtn.cloneNode(true);
-    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-    
-    // Add new listener
-    document.getElementById('confirmSecretBtn').addEventListener('click', confirmSecret);
-    
-    // Setup other listeners
-    document.getElementById('askQuestionBtn').addEventListener('click', showQuestionInterface);
-    document.getElementById('makeGuessBtn').addEventListener('click', showGuessInterface);
-    document.getElementById('endTurnBtn').addEventListener('click', endTurn);
-    document.getElementById('submitQuestionBtn').addEventListener('click', submitQuestion);
-    
-
-    
-    // Question modal
-    document.querySelectorAll('.answer-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            answerQuestion(this.dataset.answer);
-        });
-    });
-    
-    document.getElementById('skipAnswerBtn').addEventListener('click', skipAnswer);
-    document.getElementById('nextTurnBtn').addEventListener('click', continueAfterGuess);
 }
 
 function confirmSecret() {
     if (!gameState.imageGame) return;
     
     const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-    const randomIndex = Math.floor(Math.random() * 21); // 21 images
-    gameState.imageGame.playerSecrets[currentPlayer] = randomIndex;
     
+    // Check selection
+    if (gameState.imageGame.selections[currentPlayer] === undefined) {
+        alert('Please select an image first!');
+        return;
+    }
+    
+    // Hide indicator
+    document.querySelectorAll('.selection-indicator').forEach(ind => {
+        ind.style.display = 'none';
+    });
+    
+    // Next player
     gameState.imageGame.currentPlayerIndex++;
     
     if (gameState.imageGame.currentPlayerIndex < gameState.imageGame.players.length) {
+        // Next player's turn
         updatePlayerDisplay();
-        alert(`${currentPlayer} has chosen their secret! Pass to next player.`);
+        
+        // Update instruction
+        const instructionEl = document.querySelector('.selection-instruction');
+        if (instructionEl) {
+            instructionEl.innerHTML = `
+                <i class="fas fa-user-secret"></i>
+                <h3>Choose Your Secret Image!</h3>
+                <p><strong>${gameState.imageGame.players[gameState.imageGame.currentPlayerIndex]}</strong>, tap an image to select it.</p>
+                <p>✔ will appear. Pass to next player when done.</p>
+            `;
+        }
+        
+        alert(`${currentPlayer} has chosen! Pass to next player.`);
     } else {
+        // All players chosen - start guessing
         gameState.imageGame.currentPlayerIndex = 0;
-        gameState.imageGame.turnPhase = 'playing';
+        gameState.imageGame.turnPhase = 'guessing';
         
         document.getElementById('secretSelection').style.display = 'none';
         document.getElementById('gamePhase').style.display = 'block';
         
         updatePlayerDisplay();
-        alert('All players have chosen their secrets! Game begins.');
+        alert('All players have chosen! Game begins.');
     }
 }
+
+function submitGuess() {
+    if (!gameState.imageGame) return;
+    
+    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    const targetPlayer = document.getElementById('playerSelect').value;
+    const guessIndex = prompt(`Which image number do you think ${targetPlayer} chose? (1-16)`);
+    
+    if (!guessIndex || !targetPlayer) {
+        alert('Please select a player and enter a guess!');
+        return;
+    }
+    
+    const guessNum = parseInt(guessIndex) - 1;
+    
+    if (guessNum < 0 || guessNum > 15) {
+        alert('Please enter a number between 1 and 16');
+        return;
+    }
+    
+    // Check guess
+    const actualIndex = gameState.imageGame.selections[targetPlayer];
+    const isCorrect = guessNum === actualIndex;
+    
+    if (isCorrect) {
+        // Correct guess
+        gameState.imageGame.revealedPlayers.push(targetPlayer);
+        
+        // Show correct image
+        const imageCell = document.querySelector(`.image-cell-simple[data-index="${actualIndex}"]`);
+        const indicator = imageCell.querySelector('.selection-indicator');
+        indicator.textContent = '🎯';
+        indicator.style.display = 'block';
+        indicator.className = 'selection-indicator correct';
+        
+        alert(`✅ Correct! ${targetPlayer} chose image ${guessIndex}. ${targetPlayer} is revealed!`);
+        
+        // Check if game over
+        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
+            setTimeout(endImageGame, 1500);
+            return;
+        }
+    } else {
+        // Wrong guess
+        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessIndex}.`);
+        
+        // Track wrong guess
+        if (!gameState.imageGame.guesses[guessingPlayer]) {
+            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
+        }
+        gameState.imageGame.guesses[guessingPlayer].eliminated.push(guessNum);
+    }
+    
+    // Next turn
+    endTurn();
+}
+
+function showGuessInterface() {
+    document.getElementById('guessInterface').style.display = 'block';
+    document.getElementById('questionInterface').style.display = 'none';
+    
+    // Update player list
+    const playerSelect = document.getElementById('playerSelect');
+    playerSelect.innerHTML = '<option value="">Select a player to guess...</option>';
+    
+    gameState.imageGame.players.forEach((player, index) => {
+        if (index !== gameState.imageGame.currentPlayerIndex && 
+            !gameState.imageGame.revealedPlayers.includes(player)) {
+            const option = document.createElement('option');
+            option.value = player;
+            option.textContent = player;
+            playerSelect.appendChild(option);
+        }
+    });
+}
+
+function endTurn() {
+    if (!gameState.imageGame) return;
+    
+    // Find next player who isn't revealed
+    let nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
+    let attempts = 0;
+    
+    while (gameState.imageGame.revealedPlayers.includes(gameState.imageGame.players[nextPlayerIndex]) && 
+           attempts < gameState.imageGame.players.length) {
+        nextPlayerIndex = (nextPlayerIndex + 1) % gameState.imageGame.players.length;
+        attempts++;
+    }
+    
+    gameState.imageGame.currentPlayerIndex = nextPlayerIndex;
+    updatePlayerDisplay();
+}
+
+
+
+
+
+function submitGuess() {
+    if (!gameState.imageGame) return;
+    
+    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    const targetPlayer = document.getElementById('playerSelect').value;
+    const guessIndex = prompt(`Which image number do you think ${targetPlayer} chose? (1-16)`);
+    
+    if (!guessIndex || !targetPlayer) {
+        alert('Please select a player and enter a guess!');
+        return;
+    }
+    
+    const guessNum = parseInt(guessIndex) - 1;
+    
+    if (guessNum < 0 || guessNum > 15) {
+        alert('Please enter a number between 1 and 16');
+        return;
+    }
+    
+    // Check if correct
+    const actualIndex = gameState.imageGame.selections[targetPlayer];
+    const isCorrect = guessNum === actualIndex;
+    
+    if (isCorrect) {
+        // Correct guess - reveal player
+        gameState.imageGame.revealedPlayers.push(targetPlayer);
+        
+        // Show correct image with player's name
+        const imageCell = document.querySelector(`.image-cell-simple[data-index="${actualIndex}"]`);
+        const indicator = imageCell.querySelector('.selection-indicator');
+        indicator.textContent = '🎯';
+        indicator.style.display = 'block';
+        indicator.className = 'selection-indicator correct';
+        
+        alert(`✅ Correct! ${targetPlayer} chose image ${guessIndex}. ${targetPlayer} is revealed!`);
+        
+        // Check if game is over
+        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
+            setTimeout(endImageGame, 1500);
+            return;
+        }
+    } else {
+        // Wrong guess
+        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessIndex}.`);
+        
+        // Add wrong guess mark to player's data
+        if (!gameState.imageGame.guesses[guessingPlayer]) {
+            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
+        }
+        gameState.imageGame.guesses[guessingPlayer].eliminated.push(guessNum);
+    }
+    
+    // Move to next player
+    endTurn();
+}
+
+
+
+// ================= SIMPLIFIED EVENT LISTENERS =================
+function setupImageGameListeners() {
+    // Add fresh listeners
+    document.getElementById('confirmSecretBtn').addEventListener('click', confirmSecret);
+    document.getElementById('makeGuessBtn').addEventListener('click', showGuessInterface);
+    document.getElementById('endTurnBtn').addEventListener('click', endTurn);
+    document.getElementById('submitGuessBtn').addEventListener('click', submitGuess);
+}
+
+
+
+
+
 
 function showQuestionInterface() {
     document.getElementById('questionInterface').style.display = 'block';
@@ -508,10 +687,12 @@ function continueAfterGuess() {
 function endTurn() {
     if (!gameState.imageGame) return;
     
+    // Find next player who hasn't been revealed
     let nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
     let attempts = 0;
     
-    while (gameState.imageGame.revealedPlayers.includes(gameState.imageGame.players[nextPlayerIndex]) && attempts < gameState.imageGame.players.length) {
+    while (gameState.imageGame.revealedPlayers.includes(gameState.imageGame.players[nextPlayerIndex]) && 
+           attempts < gameState.imageGame.players.length) {
         nextPlayerIndex = (nextPlayerIndex + 1) % gameState.imageGame.players.length;
         attempts++;
     }
