@@ -1140,7 +1140,7 @@ function setupEventListeners() {
     document.getElementById('nextPlayerBtn').addEventListener('click', nextPlayer);
     
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
-    document.getElementById('startDescribeBtn').addEventListener('click', startDescribing);
+    //document.getElementById('startDescribeBtn').addEventListener('click', startDescribing);
     document.getElementById('showWordBtn').addEventListener('click', function() {
         document.getElementById('describerWordDisplay').style.display = 'block';
     });
@@ -1573,6 +1573,67 @@ function showDescriberWord() {
     document.getElementById('describerArabicWord').textContent = gameState.wordAr;
     document.getElementById('describerWordDisplay').style.display = 'none';
     
+    // Reset the button to "Show Word"
+    const showWordBtn = document.getElementById('showWordBtn');
+    if (showWordBtn) {
+        showWordBtn.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        showWordBtn.id = 'showWordBtn';
+        showWordBtn.className = 'btn btn-secondary';
+        showWordBtn.style.display = 'block';
+        showWordBtn.style.marginTop = '10px';
+        showWordBtn.style.marginBottom = '20px';
+        showWordBtn.style.width = '100%';
+    }
+    
+    // Remove any existing event listeners by replacing the button
+    if (showWordBtn) {
+        const newShowWordBtn = showWordBtn.cloneNode(true);
+        showWordBtn.parentNode.replaceChild(newShowWordBtn, showWordBtn);
+        
+        // Add fresh event listener
+        document.getElementById('showWordBtn').addEventListener('click', function() {
+            if (gameState.gameMode === 'describe') {
+                const showWordBtn = document.getElementById('showWordBtn');
+                
+                // First click - show the word and change button
+                showWordBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
+                showWordBtn.id = 'startDescribeBtn'; // Change ID
+                showWordBtn.className = 'btn btn-primary'; // Change style
+                
+                // Show the word display box
+                const wordDisplay = document.getElementById('describerWordDisplay');
+                wordDisplay.style.display = 'block';
+                
+                // DO NOT update the main display - word is only in the box
+                // The main display stays as "Your Mission"
+                
+                // Remove this click event and add new one
+                showWordBtn.removeEventListener('click', arguments.callee);
+                showWordBtn.addEventListener('click', function() {
+                    // This starts the actual describing phase
+                    document.getElementById('describeWordScreen').style.display = 'none';
+                    
+                    const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
+                    const instruction = mode === 'speech' ?
+                        `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
+                        `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
+                    
+                    document.getElementById('roundInstruction').textContent = instruction;
+                    document.getElementById('discussionRound').style.display = 'block';
+                    
+                    document.getElementById('revealImposterBtn').style.display = 'none';
+                    
+                    if (gameState.timer === 0) {
+                        document.getElementById('discussionTimer').textContent = '∞';
+                        document.getElementById('discussionTimer').style.color = 'var(--primary)';
+                    } else {
+                        startDiscussionTimer();
+                    }
+                });
+            }
+        });
+    }
+    
     document.getElementById('describeWordScreen').style.display = 'block';
 }
 
@@ -1587,29 +1648,68 @@ function updateTeamsDisplay() {
 }
 
 // Update the showWordBtn event listener
+// Update the showWordBtn event listener - SINGLE VERSION
+// Update the showWordBtn event listener - SINGLE VERSION
+// Update the showWordBtn event listener
+// Update the showWordBtn event listener
+// Update the showWordBtn event listener
 document.getElementById('showWordBtn').addEventListener('click', function() {
-    const wordDisplay = document.getElementById('describerWordDisplay');
-    
-    if (wordDisplay.style.display === 'none') {
-        // Show the word in both languages
+    if (gameState.gameMode === 'describe') {
+        // Get the button
+        const showWordBtn = document.getElementById('showWordBtn');
+        
+        // Remove the old Start Describing button if it exists
+        const oldStartBtn = document.getElementById('startDescribeBtn');
+        if (oldStartBtn) {
+            oldStartBtn.style.display = 'none';
+        }
+        
+        // First click - show the word and change button
+        showWordBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
+        showWordBtn.id = 'startDescribeBtn'; // Change ID
+        showWordBtn.className = 'btn btn-primary'; // Change style
+        
+        // Show the word
+        const wordDisplay = document.getElementById('describerWordDisplay');
         wordDisplay.style.display = 'block';
-        this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Word';
         
         // Update the main display to show the actual word
         document.getElementById('describerWord').textContent = gameState.word;
         document.getElementById('describerHint').innerHTML = 
             `<strong>Arabic:</strong> ${gameState.wordAr}`;
-    } else {
-        // Hide the word
-        wordDisplay.style.display = 'none';
-        this.innerHTML = '<i class="fas fa-eye"></i> Show Word';
         
-        // Return to the mission text
-        document.getElementById('describerWord').textContent = 'Your Mission';
-        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+        // Remove old click event and add new one
+        showWordBtn.removeEventListener('click', arguments.callee);
+        showWordBtn.addEventListener('click', function() {
+            // This starts the actual describing phase
+            document.getElementById('describeWordScreen').style.display = 'none';
+            
+            const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
+            const instruction = mode === 'speech' ?
+                `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
+                `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
+            
+            document.getElementById('roundInstruction').textContent = instruction;
+            document.getElementById('discussionRound').style.display = 'block';
+            
+            document.getElementById('revealImposterBtn').style.display = 'none';
+            
+            if (gameState.timer === 0) {
+                document.getElementById('discussionTimer').textContent = '∞';
+                document.getElementById('discussionTimer').style.color = 'var(--primary)';
+            } else {
+                startDiscussionTimer();
+            }
+        });
+    } else {
+        // CLASSIC MODE: Original behavior
+        const wordDisplay = document.getElementById('describerWordDisplay');
+        if (wordDisplay.style.display === 'none' || wordDisplay.style.display === '') {
+            wordDisplay.style.display = 'block';
+            this.innerHTML = '<i class="fas fa-eye-slash"></i> Word Shown';
+        }
     }
 });
-
 
 // ================= DESCRIBE GAME =================
 function validateTeamsForDescribe() {
@@ -1662,45 +1762,10 @@ function startDescribeGame() {
 
 
 
-// Update the showWordBtn event listener
-function showDescriberWord() {
-    document.getElementById('describerTeam').textContent = gameState.describerTeam;
-    
-    // Show "Your Mission" text
-    document.getElementById('describerWord').textContent = 'Your Mission';
-    document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
-    
-    // Set up the word display (but keep it hidden initially)
-    document.getElementById('describerActualWord').textContent = gameState.word;
-    document.getElementById('describerArabicWord').textContent = gameState.wordAr;
-    document.getElementById('describerWordDisplay').style.display = 'none';
-    
-    document.getElementById('describeWordScreen').style.display = 'block';
-}
+
 
 // Update the showWordBtn event listener
-document.getElementById('showWordBtn').addEventListener('click', function() {
-    const wordDisplay = document.getElementById('describerWordDisplay');
-    
-    if (wordDisplay.style.display === 'none') {
-        // Show the word in both languages
-        wordDisplay.style.display = 'block';
-        this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Word';
-        
-        // Update the main display to show the actual word
-        document.getElementById('describerWord').textContent = gameState.word;
-        document.getElementById('describerHint').innerHTML = 
-            `<strong>Arabic:</strong> ${gameState.wordAr}`;
-    } else {
-        // Hide the word
-        wordDisplay.style.display = 'none';
-        this.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-        
-        // Return to the mission text
-        document.getElementById('describerWord').textContent = 'Your Mission';
-        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
-    }
-});
+
 
 function startDescribing() {
     document.getElementById('describeWordScreen').style.display = 'none';
@@ -1821,6 +1886,11 @@ function playAgain() {
         clearInterval(gameState.timerInterval);
     }
     
+    // Clear any describe mode intervals
+    if (gameState.rollerInterval) {
+        clearInterval(gameState.rollerInterval);
+    }
+    
     gameState.currentPlayer = 0;
     
     const filteredWords = words.filter(w => gameState.categories.includes(w.category));
@@ -1838,10 +1908,39 @@ function playAgain() {
     
     document.getElementById('resultsScreen').style.display = 'none';
     
+    // RESET THE BUTTON BEFORE STARTING NEW GAME
+    if (gameState.gameMode === 'describe') {
+        // Reset the button manually
+        const button = document.getElementById('startDescribeBtn') || document.getElementById('showWordBtn');
+        if (button) {
+            button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+            button.id = 'showWordBtn';
+            button.className = 'btn btn-secondary';
+            button.style.display = 'block';
+            button.style.marginTop = '10px';
+            button.style.marginBottom = '20px';
+            button.style.width = '100%';
+            
+            // Remove all event listeners by replacing the button
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+        }
+        
+        // Hide the word display
+        const wordDisplay = document.getElementById('describerWordDisplay');
+        if (wordDisplay) {
+            wordDisplay.style.display = 'none';
+        }
+        
+        // Reset mission text
+        document.getElementById('describerWord').textContent = 'Your Mission';
+        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+    }
+    
     if (gameState.gameMode === 'classic') {
         startClassicGame();
     } else {
-        startDescribeGame();
+        startDescribeGame(); // This will set up fresh event listeners
     }
 }
 

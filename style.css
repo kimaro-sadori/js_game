@@ -2554,7 +2554,7 @@ img, video {
 @media (max-width: 768px) {
     .image-cell-simple {
         min-height: 100px;
-    }
+    }}
     
    /* Make name label small at bottom */
 .image-cell-simple .player-name-label {

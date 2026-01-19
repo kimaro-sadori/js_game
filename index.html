@@ -342,10 +342,10 @@
                 <div class="action-buttons">
                     <button class="action-btn" onclick="backToLobby()">
                         <i class="fas fa-home"></i>
-                    </button>
+                   <!-- </button>
                     <button class="action-btn" onclick="restartGame()">
                         <i class="fas fa-redo"></i>
-                    </button>
+                    </button>-->
                 </div>
             </div>
             
@@ -375,12 +375,22 @@
     </div>
 
     <!-- Describe Word -->
+<!-- Describe Word -->
 <div id="describeWordScreen" class="game-screen">
     <div class="game-container">
         <div class="game-header">
             <div class="game-title">
                 <i class="fas fa-microphone-alt"></i>
                 <span>Describe the Word</span>
+            </div>
+            <div class="action-buttons">
+                 </button>
+                <button class="action-btn" onclick="restartGame()">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button class="action-btn" onclick="backToLobby()">
+                    <i class="fas fa-home"></i>
+               
             </div>
         </div>
         
@@ -408,7 +418,7 @@
             </div>
         </div>
         
-        <button id="showWordBtn" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 20px; width: 100%;">
+        <button id="showWordBtn" class="btn btn-secondary" style="margin-top: 10px; margin-bottom: 20px; width: 100%;"><!--not this one-->
             <i class="fas fa-eye"></i> Show Word
         </button>
         
@@ -431,9 +441,7 @@
             </div>
         </div>
         
-        <button id="startDescribeBtn" class="next-btn">
-            <i class="fas fa-play"></i> Start Describing
-        </button>
+        
     </div>
 </div>
 
