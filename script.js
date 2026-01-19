@@ -1252,11 +1252,12 @@ function updateCategoriesDisplay() {
 function updateUI() {
     document.getElementById('playersCount').textContent = gameState.players.length;
     
-    const canStart = gameState.players.length >= 3;
+    // Always enable the button if there's at least 1 player
+    const canStart = gameState.players.length >= 1;
     document.getElementById('startGameBtn').disabled = !canStart;
     
     if (!canStart) {
-        document.getElementById('startGameBtn').innerHTML = '<i class="fas fa-exclamation-circle"></i> Need 3+ Players';
+        document.getElementById('startGameBtn').innerHTML = '<i class="fas fa-exclamation-circle"></i> Need a team';
     } else {
         document.getElementById('startGameBtn').innerHTML = '<i class="fas fa-play"></i> START GAME';
     }
@@ -1265,13 +1266,15 @@ function updateUI() {
 }
 
 // ================= GAME START =================
+// ================= GAME START =================
 function startGame() {
     console.log('Starting game with mode:', gameState.gameMode);
     
-    // IMAGES MODE
+    // Check mode-specific player requirements
     if (gameState.gameMode === 'images') {
+        // Image mode needs at least 2 players
         if (gameState.players.length < 2) {
-            alert('Football Image mode needs at least 2 players!');
+            alert('Guess the Image mode needs at least 2 players!');
             return;
         }
         
@@ -1282,14 +1285,16 @@ function startGame() {
         
         startImageMatch();
         return;
+    } 
+    else if (gameState.gameMode === 'classic' || gameState.gameMode === 'describe') {
+        // Classic and Describe modes need at least 3 players
+        if (gameState.players.length < 3) {
+            alert(`${gameState.gameMode === 'classic' ? 'Classic' : 'Describe It'} mode needs at least 3 players!`);
+            return;
+        }
     }
     
-    // CLASSIC/DESCRIBE MODES
-    if (gameState.players.length < 3) {
-        alert('Need at least 3 players!');
-        return;
-    }
-
+    // Filter words for classic/describe modes
     const filteredWords = words.filter(w =>
         gameState.categories.includes(w.category)
     );
