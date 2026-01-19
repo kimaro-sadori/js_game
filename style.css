@@ -2734,3 +2734,125 @@ img, video {
         grid-template-columns: repeat(2, 1fr) !important;
     }
 }
+/* ===== PLAYER MARKS STYLES ===== */
+.player-marks {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 1.8rem;
+    z-index: 100;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.guess-mark {
+    animation: pulse-mark 0.5s ease-in-out;
+}
+
+@keyframes pulse-mark {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+/* ===== FIX SELECT DROPDOWN STYLES ===== */
+.player-select {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(30, 41, 59, 0.8) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px;
+    color: var(--text) !important;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 20px !important;
+    padding-right: 40px !important;
+    cursor: pointer;
+}
+
+.player-select option {
+    background: var(--card) !important;
+    color: var(--text) !important;
+    padding: 10px;
+}
+
+.player-select:focus {
+    outline: none;
+    border-color: var(--primary) !important;
+}
+
+/* Fix for mobile dropdowns */
+@media (max-width: 768px) {
+    .player-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+/* ===== IMPROVE NUMBER LABELS ===== */
+.image-number {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 50%;
+    z-index: 3;
+    min-width: 24px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* ===== IMPROVE NAME LABEL WITH ARABIC TEXT ===== */
+.player-name-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    color: white;
+    font-size: 0.8rem;
+    padding: 8px 4px;
+    text-align: center;
+    z-index: 2;
+    word-break: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 40px;
+}
+
+.english-text {
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.arabic-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+/* For flags, make emoji larger in the display area */
+.image-cell-simple[data-category="flags"] .emoji-display {
+    font-size: 4rem !important;
+}

@@ -3,7 +3,7 @@ let gameState = {
     players: [],
     gameMode: 'images', // CHANGED from 'classic' to 'images'
     timer: 120,
-    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'football'], // NEW - all 10 categories
+    categories: ['animals', 'food', 'movies', 'places', 'objects', 'celebrities', 'flags', 'sports', 'anime', 'football'],
 
     // Current game
     currentPlayer: 0,
@@ -61,7 +61,8 @@ function generateImageGrid() {
                     name: player.name,
                     image: player.image,
                     category: 'football',
-                    displayName: player.name
+                    displayName: player.name,
+                    arabic: ""
                 });
             });
         } else {
@@ -111,6 +112,14 @@ function renderImageGrid(items) {
             img.src = item.image;
             img.alt = item.name;
             img.className = 'player-image';
+            img.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.className = 'emoji-display';
+                fallback.textContent = '⚽';
+                fallback.style.fontSize = '3rem';
+                content.appendChild(fallback);
+            };
             content.appendChild(img);
         } else {
             const emojiDisplay = document.createElement('div');
@@ -119,30 +128,55 @@ function renderImageGrid(items) {
             content.appendChild(emojiDisplay);
         }
         
-        // Number
+        // Number label
         const numberLabel = document.createElement('div');
         numberLabel.className = 'image-number';
         numberLabel.textContent = index + 1;
+        numberLabel.style.cssText = `
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 6px 10px;
+            border-radius: 50%;
+            z-index: 3;
+            min-width: 24px;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        `;
         
-        // Name
+        // Name label
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
-        nameLabel.innerHTML = `<div class="english-text">${item.type === 'emoji' ? item.name : item.name}</div>`;
+        if (item.type === 'emoji' && item.category === 'flags') {
+            nameLabel.innerHTML = `
+                <div class="english-text">${item.image}</div>
+                ${item.arabic ? `<div class="arabic-text">${item.arabic}</div>` : ''}
+            `;
+        } else if (item.type === 'emoji') {
+            nameLabel.innerHTML = `
+                <div class="english-text">${item.name}</div>
+                ${item.arabic ? `<div class="arabic-text">${item.arabic}</div>` : ''}
+            `;
+        } else {
+            nameLabel.innerHTML = `<div class="english-text">${item.name}</div>`;
+        }
         
         // Selection indicator
         const selectionIndicator = document.createElement('div');
         selectionIndicator.className = 'selection-indicator';
         selectionIndicator.style.display = 'none';
         
-        // Player marks
-        const playerMarks = document.createElement('div');
-        playerMarks.className = 'player-marks';
-        
         imageCell.appendChild(content);
         imageCell.appendChild(numberLabel);
         imageCell.appendChild(nameLabel);
         imageCell.appendChild(selectionIndicator);
-        imageCell.appendChild(playerMarks);
         imageGrid.appendChild(imageCell);
         
         imageCell.addEventListener('click', handleImageClick);
@@ -180,92 +214,8 @@ function handleImageClick(event) {
             indicator.className = 'selection-indicator selected';
         }
     }
-    // GUESSING PHASE
-    else if (gameState.imageGame.turnPhase === 'guessing') {
-        const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-        
-        if (!gameState.imageGame.guesses[guessingPlayer]) {
-            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
-        }
-        
-        const playerGuesses = gameState.imageGame.guesses[guessingPlayer];
-        const cellIndex = cell.dataset.index;
-        const playerMarks = cell.querySelector('.player-marks');
-        
-        // Toggle X mark
-        if (playerGuesses.marks.includes(cellIndex)) {
-            // Remove X
-            const markIndex = playerGuesses.marks.indexOf(cellIndex);
-            playerGuesses.marks.splice(markIndex, 1);
-            playerMarks.textContent = '';
-        } else {
-            // Add X (max 5)
-            if (playerGuesses.marks.length < 5) {
-                playerGuesses.marks.push(cellIndex);
-                playerMarks.textContent = '❌';
-                playerMarks.className = 'player-marks guess-mark';
-            }
-        }
-    }
-}
-// ================= UPDATED IMAGE MATCH FUNCTIONS =================
-
-
-
-
-
-// Function to adjust label height based on content
-function adjustNameLabelHeight(label) {
-    const textHeight = label.scrollHeight;
-    const lines = Math.ceil(textHeight / 16); // Approximate line height
-    
-    // Set minimum height, adjust based on line count
-    let minHeight = 40; // Default for 1-2 lines
-    
-    if (lines > 2) {
-        minHeight = 60; // Taller for 3+ lines
-    }
-    if (lines > 3) {
-        minHeight = 80; // Even taller for 4+ lines
-    }
-    
-    label.style.minHeight = `${minHeight}px`;
-    label.style.padding = '8px 4px';
 }
 
-function preloadImages(imageUrls, callback) {
-    let loadedCount = 0;
-    let errorCount = 0;
-    const totalImages = imageUrls.length;
-    
-    if (totalImages === 0) {
-        callback();
-        return;
-    }
-    
-    imageUrls.forEach(url => {
-        const img = new Image();
-        img.onload = () => {
-            loadedCount++;
-            if (loadedCount + errorCount === totalImages) {
-                callback();
-            }
-        };
-        img.onerror = () => {
-            errorCount++;
-            console.warn('Failed to preload image:', url);
-            if (loadedCount + errorCount === totalImages) {
-                callback();
-            }
-        };
-        img.src = url;
-    });
-}
-
-
-// ================= UPDATED GAME FLOW =================
-
-// ================= START IMAGE GAME =================
 function startImageMatch() {
     if (gameState.players.length < 2) {
         alert('Need at least 2 players for Guess the Image!');
@@ -275,12 +225,10 @@ function startImageMatch() {
     
     incrementPlayCount();
     
-    // Hide lobby
     document.querySelector('.dashboard').style.display = 'none';
     document.querySelector('.start-section').style.display = 'none';
     document.querySelector('.social-buttons').style.display = 'none';
     
-    // Initialize game
     gameState.imageGame = {
         players: [...gameState.players],
         currentPlayerIndex: 0,
@@ -304,7 +252,6 @@ function showImageMatchScreen() {
     generateImageGrid();
     updatePlayerDisplay();
     
-    // Show selection phase
     const secretSection = document.getElementById('secretSelection');
     const gamePhase = document.getElementById('gamePhase');
     
@@ -312,7 +259,6 @@ function showImageMatchScreen() {
         secretSection.style.display = 'block';
         gamePhase.style.display = 'none';
         
-        // Update instruction
         const instructionEl = document.querySelector('.selection-instruction');
         if (instructionEl) {
             instructionEl.innerHTML = `
@@ -339,10 +285,9 @@ function updatePlayerDisplay() {
     document.getElementById('currentImagePlayerName').textContent = currentPlayer;
     document.getElementById('imagePlayerCounter').textContent = `${game.currentPlayerIndex + 1}/${game.players.length}`;
     
-    // Update instruction
     let instruction = game.turnPhase === 'selection' 
         ? 'Tap an image to choose your secret!' 
-        : 'Tap images to mark with ❌, then guess!';
+        : 'Now guess other players\' secrets!';
     
     document.getElementById('turnInstruction').textContent = instruction;
 }
@@ -352,25 +297,20 @@ function confirmSecret() {
     
     const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
     
-    // Check selection
     if (gameState.imageGame.selections[currentPlayer] === undefined) {
         alert('Please select an image first!');
         return;
     }
     
-    // Hide indicator
     document.querySelectorAll('.selection-indicator').forEach(ind => {
         ind.style.display = 'none';
     });
     
-    // Next player
     gameState.imageGame.currentPlayerIndex++;
     
     if (gameState.imageGame.currentPlayerIndex < gameState.imageGame.players.length) {
-        // Next player's turn
         updatePlayerDisplay();
         
-        // Update instruction
         const instructionEl = document.querySelector('.selection-instruction');
         if (instructionEl) {
             instructionEl.innerHTML = `
@@ -383,7 +323,6 @@ function confirmSecret() {
         
         alert(`${currentPlayer} has chosen! Pass to next player.`);
     } else {
-        // All players chosen - start guessing
         gameState.imageGame.currentPlayerIndex = 0;
         gameState.imageGame.turnPhase = 'guessing';
         
@@ -391,188 +330,9 @@ function confirmSecret() {
         document.getElementById('gamePhase').style.display = 'block';
         
         updatePlayerDisplay();
-        alert('All players have chosen! Game begins.');
+        updatePlayerSelect();
+        alert('All players have chosen! Game begins. Now guess!');
     }
-}
-
-function submitGuess() {
-    if (!gameState.imageGame) return;
-    
-    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-    const targetPlayer = document.getElementById('playerSelect').value;
-    const guessIndex = prompt(`Which image number do you think ${targetPlayer} chose? (1-16)`);
-    
-    if (!guessIndex || !targetPlayer) {
-        alert('Please select a player and enter a guess!');
-        return;
-    }
-    
-    const guessNum = parseInt(guessIndex) - 1;
-    
-    if (guessNum < 0 || guessNum > 15) {
-        alert('Please enter a number between 1 and 16');
-        return;
-    }
-    
-    // Check guess
-    const actualIndex = gameState.imageGame.selections[targetPlayer];
-    const isCorrect = guessNum === actualIndex;
-    
-    if (isCorrect) {
-        // Correct guess
-        gameState.imageGame.revealedPlayers.push(targetPlayer);
-        
-        // Show correct image
-        const imageCell = document.querySelector(`.image-cell-simple[data-index="${actualIndex}"]`);
-        const indicator = imageCell.querySelector('.selection-indicator');
-        indicator.textContent = '🎯';
-        indicator.style.display = 'block';
-        indicator.className = 'selection-indicator correct';
-        
-        alert(`✅ Correct! ${targetPlayer} chose image ${guessIndex}. ${targetPlayer} is revealed!`);
-        
-        // Check if game over
-        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
-            setTimeout(endImageGame, 1500);
-            return;
-        }
-    } else {
-        // Wrong guess
-        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessIndex}.`);
-        
-        // Track wrong guess
-        if (!gameState.imageGame.guesses[guessingPlayer]) {
-            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
-        }
-        gameState.imageGame.guesses[guessingPlayer].eliminated.push(guessNum);
-    }
-    
-    // Next turn
-    endTurn();
-}
-
-function showGuessInterface() {
-    document.getElementById('guessInterface').style.display = 'block';
-    document.getElementById('questionInterface').style.display = 'none';
-    
-    // Update player list
-    const playerSelect = document.getElementById('playerSelect');
-    playerSelect.innerHTML = '<option value="">Select a player to guess...</option>';
-    
-    gameState.imageGame.players.forEach((player, index) => {
-        if (index !== gameState.imageGame.currentPlayerIndex && 
-            !gameState.imageGame.revealedPlayers.includes(player)) {
-            const option = document.createElement('option');
-            option.value = player;
-            option.textContent = player;
-            playerSelect.appendChild(option);
-        }
-    });
-}
-
-function endTurn() {
-    if (!gameState.imageGame) return;
-    
-    // Find next player who isn't revealed
-    let nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
-    let attempts = 0;
-    
-    while (gameState.imageGame.revealedPlayers.includes(gameState.imageGame.players[nextPlayerIndex]) && 
-           attempts < gameState.imageGame.players.length) {
-        nextPlayerIndex = (nextPlayerIndex + 1) % gameState.imageGame.players.length;
-        attempts++;
-    }
-    
-    gameState.imageGame.currentPlayerIndex = nextPlayerIndex;
-    updatePlayerDisplay();
-}
-
-
-
-
-
-function submitGuess() {
-    if (!gameState.imageGame) return;
-    
-    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-    const targetPlayer = document.getElementById('playerSelect').value;
-    const guessIndex = prompt(`Which image number do you think ${targetPlayer} chose? (1-16)`);
-    
-    if (!guessIndex || !targetPlayer) {
-        alert('Please select a player and enter a guess!');
-        return;
-    }
-    
-    const guessNum = parseInt(guessIndex) - 1;
-    
-    if (guessNum < 0 || guessNum > 15) {
-        alert('Please enter a number between 1 and 16');
-        return;
-    }
-    
-    // Check if correct
-    const actualIndex = gameState.imageGame.selections[targetPlayer];
-    const isCorrect = guessNum === actualIndex;
-    
-    if (isCorrect) {
-        // Correct guess - reveal player
-        gameState.imageGame.revealedPlayers.push(targetPlayer);
-        
-        // Show correct image with player's name
-        const imageCell = document.querySelector(`.image-cell-simple[data-index="${actualIndex}"]`);
-        const indicator = imageCell.querySelector('.selection-indicator');
-        indicator.textContent = '🎯';
-        indicator.style.display = 'block';
-        indicator.className = 'selection-indicator correct';
-        
-        alert(`✅ Correct! ${targetPlayer} chose image ${guessIndex}. ${targetPlayer} is revealed!`);
-        
-        // Check if game is over
-        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
-            setTimeout(endImageGame, 1500);
-            return;
-        }
-    } else {
-        // Wrong guess
-        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessIndex}.`);
-        
-        // Add wrong guess mark to player's data
-        if (!gameState.imageGame.guesses[guessingPlayer]) {
-            gameState.imageGame.guesses[guessingPlayer] = { marks: [], eliminated: [] };
-        }
-        gameState.imageGame.guesses[guessingPlayer].eliminated.push(guessNum);
-    }
-    
-    // Move to next player
-    endTurn();
-}
-
-
-
-// ================= SIMPLIFIED EVENT LISTENERS =================
-function setupImageGameListeners() {
-    // Add fresh listeners
-    document.getElementById('confirmSecretBtn').addEventListener('click', confirmSecret);
-    document.getElementById('makeGuessBtn').addEventListener('click', showGuessInterface);
-    document.getElementById('endTurnBtn').addEventListener('click', endTurn);
-    document.getElementById('submitGuessBtn').addEventListener('click', submitGuess);
-}
-
-
-
-
-
-
-function showQuestionInterface() {
-    document.getElementById('questionInterface').style.display = 'block';
-    document.getElementById('guessInterface').style.display = 'none';
-    document.getElementById('questionInput').focus();
-}
-
-function showGuessInterface() {
-    document.getElementById('guessInterface').style.display = 'block';
-    document.getElementById('questionInterface').style.display = 'none';
-    updatePlayerSelect();
 }
 
 function updatePlayerSelect() {
@@ -580,7 +340,7 @@ function updatePlayerSelect() {
     
     const game = gameState.imageGame;
     const playerSelect = document.getElementById('playerSelect');
-    playerSelect.innerHTML = '<option value="">Select a player...</option>';
+    playerSelect.innerHTML = '';
     
     game.players.forEach((player, index) => {
         if (index !== game.currentPlayerIndex && !game.revealedPlayers.includes(player)) {
@@ -592,102 +352,57 @@ function updatePlayerSelect() {
     });
 }
 
-function submitQuestion() {
-    const question = document.getElementById('questionInput').value.trim();
+function submitGuess() {
+    if (!gameState.imageGame) return;
     
-    if (!question) {
-        alert('Please enter a question!');
+    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    const targetPlayer = document.getElementById('playerSelect').value;
+    
+    if (!targetPlayer) {
+        alert('Please select a player to guess!');
         return;
     }
     
-    gameState.imageGame.currentQuestion = {
-        text: question,
-        askingPlayer: gameState.imageGame.players[gameState.imageGame.currentPlayerIndex]
-    };
+    const guessIndex = prompt(`Which image number do you think ${targetPlayer} chose? (1-16)`);
     
-    document.getElementById('questionInterface').style.display = 'none';
-    document.getElementById('questionInput').value = '';
+    if (!guessIndex) return;
     
-    const nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
-    const answeringPlayer = gameState.imageGame.players[nextPlayerIndex];
+    const guessNum = parseInt(guessIndex) - 1;
     
-    showQuestionModal(question, answeringPlayer);
-}
-
-function showQuestionModal(question, targetPlayer) {
-    gameState.imageGame.turnPhase = 'answering';
-    
-    document.getElementById('questionText').textContent = question;
-    document.getElementById('questionTarget').textContent = `Asking: ${targetPlayer}`;
-    document.getElementById('questionModal').style.display = 'flex';
-    
-    gameState.imageGame.currentQuestion.targetPlayer = targetPlayer;
-}
-
-function answerQuestion(answer) {
-    const question = gameState.imageGame.currentQuestion;
-    const targetPlayer = question.targetPlayer;
-    
-    alert(`${targetPlayer} answers: ${answer.toUpperCase()}`);
-    
-    document.getElementById('questionModal').style.display = 'none';
-    gameState.imageGame.turnPhase = 'playing';
-    endTurn();
-}
-
-function skipAnswer() {
-    alert('Question skipped / cannot be answered');
-    document.getElementById('questionModal').style.display = 'none';
-    gameState.imageGame.turnPhase = 'playing';
-    endTurn();
-}
-
-
-
-function showGuessResult(targetPlayer, isCorrect, guessedIndex, actualIndex) {
-    const guesser = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-    
-    if (isCorrect) {
-        document.getElementById('guessResultTitle').textContent = 'Correct Guess! 🎉';
-        document.getElementById('guessResultText').innerHTML = `
-            <p><strong>${guesser}</strong> correctly guessed that <strong>${targetPlayer}</strong> chose:</p>
-            <div style="font-size: 2rem; margin: 15px 0;">⚽</div>
-            <p><strong>${gameState.imageGame.images[actualIndex].name}</strong></p>
-            <p style="color: var(--text-secondary); margin-top: 10px;">${targetPlayer} is now revealed!</p>
-        `;
-        
-        gameState.imageGame.revealedPlayers.push(targetPlayer);
-        
-        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
-            setTimeout(() => {
-                endImageGame();
-            }, 3000);
-        }
-    } else {
-        document.getElementById('guessResultTitle').textContent = 'Wrong Guess! ❌';
-        document.getElementById('guessResultText').innerHTML = `
-            <p><strong>${guesser}</strong> guessed wrong!</p>
-            <p>${targetPlayer}'s secret remains hidden.</p>
-            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
-                <p><small>You guessed: Image ${guessedIndex + 1}</small></p>
-                <p><small>${targetPlayer} chose a different image</small></p>
-            </div>
-        `;
+    if (guessNum < 0 || guessNum > 15 || isNaN(guessNum)) {
+        alert('Please enter a number between 1 and 16');
+        return;
     }
     
-    document.getElementById('guessInterface').style.display = 'none';
-    document.getElementById('guessResultModal').style.display = 'flex';
-}
-
-function continueAfterGuess() {
-    document.getElementById('guessResultModal').style.display = 'none';
-    endTurn();
+    const actualIndex = gameState.imageGame.selections[targetPlayer];
+    const isCorrect = guessNum === actualIndex;
+    
+    if (isCorrect) {
+        gameState.imageGame.revealedPlayers.push(targetPlayer);
+        
+        const imageCell = document.querySelector(`.image-cell-simple[data-index="${actualIndex}"]`);
+        const indicator = imageCell.querySelector('.selection-indicator');
+        indicator.textContent = '🎯';
+        indicator.style.display = 'block';
+        indicator.className = 'selection-indicator correct';
+        
+        alert(`✅ Correct! ${targetPlayer} chose image ${guessIndex}. ${targetPlayer} is revealed!`);
+        
+        if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
+            setTimeout(endImageGame, 1500);
+            return;
+        }
+        
+        updatePlayerSelect();
+    } else {
+        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessIndex}.`);
+        endTurn();
+    }
 }
 
 function endTurn() {
     if (!gameState.imageGame) return;
     
-    // Find next player who hasn't been revealed
     let nextPlayerIndex = (gameState.imageGame.currentPlayerIndex + 1) % gameState.imageGame.players.length;
     let attempts = 0;
     
@@ -699,40 +414,11 @@ function endTurn() {
     
     gameState.imageGame.currentPlayerIndex = nextPlayerIndex;
     updatePlayerDisplay();
-}
-
-function startImageGameTimer() {
-    if (!gameState.imageGame) return;
-    
-    let timeLeft = gameState.timer;
-    const timerDisplay = document.getElementById('imageTimerDisplay');
-    
-    gameState.imageGame.timerInterval = setInterval(() => {
-        timeLeft--;
-        timerDisplay.textContent = formatTime(timeLeft);
-        
-        if (timeLeft <= 30) {
-            timerDisplay.style.color = '#ef4444';
-        }
-        
-        if (timeLeft <= 0) {
-            clearInterval(gameState.imageGame.timerInterval);
-            timeUpInImageGame();
-        }
-    }, 1000);
-}
-
-function timeUpInImageGame() {
-    alert('Time\'s up! Game ends.');
-    endImageGame();
+    updatePlayerSelect();
 }
 
 function endImageGame() {
     if (!gameState.imageGame) return;
-    
-    if (gameState.imageGame.timerInterval) {
-        clearInterval(gameState.imageGame.timerInterval);
-    }
     
     alert('Game Over! Here are the results:\n\n' + 
         gameState.imageGame.players.map(player => {
@@ -748,10 +434,31 @@ function endImageGame() {
 }
 
 function restartImageGame() {
-    if (gameState.imageGame && gameState.imageGame.timerInterval) {
-        clearInterval(gameState.imageGame.timerInterval);
-    }
     startImageMatch();
+}
+
+function setupImageGameListeners() {
+    const confirmSecretBtn = document.getElementById('confirmSecretBtn');
+    const makeGuessBtn = document.getElementById('makeGuessBtn');
+    const endTurnBtn = document.getElementById('endTurnBtn');
+    const submitGuessBtn = document.getElementById('submitGuessBtn');
+    
+    if (confirmSecretBtn) {
+        confirmSecretBtn.onclick = confirmSecret;
+    }
+    if (makeGuessBtn) {
+        makeGuessBtn.onclick = function() {
+            document.getElementById('guessInterface').style.display = 'block';
+            document.getElementById('questionInterface').style.display = 'none';
+            updatePlayerSelect();
+        };
+    }
+    if (endTurnBtn) {
+        endTurnBtn.onclick = endTurn;
+    }
+    if (submitGuessBtn) {
+        submitGuessBtn.onclick = submitGuess;
+    }
 }
 
 // ================= JSONBin CONFIG =================
@@ -1212,7 +919,6 @@ function setupEventListeners() {
     
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            console.log('Mode clicked:', this.dataset.mode);
             selectGameMode(this.dataset.mode);
         });
     });
@@ -1224,22 +930,11 @@ function setupEventListeners() {
         });
     });
     
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            if (!e.target.closest('.mode-help-btn')) {
-                selectGameMode(this.dataset.mode);
-            }
-        });
-    });
-    
     setTimeout(() => {
         const timerBtns = document.querySelectorAll('.timer-btn');
-        console.log('Timer buttons found:', timerBtns.length);
-        
         timerBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                console.log('Timer clicked:', this.dataset.time);
                 selectTimer(parseInt(this.dataset.time));
                 
                 const buttons = document.getElementById('timerButtons');
@@ -1251,8 +946,6 @@ function setupEventListeners() {
     }, 100);
     
     const checkboxes = document.querySelectorAll('.category-checkbox');
-    console.log('Category checkboxes found:', checkboxes.length);
-    
     checkboxes.forEach(cb => {
         cb.addEventListener('change', updateCategories);
     });
@@ -1284,7 +977,6 @@ function setupEventListeners() {
                 return;
             }
             
-            console.log('Timer group clicked');
             const buttons = document.getElementById('timerButtons');
             const expandIcon = document.getElementById('timerExpand');
             const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
@@ -1304,7 +996,6 @@ function setupEventListeners() {
                 return;
             }
             
-            console.log('Categories group clicked');
             const grid = document.getElementById('categoriesGrid');
             const expandIcon = document.getElementById('categoriesExpand');
             const isHidden = grid.style.display === 'none' || grid.style.display === '';
@@ -1321,10 +1012,30 @@ function setupEventListeners() {
     document.getElementById('nextPlayerBtn').addEventListener('click', nextPlayer);
     
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
-    //document.getElementById('startDescribeBtn').addEventListener('click', startDescribing);
-    document.getElementById('showWordBtn').addEventListener('click', function() {
-        document.getElementById('describerWordDisplay').style.display = 'block';
-    });
+    
+    // SIMPLE SHOW WORD BUTTON - NO COMPLEX EVENT LISTENER CHAINS
+    const showWordBtn = document.getElementById('showWordBtn');
+    if (showWordBtn) {
+        showWordBtn.addEventListener('click', function() {
+            if (gameState.gameMode === 'describe') {
+                const wordDisplay = document.getElementById('describerWordDisplay');
+                if (wordDisplay.style.display === 'none' || wordDisplay.style.display === '') {
+                    wordDisplay.style.display = 'block';
+                    document.getElementById('describerWord').textContent = gameState.word;
+                    document.getElementById('describerHint').innerHTML = `<strong>Arabic:</strong> ${gameState.wordAr}`;
+                    this.innerHTML = '<i class="fas fa-play"></i> Start Describing';
+                    this.id = 'startDescribeBtn';
+                    this.className = 'btn btn-primary';
+                }
+            } else {
+                const wordDisplay = document.getElementById('describerWordDisplay');
+                if (wordDisplay.style.display === 'none' || wordDisplay.style.display === '') {
+                    wordDisplay.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-eye-slash"></i> Word Shown';
+                }
+            }
+        });
+    }
     
     document.getElementById('revealImposterBtn').addEventListener('click', revealImposterEarly);
     document.getElementById('endDiscussionBtn').addEventListener('click', endDiscussion);
@@ -1527,7 +1238,6 @@ function updateCategoriesDisplay() {
 function updateUI() {
     document.getElementById('playersCount').textContent = gameState.players.length;
     
-    // Always enable the button if there's at least 1 player
     const canStart = gameState.players.length >= 1;
     document.getElementById('startGameBtn').disabled = !canStart;
     
@@ -1541,39 +1251,30 @@ function updateUI() {
 }
 
 // ================= GAME START =================
-// ================= GAME START =================
 function startGame() {
     console.log('Starting game with mode:', gameState.gameMode);
     
-    // Check mode-specific player requirements
     if (gameState.gameMode === 'images') {
-    // Image mode needs at least 2 players
-    if (gameState.players.length < 2) {
-        alert('Guess the Image mode needs at least 2 players!');
+        if (gameState.players.length < 2) {
+            alert('Guess the Image mode needs at least 2 players!');
+            return;
+        }
+        
+        if (gameState.categories.length === 0) {
+            alert('Please select at least one category for Guess the Image mode!');
+            return;
+        }
+        
+        startImageMatch();
         return;
-    }
-    
-    // Check if ANY categories are selected
-    if (gameState.categories.length === 0) {
-        alert('Please select at least one category for Guess the Image mode!');
-        return;
-    }
-    
-    startImageMatch();
-    return;
-}
-    else if (gameState.gameMode === 'classic' || gameState.gameMode === 'describe') {
-        // Classic and Describe modes need at least 3 players
+    } else if (gameState.gameMode === 'classic' || gameState.gameMode === 'describe') {
         if (gameState.players.length < 3) {
             alert(`${gameState.gameMode === 'classic' ? 'Classic' : 'Describe It'} mode needs at least 3 players!`);
             return;
         }
     }
     
-    // Filter words for classic/describe modes
-    const filteredWords = words.filter(w =>
-        gameState.categories.includes(w.category)
-    );
+    const filteredWords = words.filter(w => gameState.categories.includes(w.category));
 
     console.log('Filtered words count:', filteredWords.length);
 
@@ -1659,9 +1360,6 @@ function nextPlayer() {
 }
 
 // ================= DESCRIBE GAME =================
-
-
-// ================= DESCRIBE GAME =================
 function startDescribeGame() {
     const shuffled = [...gameState.players].sort(() => Math.random() - 0.5);
     const half = Math.ceil(shuffled.length / 2);
@@ -1683,7 +1381,6 @@ function startDescribeGame() {
 function startNameRoller() {
     let index = 0;
     
-    // Create a pool of eligible players (only from teams with at least 2 players)
     let eligiblePlayers = [];
     
     if (gameState.redTeam.length >= 2) {
@@ -1694,7 +1391,6 @@ function startNameRoller() {
         eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
     }
     
-    // Fallback: if somehow all teams have 1 player, use all players
     if (eligiblePlayers.length === 0) {
         eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
         console.warn('All teams have only 1 player, using all players as eligible');
@@ -1711,7 +1407,6 @@ function startNameRoller() {
 function stopNameRoller() {
     clearInterval(gameState.rollerInterval);
     
-    // Determine eligible players (same logic as startNameRoller)
     let eligiblePlayers = [];
     
     if (gameState.redTeam.length >= 2) {
@@ -1722,16 +1417,13 @@ function stopNameRoller() {
         eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
     }
     
-    // Fallback
     if (eligiblePlayers.length === 0) {
         eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
     }
     
-    // Select random describer from eligible players
     const describerIndex = Math.floor(Math.random() * eligiblePlayers.length);
     const describer = eligiblePlayers[describerIndex];
     
-    // Determine which team the describer is from
     gameState.describerTeam = gameState.redTeam.includes(describer) ? 'Red Team' : 'Blue Team';
     
     document.getElementById('rollingName').textContent = describer;
@@ -1744,76 +1436,12 @@ function stopNameRoller() {
 
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
-    
-    // Show "Your Mission" text
     document.getElementById('describerWord').textContent = 'Your Mission';
     document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
     
-    // Set up the word display (but keep it hidden initially)
     document.getElementById('describerActualWord').textContent = gameState.word;
     document.getElementById('describerArabicWord').textContent = gameState.wordAr;
     document.getElementById('describerWordDisplay').style.display = 'none';
-    
-    // Reset the button to "Show Word"
-    const showWordBtn = document.getElementById('showWordBtn');
-    if (showWordBtn) {
-        showWordBtn.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-        showWordBtn.id = 'showWordBtn';
-        showWordBtn.className = 'btn btn-secondary';
-        showWordBtn.style.display = 'block';
-        showWordBtn.style.marginTop = '10px';
-        showWordBtn.style.marginBottom = '20px';
-        showWordBtn.style.width = '100%';
-    }
-    
-    // Remove any existing event listeners by replacing the button
-    if (showWordBtn) {
-        const newShowWordBtn = showWordBtn.cloneNode(true);
-        showWordBtn.parentNode.replaceChild(newShowWordBtn, showWordBtn);
-        
-        // Add fresh event listener
-        document.getElementById('showWordBtn').addEventListener('click', function() {
-            if (gameState.gameMode === 'describe') {
-                const showWordBtn = document.getElementById('showWordBtn');
-                
-                // First click - show the word and change button
-                showWordBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
-                showWordBtn.id = 'startDescribeBtn'; // Change ID
-                showWordBtn.className = 'btn btn-primary'; // Change style
-                
-                // Show the word display box
-                const wordDisplay = document.getElementById('describerWordDisplay');
-                wordDisplay.style.display = 'block';
-                
-                // DO NOT update the main display - word is only in the box
-                // The main display stays as "Your Mission"
-                
-                // Remove this click event and add new one
-                showWordBtn.removeEventListener('click', arguments.callee);
-                showWordBtn.addEventListener('click', function() {
-                    // This starts the actual describing phase
-                    document.getElementById('describeWordScreen').style.display = 'none';
-                    
-                    const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
-                    const instruction = mode === 'speech' ?
-                        `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
-                        `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
-                    
-                    document.getElementById('roundInstruction').textContent = instruction;
-                    document.getElementById('discussionRound').style.display = 'block';
-                    
-                    document.getElementById('revealImposterBtn').style.display = 'none';
-                    
-                    if (gameState.timer === 0) {
-                        document.getElementById('discussionTimer').textContent = '∞';
-                        document.getElementById('discussionTimer').style.color = 'var(--primary)';
-                    } else {
-                        startDiscussionTimer();
-                    }
-                });
-            }
-        });
-    }
     
     document.getElementById('describeWordScreen').style.display = 'block';
 }
@@ -1826,147 +1454,6 @@ function updateTeamsDisplay() {
     document.getElementById('blueTeamPlayers').innerHTML = gameState.blueTeam.map(p => 
         `<div class="team-player">${p}</div>`
     ).join('');
-}
-
-// Update the showWordBtn event listener
-// Update the showWordBtn event listener - SINGLE VERSION
-// Update the showWordBtn event listener - SINGLE VERSION
-// Update the showWordBtn event listener
-// Update the showWordBtn event listener
-// Update the showWordBtn event listener
-document.getElementById('showWordBtn').addEventListener('click', function() {
-    if (gameState.gameMode === 'describe') {
-        // Get the button
-        const showWordBtn = document.getElementById('showWordBtn');
-        
-        // Remove the old Start Describing button if it exists
-        const oldStartBtn = document.getElementById('startDescribeBtn');
-        if (oldStartBtn) {
-            oldStartBtn.style.display = 'none';
-        }
-        
-        // First click - show the word and change button
-        showWordBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
-        showWordBtn.id = 'startDescribeBtn'; // Change ID
-        showWordBtn.className = 'btn btn-primary'; // Change style
-        
-        // Show the word
-        const wordDisplay = document.getElementById('describerWordDisplay');
-        wordDisplay.style.display = 'block';
-        
-        // Update the main display to show the actual word
-        document.getElementById('describerWord').textContent = gameState.word;
-        document.getElementById('describerHint').innerHTML = 
-            `<strong>Arabic:</strong> ${gameState.wordAr}`;
-        
-        // Remove old click event and add new one
-        showWordBtn.removeEventListener('click', arguments.callee);
-        showWordBtn.addEventListener('click', function() {
-            // This starts the actual describing phase
-            document.getElementById('describeWordScreen').style.display = 'none';
-            
-            const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
-            const instruction = mode === 'speech' ?
-                `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
-                `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
-            
-            document.getElementById('roundInstruction').textContent = instruction;
-            document.getElementById('discussionRound').style.display = 'block';
-            
-            document.getElementById('revealImposterBtn').style.display = 'none';
-            
-            if (gameState.timer === 0) {
-                document.getElementById('discussionTimer').textContent = '∞';
-                document.getElementById('discussionTimer').style.color = 'var(--primary)';
-            } else {
-                startDiscussionTimer();
-            }
-        });
-    } else {
-        // CLASSIC MODE: Original behavior
-        const wordDisplay = document.getElementById('describerWordDisplay');
-        if (wordDisplay.style.display === 'none' || wordDisplay.style.display === '') {
-            wordDisplay.style.display = 'block';
-            this.innerHTML = '<i class="fas fa-eye-slash"></i> Word Shown';
-        }
-    }
-});
-
-// ================= DESCRIBE GAME =================
-function validateTeamsForDescribe() {
-    // For 3 players: teams will be 2 vs 1
-    // For 4 players: teams will be 2 vs 2  
-    // For 5 players: teams will be 3 vs 2
-    // etc.
-    
-    const redCount = gameState.redTeam.length;
-    const blueCount = gameState.blueTeam.length;
-    
-    console.log('Team validation:', {
-        redTeamCount: redCount,
-        blueTeamCount: blueCount,
-        isValid: redCount >= 2 || blueCount >= 2
-    });
-    
-    // Return true if at least one team has 2+ players
-    return redCount >= 2 || blueCount >= 2;
-}
-
-function startDescribeGame() {
-    const shuffled = [...gameState.players].sort(() => Math.random() - 0.5);
-    const half = Math.ceil(shuffled.length / 2);
-    gameState.redTeam = shuffled.slice(0, half);
-    gameState.blueTeam = shuffled.slice(half);
-    
-    // Validate teams
-    if (!validateTeamsForDescribe()) {
-        console.error('Invalid team configuration for Describe It mode');
-        // This shouldn't happen with 3+ players, but just in case
-        alert('Teams need to be reconfigured. Please add more players.');
-        backToLobby();
-        return;
-    }
-    
-    console.log('Teams created:', {
-        redTeam: gameState.redTeam,
-        blueTeam: gameState.blueTeam,
-        totalPlayers: gameState.players.length
-    });
-    
-    document.getElementById('describeGame').style.display = 'block';
-    updateTeamsDisplay();
-    
-    startNameRoller();
-}
-
-
-
-
-
-
-
-// Update the showWordBtn event listener
-
-
-function startDescribing() {
-    document.getElementById('describeWordScreen').style.display = 'none';
-    
-    const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
-    const instruction = mode === 'speech' ?
-        `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
-        `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
-    
-    document.getElementById('roundInstruction').textContent = instruction;
-    document.getElementById('discussionRound').style.display = 'block';
-    
-    document.getElementById('revealImposterBtn').style.display = 'none';
-    
-    if (gameState.timer === 0) {
-        document.getElementById('discussionTimer').textContent = '∞';
-        document.getElementById('discussionTimer').style.color = 'var(--primary)';
-    } else {
-        startDiscussionTimer();
-    }
 }
 
 // ================= DISCUSSION =================
@@ -2051,11 +1538,11 @@ function revealImposter() {
         const imposter = gameState.players[gameState.imposter];
         document.getElementById('imposterName').textContent = imposter;
         document.getElementById('correctWord').textContent = gameState.word;
-        document.getElementById('arabicWord').textContent = gameState.wordAr; // Changed from imposterHint to arabicWord
+        document.getElementById('arabicWord').textContent = gameState.wordAr;
     } else {
         document.getElementById('imposterName').textContent = gameState.describerTeam;
         document.getElementById('correctWord').textContent = gameState.word;
-         document.getElementById('arabicWord').textContent = gameState.wordAr; // Changed from imposterHint to arabicWord
+        document.getElementById('arabicWord').textContent = gameState.wordAr;
     }
     
     document.getElementById('secretCard').style.display = 'none';
@@ -2067,7 +1554,6 @@ function playAgain() {
         clearInterval(gameState.timerInterval);
     }
     
-    // Clear any describe mode intervals
     if (gameState.rollerInterval) {
         clearInterval(gameState.rollerInterval);
     }
@@ -2089,39 +1575,34 @@ function playAgain() {
     
     document.getElementById('resultsScreen').style.display = 'none';
     
-    // RESET THE BUTTON BEFORE STARTING NEW GAME
     if (gameState.gameMode === 'describe') {
-        // Reset the button manually
-        const button = document.getElementById('startDescribeBtn') || document.getElementById('showWordBtn');
-        if (button) {
-            button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-            button.id = 'showWordBtn';
-            button.className = 'btn btn-secondary';
-            button.style.display = 'block';
-            button.style.marginTop = '10px';
-            button.style.marginBottom = '20px';
-            button.style.width = '100%';
-            
-            // Remove all event listeners by replacing the button
-            const newButton = button.cloneNode(true);
-            button.parentNode.replaceChild(newButton, button);
-        }
-        
-        // Hide the word display
-        const wordDisplay = document.getElementById('describerWordDisplay');
-        if (wordDisplay) {
-            wordDisplay.style.display = 'none';
-        }
-        
-        // Reset mission text
-        document.getElementById('describerWord').textContent = 'Your Mission';
-        document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
+        resetShowWordButton();
     }
     
     if (gameState.gameMode === 'classic') {
         startClassicGame();
     } else {
-        startDescribeGame(); // This will set up fresh event listeners
+        startDescribeGame();
+    }
+}
+
+function resetShowWordButton() {
+    const button = document.getElementById('startDescribeBtn') || document.getElementById('showWordBtn');
+    if (button) {
+        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        button.id = 'showWordBtn';
+        button.className = 'btn btn-secondary';
+        button.style.display = 'block';
+        
+        const wordDisplay = document.getElementById('describerWordDisplay');
+        if (wordDisplay) {
+            wordDisplay.style.display = 'none';
+        }
+        
+        const describerWord = document.getElementById('describerWord');
+        const describerHint = document.getElementById('describerHint');
+        if (describerWord) describerWord.textContent = 'Your Mission';
+        if (describerHint) describerHint.textContent = 'Describe it to your team without saying the word';
     }
 }
 
@@ -2386,7 +1867,10 @@ function getImagesHelp() {
             </div>
             <div class="step">
                 <div class="step-num">5</div>
-                <div class="step-text">Last player standing <strong>wins!</strong></div>
+               <div class="step-text">
+  Infinite time until the last player standing <strong>wins!</strong>
+</div>
+
             </div>
             <div class="step">
                 <div class="step-num">☆</div>
