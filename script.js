@@ -254,7 +254,7 @@ function saveTeam() {
     gameState.savedTeams.push(team);
     localStorage.setItem('savedTeams', JSON.stringify(gameState.savedTeams));
     updateSavedTeamsList();
-    alert('Team saved!');
+    // Removed alert for cleaner experience
 }
 
 function updateSavedTeamsList() {
@@ -285,11 +285,10 @@ function updateSavedTeamsList() {
 
 function loadTeam(index) {
     const team = gameState.savedTeams[index];
-    if (confirm(`Load team "${team.name}"?`)) {
-        gameState.players = [...team.players];
-        updatePlayersList();
-        updateUI();
-    }
+    gameState.players = [...team.players];
+    updatePlayersList();
+    updateUI();
+    // Removed confirmation alert for faster experience
 }
 
 function deleteTeam(index) {
@@ -397,6 +396,7 @@ function updateUI() {
 }
 
 // ================= EVENT LISTENERS =================
+// ================= EVENT LISTENERS =================
 function setupEventListeners() {
     console.log('Setting up event listeners...');
     
@@ -501,54 +501,6 @@ function setupEventListeners() {
     
     // Describe game controls
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
-    
-    // Word button using event delegation
-    document.addEventListener('click', function(e) {
-        const button = e.target.closest('#showWordBtn, #startDescribeBtn');
-        if (!button) return;
-        
-        if (button.id === 'showWordBtn') {
-            const wordDisplay = document.getElementById('describerWordDisplay');
-            wordDisplay.style.display = 'block';
-            
-            const filteredWords = words.filter(w => gameState.categories.includes(w.category));
-            if (filteredWords.length > 0) {
-                const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
-                gameState.word = random.word;
-                gameState.wordAr = random.wordAr;
-                
-                const hintIndex = Math.floor(Math.random() * random.hints.length);
-                gameState.hint = random.hints[hintIndex];
-                gameState.hintAr = random.hintsAr[hintIndex];
-            }
-            
-            document.getElementById('describerActualWord').textContent = gameState.word;
-            document.getElementById('describerArabicWord').textContent = gameState.wordAr;
-            
-            button.innerHTML = '<i class="fas fa-play"></i> Start Describing';
-            button.id = 'startDescribeBtn';
-            button.className = 'btn btn-primary';
-        } 
-        else if (button.id === 'startDescribeBtn') {
-            document.getElementById('describeWordScreen').style.display = 'none';
-            
-            const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
-            const instruction = mode === 'speech' ?
-                `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
-                `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
-            
-            document.getElementById('roundInstruction').textContent = instruction;
-            document.getElementById('discussionRound').style.display = 'block';
-            document.getElementById('revealImposterBtn').style.display = 'none';
-            
-            if (gameState.timer === 0) {
-                document.getElementById('discussionTimer').textContent = '∞';
-                document.getElementById('discussionTimer').style.color = 'var(--primary)';
-            } else {
-                startDiscussionTimer();
-            }
-        }
-    });
     
     // Discussion controls
     document.getElementById('revealImposterBtn').addEventListener('click', revealImposterEarly);
@@ -752,24 +704,74 @@ function showDescriberWord() {
     const wordDisplay = document.getElementById('describerWordDisplay');
     wordDisplay.style.display = 'none';
     
-    const buttonArea = document.querySelector('#describeWordScreen .role-card + button');
-    if (!buttonArea) {
+    // Get or create the button
+    let button = document.getElementById('showWordBtn');
+    if (!button) {
+        button = document.createElement('button');
+        button.id = 'showWordBtn';
+        button.className = 'btn btn-secondary';
+        button.style.marginTop = '10px';
+        button.style.marginBottom = '20px';
+        button.style.width = '100%';
+        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        
         const roleCard = document.querySelector('#describeWordScreen .role-card');
         if (roleCard) {
-            const newButton = document.createElement('button');
-            newButton.id = 'showWordBtn';
-            newButton.className = 'btn btn-secondary';
-            newButton.style.marginTop = '10px';
-            newButton.style.marginBottom = '20px';
-            newButton.style.width = '100%';
-            newButton.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-            roleCard.parentNode.insertBefore(newButton, roleCard.nextSibling);
+            roleCard.parentNode.insertBefore(button, roleCard.nextSibling);
         }
     } else {
-        buttonArea.id = 'showWordBtn';
-        buttonArea.className = 'btn btn-secondary';
-        buttonArea.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+        button.id = 'showWordBtn';
+        button.className = 'btn btn-secondary';
+        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
     }
+    
+    // Clear any existing onclick handlers
+    button.onclick = null;
+    
+    // Add new click handler
+    button.onclick = function() {
+        const wordDisplay = document.getElementById('describerWordDisplay');
+        wordDisplay.style.display = 'block';
+        
+        const filteredWords = words.filter(w => gameState.categories.includes(w.category));
+        if (filteredWords.length > 0) {
+            const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+            gameState.word = random.word;
+            gameState.wordAr = random.wordAr;
+            
+            const hintIndex = Math.floor(Math.random() * random.hints.length);
+            gameState.hint = random.hints[hintIndex];
+            gameState.hintAr = random.hintsAr[hintIndex];
+        }
+        
+        document.getElementById('describerActualWord').textContent = gameState.word;
+        
+        // Change button to start describing
+        this.innerHTML = '<i class="fas fa-play"></i> Start Describing';
+        this.id = 'startDescribeBtn';
+        this.className = 'btn btn-primary';
+        
+        // Add new click handler for start describing
+        this.onclick = function() {
+            document.getElementById('describeWordScreen').style.display = 'none';
+            
+            const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
+            const instruction = mode === 'speech' ?
+                `${gameState.describerTeam}'s describer is describing the word. Both teams guess!` :
+                `${gameState.describerTeam}'s describer is using gestures only. Both teams guess!`;
+            
+            document.getElementById('roundInstruction').textContent = instruction;
+            document.getElementById('discussionRound').style.display = 'block';
+            document.getElementById('revealImposterBtn').style.display = 'none';
+            
+            if (gameState.timer === 0) {
+                document.getElementById('discussionTimer').textContent = '∞';
+                document.getElementById('discussionTimer').style.color = 'var(--primary)';
+            } else {
+                startDiscussionTimer();
+            }
+        };
+    };
     
     document.getElementById('describeWordScreen').style.display = 'block';
 }
@@ -942,8 +944,7 @@ function generateImageGrid() {
                     name: player.name,
                     image: player.image,
                     category: 'football',
-                    displayName: player.name,
-                    arabic: ""
+                    displayName: player.name
                 });
             });
         } else {
@@ -953,16 +954,17 @@ function generateImageGrid() {
                     type: 'emoji',
                     name: word.word,
                     image: word.image || '❓',
-                    arabic: word.wordAr,
                     category: category,
-                    displayName: `${word.word} (${word.wordAr})`
+                    displayName: word.word // Removed Arabic text
                 });
             });
         }
     });
     
-    // Get 16 random items
-    const selectedItems = [...imagePool].sort(() => Math.random() - 0.5).slice(0, 16);
+    // Get 18 random items for 3x6 grid on mobile
+    const isMobile = window.innerWidth <= 768;
+    const itemCount = isMobile ? 18 : 16; // 3x6 on mobile, 4x4 on desktop
+    const selectedItems = [...imagePool].sort(() => Math.random() - 0.5).slice(0, itemCount);
     
     // Initialize game state
     gameState.imageGame = gameState.imageGame || {};
@@ -980,13 +982,14 @@ function renderImageGrid(items) {
     imageGrid.innerHTML = '';
     
     // Responsive grid: 3 columns on mobile, 4 on desktop
-    // Use a more mobile-friendly breakpoint
-    const isMobile = window.innerWidth <= 480; // Changed from 768 to 480
-    imageGrid.style.gridTemplateColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)';
+    const isMobile = window.innerWidth <= 768;
+    const columns = isMobile ? 3 : 4;
+    const rows = isMobile ? 6 : 4;
     
-    // Also set the CSS property for the container to ensure it works
+    imageGrid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    imageGrid.style.gridAutoRows = 'minmax(130px, auto)';
     imageGrid.style.display = 'grid';
-    imageGrid.style.gap = '8px';
+    imageGrid.style.gap = '10px';
     
     items.forEach((item, index) => {
         const imageCell = document.createElement('div');
@@ -1005,8 +1008,11 @@ function renderImageGrid(items) {
         // Image content
         const content = document.createElement('div');
         content.className = 'image-content';
-        content.style.height = '75%';
+        content.style.height = isMobile ? '65%' : '70%';
         content.style.position = 'relative';
+        content.style.display = 'flex';
+        content.style.alignItems = 'center';
+        content.style.justifyContent = 'center';
         
         if (item.type === 'football') {
             const img = document.createElement('img');
@@ -1016,13 +1022,14 @@ function renderImageGrid(items) {
             img.style.objectFit = 'cover';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.maxHeight = '180px';
+            img.style.borderRadius = '4px';
             img.onerror = function() {
                 this.style.display = 'none';
                 const fallback = document.createElement('div');
                 fallback.className = 'emoji-display';
                 fallback.textContent = '⚽';
-                fallback.style.fontSize = '4rem';
+                fallback.style.fontSize = isMobile ? '2.5rem' : '3rem';
+                fallback.style.padding = '10px';
                 content.appendChild(fallback);
             };
             content.appendChild(img);
@@ -1030,15 +1037,16 @@ function renderImageGrid(items) {
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
             emojiDisplay.textContent = item.image;
-            emojiDisplay.style.fontSize = '5rem';
+            emojiDisplay.style.fontSize = isMobile ? '2.5rem' : '3rem';
             emojiDisplay.style.height = '100%';
             emojiDisplay.style.display = 'flex';
             emojiDisplay.style.alignItems = 'center';
             emojiDisplay.style.justifyContent = 'center';
+            emojiDisplay.style.padding = '10px';
             content.appendChild(emojiDisplay);
         }
         
-        // Center ❌ Prediction - FIXED: Only show for current player
+        // Center ❌ Prediction
         const centerPrediction = document.createElement('div');
         centerPrediction.className = 'center-prediction';
         centerPrediction.dataset.playerIndex = gameState.imageGame.currentPlayerIndex;
@@ -1047,7 +1055,7 @@ function renderImageGrid(items) {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 4rem;
+            font-size: ${isMobile ? '3rem' : '4rem'};
             color: rgba(239, 68, 68, 0.8);
             display: none;
             z-index: 5;
@@ -1068,7 +1076,7 @@ function renderImageGrid(items) {
             left: 3px;
             background: rgba(0, 0, 0, 0.85);
             color: white;
-            font-size: 0.8rem;
+            font-size: ${isMobile ? '0.7rem' : '0.8rem'};
             font-weight: bold;
             padding: 4px 8px;
             border-radius: 50%;
@@ -1081,7 +1089,7 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Name label
+        // Name label - Only English, no Arabic
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
         nameLabel.style.cssText = `
@@ -1089,17 +1097,16 @@ function renderImageGrid(items) {
             bottom: 0;
             left: 0;
             right: 0;
-            height: 25%;
+            height: ${isMobile ? '35%' : '30%'};
             background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7));
             color: white;
-            font-size: 0.75rem;
-            padding: 10px 5px;
+            font-size: ${isMobile ? '0.75rem' : '0.8rem'};
+            padding: ${isMobile ? '6px 3px' : '8px 4px'};
             text-align: center;
             font-weight: 600;
             z-index: 2;
             word-break: break-word;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
@@ -1107,19 +1114,11 @@ function renderImageGrid(items) {
             border-top: 2px solid rgba(255,255,255,0.1);
         `;
         
-        if (item.type === 'emoji' && item.category === 'flags') {
-            nameLabel.innerHTML = `
-                <div class="english-text" style="font-size: 0.75rem; line-height: 1.2; font-weight: bold; margin-bottom: 3px;">${item.image}</div>
-                ${item.arabic ? `<div class="arabic-text" style="font-size: 0.65rem; line-height: 1.1; color: rgba(255,255,255,0.95);">${item.arabic}</div>` : ''}
-            `;
-        } else if (item.type === 'emoji') {
-            nameLabel.innerHTML = `
-                <div class="english-text" style="font-size: 0.75rem; line-height: 1.2; font-weight: bold; margin-bottom: 3px;">${item.name}</div>
-                ${item.arabic ? `<div class="arabic-text" style="font-size: 0.65rem; line-height: 1.1; color: rgba(255,255,255,0.95);">${item.arabic}</div>` : ''}
-            `;
-        } else {
-            nameLabel.innerHTML = `<div class="english-text" style="font-size: 0.75rem; line-height: 1.2; font-weight: bold;">${item.name}</div>`;
-        }
+        nameLabel.innerHTML = `
+            <div class="english-text" style="font-size: ${isMobile ? '0.75rem' : '0.8rem'}; line-height: 1.2; font-weight: bold;">
+                ${item.displayName}
+            </div>
+        `;
         
         // Selection indicator
         const selectionIndicator = document.createElement('div');
@@ -1130,13 +1129,13 @@ function renderImageGrid(items) {
             right: 5px;
             background: rgba(0, 0, 0, 0.8);
             color: white;
-            width: 32px;
-            height: 32px;
+            width: ${isMobile ? '28px' : '30px'};
+            height: ${isMobile ? '28px' : '30px'};
             border-radius: 50%;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: ${isMobile ? '1.1rem' : '1.2rem'};
             font-weight: bold;
             z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -1153,7 +1152,7 @@ function renderImageGrid(items) {
             flex-wrap: wrap;
             gap: 3px;
             z-index: 10;
-            max-width: 60px;
+            max-width: ${isMobile ? '50px' : '60px'};
             justify-content: flex-end;
         `;
         
@@ -1179,20 +1178,9 @@ function renderImageGrid(items) {
     
     updateGridBackground();
     addResetPredictionsButton();
-    updatePlayerPredictionsDisplay(); // FIXED: Show predictions for current player only
-}
-// Add this function
-function handleWindowResize() {
-    if (gameState.imageGame && document.getElementById('imageMatchScreen').style.display === 'block') {
-        // Re-render the grid with correct columns
-        if (gameState.imageGame.images) {
-            renderImageGrid(gameState.imageGame.images);
-        }
-    }
+    updatePlayerPredictionsDisplay();
 }
 
-// Add this to your initializeGame() function or setupEventListeners():
-window.addEventListener('resize', handleWindowResize);
 function updateGridBackground() {
     const imageGrid = document.getElementById('imageGrid');
     if (imageGrid && gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
@@ -1240,7 +1228,6 @@ function addResetPredictionsButton() {
             });
             
             updateAllMarksForCurrentPlayer();
-            alert('✅ Your predictions have been reset!');
         });
         
         const gamePhase = document.getElementById('gamePhase');
@@ -1303,7 +1290,8 @@ function updatePlayerPredictionsDisplay() {
 function updateAllMarksForCurrentPlayer() {
     const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
     
-    for (let i = 0; i < 16; i++) {
+    const itemCount = gameState.imageGame.images.length;
+    for (let i = 0; i < itemCount; i++) {
         updateImageMarksDisplay(i, currentPlayer);
     }
 }
@@ -1489,7 +1477,7 @@ function updatePlayerDisplay() {
     });
     
     updateGridBackground();
-    updatePlayerPredictionsDisplay(); // FIXED: Update predictions display
+    updatePlayerPredictionsDisplay();
     updateAllMarksForCurrentPlayer();
     addResetPredictionsButton();
 }
@@ -1523,7 +1511,7 @@ function confirmSecret() {
             `;
         }
         
-        alert(`${currentPlayer} has chosen! Pass to next player.`);
+        // Removed alert for cleaner experience
     } else {
         gameState.imageGame.currentPlayerIndex = 0;
         gameState.imageGame.turnPhase = 'guessing';
@@ -1533,7 +1521,7 @@ function confirmSecret() {
         
         updatePlayerDisplay();
         autoSelectNextPlayer();
-        alert('All players have chosen! Game begins. Now guess!');
+        // Removed alert for cleaner experience
     }
 }
 
@@ -1609,7 +1597,7 @@ function showNumberSelection(targetPlayer) {
                     Select the image number you think <strong>${targetPlayer}</strong> chose:
                 </p>
                 <div class="number-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0;">
-                    ${Array.from({length: 16}, (_, i) => `
+                    ${Array.from({length: gameState.imageGame.images.length}, (_, i) => `
                         <button class="number-btn" data-number="${i + 1}" 
                             style="padding: 15px; border: 2px solid ${playerColor}; 
                                    border-radius: 10px; background: rgba(255,255,255,0.05); 
@@ -1681,7 +1669,7 @@ function processGuess(targetPlayer, guessNum) {
             gameState.imageGame.playerPredictions[targetPlayer] = [];
         }
         
-        alert(`✅ Correct! ${targetPlayer} chose image ${guessNum + 1}. ${targetPlayer} is revealed!`);
+        // Removed alert for cleaner experience
         
         if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
             setTimeout(endImageGame, 1500);
@@ -1691,7 +1679,7 @@ function processGuess(targetPlayer, guessNum) {
         autoSelectNextPlayer();
         endTurn();
     } else {
-        alert(`❌ Wrong! ${targetPlayer} did not choose image ${guessNum + 1}.`);
+        // Removed alert for cleaner experience
         autoSelectNextPlayer();
         endTurn();
     }
@@ -1825,6 +1813,16 @@ function setupImageGameListeners() {
         submitGuessBtn.onclick = submitGuess;
     }
 }
+
+// Handle window resize for responsive image grid
+window.addEventListener('resize', function() {
+    if (gameState.imageGame && document.getElementById('imageMatchScreen').style.display === 'block') {
+        // Re-render the grid with correct columns
+        if (gameState.imageGame.images) {
+            renderImageGrid(gameState.imageGame.images);
+        }
+    }
+});
 
 // ================= MODALS =================
 function showShareModal() {
