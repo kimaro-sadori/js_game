@@ -122,14 +122,15 @@
                         <i class="fas fa-clock"></i>
                         <h3>Timer <span class="expand-toggle" id="timerExpand"> </span></h3>
                     </div>
-                    <div id="timerButtons" class="timer-buttons" style="display: none;">
-                        <button class="timer-btn" data-time="30">30s</button>
-                        <button class="timer-btn" data-time="60">1m</button>
-                        <button class="timer-btn active" data-time="120">2m</button>
-                        <button class="timer-btn" data-time="180">3m</button>
-                        <button class="timer-btn" data-time="300">5m</button>
-                        <button class="timer-btn" data-time="0">No Timer</button>
-                    </div>
+                    <div id="timerButtons" class="timer-buttons" style="display: none; font-weight: bold;">
+    <button class="timer-btn" data-time="30">30s</button>
+    <button class="timer-btn" data-time="60">1m</button>
+    <button class="timer-btn active" data-time="120">2m</button>
+    <button class="timer-btn" data-time="180">3m</button>
+    <button class="timer-btn" data-time="300">5m</button>
+    <button class="timer-btn" data-time="0">No Timer</button>
+</div>
+
                     <br>
                     <div id="timerDisplay" class="timer-display-mini" style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center;">
                         <span id="currentTimerText">2:00</span>
@@ -272,11 +273,14 @@
     </div>
 
     <!-- Social Buttons -->
-      <div class="support-title">
-        Support Us ❤️
-    </div>
+     <br>
+   <div class="support-title" style="text-align: center;">
+    Support Us ❤️
+</div>
+<br>
     <div class="social-buttons">
-   
+     
+
 
     <button id="shareBtn" class="social-btn">
         <i class="fas fa-share-alt"></i> Share
@@ -582,12 +586,13 @@
                 <span>Who/What Am I?</span>
             </div>
             <div class="action-buttons">
-                <button class="action-btn" onclick="backToLobby()">
-                    <i class="fas fa-home"></i>&nbsp;Home
-                </button>
                 <button class="action-btn" onclick="restartImageGame()">
-                    <i class="fas fa-redo"></i>&nbsp;New Images
+                    <i class="fas fa-redo"></i>&nbsp;
                 </button>
+                <button class="action-btn" onclick="backToLobby()">
+                    <i class="fas fa-home"></i>&nbsp;
+                </button>
+                
             </div>
         </div>
         

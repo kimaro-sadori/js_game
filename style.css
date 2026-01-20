@@ -32,7 +32,6 @@ body {
 /* ===== SIMPLE HEADER ===== */
 .header {
     padding: 15px;
-    /* Removed sticky positioning */
     background: var(--bg);
     z-index: 100;
     border-bottom: 1px solid var(--border);
@@ -64,6 +63,11 @@ body {
 #playCount {
     color: var(--accent);
     font-weight: 700;
+    transition: opacity 0.3s ease;
+}
+
+#playCount.loading {
+    opacity: 0.5;
 }
 
 /* ===== FAST DASHBOARD ===== */
@@ -102,11 +106,8 @@ body {
     font-size: 0.8rem;
     margin-left: auto;
     user-select: none;
-    /* Remove pointer events so parent gets the click */
-    pointer-events: none;
 }
 
-/* Hide the arrow characters when expanded */
 .expand-toggle:not(.expanded)::before {
     content: "▼";
 }
@@ -273,7 +274,7 @@ body {
     border: 1px solid var(--danger);
 }
 
-/* ===== GAME SETTINGS - SIMPLE ===== */
+/* ===== GAME SETTINGS ===== */
 .settings-grid {
     display: grid;
     gap: 20px;
@@ -285,18 +286,6 @@ body {
     padding: 15px;
     border: 1px solid var(--border);
     cursor: pointer;
-    /* Disable all transitions */
-    transition: none !important;
-}
-
-/* Completely disable hover effects */
-.setting-group:hover,
-.setting-group:active,
-.setting-group:focus {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border-color: var(--border) !important;
-    transform: none !important;
-    box-shadow: none !important;
 }
 
 .setting-title {
@@ -323,22 +312,19 @@ body {
     color: var(--primary);
 }
 
-.setting-title h3 span {
-    flex-shrink: 0;
-}
-
-.setting-title i {
-    color: var(--primary);
-}
-
 /* Game Mode */
 .mode-buttons {
     display: flex;
     gap: 10px;
 }
 
-.mode-btn {
+.mode-container {
+    position: relative;
     flex: 1;
+}
+
+.mode-btn {
+    width: 100%;
     padding: 15px;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid var(--border);
@@ -348,13 +334,34 @@ body {
     transition: all 0.2s;
 }
 
-.mode-btn:hover {
-    border-color: var(--primary);
-}
-
 .mode-btn.active {
     background: rgba(99, 102, 241, 0.2);
     border-color: var(--primary);
+}
+
+.mode-help-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.mode-help-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
 }
 
 .mode-icon {
@@ -376,17 +383,13 @@ body {
 }
 
 .timer-btn {
+    color: white;
     padding: 12px;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid var(--border);
     border-radius: 8px;
     cursor: pointer;
     text-align: center;
-    transition: all 0.2s;
-}
-
-.timer-btn:hover {
-    border-color: var(--primary);
 }
 
 .timer-btn.active {
@@ -399,90 +402,51 @@ body {
     color: var(--text);
 }
 
-/* Category option with right checkbox */
+/* Categories */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
 .category-option {
-    position: relative;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding: 12px;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid var(--border);
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
-    min-height: 50px; /* Ensure consistent height */
 }
 
 .category-label {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex: 1; /* Take available space */
-}
-
-/* Categories */
-/* Make entire categories group clickable like timer */
-.setting-group[data-has-grid="true"] {
-    cursor: pointer;
+    order: 1;
 }
 
 .category-checkbox {
-    /* Checkbox stays on right */
-    margin-left: 10px;
+    order: 2;
+    margin-left: auto;
     width: 18px;
     height: 18px;
     cursor: pointer;
+    accent-color: var(--primary);
 }
 
-/* Right-aligned checkboxes */
-.category-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
+.category-icon {
+    font-size: 1.2rem;
 }
 
-.category-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    order: 1; /* Text on left */
+.category-text {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
-.category-checkbox {
-    order: 2; /* Checkbox on right */
-    margin-left: auto;
-}
-
-.category-option:hover {
-    border-color: var(--border);
-}
-
-.timer-btn:hover,
-.mode-btn:hover {
-    /* Remove border color change */
-    border-color: var(--border); /* Keep original border color */
-}
-
-.category-checkbox:checked + .category-label {
-    background: none; /* Remove old style */
-}
-
-.category-checkbox:checked ~ .category-label {
-    background: none; /* Remove old style */
-}
-
-.category-checkbox:checked {
-    accent-color: var(--primary); /* Modern browsers */
-}
-
-/* Select All container */
 .select-all-container {
     display: flex;
     justify-content: space-between;
@@ -492,7 +456,7 @@ body {
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     border: 1px solid var(--border);
-    grid-column: 1 / -1; /* Span across both columns */
+    grid-column: 1 / -1;
 }
 
 .select-all-btn {
@@ -508,24 +472,6 @@ body {
 
 .select-all-btn:hover {
     background: var(--primary-dark);
-}
-
-.category-icon {
-    font-size: 1.2rem;
-}
-
-.category-text {
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-/* Categories grid with proper spacing */
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px; /* RESTORE THIS - spacing between categories */
-    margin-top: 15px; /* Add top margin */
 }
 
 /* ===== START GAME BUTTON ===== */
@@ -691,12 +637,12 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 1); /* 90% black - very dark */
+    background: rgba(0, 0, 0, 1);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2; /* Make sure it's above the card content */
+    z-index: 2;
 }
 
 .card-hidden.hidden {
@@ -814,7 +760,6 @@ body {
     text-align: center;
     margin: 30px 0;
     cursor: pointer;
-    transition: border-color 0.2s;
 }
 
 .secret-card:hover {
@@ -854,7 +799,6 @@ body {
 
 .imposter-name {
     font-size: 2rem;
-    /*color: var(--danger);*/
     font-weight: 700;
     margin: 20px 0;
 }
@@ -957,11 +901,11 @@ body {
 
 /* ===== SOCIAL BUTTONS ===== */
 .social-buttons {
-    position: relative;  /* ← This fixed it! */
-    display: flex !important; /* ← Force display */
+    position: relative;
+    display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 150px; /* Add space below */
+    margin-bottom: 150px;
 }
 
 .social-btn {
@@ -987,9 +931,9 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 23, 42, 0.95);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
     z-index: 2000;
     display: none;
     align-items: center;
@@ -998,284 +942,13 @@ body {
 }
 
 .modal-content {
-    max-width: 500px;
-    width: 100%;
     background: var(--card);
-    border-radius: 12px;
-    padding: 25px;
-    border: 1px solid var(--border);
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.modal-title {
-    font-size: 1.3rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.close-modal {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 5px;
-}
-
-.close-modal:hover {
-    color: var(--text);
-}
-
-/* Stats Modal */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.stat-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin: 10px 0;
-}
-
-.stat-label {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .social-buttons {
-        padding-left: 15px;
-        padding-right: 15px;
-        box-sizing: border-box;
-    }
-    .dashboard {
-        padding: 10px;
-    }
-    
-    .panel {
-        padding: 15px;
-    }
-    
-    .game-summary {
-        gap: 15px;
-    }
-    
-    .timer-buttons {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .teams-container {
-        flex-direction: column;
-    }
-    
-    .social-buttons {
-        flex-direction: column;
-    }
-    
-    .social-btn {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo h1 {
-        font-size: 1.8rem;
-    }
-    
-    .mode-buttons {
-        flex-direction: column;
-    }
-    
-    .role-word {
-        font-size: 2rem;
-    }
-    
-    .timer-display {
-        font-size: 2.8rem;
-    }
-    
-    .results-buttons {
-        flex-direction: column;
-    }
-}
-
-/* Touch optimizations */
-@media (hover: none) and (pointer: coarse) {
-    .btn, .action-btn, .social-btn {
-        min-height: 44px;
-    }
-    
-    .role-card {
-        min-height: 250px;
-    }
-    
-    .timer-btn, .mode-btn {
-        padding: 16px;
-    }
-}
-
-/* Performance optimizations */
-* {
-    -webkit-tap-highlight-color: transparent;
-}
-
-img, video {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Remove all heavy animations */
-.role-card, .secret-card {
-    transition: none !important;
-}
-
-/* Optimize scrolling */
-.game-screen, .modal-content, .players-list {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-}
-
-/* Remove shadows and blurs for performance */
-.game-container, .panel, .modal-content {
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-}
-
-#playCount {
-    transition: opacity 0.3s ease;
-}
-
-#playCount.loading {
-    opacity: 0.5;
-}
-
-/* Feedback Modal Styles */
-.feedback-options {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.quick-feedback h4, .full-form h4 {
-    margin-bottom: 15px;
-    color: var(--text);
-    font-size: 1.1rem;
-}
-
-.quick-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.quick-btn {
-    padding: 12px 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.quick-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-}
-
-.quick-btn i {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-.quick-btn[data-type="love"] i {
-    color: #ef4444;
-}
-
-.quick-btn[data-type="bug"] i {
-    color: #f59e0b;
-}
-
-.quick-btn[data-type="suggestion"] i {
-    color: #10b981;
-}
-
-.form-note {
-    text-align: center;
-    margin-top: 8px;
-    color: #94a3b8;
-    font-size: 0.9rem;
-}
-
-.feedback-stats h5 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
-    color: var(--text);
-}
-
-.feedback-stats strong {
-    color: var(--accent);
-    font-weight: 600;
-}
-
-/* Update modal styles for better appearance */
-.modal-content {
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-/* Simple Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: var(--bg);
     border-radius: 12px;
     width: 90%;
     max-width: 400px;
     border: 1px solid var(--border);
     overflow: hidden;
+    pointer-events: auto;
 }
 
 .modal-header {
@@ -1317,319 +990,11 @@ img, video {
     color: var(--text);
 }
 
-/* Button Styles */
-.btn {
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #3a82e6;
-    transform: translateY(-2px);
-}
-
-.modal {
-    /* Ensure it covers everything */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 10000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: var(--card);
-    border-radius: 12px;
-    max-width: 500px;
-    width: 90%;
-    position: relative;
-    /* Prevent click propagation */
-    pointer-events: auto;
-}
-
-/* Flag option */
-.flag-option {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    min-height: 50px;
-}
-
-.flag-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-}
-
-.flag-icon {
-    font-size: 1.2rem;
-}
-
-.flag-text {
-    color: var(--text);
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-/* For flag display in game */
-.flag-display {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: white;
-    margin: 10px 0;
-    text-align: center;
-}
-
-/* Make categories grid responsive for new category */
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 15px;
-}
-
-@media (max-width: 480px) {
-    .categories-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Update categories grid to handle more categories */
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-top: 15px;
-}
-
-@media (max-width: 768px) {
-    .categories-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Make sure categories display shows all selected */
-.categories-display-mini {
-    max-height: 100px;
-    overflow-y: auto;
-}
-
-/* ===== REMOVE ALL BACKGROUND COLOR CHANGES ON HOVER ===== */
-.setting-group,
-.setting-title,
-.category-option,
-.timer-btn,
-.mode-btn {
-    transition: none !important;
-}
-
-.setting-group:hover,
-.setting-group:active,
-.setting-group:focus,
-.setting-title:hover,
-.setting-title:active,
-.category-option:hover,
-.category-option:active,
-.timer-btn:hover,
-.timer-btn:active,
-.mode-btn:hover,
-.mode-btn:active {
-    background: inherit !important;
-    background-color: inherit !important;
-    border-color: var(--border) !important;
-    transform: none !important;
-    box-shadow: none !important;
-}
-
-/* Keep cursor pointer for clickable elements */
-.setting-group,
-.category-option,
-.timer-btn,
-.mode-btn,
-.btn,
-.action-btn,
-.social-btn {
-    cursor: pointer;
-}
-
-/* Keep your original .mode-buttons styles */
-.mode-buttons {
-    display: flex;
-    gap: 10px; /* This should already be in your CSS */
-}
-
-/* Make containers flex: 1 to take equal width like before */
-.mode-container {
-    position: relative;
-    flex: 1; /* This makes them take equal width like your original buttons */
-}
-
-/* Keep your original .mode-btn styles exactly as they are */
-.mode-btn {
-    /* Your existing styles - DO NOT CHANGE THESE */
-    flex: 1;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-    width: 100%; /* Keep this if it was there */
-    height: auto; /* Keep this */
-}
-
-/* Add help button - positioned absolutely so it doesn't affect layout */
-.mode-help-btn {
-    position: absolute;
-    top: -10px; /* Position above the button */
-    right: -10px; /* Position outside to the right */
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: white;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    z-index: 100; /* Make sure it's above everything */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.mode-help-btn:hover {
-    background: var(--primary);
-    color: white;
-    transform: scale(1.1);
-}
-
-/* Help Modal Styles */
-.help-content {
-    padding: 10px 0;
-}
-
-.help-content h2 {
-    color: var(--primary);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.help-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.step {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
-
-.step-num {
-    background: var(--primary);
-    color: white;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-    font-size: 14px;
-}
-
-.step p {
-    color: var(--text);
-    line-height: 1.5;
-    margin: 0;
-}
-
-.step strong {
-    color: var(--primary);
-}
-
-/* Help Modal Specific Styles */
+/* Help Modal */
 .help-modal {
     max-width: 450px;
-    padding: 0;
-    overflow: hidden;
 }
 
-.help-modal .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(99, 102, 241, 0.1);
-}
-
-.help-modal .modal-header h2 {
-    margin: 0;
-    color: var(--text);
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.help-modal .close-modal {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 28px;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    line-height: 1;
-}
-
-.help-modal .close-modal:hover {
-    color: var(--danger);
-}
-
-.help-modal .modal-body {
-    padding: 20px;
-}
-
-/* Help steps styling */
 .help-steps {
     display: flex;
     flex-direction: column;
@@ -1643,17 +1008,18 @@ img, video {
 }
 
 .step-num {
-    background: var(--primary);
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    flex-shrink: 0;
-    font-size: 16px;
+  background: var(--primary);
+  color: white;
+  width: 28px; /* Reduced from 32px */
+  height: 28px; /* Reduced from 32px */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  font-size: 15px; /* Changed from 16px */
+  margin-right: 12px; /* Added left spacing */
 }
 
 .step-text {
@@ -1677,323 +1043,6 @@ img, video {
 }
 
 /* ===== IMAGE MATCH MODE STYLES ===== */
-.image-match-timer {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-    margin: 15px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: monospace;
-}
-
-.current-turn {
-    text-align: center;
-    margin: 20px 0;
-    padding: 15px;
-    background: rgba(99, 102, 241, 0.1);
-    border-radius: 10px;
-    border: 1px solid rgba(99, 102, 241, 0.3);
-}
-
-.current-turn h3 {
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-    font-size: 1rem;
-}
-
-.image-display-container {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-    text-align: center;
-}
-
-.current-image-display {
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.current-image-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.current-image-emoji {
-    font-size: 5rem;
-    animation: bounce 1s infinite alternate;
-}
-
-@keyframes bounce {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-10px); }
-}
-
-.current-image-label {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.image-table-container {
-    margin: 25px 0;
-}
-
-.image-table-container h3 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: var(--text);
-}
-
-.images-table {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 0 auto;
-    max-width: 400px;
-}
-
-.image-cell {
-    aspect-ratio: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 10px;
-}
-
-.image-cell:hover {
-    border-color: var(--primary);
-    transform: scale(1.05);
-}
-
-.image-hidden {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.image-hidden i {
-    font-size: 2rem;
-    color: var(--text-secondary);
-}
-
-.image-hidden span {
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-}
-
-.image-revealed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
-}
-
-.image-emoji {
-    font-size: 1.8rem;
-}
-
-.image-word {
-    font-size: 0.7rem;
-    color: var(--text);
-    font-weight: bold;
-    text-align: center;
-    word-break: break-word;
-    width: 100%;
-}
-
-.game-controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.game-controls .btn {
-    flex: 1;
-    padding: 12px;
-    font-size: 0.9rem;
-}
-
-.btn-success {
-    background: var(--success);
-    color: white;
-}
-
-.btn-success:hover {
-    background: #16a34a;
-}
-
-/* Action buttons with text */
-.action-buttons .action-btn {
-    width: auto;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-}
-
-.score-board {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 20px 0;
-}
-
-.score-board h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--text);
-}
-
-.score-item {
-    transition: all 0.3s ease;
-}
-
-.score-item:hover {
-    transform: translateX(5px);
-}
-
-/* Responsive design for images */
-@media (max-width: 768px) {
-    .images-table {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 300px;
-    }
-    
-    .current-image-emoji {
-        font-size: 4rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .images-table {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 250px;
-    }
-    
-    .current-image-emoji {
-        font-size: 3rem;
-    }
-    
-    .game-controls {
-        flex-direction: column;
-    }
-}
-/* Better text layout for image labels */
-.player-name-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
-    color: white;
-    font-size: 0.8rem;
-    padding: 8px 4px;
-    text-align: center;
-    z-index: 2;
-    word-break: break-word;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    box-sizing: border-box;
-    min-height: 40px; /* Adjusts dynamically via JS */
-    transition: min-height 0.2s ease;
-}
-
-/* English text styling */
-.english-text {
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-bottom: 2px;
-    line-height: 1.2;
-}
-
-/* Arabic text styling */
-.arabic-text {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.2;
-    margin-top: 2px;
-}
-
-/* Space between texts */
-.text-separator {
-    height: 4px;
-}
-
-/* Flag indicator */
-.flag-indicator {
-    margin-top: 4px;
-    font-size: 1.2rem;
-}
-
-
-
-
-/* Category-specific backgrounds */
-.image-cell-simple[data-category="flags"] {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.1));
-}
-
-.image-cell-simple[data-category="animals"] {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(21, 128, 61, 0.1));
-}
-
-.image-cell-simple[data-category="food"] {
-    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.1));
-}
-
-/* Add other category styles as needed... */
-
-/* Better hover effects */
-.image-cell-simple:hover .player-name-label {
-    background: linear-gradient(to top, rgba(99, 102, 241, 0.9), rgba(99, 102, 241, 0.6));
-}
-
-.image-cell-simple:hover .arabic-text {
-    color: white;
-}
-.support-title {
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text-secondary);
-}
-
-.emoji-display {
-    font-size: 3.5rem;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-}
-
-.player-name-label small {
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    display: block;
-    margin-top: 2px;
-}
-/* ===== IMAGE MATCH MODE - Social Deduction Version ===== */
 .image-match-header {
     display: flex;
     justify-content: space-between;
@@ -2006,11 +1055,6 @@ img, video {
 .image-match-header .player-turn {
     flex: 1;
     min-width: 200px;
-}
-.player-turn {
-    /* Remove or adjust these if they're affecting the layout */
-    margin-bottom: 0;
-    text-align: left;
 }
 
 .image-match-header .timer-display {
@@ -2082,7 +1126,6 @@ img, video {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s;
 }
 
 .phase-btn:hover {
@@ -2094,30 +1137,32 @@ img, video {
     font-size: 1.5rem;
 }
 
-.question-interface, .guess-interface {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.hint-text {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    margin-top: 10px;
-    text-align: center;
-}
-
 .player-select {
     flex: 1;
     padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(30, 41, 59, 0.8);
     border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--text);
     font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.player-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.player-select option {
+    background: var(--card);
+    color: var(--text);
+    padding: 10px;
 }
 
 /* Image Grid Container */
@@ -2152,244 +1197,212 @@ img, video {
     gap: 8px;
 }
 
-/* 3 columns × 7 rows grid - FIXED VERSION */
-/* Image Grid - make cells touch each other */
-/* Fix the image grid layout */
+/* Image Grid */
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(120px, auto); /* This is KEY */
-    gap: 4px; /* Small gap between cells */
+    
+    grid-auto-rows: minmax(120px, auto);
+    gap: 8px;
     margin: 0 auto 15px;
     width: 100%;
     max-height: 500px;
     overflow-y: auto;
-    padding: 2px;
+    padding: 10px;
     border-radius: 8px;
     background: rgba(0, 0, 0, 0.1);
 }
 
-/* Add to your CSS */
-
-
-/* Ensure image container fills the cell */
-.image-cell-simple > div:first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+/* Image cell */
+.image-cell-simple {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
     height: 100%;
-    z-index: 1;
+    min-height: 120px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-/* Make sure the name label doesn't cover too much */
+.image-cell-simple:active {
+    transform: scale(0.95);
+}
 
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .image-cell-simple {
-        min-height: 100px;
-    }
-    
-    /* Make name label small at bottom */
-.image-cell-simple .player-name-label {
+/* Number label */
+.image-number {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30%; /* Only 30% height */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+    top: 5px;
+    left: 5px;
+    background: rgba(0, 0, 0, 0.85);
     color: white;
-    padding: 5px;
-    z-index: 2;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 50%;
+    z-index: 3;
+    min-width: 24px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-}
-/* Image cell - FIXED VERSION */
-/* Image cell - Increase height */
-
-
-/* Image will fit perfectly */
-/* Make image fill the cell better */
-.player-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    flex-grow: 1;
-}
-
-
-
-.image-cell-simple:hover .player-image {
-    transform: scale(1.05);
-}
-/* Add hover effect to make name more visible */
-.image-cell-simple:hover .player-name-label {
-    background: linear-gradient(to top, rgba(99, 102, 241, 0.9), rgba(99, 102, 241, 0.6));
-    color: white;
-    font-weight: 700;
-}
-
-
-/* Player name label - FIXED POSITION */
-/* Player name label - Make it taller and more prominent */
-/* Alternative: Banner-style label that covers bottom third */
+/* Player name label */
 .player-name-label {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 35%; /* Covers bottom 35% of the image */
+    height: 30%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
     color: white;
-    font-size: 0.9rem;
-    padding: 15px 5px 5px;
+    font-size: 0.8rem;
+    padding: 8px 4px;
     text-align: center;
-    font-weight: 600;
     z-index: 2;
     word-break: break-word;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
-.loading-images {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-}
-
-.loading-images:before {
-    content: "🔄";
-    display: block;
-    font-size: 2rem;
-    margin-bottom: 15px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.grid-note {
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.8rem;
-    margin-top: 10px;
-    font-style: italic;
-}
-
-/* Loading state */
-.image-loading {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-/* Error fallback */
-.player-fallback {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 40px;
+    pointer-events: none;
+}
+
+.english-text {
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.arabic-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.2;
+    margin-top: 2px;
+}
+
+/* Image content */
+.image-cell-simple > div:first-child:not(.image-number):not(.player-name-label) {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-display {
+    font-size: 3rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+}
+
+/* For flags, make emoji larger */
+.image-cell-simple[data-category="flags"] .emoji-display {
+    font-size: 4rem;
+}
+
+/* Player image */
+.player-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Selection indicator */
+.selection-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
     font-size: 1.2rem;
     font-weight: bold;
-    padding: 10px;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
-.player-fallback:before {
-    content: "⚽";
-    font-size: 2rem;
-    margin-bottom: 5px;
+.selection-indicator.selected {
+    background: rgba(34, 197, 94, 0.9);
+    display: flex;
 }
 
-/* Scrollbar styling */
-.image-grid::-webkit-scrollbar {
-    width: 8px;
+.selection-indicator.correct {
+    background: rgba(239, 68, 68, 0.9);
+    display: flex;
+    animation: pulse 1s infinite;
 }
 
-.image-grid::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
-.image-grid::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 4px;
+/* Player marks container */
+.player-marks-container {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    z-index: 10;
+    max-width: 60px;
+    justify-content: flex-end;
 }
 
-/* Responsive design */
-/* For larger screens */
-@media (min-width: 768px) {
-    .image-cell-simple {
-        height: 160px; /* Slightly taller on larger screens */
-    }
-    
-    .player-name-label {
-        font-size: 0.9rem; /* Larger font on bigger screens */
-        padding: 30px 10px 10px;
-        min-height: 55px;
-    }
-    
-    .image-grid {
-        height: 550px;
-    }
-}
-@media (max-width: 768px) {
-    .image-grid {
-        height: 400px;
-        grid-template-columns: repeat(3, 1fr); /* Keep 3 columns on mobile */
-        gap: 6px;
-    }
-    
-    .player-name-label {
-        font-size: 0.65rem;
-        padding: 15px 4px 4px;
-    }
-    
-    .image-number {
-        font-size: 0.8rem;
-        padding: 3px 8px;
-    }
+.player-mark {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* For smaller screens */
-@media (max-width: 480px) {
-    .image-cell-simple {
-        height: 130px; /* Adjust for mobile */
-    }
-    
-    .player-name-label {
-        font-size: 0.8rem;
-        padding: 20px 6px 6px;
-        min-height: 45px;
-    }
-    
-    .image-grid {
-        height: 450px;
-    }
+.player-mark[data-mark="✅"] {
+    color: #22c55e;
+    animation: pulse 1s infinite;
 }
 
-/* Answer Buttons */
+/* Center prediction (for ❌ marks) */
+.center-prediction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: rgba(239, 68, 68, 0.8);
+    display: none;
+    z-index: 5;
+    pointer-events: none;
+    text-shadow: 0 0 20px rgba(0,0,0,0.7);
+    opacity: 0.8;
+}
+
+/* Answer buttons */
 .answer-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2406,7 +1419,6 @@ img, video {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s;
 }
 
 .answer-btn:hover {
@@ -2438,421 +1450,178 @@ img, video {
     border-top: 1px solid var(--border);
 }
 
-/* Responsive Design for Answer Buttons */
+/* Reset predictions button */
+#resetPredictionsBtn {
+    display: block;
+    margin: 10px auto;
+    padding: 12px 20px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.5);
+}
+
+/* Loading state */
+.loading-images {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}
+
+.loading-images:before {
+    content: "🔄";
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    .social-buttons {
+        padding-left: 15px;
+        padding-right: 15px;
+        box-sizing: border-box;
+        flex-direction: column;
+    }
+    
+    .social-btn {
+        justify-content: center;
+    }
+    
+    .dashboard {
+        padding: 10px;
+    }
+    
+    .panel {
+        padding: 15px;
+    }
+    
+    .game-summary {
+        gap: 15px;
+    }
+    
+    .timer-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .teams-container {
+        flex-direction: column;
+    }
+    
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .image-grid {
+        grid-template-columns: repeat(3, 1fr);
+        height: 400px;
+    }
+    
     .answer-buttons {
         grid-template-columns: 1fr;
     }
-}
-
-/* Image cell labels - SINGLE VERSION (replace all others) */
-.image-cell-simple {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    height: 100%; /* Fill the grid cell */
-    min-height: 120px;
-}
-
-.image-cell-simple:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    z-index: 10; /* Bring to front on hover */
-}
-
-/* Number label - keep this */
-.image-number {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 5px 12px;
-    border-radius: 12px;
-    z-index: 3;
-}
-
-/* Player name label - FIXED VERSION */
-.image-cell-simple .player-name-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    min-height: 30px; /* Small height */
-    max-height: 40px; /* Don't let it grow too much */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
-    color: white;
-    font-size: 0.7rem; /* Smaller font */
-    padding: 5px 4px; /* Less padding */
-    text-align: center;
-    font-weight: 600;
-    z-index: 2;
-    word-break: break-word;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    overflow: hidden;
-    pointer-events: none; /* Allow clicks through */
-}
-
-/* Text inside the label */
-.image-cell-simple .player-name-label .english-text {
-    font-weight: bold;
-    font-size: 0.65rem;
-    line-height: 1.1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-}
-
-.image-cell-simple .player-name-label .arabic-text {
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.1;
-    margin-top: 1px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-}
-
-/* Image container should fill the cell */
-/* Ensure image/emoji takes most space */
-.image-cell-simple > div:first-child:not(.image-number):not(.player-name-label) {
-    width: 100%;
-    height: 70%; /* 70% for image */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Emoji display styling */
-.emoji-display {
-    font-size: 3rem !important;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-}
-
-/* For flags, make emoji larger */
-.image-cell-simple[data-category="flags"] .emoji-display {
-    font-size: 4rem !important;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .image-cell-simple {
-        min-height: 100px;
-    }}
     
-   /* Make name label small at bottom */
-.image-cell-simple .player-name-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 30%; /* Only 30% height */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
-    color: white;
-    padding: 5px;
-    z-index: 2;
-}
-/* ===== IMAGE SELECTION INDICATORS ===== */
-.selection-indicator {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    z-index: 10;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.selection-indicator.selected {
-    background: rgba(34, 197, 94, 0.9); /* Green for selection */
-}
-
-.selection-indicator.correct {
-    background: rgba(239, 68, 68, 0.9); /* Red for correct guess */
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.player-marks {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 1.5rem;
-    z-index: 10;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-
-.guess-mark {
-    animation: bounce 0.5s;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-/* Make image cells more touch-friendly */
-.image-cell-simple {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.2s;
-}
-
-.image-cell-simple:active {
-    transform: scale(0.95);
-}
-
-/* Update grid layout for 4x4 */
-.image-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px;
-    padding: 10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .image-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .image-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-/* ===== IMAGE SELECTION INDICATORS ===== */
-.selection-indicator {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    z-index: 10;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.selection-indicator.selected {
-    background: rgba(34, 197, 94, 0.9); /* Green for selection */
-}
-
-.selection-indicator.correct {
-    background: rgba(239, 68, 68, 0.9); /* Red for correct guess */
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.player-marks {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: 1.5rem;
-    z-index: 10;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-
-.guess-mark {
-    animation: bounce 0.5s;
-}
-
-@keyframes bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
-/* Make image cells more touch-friendly */
-.image-cell-simple {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.2s;
-}
-
-.image-cell-simple:active {
-    transform: scale(0.95);
-}
-
-/* Update grid layout for 4x4 */
-.image-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px;
-    padding: 10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .image-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .image-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-/* ===== PLAYER MARKS STYLES ===== */
-.player-marks {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    font-size: 1.8rem;
-    z-index: 100;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-.guess-mark {
-    animation: pulse-mark 0.5s ease-in-out;
-}
-
-@keyframes pulse-mark {
-    0% { transform: scale(0.5); opacity: 0; }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); opacity: 1; }
-}
-/* ===== FIX SELECT DROPDOWN STYLES ===== */
-.player-select {
-    flex: 1;
-    padding: 12px 15px;
-    background: rgba(30, 41, 59, 0.8) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px;
-    color: var(--text) !important;
-    font-size: 1rem;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") !important;
-    background-repeat: no-repeat !important;
-    background-position: right 10px center !important;
-    background-size: 20px !important;
-    padding-right: 40px !important;
-    cursor: pointer;
-}
-
-.player-select option {
-    background: var(--card) !important;
-    color: var(--text) !important;
-    padding: 10px;
-}
-
-.player-select:focus {
-    outline: none;
-    border-color: var(--primary) !important;
-}
-
-/* Fix for mobile dropdowns */
-@media (max-width: 768px) {
     .player-select {
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
     }
 }
 
-/* ===== IMPROVE NUMBER LABELS ===== */
-.image-number {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 6px 10px;
-    border-radius: 50%;
-    z-index: 3;
-    min-width: 24px;
-    min-height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    .mode-buttons {
+        flex-direction: column;
+    }
+    
+    .role-word {
+        font-size: 2rem;
+    }
+    
+    .timer-display {
+        font-size: 2.8rem;
+    }
+    
+    .results-buttons {
+        flex-direction: column;
+    }
+    
+    .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .image-cell-simple {
+        min-height: 110px;
+    }
+    
+    .player-name-label {
+        font-size: 0.8rem;
+        padding: 20px 6px 6px;
+        min-height: 45px;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+    }
 }
 
-/* ===== IMPROVE NAME LABEL WITH ARABIC TEXT ===== */
-.player-name-label {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
-    color: white;
-    font-size: 0.8rem;
-    padding: 8px 4px;
-    text-align: center;
-    z-index: 2;
-    word-break: break-word;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    box-sizing: border-box;
-    min-height: 40px;
+/* Touch optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn, .action-btn, .social-btn {
+        min-height: 44px;
+    }
+    
+    .role-card {
+        min-height: 250px;
+    }
+    
+    .timer-btn, .mode-btn {
+        padding: 16px;
+    }
 }
 
-.english-text {
-    font-weight: bold;
-    font-size: 0.85rem;
-    margin-bottom: 2px;
-    line-height: 1.2;
+/* Performance optimizations */
+* {
+    -webkit-tap-highlight-color: transparent;
 }
 
-.arabic-text {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.2;
-    margin-top: 2px;
+img, video {
+    max-width: 100%;
+    height: auto;
 }
 
-/* For flags, make emoji larger in the display area */
-.image-cell-simple[data-category="flags"] .emoji-display {
-    font-size: 4rem !important;
+/* Optimize scrolling */
+.game-screen, .modal-content, .players-list {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+
+/* Remove shadows and blurs for performance */
+.game-container, .panel, .modal-content {
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Direct fix for the help modal content */
+.modal-content > div:not(.modal-header) {
+    padding: 20px;
+}
+
+/* Make sure text has breathing room */
+.step {
+    margin-bottom: 15px;
+    padding-right: 10px;
 }

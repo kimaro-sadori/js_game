@@ -79,26 +79,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     loadPlayCount().then(() => {
         console.log('✅ Play count loaded:', gameState.gamesPlayed);
-        
-        loadSettings();
-        loadSavedTeams();
-        setupEventListeners();
-        updateUI();
-        updateCategoriesDisplay();
-        updatePlayersList();
-        
-        setTimeout(syncWithJSONBin, 3000);
-        
+        initializeGame();
     }).catch(error => {
         console.error('❌ Initialization error:', error);
-        loadSettings();
-        loadSavedTeams();
-        setupEventListeners();
-        updateUI();
-        updateCategoriesDisplay();
-        updatePlayersList();
+        initializeGame();
     });
 });
+
+function initializeGame() {
+    loadSettings();
+    loadSavedTeams();
+    setupEventListeners();
+    updateUI();
+    updateCategoriesDisplay();
+    updatePlayersList();
+    
+    setTimeout(syncWithJSONBin, 3000);
+}
 
 // ================= SETTINGS MANAGEMENT =================
 function loadSettings() {
@@ -113,26 +110,17 @@ function loadSettings() {
     if (saved) {
         const settings = JSON.parse(saved);
         
-        if (typeof settings.timer === 'number') {
-            gameState.timer = settings.timer;
-        } else {
-            gameState.timer = 120;
-        }
-        
+        gameState.timer = typeof settings.timer === 'number' ? settings.timer : 120;
         gameState.categories = settings.categories || [];
         
         // Upgrade old categories
-        if (gameState.categories.length < ALL_CATEGORIES.length) {
-            console.log('🔄 Upgrading old categories to include new ones...');
-            
-            ALL_CATEGORIES.forEach(category => {
-                if (!gameState.categories.includes(category)) {
-                    gameState.categories.push(category);
-                }
-            });
-            
-            saveSettings();
-        }
+        ALL_CATEGORIES.forEach(category => {
+            if (!gameState.categories.includes(category)) {
+                gameState.categories.push(category);
+            }
+        });
+        
+        saveSettings();
         
         document.querySelectorAll('.timer-btn').forEach(btn => {
             btn.classList.remove('active');
@@ -152,9 +140,6 @@ function loadSettings() {
         if (document.getElementById('selectAllBtn')) {
             document.getElementById('selectAllBtn').textContent = allChecked ? 'Deselect All' : 'Select All';
         }
-        
-        updateTimerDisplay();
-        updateCategoriesDisplay();
     } else {
         gameState.categories = ALL_CATEGORIES;
         gameState.gameMode = 'images';
@@ -169,11 +154,10 @@ function loadSettings() {
         if (document.getElementById('selectAllBtn')) {
             document.getElementById('selectAllBtn').textContent = 'Deselect All';
         }
-        
-        updateTimerDisplay();
-        updateCategoriesDisplay();
     }
     
+    updateTimerDisplay();
+    updateCategoriesDisplay();
     selectGameMode(gameState.gameMode);
 }
 
@@ -228,10 +212,7 @@ function clearPlayers() {
 function updatePlayersList() {
     const list = document.getElementById('playersList');
     
-    if (!list) {
-        console.error('playersList element not found!');
-        return;
-    }
+    if (!list) return;
     
     if (gameState.players.length === 0) {
         list.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 20px;">👤 Enter player names above<br><small>Players will appear here</small></p>';
@@ -321,8 +302,6 @@ function deleteTeam(index) {
 
 // ================= GAME SETTINGS =================
 function selectGameMode(mode) {
-    console.log('Changing game mode to:', mode);
-    
     gameState.gameMode = mode;
     
     document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -351,8 +330,6 @@ function selectGameMode(mode) {
     
     document.getElementById('gameModeText').textContent = modeText;
     saveSettings();
-    
-    console.log('Game mode set to:', gameState.gameMode);
 }
 
 function selectTimer(seconds) {
@@ -378,11 +355,7 @@ function updateTimerDisplay() {
 
 function updateCategories() {
     const checkboxes = document.querySelectorAll('.category-checkbox:checked');
-    
     gameState.categories = Array.from(checkboxes).map(cb => cb.value);
-    
-    console.log('Selected categories:', gameState.categories);
-    console.log('Selected count:', gameState.categories.length);
     
     const allCheckboxes = document.querySelectorAll('.category-checkbox');
     const allChecked = gameState.categories.length === allCheckboxes.length;
@@ -450,20 +423,17 @@ function setupEventListeners() {
     });
     
     // Timer selection
-    setTimeout(() => {
-        const timerBtns = document.querySelectorAll('.timer-btn');
-        timerBtns.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                selectTimer(parseInt(this.dataset.time));
-                
-                const buttons = document.getElementById('timerButtons');
-                const expandIcon = document.getElementById('timerExpand');
-                buttons.style.display = 'none';
-                expandIcon.classList.remove('expanded');
-            });
+    document.querySelectorAll('.timer-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            selectTimer(parseInt(this.dataset.time));
+            
+            const buttons = document.getElementById('timerButtons');
+            const expandIcon = document.getElementById('timerExpand');
+            buttons.style.display = 'none';
+            expandIcon.classList.remove('expanded');
         });
-    }, 100);
+    });
     
     // Categories selection
     const checkboxes = document.querySelectorAll('.category-checkbox');
@@ -482,7 +452,6 @@ function setupEventListeners() {
             });
             
             this.textContent = allChecked ? 'Select All' : 'Deselect All';
-            
             updateCategories();
         });
     }
@@ -494,8 +463,7 @@ function setupEventListeners() {
     if (timerGroup) {
         timerGroup.addEventListener('click', function(e) {
             if (e.target.classList.contains('timer-btn') || 
-                e.target.closest('.timer-btn') || 
-                e.target.type === 'checkbox') {
+                e.target.closest('.timer-btn')) {
                 return;
             }
             
@@ -504,8 +472,6 @@ function setupEventListeners() {
             const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
             buttons.style.display = isHidden ? 'grid' : 'none';
             expandIcon.classList.toggle('expanded', isHidden);
-            
-            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
         });
     }
     
@@ -523,8 +489,6 @@ function setupEventListeners() {
             const isHidden = grid.style.display === 'none' || grid.style.display === '';
             grid.style.display = isHidden ? 'grid' : 'none';
             expandIcon.classList.toggle('expanded', isHidden);
-            
-            if (isHidden) setTimeout(() => this.scrollIntoView({behavior: 'smooth', block: 'center'}), 100);
         });
     }
     
@@ -538,17 +502,15 @@ function setupEventListeners() {
     // Describe game controls
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
     
-    // FIXED: Word button using event delegation - SINGLE event handler
+    // Word button using event delegation
     document.addEventListener('click', function(e) {
         const button = e.target.closest('#showWordBtn, #startDescribeBtn');
         if (!button) return;
         
         if (button.id === 'showWordBtn') {
-            // First click: Show the word
             const wordDisplay = document.getElementById('describerWordDisplay');
             wordDisplay.style.display = 'block';
             
-            // Update the word in the display box with BOTH languages
             const filteredWords = words.filter(w => gameState.categories.includes(w.category));
             if (filteredWords.length > 0) {
                 const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
@@ -560,17 +522,14 @@ function setupEventListeners() {
                 gameState.hintAr = random.hintsAr[hintIndex];
             }
             
-            // Show BOTH Arabic and English text
             document.getElementById('describerActualWord').textContent = gameState.word;
             document.getElementById('describerArabicWord').textContent = gameState.wordAr;
             
-            // Change button to "Start Describing"
             button.innerHTML = '<i class="fas fa-play"></i> Start Describing';
             button.id = 'startDescribeBtn';
             button.className = 'btn btn-primary';
         } 
         else if (button.id === 'startDescribeBtn') {
-            // Second click: Start describing
             document.getElementById('describeWordScreen').style.display = 'none';
             
             const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
@@ -580,7 +539,6 @@ function setupEventListeners() {
             
             document.getElementById('roundInstruction').textContent = instruction;
             document.getElementById('discussionRound').style.display = 'block';
-            
             document.getElementById('revealImposterBtn').style.display = 'none';
             
             if (gameState.timer === 0) {
@@ -624,26 +582,10 @@ function setupEventListeners() {
             shareGame(this.dataset.share);
         });
     });
-    
-    // Touch events for secret card
-    let startY;
-    document.getElementById('secretCard').addEventListener('touchstart', function(e) {
-        startY = e.touches[0].clientY;
-    });
-    
-    document.getElementById('secretCard').addEventListener('touchend', function(e) {
-        if (startY - e.changedTouches[0].clientY > 50) {
-            revealImposter();
-        }
-    });
-    
-    console.log('Event listeners setup complete');
 }
 
 // ================= GAME START =================
 function startGame() {
-    console.log('Starting game with mode:', gameState.gameMode);
-    
     if (gameState.gameMode === 'images') {
         if (gameState.players.length < 2) {
             alert('Guess the Image mode needs at least 2 players!');
@@ -666,15 +608,8 @@ function startGame() {
     
     const filteredWords = words.filter(w => gameState.categories.includes(w.category));
 
-    console.log('Filtered words count:', filteredWords.length);
-
     if (filteredWords.length === 0) {
         alert('No words in selected categories! Please select at least one valid category.');
-        console.log(
-            'Available categories in words.js:',
-            [...new Set(words.map(w => w.category))]
-        );
-        console.log('Selected categories:', gameState.categories);
         return;
     }
 
@@ -756,12 +691,6 @@ function startDescribeGame() {
     gameState.redTeam = shuffled.slice(0, half);
     gameState.blueTeam = shuffled.slice(half);
     
-    console.log('Teams created:', {
-        redTeam: gameState.redTeam,
-        blueTeam: gameState.blueTeam,
-        totalPlayers: gameState.players.length
-    });
-    
     document.getElementById('describeGame').style.display = 'block';
     updateTeamsDisplay();
     
@@ -772,21 +701,15 @@ function startNameRoller() {
     let index = 0;
     
     let eligiblePlayers = [];
-    
     if (gameState.redTeam.length >= 2) {
         eligiblePlayers = eligiblePlayers.concat(gameState.redTeam);
     }
-    
     if (gameState.blueTeam.length >= 2) {
         eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
     }
-    
     if (eligiblePlayers.length === 0) {
         eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
-        console.warn('All teams have only 1 player, using all players as eligible');
     }
-    
-    console.log('Eligible players for describer:', eligiblePlayers);
     
     gameState.rollerInterval = setInterval(() => {
         document.getElementById('rollingName').textContent = eligiblePlayers[index];
@@ -798,15 +721,12 @@ function stopNameRoller() {
     clearInterval(gameState.rollerInterval);
     
     let eligiblePlayers = [];
-    
     if (gameState.redTeam.length >= 2) {
         eligiblePlayers = eligiblePlayers.concat(gameState.redTeam);
     }
-    
     if (gameState.blueTeam.length >= 2) {
         eligiblePlayers = eligiblePlayers.concat(gameState.blueTeam);
     }
-    
     if (eligiblePlayers.length === 0) {
         eligiblePlayers = [...gameState.redTeam, ...gameState.blueTeam];
     }
@@ -829,14 +749,10 @@ function showDescriberWord() {
     document.getElementById('describerWord').textContent = 'Your Mission';
     document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
     
-    // FIXED: Always ensure we have the button properly
     const wordDisplay = document.getElementById('describerWordDisplay');
     wordDisplay.style.display = 'none';
     
-    // Get the button area
     const buttonArea = document.querySelector('#describeWordScreen .role-card + button');
-    
-    // If no button exists, create it
     if (!buttonArea) {
         const roleCard = document.querySelector('#describeWordScreen .role-card');
         if (roleCard) {
@@ -850,7 +766,6 @@ function showDescriberWord() {
             roleCard.parentNode.insertBefore(newButton, roleCard.nextSibling);
         }
     } else {
-        // Reset existing button
         buttonArea.id = 'showWordBtn';
         buttonArea.className = 'btn btn-secondary';
         buttonArea.innerHTML = '<i class="fas fa-eye"></i> Show Word';
@@ -995,18 +910,6 @@ function playAgain() {
     }
 }
 
-function restartGame() {
-    if (confirm('Restart game?')) {
-        clearInterval(gameState.timerInterval);
-        
-        document.querySelectorAll('.game-screen').forEach(screen => {
-            screen.style.display = 'none';
-        });
-        
-        startGame();
-    }
-}
-
 function backToLobby() {
     clearInterval(gameState.timerInterval);
     
@@ -1066,8 +969,8 @@ function generateImageGrid() {
     gameState.imageGame.images = selectedItems;
     gameState.imageGame.selections = {};
     gameState.imageGame.guesses = {};
-    gameState.imageGame.playerMarks = {}; // Store player marks
-    gameState.imageGame.playerPredictions = {}; // Store center ❌ predictions
+    gameState.imageGame.playerMarks = {};
+    gameState.imageGame.playerPredictions = {};
     
     renderImageGrid(selectedItems);
 }
@@ -1075,7 +978,15 @@ function generateImageGrid() {
 function renderImageGrid(items) {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '';
-    imageGrid.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    
+    // Responsive grid: 3 columns on mobile, 4 on desktop
+    // Use a more mobile-friendly breakpoint
+    const isMobile = window.innerWidth <= 480; // Changed from 768 to 480
+    imageGrid.style.gridTemplateColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)';
+    
+    // Also set the CSS property for the container to ensure it works
+    imageGrid.style.display = 'grid';
+    imageGrid.style.gap = '8px';
     
     items.forEach((item, index) => {
         const imageCell = document.createElement('div');
@@ -1091,11 +1002,11 @@ function renderImageGrid(items) {
             imageCell.style.boxShadow = `0 0 10px ${playerColor}40`;
         }
         
-        // Image content - BIGGER IMAGES
+        // Image content
         const content = document.createElement('div');
         content.className = 'image-content';
-        content.style.height = '75%'; // Even bigger images
-        content.style.position = 'relative'; // For center ❌
+        content.style.height = '75%';
+        content.style.position = 'relative';
         
         if (item.type === 'football') {
             const img = document.createElement('img');
@@ -1105,13 +1016,13 @@ function renderImageGrid(items) {
             img.style.objectFit = 'cover';
             img.style.width = '100%';
             img.style.height = '100%';
-            img.style.maxHeight = '180px'; // Limit height for consistency
+            img.style.maxHeight = '180px';
             img.onerror = function() {
                 this.style.display = 'none';
                 const fallback = document.createElement('div');
                 fallback.className = 'emoji-display';
                 fallback.textContent = '⚽';
-                fallback.style.fontSize = '4rem'; // Bigger fallback
+                fallback.style.fontSize = '4rem';
                 content.appendChild(fallback);
             };
             content.appendChild(img);
@@ -1119,7 +1030,7 @@ function renderImageGrid(items) {
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
             emojiDisplay.textContent = item.image;
-            emojiDisplay.style.fontSize = '5rem'; // Bigger emojis
+            emojiDisplay.style.fontSize = '5rem';
             emojiDisplay.style.height = '100%';
             emojiDisplay.style.display = 'flex';
             emojiDisplay.style.alignItems = 'center';
@@ -1127,16 +1038,17 @@ function renderImageGrid(items) {
             content.appendChild(emojiDisplay);
         }
         
-        // Center ❌ Prediction (toggleable) - MORE TRANSPARENT (80% opacity)
+        // Center ❌ Prediction - FIXED: Only show for current player
         const centerPrediction = document.createElement('div');
         centerPrediction.className = 'center-prediction';
+        centerPrediction.dataset.playerIndex = gameState.imageGame.currentPlayerIndex;
         centerPrediction.style.cssText = `
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 4rem;
-            color: rgba(239, 68, 68, 0.8); /* 80% opacity */
+            color: rgba(239, 68, 68, 0.8);
             display: none;
             z-index: 5;
             pointer-events: none;
@@ -1146,7 +1058,7 @@ function renderImageGrid(items) {
         centerPrediction.textContent = '❌';
         content.appendChild(centerPrediction);
         
-        // Number label - SMALLER
+        // Number label
         const numberLabel = document.createElement('div');
         numberLabel.className = 'image-number';
         numberLabel.textContent = index + 1;
@@ -1169,7 +1081,7 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Name label - BETTER VISIBILITY for Arabic/English text
+        // Name label
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
         nameLabel.style.cssText = `
@@ -1230,7 +1142,7 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Player marks container (for ❌ marks)
+        // Player marks container
         const marksContainer = document.createElement('div');
         marksContainer.className = 'player-marks-container';
         marksContainer.style.cssText = `
@@ -1254,42 +1166,51 @@ function renderImageGrid(items) {
         
         // Make image cell clickable for center ❌ toggle
         imageCell.addEventListener('click', function(e) {
-            // Only allow toggle in guessing phase
             if (gameState.imageGame && gameState.imageGame.turnPhase === 'guessing') {
                 const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
                 const cellIndex = parseInt(this.dataset.index);
-                
-                // Toggle center prediction
                 toggleCenterPrediction(cellIndex, currentPlayer, this);
             }
         });
         
-        // Also handle selection phase clicks
+        // Handle selection phase clicks
         imageCell.addEventListener('click', handleImageClick);
     });
     
-    // Update grid background color
     updateGridBackground();
-    
-    // Add single reset predictions button
     addResetPredictionsButton();
+    updatePlayerPredictionsDisplay(); // FIXED: Show predictions for current player only
+}
+// Add this function
+function handleWindowResize() {
+    if (gameState.imageGame && document.getElementById('imageMatchScreen').style.display === 'block') {
+        // Re-render the grid with correct columns
+        if (gameState.imageGame.images) {
+            renderImageGrid(gameState.imageGame.images);
+        }
+    }
+}
+
+// Add this to your initializeGame() function or setupEventListeners():
+window.addEventListener('resize', handleWindowResize);
+function updateGridBackground() {
+    const imageGrid = document.getElementById('imageGrid');
+    if (imageGrid && gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
+        const bgColor = GRID_BACKGROUND_COLORS[gameState.imageGame.currentPlayerIndex % GRID_BACKGROUND_COLORS.length];
+        imageGrid.style.backgroundColor = bgColor;
+        imageGrid.style.borderRadius = '12px';
+        imageGrid.style.padding = '15px';
+        imageGrid.style.boxShadow = `0 4px 20px ${bgColor.replace('0.1', '0.2')}`;
+    }
 }
 
 function addResetPredictionsButton() {
-    // Remove existing buttons if any
-    const existingBtn = document.getElementById('togglePredictionsBtn');
+    const existingBtn = document.getElementById('resetPredictionsBtn');
     if (existingBtn) {
         existingBtn.remove();
     }
     
-    const existingResetBtn = document.getElementById('resetPredictionsBtn');
-    if (existingResetBtn) {
-        existingResetBtn.remove();
-    }
-    
     if (gameState.imageGame && gameState.imageGame.turnPhase === 'guessing') {
-        const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
-        
         const resetBtn = document.createElement('button');
         resetBtn.id = 'resetPredictionsBtn';
         resetBtn.innerHTML = '<i class="fas fa-redo"></i> Reset My Predictions';
@@ -1308,18 +1229,17 @@ function addResetPredictionsButton() {
         `;
         
         resetBtn.addEventListener('click', function() {
-            // Reset all predictions for current player
             const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-            gameState.imageGame.playerPredictions[currentPlayer] = [];
+            if (gameState.imageGame.playerPredictions[currentPlayer]) {
+                gameState.imageGame.playerPredictions[currentPlayer] = [];
+            }
             
-            // Hide all center predictions
+            // Hide all center predictions for current player
             document.querySelectorAll('.center-prediction').forEach(x => {
                 x.style.display = 'none';
             });
             
-            // Update marks display
             updateAllMarksForCurrentPlayer();
-            
             alert('✅ Your predictions have been reset!');
         });
         
@@ -1339,58 +1259,115 @@ function toggleCenterPrediction(imageIndex, playerName, cellElement) {
     const centerX = cellElement.querySelector('.center-prediction');
     
     if (predictions.includes(imageIndex)) {
-        // Remove prediction
         const idx = predictions.indexOf(imageIndex);
         predictions.splice(idx, 1);
         centerX.style.display = 'none';
     } else {
-        // Add prediction
         predictions.push(imageIndex);
         centerX.style.display = 'block';
         const playerIndex = gameState.imageGame.players.indexOf(playerName);
         if (playerIndex !== -1) {
             const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
-            centerX.style.color = playerColor.replace(')', ', 0.8)').replace('rgb', 'rgba'); // Keep 80% opacity
+            centerX.style.color = playerColor.replace(')', ', 0.8)').replace('rgb', 'rgba');
         }
     }
 }
 
-function updateCenterPredictionsForPlayer(playerName) {
-    const predictions = gameState.imageGame.playerPredictions[playerName] || [];
-    const playerIndex = gameState.imageGame.players.indexOf(playerName);
-    let playerColor = 'rgba(239, 68, 68, 0.8)'; // Default red with 80% opacity
+function updatePlayerPredictionsDisplay() {
+    // Clear all center predictions first
+    document.querySelectorAll('.center-prediction').forEach(x => {
+        x.style.display = 'none';
+    });
     
-    if (playerIndex !== -1) {
-        const hexColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
-        // Convert hex to rgba with 80% opacity
-        const r = parseInt(hexColor.slice(1, 3), 16);
-        const g = parseInt(hexColor.slice(3, 5), 16);
-        const b = parseInt(hexColor.slice(5, 7), 16);
-        playerColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
+    // Show only current player's predictions
+    if (gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
+        const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+        const predictions = gameState.imageGame.playerPredictions[currentPlayer] || [];
+        
+        const playerIndex = gameState.imageGame.currentPlayerIndex;
+        const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
+        
+        predictions.forEach(index => {
+            const cell = document.querySelector(`.image-cell-simple[data-index="${index}"]`);
+            if (cell) {
+                const centerX = cell.querySelector('.center-prediction');
+                if (centerX) {
+                    centerX.style.display = 'block';
+                    centerX.style.color = playerColor.replace(')', ', 0.8)').replace('rgb', 'rgba');
+                }
+            }
+        });
+    }
+}
+
+function updateAllMarksForCurrentPlayer() {
+    const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    
+    for (let i = 0; i < 16; i++) {
+        updateImageMarksDisplay(i, currentPlayer);
+    }
+}
+
+function updateImageMarksDisplay(imageIndex, viewingPlayer) {
+    const imageCell = document.querySelector(`.image-cell-simple[data-index="${imageIndex}"]`);
+    if (!imageCell) return;
+    
+    let marksContainer = imageCell.querySelector('.player-marks-container');
+    if (!marksContainer) {
+        marksContainer = document.createElement('div');
+        marksContainer.className = 'player-marks-container';
+        marksContainer.style.cssText = `
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            z-index: 10;
+            max-width: 60px;
+            justify-content: flex-end;
+        `;
+        imageCell.appendChild(marksContainer);
     }
     
-    // Show this player's predictions
-    predictions.forEach(index => {
-        const cell = document.querySelector(`.image-cell-simple[data-index="${index}"]`);
-        if (cell) {
-            const centerX = cell.querySelector('.center-prediction');
-            if (centerX) {
-                centerX.style.display = 'block';
-                centerX.style.color = playerColor;
+    marksContainer.innerHTML = '';
+    
+    const marks = gameState.imageGame.playerMarks[imageIndex] || [];
+    
+    marks.forEach((mark) => {
+        const isViewingPlayersMark = mark.player === viewingPlayer;
+        const isCorrectMarkForRevealed = mark.mark === '✅' && 
+            gameState.imageGame.revealedPlayers.includes(mark.player);
+        
+        if (isViewingPlayersMark || isCorrectMarkForRevealed) {
+            const markElement = document.createElement('div');
+            markElement.className = 'player-mark';
+            markElement.textContent = mark.mark;
+            markElement.title = `${mark.player}'s ${mark.mark === '✅' ? 'correct guess' : 'guess'}`;
+            markElement.style.cssText = `
+                background: rgba(0, 0, 0, 0.8);
+                color: ${mark.mark === '✅' ? '#22c55e' : 'white'};
+                border-radius: 50%;
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                font-weight: bold;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                animation: ${mark.mark === '✅' ? 'pulse 1s infinite' : 'none'};
+            `;
+            
+            const playerIndex = gameState.imageGame.players.indexOf(mark.player);
+            if (playerIndex !== -1) {
+                const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
+                markElement.style.border = `2px solid ${playerColor}`;
             }
+            
+            marksContainer.appendChild(markElement);
         }
     });
-}
-
-function updateGridBackground() {
-    const imageGrid = document.getElementById('imageGrid');
-    if (imageGrid && gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
-        const bgColor = GRID_BACKGROUND_COLORS[gameState.imageGame.currentPlayerIndex % GRID_BACKGROUND_COLORS.length];
-        imageGrid.style.backgroundColor = bgColor;
-        imageGrid.style.borderRadius = '12px';
-        imageGrid.style.padding = '15px';
-        imageGrid.style.boxShadow = `0 4px 20px ${bgColor.replace('0.1', '0.2')}`;
-    }
 }
 
 function handleImageClick(event) {
@@ -1405,19 +1382,15 @@ function handleImageClick(event) {
         const selectedIndex = gameState.imageGame.selections[currentPlayer];
         
         if (selectedIndex === index) {
-            // Deselect
             delete gameState.imageGame.selections[currentPlayer];
             cell.querySelector('.selection-indicator').style.display = 'none';
         } else {
-            // Select new image
             gameState.imageGame.selections[currentPlayer] = index;
             
-            // Clear all indicators
             document.querySelectorAll('.selection-indicator').forEach(ind => {
                 ind.style.display = 'none';
             });
             
-            // Show this one
             const indicator = cell.querySelector('.selection-indicator');
             indicator.textContent = '✔';
             indicator.style.display = 'flex';
@@ -1499,7 +1472,6 @@ function updatePlayerDisplay() {
     document.getElementById('currentImagePlayerName').textContent = currentPlayer;
     document.getElementById('imagePlayerCounter').textContent = `${game.currentPlayerIndex + 1}/${game.players.length}`;
     
-    // Update the player name with their color
     document.getElementById('currentImagePlayerName').style.color = playerColor;
     document.getElementById('currentImagePlayerName').style.fontWeight = 'bold';
     
@@ -1510,33 +1482,16 @@ function updatePlayerDisplay() {
     document.getElementById('turnInstruction').textContent = instruction;
     document.getElementById('turnInstruction').style.color = playerColor;
     
-    // Update all image grid borders with current player color
     document.querySelectorAll('.image-cell-simple').forEach(cell => {
         cell.style.borderColor = playerColor;
         cell.style.borderWidth = '3px';
         cell.style.boxShadow = `0 0 10px ${playerColor}40`;
     });
     
-    // Update grid background
     updateGridBackground();
-    
-    // Update center predictions for current player
-    updateCenterPredictionsForPlayer(currentPlayer);
-    
-    // Update marks display for current player
+    updatePlayerPredictionsDisplay(); // FIXED: Update predictions display
     updateAllMarksForCurrentPlayer();
-    
-    // Add/update reset predictions button
     addResetPredictionsButton();
-}
-
-function updateAllMarksForCurrentPlayer() {
-    const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-    
-    // Update marks for all images
-    for (let i = 0; i < 16; i++) {
-        updateImageMarksDisplay(i, currentPlayer);
-    }
 }
 
 function confirmSecret() {
@@ -1588,7 +1543,6 @@ function autoSelectNextPlayer() {
     const game = gameState.imageGame;
     const playerSelect = document.getElementById('playerSelect');
     
-    // Find next available player to guess
     let targetIndex = (game.currentPlayerIndex + 1) % game.players.length;
     let attempts = 0;
     
@@ -1599,7 +1553,6 @@ function autoSelectNextPlayer() {
         attempts++;
     }
     
-    // Update select dropdown
     playerSelect.innerHTML = '';
     
     game.players.forEach((player, index) => {
@@ -1607,7 +1560,6 @@ function autoSelectNextPlayer() {
             const option = document.createElement('option');
             option.value = player;
             option.textContent = player;
-            // Auto-select the first available player
             if (playerSelect.children.length === 0) {
                 option.selected = true;
             }
@@ -1615,7 +1567,6 @@ function autoSelectNextPlayer() {
         }
     });
     
-    // If no players available (shouldn't happen), add a disabled option
     if (playerSelect.children.length === 0) {
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
@@ -1637,41 +1588,38 @@ function submitGuess() {
         return;
     }
     
-    // Create number selection instead of prompt
     showNumberSelection(targetPlayer);
 }
 
 function showNumberSelection(targetPlayer) {
-    // Create modal for number selection
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.style.display = 'flex';
     
-    // Get current player color for modal styling
     const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
     
     modal.innerHTML = `
         <div class="modal-content" style="max-width: 500px;">
             <div class="modal-header" style="background: ${playerColor}20; border-bottom: 2px solid ${playerColor};">
-                <h2 style="color: ${playerColor};">Guess ${targetPlayer}'s Image</h2>
+                <h2 style="color: ${playerColor}; font-size: 1.5rem;">Guess ${targetPlayer}'s Image</h2>
                 <button class="close-modal" style="color: ${playerColor};">&times;</button>
             </div>
             <div class="modal-body" style="padding: 20px;">
-                <p style="margin-bottom: 20px; text-align: center; font-size: 1.1rem;">
+                <p style="margin-bottom: 20px; text-align: center; font-size: 1rem;">
                     Select the image number you think <strong>${targetPlayer}</strong> chose:
                 </p>
-                <div class="number-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0;">
+                <div class="number-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0;">
                     ${Array.from({length: 16}, (_, i) => `
                         <button class="number-btn" data-number="${i + 1}" 
-                            style="padding: 20px; border: 2px solid ${playerColor}; 
-                                   border-radius: 12px; background: rgba(255,255,255,0.05); 
-                                   color: ${playerColor}; font-size: 1.3rem; font-weight: bold; 
+                            style="padding: 15px; border: 2px solid ${playerColor}; 
+                                   border-radius: 10px; background: rgba(255,255,255,0.05); 
+                                   color: ${playerColor}; font-size: 1.1rem; font-weight: bold; 
                                    cursor: pointer; transition: all 0.2s;">
                             ${i + 1}
                         </button>
                     `).join('')}
                 </div>
-                <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                <p style="text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
                     Click a number to make your guess
                 </p>
             </div>
@@ -1680,7 +1628,6 @@ function showNumberSelection(targetPlayer) {
     
     document.body.appendChild(modal);
     
-    // Close modal
     modal.querySelector('.close-modal').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
@@ -1691,7 +1638,6 @@ function showNumberSelection(targetPlayer) {
         }
     });
     
-    // Handle number selection
     modal.querySelectorAll('.number-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const guessNum = parseInt(this.dataset.number) - 1;
@@ -1699,10 +1645,9 @@ function showNumberSelection(targetPlayer) {
             document.body.removeChild(modal);
         });
         
-        // Add hover effects
         btn.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.05)';
-            this.style.boxShadow = `0 0 15px ${playerColor}`;
+            this.style.boxShadow = `0 0 12px ${playerColor}`;
         });
         
         btn.addEventListener('mouseleave', function() {
@@ -1717,7 +1662,6 @@ function processGuess(targetPlayer, guessNum) {
     const actualIndex = gameState.imageGame.selections[targetPlayer];
     const isCorrect = guessNum === actualIndex;
     
-    // Add player's mark (❌) to the image - PRIVATE to the guessing player only
     addPlayerMark(guessNum, guessingPlayer, '❌');
     
     if (isCorrect) {
@@ -1731,10 +1675,8 @@ function processGuess(targetPlayer, guessNum) {
         indicator.style.background = 'rgba(239, 68, 68, 0.9)';
         indicator.style.animation = 'pulse 1s infinite';
         
-        // Add special correct mark (visible to all when revealed)
         addPlayerMark(actualIndex, guessingPlayer, '✅');
         
-        // Clear predictions for the eliminated player
         if (gameState.imageGame.playerPredictions[targetPlayer]) {
             gameState.imageGame.playerPredictions[targetPlayer] = [];
         }
@@ -1760,7 +1702,6 @@ function addPlayerMark(imageIndex, playerName, mark = '❌') {
         gameState.imageGame.playerMarks[imageIndex] = [];
     }
     
-    // Add mark if not already there for this player
     const existingMarkIndex = gameState.imageGame.playerMarks[imageIndex].findIndex(
         m => m.player === playerName && m.mark === mark
     );
@@ -1768,81 +1709,11 @@ function addPlayerMark(imageIndex, playerName, mark = '❌') {
     if (existingMarkIndex === -1) {
         gameState.imageGame.playerMarks[imageIndex].push({ player: playerName, mark: mark });
     } else {
-        // Update existing mark
         gameState.imageGame.playerMarks[imageIndex][existingMarkIndex].mark = mark;
     }
     
-    // Update display for current player
     const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
     updateImageMarksDisplay(imageIndex, currentPlayer);
-}
-
-function updateImageMarksDisplay(imageIndex, viewingPlayer) {
-    const imageCell = document.querySelector(`.image-cell-simple[data-index="${imageIndex}"]`);
-    if (!imageCell) return;
-    
-    let marksContainer = imageCell.querySelector('.player-marks-container');
-    if (!marksContainer) {
-        marksContainer = document.createElement('div');
-        marksContainer.className = 'player-marks-container';
-        marksContainer.style.cssText = `
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 3px;
-            z-index: 10;
-            max-width: 60px;
-            justify-content: flex-end;
-        `;
-        imageCell.appendChild(marksContainer);
-    }
-    
-    marksContainer.innerHTML = '';
-    
-    const marks = gameState.imageGame.playerMarks[imageIndex] || [];
-    
-    // Show ONLY marks made by the VIEWING player
-    // OR show ✅ marks for revealed players
-    marks.forEach((mark, index) => {
-        // Show mark if:
-        // 1. It's made by the viewing player
-        // 2. OR it's a ✅ mark for a revealed player
-        const isViewingPlayersMark = mark.player === viewingPlayer;
-        const isCorrectMarkForRevealed = mark.mark === '✅' && 
-            gameState.imageGame.revealedPlayers.includes(mark.player);
-        
-        if (isViewingPlayersMark || isCorrectMarkForRevealed) {
-            const markElement = document.createElement('div');
-            markElement.className = 'player-mark';
-            markElement.textContent = mark.mark;
-            markElement.title = `${mark.player}'s ${mark.mark === '✅' ? 'correct guess' : 'guess'}`;
-            markElement.style.cssText = `
-                background: rgba(0, 0, 0, 0.8);
-                color: ${mark.mark === '✅' ? '#22c55e' : 'white'};
-                border-radius: 50%;
-                width: 28px;
-                height: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1rem;
-                font-weight: bold;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-                animation: ${mark.mark === '✅' ? 'pulse 1s infinite' : 'none'};
-            `;
-            
-            // Add player color if available
-            const playerIndex = gameState.imageGame.players.indexOf(mark.player);
-            if (playerIndex !== -1) {
-                const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
-                markElement.style.border = `2px solid ${playerColor}`;
-            }
-            
-            marksContainer.appendChild(markElement);
-        }
-    });
 }
 
 function endTurn() {
@@ -1865,10 +1736,8 @@ function endTurn() {
 function endImageGame() {
     if (!gameState.imageGame) return;
     
-    // Show celebration
     const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
     
-    // Create celebration modal
     const modal = document.createElement('div');
     modal.className = 'modal';
     modal.style.display = 'flex';
@@ -1876,13 +1745,13 @@ function endImageGame() {
     modal.innerHTML = `
         <div class="modal-content" style="max-width: 500px; text-align: center; background: linear-gradient(135deg, ${playerColor}20, rgba(0,0,0,0.1));">
             <div class="modal-header" style="border: none; justify-content: center;">
-                <h2 style="color: ${playerColor}; font-size: 2rem;">🎉 Game Over! 🎉</h2>
+                <h2 style="color: ${playerColor}; font-size: 1.8rem;">🎉 Game Over! 🎉</h2>
             </div>
-            <div class="modal-body" style="padding: 30px;">
-                <div style="font-size: 1.5rem; color: var(--text); margin-bottom: 20px;">
+            <div class="modal-body" style="padding: 25px;">
+                <div style="font-size: 1.3rem; color: var(--text); margin-bottom: 15px;">
                     <strong>Final Results:</strong>
                 </div>
-                <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 12px; margin-bottom: 20px;">
                     ${gameState.imageGame.players.map(player => {
                         const isRevealed = gameState.imageGame.revealedPlayers.includes(player);
                         const imageIndex = gameState.imageGame.selections[player];
@@ -1890,19 +1759,19 @@ function endImageGame() {
                         const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
                         return `
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <span style="color: ${playerColor}; font-weight: bold;">${player}</span>
-                                <span style="color: ${isRevealed ? '#ef4444' : '#22c55e'}; font-weight: bold;">
+                                <span style="color: ${playerColor}; font-weight: bold; font-size: 0.9rem;">${player}</span>
+                                <span style="color: ${isRevealed ? '#ef4444' : '#22c55e'}; font-weight: bold; font-size: 0.85rem;">
                                     ${isRevealed ? `REVEALED (Image ${imageIndex + 1})` : 'STILL HIDDEN'}
                                 </span>
                             </div>
                         `;
                     }).join('')}
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button id="playAgainImageBtn" class="btn" style="flex: 1; background: ${playerColor}; color: white; padding: 15px; font-size: 1.1rem;">
+                <div style="display: flex; gap: 8px; margin-top: 20px;">
+                    <button id="playAgainImageBtn" class="btn" style="flex: 1; background: ${playerColor}; color: white; padding: 12px; font-size: 1rem;">
                         <i class="fas fa-redo"></i> Play Again
                     </button>
-                    <button id="backToLobbyBtn" class="btn" style="flex: 1; background: rgba(255,255,255,0.1); color: var(--text); padding: 15px; font-size: 1.1rem;">
+                    <button id="backToLobbyBtn" class="btn" style="flex: 1; background: rgba(255,255,255,0.1); color: var(--text); padding: 12px; font-size: 1rem;">
                         <i class="fas fa-home"></i> Back to Menu
                     </button>
                 </div>
@@ -1912,7 +1781,6 @@ function endImageGame() {
     
     document.body.appendChild(modal);
     
-    // Add button listeners
     modal.querySelector('#playAgainImageBtn').addEventListener('click', function() {
         document.body.removeChild(modal);
         restartImageGame();
@@ -2305,7 +2173,7 @@ function showHelp(mode) {
     modal.innerHTML = `
         <div class="modal-content help-modal">
             <div class="modal-header">
-                <h2>${title}</h2>
+                <h2 style="font-size: 1.5rem;">${title}</h2>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="modal-body">
@@ -2336,19 +2204,19 @@ function getClassicHelp() {
         <div class="help-steps">
             <div class="step">
                 <div class="step-num">1</div>
-                <div class="step-text">One player is secretly the <strong>Imposter</strong></div>
+                <div class="step-text" style="font-size: 0.9rem;">One player is secretly the <strong>Imposter</strong></div>
             </div>
             <div class="step">
                 <div class="step-num">2</div>
-                <div class="step-text">Innocents see the <strong>word</strong>, Imposter sees a <strong>hint</strong></div>
+                <div class="step-text" style="font-size: 0.9rem;">Innocents see the <strong>word</strong>, Imposter sees a <strong>hint</strong></div>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
-                <div class="step-text">All players describe the word (Imposter tries to blend in)</div>
+                <div class="step-text" style="font-size: 0.9rem;">All players describe the word (Imposter tries to blend in)</div>
             </div>
             <div class="step">
                 <div class="step-num">4</div>
-                <div class="step-text">Discuss and vote to find the Imposter!</div>
+                <div class="step-text" style="font-size: 0.9rem;">Discuss and vote to find the Imposter!</div>
             </div>
         </div>
     `;
@@ -2359,23 +2227,23 @@ function getDescribeHelp() {
         <div class="help-steps">
             <div class="step">
                 <div class="step-num">1</div>
-                <div class="step-text">Players split into <strong class="red">Red</strong> and <strong class="blue">Blue</strong> teams</div>
+                <div class="step-text" style="font-size: 0.9rem;">Players split into <strong class="red">Red</strong> and <strong class="blue">Blue</strong> teams</div>
             </div>
             <div class="step">
                 <div class="step-num">2</div>
-                <div class="step-text">A <strong>Describer</strong> is randomly chosen from a team</div>
+                <div class="step-text" style="font-size: 0.9rem;">A <strong>Describer</strong> is randomly chosen from a team</div>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
-                <div class="step-text">Describer sees a secret word</div>
+                <div class="step-text" style="font-size: 0.9rem;">Describer sees a secret word</div>
             </div>
             <div class="step">
                 <div class="step-num">4</div>
-                <div class="step-text">Describer explains the word (speech or gestures only)</div>
+                <div class="step-text" style="font-size: 0.9rem;">Describer explains the word (speech or gestures only)</div>
             </div>
             <div class="step">
                 <div class="step-num">5</div>
-                <div class="step-text">Teams race to guess the word first!</div>
+                <div class="step-text" style="font-size: 0.9rem;">Teams race to guess the word first!</div>
             </div>
         </div>
     `;
@@ -2386,30 +2254,27 @@ function getImagesHelp() {
         <div class="help-steps">
             <div class="step">
                 <div class="step-num">1</div>
-                <div class="step-text">All players see a <strong>list of images</strong> from selected categories</div>
+                <div class="step-text" style="font-size: 0.9rem;">All players see a <strong>list of images</strong> from selected categories</div>
             </div>
             <div class="step">
                 <div class="step-num">2</div>
-                <div class="step-text">Race to <strong>guess what's in the image</strong> first</div>
+                <div class="step-text" style="font-size: 0.9rem;">Race to <strong>guess what's in the image</strong> first</div>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
-                <div class="step-text">Correct guess <strong>eliminates</strong> another player</div>
+                <div class="step-text" style="font-size: 0.9rem;">Correct guess <strong>eliminates</strong> another player</div>
             </div>
             <div class="step">
                 <div class="step-num">4</div>
-                <div class="step-text">Eliminated players sit out, <strong>circle continues</strong> with remaining players</div>
+                <div class="step-text" style="font-size: 0.9rem;">Eliminated players sit out, <strong>circle continues</strong> with remaining players</div>
             </div>
             <div class="step">
                 <div class="step-num">5</div>
-               <div class="step-text">
-  Infinite time until the last player standing <strong>wins!</strong>
-</div>
-
+                <div class="step-text" style="font-size: 0.9rem;">Infinite time until the last player standing <strong>wins!</strong></div>
             </div>
             <div class="step">
                 <div class="step-num">☆</div>
-                <div class="step-text"><strong>Minimum players: </strong> two</div>
+                <div class="step-text" style="font-size: 0.9rem;"><strong>Minimum players: </strong> two</div>
             </div>
         </div>
     `;
@@ -2418,7 +2283,7 @@ function getImagesHelp() {
 // ================= GLOBAL FUNCTIONS =================
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
-window.restartGame = restartGame;
+window.restartGame = playAgain;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
