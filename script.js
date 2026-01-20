@@ -538,7 +538,7 @@ function setupEventListeners() {
     // Describe game controls
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
     
-    // FIXED: Word button using event delegation
+    // FIXED: Word button using event delegation - SINGLE event handler
     document.addEventListener('click', function(e) {
         const button = e.target.closest('#showWordBtn, #startDescribeBtn');
         if (!button) return;
@@ -548,7 +548,19 @@ function setupEventListeners() {
             const wordDisplay = document.getElementById('describerWordDisplay');
             wordDisplay.style.display = 'block';
             
-            // Update the word in the display box
+            // Update the word in the display box with BOTH languages
+            const filteredWords = words.filter(w => gameState.categories.includes(w.category));
+            if (filteredWords.length > 0) {
+                const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+                gameState.word = random.word;
+                gameState.wordAr = random.wordAr;
+                
+                const hintIndex = Math.floor(Math.random() * random.hints.length);
+                gameState.hint = random.hints[hintIndex];
+                gameState.hintAr = random.hintsAr[hintIndex];
+            }
+            
+            // Show BOTH Arabic and English text
             document.getElementById('describerActualWord').textContent = gameState.word;
             document.getElementById('describerArabicWord').textContent = gameState.wordAr;
             
@@ -817,21 +829,17 @@ function showDescriberWord() {
     document.getElementById('describerWord').textContent = 'Your Mission';
     document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
     
-    // Reset word display
+    // FIXED: Always ensure we have the button properly
     const wordDisplay = document.getElementById('describerWordDisplay');
     wordDisplay.style.display = 'none';
     
-    // Reset the button - FIXED: Always reset to "Show Word"
-    const button = document.getElementById('showWordBtn');
-    if (button) {
-        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-        button.id = 'showWordBtn';
-        button.className = 'btn btn-secondary';
-        button.style.display = 'block';
-    } else {
-        // If button doesn't exist (after restart), recreate it
-        const btnContainer = document.querySelector('#describeWordScreen .role-card');
-        if (btnContainer) {
+    // Get the button area
+    const buttonArea = document.querySelector('#describeWordScreen .role-card + button');
+    
+    // If no button exists, create it
+    if (!buttonArea) {
+        const roleCard = document.querySelector('#describeWordScreen .role-card');
+        if (roleCard) {
             const newButton = document.createElement('button');
             newButton.id = 'showWordBtn';
             newButton.className = 'btn btn-secondary';
@@ -839,8 +847,13 @@ function showDescriberWord() {
             newButton.style.marginBottom = '20px';
             newButton.style.width = '100%';
             newButton.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-            btnContainer.parentNode.insertBefore(newButton, btnContainer.nextSibling);
+            roleCard.parentNode.insertBefore(newButton, roleCard.nextSibling);
         }
+    } else {
+        // Reset existing button
+        buttonArea.id = 'showWordBtn';
+        buttonArea.className = 'btn btn-secondary';
+        buttonArea.innerHTML = '<i class="fas fa-eye"></i> Show Word';
     }
     
     document.getElementById('describeWordScreen').style.display = 'block';
@@ -1114,7 +1127,7 @@ function renderImageGrid(items) {
             content.appendChild(emojiDisplay);
         }
         
-        // Center ❌ Prediction (toggleable)
+        // Center ❌ Prediction (toggleable) - MORE TRANSPARENT (80% opacity)
         const centerPrediction = document.createElement('div');
         centerPrediction.className = 'center-prediction';
         centerPrediction.style.cssText = `
@@ -1123,11 +1136,12 @@ function renderImageGrid(items) {
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 4rem;
-            color: rgba(239, 68, 68, 0.7);
+            color: rgba(239, 68, 68, 0.8); /* 80% opacity */
             display: none;
             z-index: 5;
             pointer-events: none;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-shadow: 0 0 20px rgba(0,0,0,0.7);
+            opacity: 0.8;
         `;
         centerPrediction.textContent = '❌';
         content.appendChild(centerPrediction);
@@ -1216,10 +1230,26 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
+        // Player marks container (for ❌ marks)
+        const marksContainer = document.createElement('div');
+        marksContainer.className = 'player-marks-container';
+        marksContainer.style.cssText = `
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            z-index: 10;
+            max-width: 60px;
+            justify-content: flex-end;
+        `;
+        
         imageCell.appendChild(content);
         imageCell.appendChild(numberLabel);
         imageCell.appendChild(nameLabel);
         imageCell.appendChild(selectionIndicator);
+        imageCell.appendChild(marksContainer);
         imageGrid.appendChild(imageCell);
         
         // Make image cell clickable for center ❌ toggle
@@ -1241,67 +1271,61 @@ function renderImageGrid(items) {
     // Update grid background color
     updateGridBackground();
     
-    // Add toggle prediction button
-    addPredictionToggleButton();
+    // Add single reset predictions button
+    addResetPredictionsButton();
 }
 
-function addPredictionToggleButton() {
-    // Remove existing button if any
+function addResetPredictionsButton() {
+    // Remove existing buttons if any
     const existingBtn = document.getElementById('togglePredictionsBtn');
     if (existingBtn) {
         existingBtn.remove();
     }
     
+    const existingResetBtn = document.getElementById('resetPredictionsBtn');
+    if (existingResetBtn) {
+        existingResetBtn.remove();
+    }
+    
     if (gameState.imageGame && gameState.imageGame.turnPhase === 'guessing') {
         const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
         
-        const toggleBtn = document.createElement('button');
-        toggleBtn.id = 'togglePredictionsBtn';
-        toggleBtn.innerHTML = '<i class="fas fa-times-circle"></i> Toggle My Predictions';
-        toggleBtn.style.cssText = `
+        const resetBtn = document.createElement('button');
+        resetBtn.id = 'resetPredictionsBtn';
+        resetBtn.innerHTML = '<i class="fas fa-redo"></i> Reset My Predictions';
+        resetBtn.style.cssText = `
             display: block;
             margin: 10px auto;
             padding: 12px 20px;
-            background: ${playerColor};
+            background: #ef4444;
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             font-size: 0.9rem;
-            box-shadow: 0 4px 10px ${playerColor}80;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.5);
         `;
         
-        toggleBtn.addEventListener('click', function() {
-            // Toggle all predictions for current player
+        resetBtn.addEventListener('click', function() {
+            // Reset all predictions for current player
             const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
-            const predictions = gameState.imageGame.playerPredictions[currentPlayer] || [];
+            gameState.imageGame.playerPredictions[currentPlayer] = [];
             
-            if (predictions.length > 0) {
-                // Remove all predictions
-                predictions.forEach(index => {
-                    const cell = document.querySelector(`.image-cell-simple[data-index="${index}"]`);
-                    if (cell) {
-                        const centerX = cell.querySelector('.center-prediction');
-                        if (centerX) {
-                            centerX.style.display = 'none';
-                        }
-                    }
-                });
-                gameState.imageGame.playerPredictions[currentPlayer] = [];
-                this.innerHTML = '<i class="fas fa-times-circle"></i> Toggle My Predictions';
-                this.style.background = playerColor;
-            } else {
-                // Show predictions (if any exist in marks)
-                updateCenterPredictionsForPlayer(currentPlayer);
-                this.innerHTML = '<i class="fas fa-eye-slash"></i> Hide My Predictions';
-                this.style.background = '#6B7280';
-            }
+            // Hide all center predictions
+            document.querySelectorAll('.center-prediction').forEach(x => {
+                x.style.display = 'none';
+            });
+            
+            // Update marks display
+            updateAllMarksForCurrentPlayer();
+            
+            alert('✅ Your predictions have been reset!');
         });
         
         const gamePhase = document.getElementById('gamePhase');
         if (gamePhase) {
-            gamePhase.parentNode.insertBefore(toggleBtn, gamePhase.nextSibling);
+            gamePhase.parentNode.insertBefore(resetBtn, gamePhase.nextSibling);
         }
     }
 }
@@ -1323,18 +1347,10 @@ function toggleCenterPrediction(imageIndex, playerName, cellElement) {
         // Add prediction
         predictions.push(imageIndex);
         centerX.style.display = 'block';
-        centerX.style.color = PLAYER_COLORS[gameState.imageGame.players.indexOf(playerName) % PLAYER_COLORS.length];
-    }
-    
-    // Update button text
-    const toggleBtn = document.getElementById('togglePredictionsBtn');
-    if (toggleBtn) {
-        if (predictions.length > 0) {
-            toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide My Predictions';
-            toggleBtn.style.background = '#6B7280';
-        } else {
-            toggleBtn.innerHTML = '<i class="fas fa-times-circle"></i> Toggle My Predictions';
-            toggleBtn.style.background = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
+        const playerIndex = gameState.imageGame.players.indexOf(playerName);
+        if (playerIndex !== -1) {
+            const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
+            centerX.style.color = playerColor.replace(')', ', 0.8)').replace('rgb', 'rgba'); // Keep 80% opacity
         }
     }
 }
@@ -1342,12 +1358,16 @@ function toggleCenterPrediction(imageIndex, playerName, cellElement) {
 function updateCenterPredictionsForPlayer(playerName) {
     const predictions = gameState.imageGame.playerPredictions[playerName] || [];
     const playerIndex = gameState.imageGame.players.indexOf(playerName);
-    const playerColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
+    let playerColor = 'rgba(239, 68, 68, 0.8)'; // Default red with 80% opacity
     
-    // Clear all center predictions first
-    document.querySelectorAll('.center-prediction').forEach(x => {
-        x.style.display = 'none';
-    });
+    if (playerIndex !== -1) {
+        const hexColor = PLAYER_COLORS[playerIndex % PLAYER_COLORS.length];
+        // Convert hex to rgba with 80% opacity
+        const r = parseInt(hexColor.slice(1, 3), 16);
+        const g = parseInt(hexColor.slice(3, 5), 16);
+        const b = parseInt(hexColor.slice(5, 7), 16);
+        playerColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
+    }
     
     // Show this player's predictions
     predictions.forEach(index => {
@@ -1506,8 +1526,8 @@ function updatePlayerDisplay() {
     // Update marks display for current player
     updateAllMarksForCurrentPlayer();
     
-    // Add/update prediction toggle button
-    addPredictionToggleButton();
+    // Add/update reset predictions button
+    addResetPredictionsButton();
 }
 
 function updateAllMarksForCurrentPlayer() {
@@ -1713,6 +1733,11 @@ function processGuess(targetPlayer, guessNum) {
         
         // Add special correct mark (visible to all when revealed)
         addPlayerMark(actualIndex, guessingPlayer, '✅');
+        
+        // Clear predictions for the eliminated player
+        if (gameState.imageGame.playerPredictions[targetPlayer]) {
+            gameState.imageGame.playerPredictions[targetPlayer] = [];
+        }
         
         alert(`✅ Correct! ${targetPlayer} chose image ${guessNum + 1}. ${targetPlayer} is revealed!`);
         
