@@ -1625,3 +1625,62 @@ img, video {
     margin-bottom: 15px;
     padding-right: 10px;
 }
+
+/* Disabled button styling */
+.btn-primary.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--primary-light);
+}
+
+.btn-primary.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Timer message styling */
+.timer-display-mini span[style*="color: var(--accent)"] {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Flag emoji styling */
+.image-cell-simple[data-category="flags"] .emoji-display {
+    font-size: 3.5rem !important;
+    padding: 5px !important;
+}
+
+@media (max-width: 768px) {
+    .image-cell-simple[data-category="flags"] .emoji-display {
+        font-size: 2.8rem !important;
+    }
+}
+/* Style for timer buttons when in Guess the Image mode */
+
+/* Add to your CSS file */
+.game-mode-images .timer-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.game-mode-images .timer-btn:hover {
+    background-color: var(--card-bg) !important;
+    transform: none !important;
+}
+.game-mode-images .setting-group:nth-child(2) {
+    cursor: default;
+}
+
+.game-mode-images .setting-group:nth-child(2):hover {
+    background-color: var(--card-bg);
+}
+
+.game-mode-images #timerExpand {
+    display: none !important;
+}
+/* Hide timer buttons when in Guess the Image mode */
+body:has(#timerDisplay span) .timer-btn {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}

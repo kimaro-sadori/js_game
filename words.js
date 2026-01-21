@@ -3814,7 +3814,7 @@ const words = [
 },
 
 ////// FOOTBALL PLAYERS //////
-// i will install the football players images later 
+
 {
     word: "KARIM BENZEMA",
     wordAr: "كريم بنزيما",
@@ -3974,6 +3974,727 @@ const words = [
     hintsAr: ["مدافع برازيلي", "قائد باريس", "مدافع مركزي"],
     category: "football",
     image: "images/marquinhos.jpeg"
+},
+
+{
+    word: "LIONEL MESSI",
+    wordAr: "ليونيل ميسي",
+    hints: ["Argentine magician", "Inter Miami", "8x Ballon d'Or"],
+    hintsAr: ["الساحر الأرجنتيني", "إنتر ميامي", "8 كرات ذهبية"],
+    category: "football",
+    image: "images/lionel-messi.jpeg"
+},
+{
+    word: "CRISTIANO RONALDO",
+    wordAr: "كريستيانو رونالدو",
+    hints: ["Portuguese icon", "Al Nassr", "5x Ballon d'Or"],
+    hintsAr: ["الأسطورة البرتغالية", "النصر", "5 كرات ذهبية"],
+    category: "football",
+    image: "images/cristiano-ronaldo.jpeg"
+},
+{
+    word: "NEYMAR JR",
+    wordAr: "نيمار جونيور",
+    hints: ["Brazilian star", "Al Hilal", "PSG legend"],
+    hintsAr: ["النجم البرازيلي", "الهلال", "أسطورة باريس"],
+    category: "football",
+    image: "images/neymar-jr.jpeg"
+},
+{
+    word: "ANDREA PIRLO",
+    wordAr: "أندريا بيرلو",
+    hints: ["Italian maestro", "Retired", "AC Milan/Juventus"],
+    hintsAr: ["السيد الإيطالي", "معتزل", "ميلان/يوفنتوس"],
+    category: "football",
+    image: "images/andrea-pirlo.jpeg"
+},
+{
+    word: "ZINEDINE ZIDANE",
+    wordAr: "زين الدين زيدان",
+    hints: ["French legend", "Real Madrid manager", "World Cup winner"],
+    hintsAr: ["أسطورة فرنسية", "مدرب ريال مدريد", "بطل كأس العالم"],
+    category: "football",
+    image: "images/zinedine-zidane.jpeg"
+},
+{
+    word: "RONALDINHO",
+    wordAr: "رونالدينيو",
+    hints: ["Brazilian magician", "Retired", "Barcelona legend"],
+    hintsAr: ["الساحر البرازيلي", "معتزل", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/ronaldinho.jpeg"
+},
+{
+    word: "LUIS SUAREZ",
+    wordAr: "لويس سواريز",
+    hints: ["Uruguayan striker", "Inter Miami", "Barcelona legend"],
+    hintsAr: ["مهاجم أوروغواياني", "إنتر ميامي", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/luis-suarez.jpeg"
+},
+{
+    word: "ACHRAF HAKIMI",
+    wordAr: "أشرف حكيمي",
+    hints: ["Moroccan defender", "PSG", "Real Madrid product"],
+    hintsAr: ["مدافع مغربي", "باريس", "منتوج ريال مدريد"],
+    category: "football",
+    image: "images/achraf-hakimi.jpeg"
+},
+{
+    word: "YASSINE BOUNOU",
+    wordAr: "ياسين بونو",
+    hints: ["Moroccan goalkeeper", "Al Hilal", "World Cup hero"],
+    hintsAr: ["حارس مغربي", "الهلال", "بطل كأس العالم"],
+    category: "football",
+    image: "images/yassine-bounou.jpeg"
+},
+{
+    word: "SOFYAN AMRABAT",
+    wordAr: "سفيان أمرابط",
+    hints: ["Moroccan midfielder", "Manchester United", "Fiorentina"],
+    hintsAr: ["لاعب وسط مغربي", "مانشستر يونايتد", "فيورنتينا"],
+    category: "football",
+    image: "images/sofyan-amrabat.jpeg"
+},
+{
+    word: "EZ ABDE",
+    wordAr: "عز الدين أزقالي",
+    hints: ["Moroccan winger", "Real Betis", "Barcelona product"],
+    hintsAr: ["جناح مغربي", "ريال بيتيس", "منتوج برشلونة"],
+    category: "football",
+    image: "images/ez-abde.jpeg"
+},
+{
+    word: "RIYAD MAHREZ",
+    wordAr: "رياض محرز",
+    hints: ["Algerian winger", "Al Ahli", "Manchester City legend"],
+    hintsAr: ["جناح جزائري", "الأهلي", "أسطورة مانشستر سيتي"],
+    category: "football",
+    image: "images/riyad-mahrez.jpeg"
+},
+{
+    word: "ISLAM SLIMANI",
+    wordAr: "إسلام سليماني",
+    hints: ["Algerian striker", "Retired", "Leicester City"],
+    hintsAr: ["مهاجم جزائري", "معتزل", "ليستر سيتي"],
+    category: "football",
+    image: "images/islam-slimani.jpeg"
+},
+{
+    word: "YACINE BRAHIMI",
+    wordAr: "ياسين براهيمي",
+    hints: ["Algerian midfielder", "Al Rayyan", "Porto legend"],
+    hintsAr: ["لاعب وسط جزائري", "الريان", "أسطورة بورتو"],
+    category: "football",
+    image: "images/yacine-brahimi.jpeg"
+},
+{
+    word: "PAULO DYBALA",
+    wordAr: "باولو ديبالا",
+    hints: ["Argentine forward", "Roma", "Juventus legend"],
+    hintsAr: ["مهاجم أرجنتيني", "روما", "أسطورة يوفنتوس"],
+    category: "football",
+    image: "images/paulo-dybala.jpeg"
+},
+{
+    word: "SERGIO BUSQUETS",
+    wordAr: "سيرجيو بوسكيتس",
+    hints: ["Spanish midfielder", "Inter Miami", "Barcelona legend"],
+    hintsAr: ["لاعب وسط إسباني", "إنتر ميامي", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/sergio-busquets.jpeg"
+},
+{
+    word: "JORDI ALBA",
+    wordAr: "جوردي ألبا",
+    hints: ["Spanish defender", "Inter Miami", "Barcelona legend"],
+    hintsAr: ["مدافع إسباني", "إنتر ميامي", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/jordi-alba.jpeg"
+},
+{
+    word: "GERARD PIQUE",
+    wordAr: "جيرارد بيكيه",
+    hints: ["Spanish defender", "Retired", "Barcelona legend"],
+    hintsAr: ["مدافع إسباني", "معتزل", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/gerard-pique.jpeg"
+},
+{
+    word: "ANDRES INIESTA",
+    wordAr: "أندريس إنييستا",
+    hints: ["Spanish midfielder", "Emirates Club", "Barcelona legend"],
+    hintsAr: ["لاعب وسط إسباني", "نادي الإمارات", "أسطورة برشلونة"],
+    category: "football",
+    image: "images/andres-iniesta.jpeg"
+},
+{
+    word: "XAVI HERNANDEZ",
+    wordAr: "شافي هيرنانديز",
+    hints: ["Spanish legend", "Barcelona manager", "Midfield maestro"],
+    hintsAr: ["أسطورة إسبانية", "مدرب برشلونة", "سيد خط الوسط"],
+    category: "football",
+    image: "images/xavi-hernandez.jpeg"
+},
+{
+    word: "IKER CASILLAS",
+    wordAr: "إيكر كاسياس",
+    hints: ["Spanish goalkeeper", "Retired", "Real Madrid legend"],
+    hintsAr: ["حارس إسباني", "معتزل", "أسطورة ريال مدريد"],
+    category: "football",
+    image: "images/iker-casillas.jpeg"
+},
+{
+    word: "SERGIO RAMOS",
+    wordAr: "سيرجيو راموس",
+    hints: ["Spanish defender", "Sevilla", "Real Madrid legend"],
+    hintsAr: ["مدافع إسباني", "إشبيلية", "أسطورة ريال مدريد"],
+    category: "football",
+    image: "images/sergio-ramos.jpeg"
+},
+{
+    word: "KARIM ADEYEMI",
+    wordAr: "كريم أديمي",
+    hints: ["German winger", "Borussia Dortmund", "Speedster"],
+    hintsAr: ["جناح ألماني", "بوروسيا دورتموند", "سريع"],
+    category: "football",
+    image: "images/karim-adeyemi.jpeg"
+},
+{
+    word: "JAMAL MUSIALA",
+    wordAr: "جمال موسيالا",
+    hints: ["German midfielder", "Bayern Munich", "Young talent"],
+    hintsAr: ["لاعب وسط ألماني", "بايرن ميونخ", "موهبة شابة"],
+    category: "football",
+    image: "images/jamal-musiala.jpeg"
+},
+{
+    word: "PHIL FODEN",
+    wordAr: "فيل فودن",
+    hints: ["English midfielder", "Manchester City", "Local hero"],
+    hintsAr: ["لاعب وسط إنجليزي", "مانشستر سيتي", "بطل محلي"],
+    category: "football",
+    image: "images/phil-foden.jpeg"
+},
+{
+    word: "BUKAYO SAKA",
+    wordAr: "بوكايو ساكا",
+    hints: ["English winger", "Arsenal", "Starboy"],
+    hintsAr: ["جناح إنجليزي", "آرسنال", "نجم صاعد"],
+    category: "football",
+    image: "images/bukayo-saka.jpeg"
+},
+{
+    word: "MARTIN ODEGAARD",
+    wordAr: "مارتن أوديغارد",
+    hints: ["Norwegian midfielder", "Arsenal captain", "Real Madrid product"],
+    hintsAr: ["لاعب وسط نرويجي", "قائد آرسنال", "منتوج ريال مدريد"],
+    category: "football",
+    image: "images/martin-odegaard.jpeg"
+},
+{
+    word: "DECLAN RICE",
+    wordAr: "دكلان رايس",
+    hints: ["English midfielder", "Arsenal", "West Ham legend"],
+    hintsAr: ["لاعب وسط إنجليزي", "آرسنال", "أسطورة وست هام"],
+    category: "football",
+    image: "images/declan-rice.jpeg"
+},
+{
+    word: "ALEXANDER ISAK",
+    wordAr: "الكسندر إيساك",
+    hints: ["Swedish striker", "Newcastle", "Technical forward"],
+    hintsAr: ["مهاجم سويدي", "نيوكاسل", "مهاجم تقني"],
+    category: "football",
+    image: "images/alexander-isak.jpeg"
+},
+{
+    word: "SANDRO TONALI",
+    wordAr: "ساندرو تونالي",
+    hints: ["Italian midfielder", "Newcastle", "AC Milan product"],
+    hintsAr: ["لاعب وسط إيطالي", "نيوكاسل", "منتوج ميلان"],
+    category: "football",
+    image: "images/sandro-tonali.jpeg"
+},
+{
+    word: "JULIAN ALVAREZ",
+    wordAr: "جوليان ألفاريز",
+    hints: ["Argentine striker", "Manchester City", "World Cup winner"],
+    hintsAr: ["مهاجم أرجنتيني", "مانشستر سيتي", "بطل كأس العالم"],
+    category: "football",
+    image: "images/julian-alvarez.jpeg"
+},
+{
+    word: "RODRI",
+    wordAr: "رودري",
+    hints: ["Spanish midfielder", "Manchester City", "Champions League winner"],
+    hintsAr: ["لاعب وسط إسباني", "مانشستر سيتي", "بطل دوري الأبطال"],
+    category: "football",
+    image: "images/rodri.jpeg"
+},
+{
+    word: "JACK GREALISH",
+    wordAr: "جاك غريليش",
+    hints: ["English winger", "Manchester City", "Aston Villa legend"],
+    hintsAr: ["جناح إنجليزي", "مانشستر سيتي", "أسطورة أستون فيلا"],
+    category: "football",
+    image: "images/jack-grealish.jpeg"
+},
+{
+    word: "BERNARDO SILVA",
+    wordAr: "برناردو سيلفا",
+    hints: ["Portuguese midfielder", "Manchester City", "Technical wizard"],
+    hintsAr: ["لاعب وسط برتغالي", "مانشستر سيتي", "ساحر تقني"],
+    category: "football",
+    image: "images/bernardo-silva.jpeg"
+},
+{
+    word: "RUBEN DIAS",
+    wordAr: "روبين دياز",
+    hints: ["Portuguese defender", "Manchester City", "Defensive rock"],
+    hintsAr: ["مدافع برتغالي", "مانشستر سيتي", "صخرة دفاعية"],
+    category: "football",
+    image: "images/ruben-dias.jpeg"
+},
+
+{
+    word: "JOÃO CANCELO",
+    wordAr: "جواو كانسيلو",
+    hints: ["Portuguese defender", "Barcelona", "Attacking fullback"],
+    hintsAr: ["مدافع برتغالي", "برشلونة", "ظهير هجومي"],
+    category: "football",
+    image: "images/joao-cancelo.jpeg"
+},
+{
+    word: "ROBERT SANCHEZ",
+    wordAr: "روبرت سانشيز",
+    hints: ["Spanish goalkeeper", "Chelsea", "Brighton product"],
+    hintsAr: ["حارس إسباني", "تشيلسي", "منتوج برايتون"],
+    category: "football",
+    image: "images/robert-sanchez.jpeg"
+},
+{
+    word: "ENZO FERNANDEZ",
+    wordAr: "إنزو فرنانديز",
+    hints: ["Argentine midfielder", "Chelsea", "World Cup winner"],
+    hintsAr: ["لاعب وسط أرجنتيني", "تشيلسي", "بطل كأس العالم"],
+    category: "football",
+    image: "images/enzo-fernandez.jpeg"
+},
+
+{
+    word: "NICOLAS JACKSON",
+    wordAr: "نيكولاس جاكسون",
+    hints: ["Senegalese striker", "Chelsea", "Villarreal product"],
+    hintsAr: ["مهاجم سنغالي", "تشيلسي", "منتوج فياريال"],
+    category: "football",
+    image: "images/nicolas-jackson.jpeg"
+},
+{
+    word: "MYCHAJLO MUDRYK",
+    wordAr: "ميخايلو بودريك",
+    hints: ["Ukrainian winger", "Chelsea", "Shakhtar product"],
+    hintsAr: ["جناح أوكراني", "تشيلسي", "منتوج شاختار"],
+    category: "football",
+    image: "images/mychajlo-mudryk.jpeg"
+},
+{
+    word: "CHRISTOPHER NKUNKU",
+    wordAr: "كريستوفر نكونكو",
+    hints: ["French forward", "Chelsea", "RB Leipzig product"],
+    hintsAr: ["مهاجم فرنسي", "تشيلسي", "منتوج لايبزيغ"],
+    category: "football",
+    image: "images/christopher-nkunku.jpeg"
+},
+{
+    word: "ALEXANDRE LACAZETTE",
+    wordAr: "ألكسندر لاكازيت",
+    hints: ["French striker", "Lyon", "Arsenal legend"],
+    hintsAr: ["مهاجم فرنسي", "ليون", "أسطورة آرسنال"],
+    category: "football",
+    image: "images/alexandre-lacazette.jpeg"
+},
+{
+    word: "ANTOINE GRIEZMANN",
+    wordAr: "أنطوان جريزمان",
+    hints: ["French forward", "Atletico Madrid", "World Cup winner"],
+    hintsAr: ["مهاجم فرنسي", "أتلتيكو مدريد", "بطل كأس العالم"],
+    category: "football",
+    image: "images/antoine-griezmann.jpeg"
+},
+{
+    word: "JAN VERTONGHEN",
+    wordAr: "يان فيرتونغن",
+    hints: ["Belgian defender", "Anderlecht", "Tottenham legend"],
+    hintsAr: ["مدافع بلجيكي", "أندرلخت", "أسطورة توتنهام"],
+    category: "football",
+    image: "images/jan-vertonghen.jpeg"
+},
+{
+    word: "TOBY ALDERWEIRELD",
+    wordAr: "توبي ألدرفايرلد",
+    hints: ["Belgian defender", "Royal Antwerp", "Tottenham legend"],
+    hintsAr: ["مدافع بلجيكي", "أنتويرب", "أسطورة توتنهام"],
+    category: "football",
+    image: "images/toby-alderweireld.jpeg"
+},
+{
+    word: "HUGO LLORIS",
+    wordAr: "هوغو لوريس",
+    hints: ["French goalkeeper", "LAFC", "Tottenham legend"],
+    hintsAr: ["حارس فرنسي", "لوس أنجلوس", "أسطورة توتنهام"],
+    category: "football",
+    image: "images/hugo-lloris.jpeg"
+},
+{
+    word: "SON HEUNG MIN",
+    wordAr: "سون هيونغ مين",
+    hints: ["Korean forward", "Tottenham captain", "Golden Boot winner"],
+    hintsAr: ["مهاجم كوري", "قائد توتنهام", "حذاء ذهبي"],
+    category: "football",
+    image: "images/son-heung-min.jpeg"
+},
+
+{
+    word: "ALVARO MORATA",
+    wordAr: "ألفارو موراتا",
+    hints: ["Spanish striker", "Atletico Madrid", "Real Madrid product"],
+    hintsAr: ["مهاجم إسباني", "أتلتيكو مدريد", "منتوج ريال مدريد"],
+    category: "football",
+    image: "images/alvaro-morata.jpeg"
+},
+{
+    word: "ANGEL DI MARIA",
+    wordAr: "أنجيل دي ماريا",
+    hints: ["Argentine winger", "Benfica", "World Cup winner"],
+    hintsAr: ["جناح أرجنتيني", "بنفيكا", "بطل كأس العالم"],
+    category: "football",
+    image: "images/angel-di-maria.jpeg"
+},
+{
+    word: "DAVID BECKHAM",
+    wordAr: "ديفيد بيكهام",
+    hints: ["English legend", "Inter Miami owner", "Manchester United"],
+    hintsAr: ["أسطورة إنجليزية", "مالك إنتر ميامي", "مانشستر يونايتد"],
+    category: "football",
+    image: "images/david-beckham.jpeg"
+},
+{
+    word: "WAYNE ROONEY",
+    wordAr: "واين روني",
+    hints: ["English legend", "DC United manager", "Manchester United"],
+    hintsAr: ["أسطورة إنجليزية", "مدرب دي سي يونايتد", "مانشستر يونايتد"],
+    category: "football",
+    image: "images/wayne-rooney.jpeg"
+},
+{
+    word: "PAUL POGBA",
+    wordAr: "بول بوجبا",
+    hints: ["French midfielder", "Suspended", "Juventus legend"],
+    hintsAr: ["لاعب وسط فرنسي", "معلق", "أسطورة يوفنتوس"],
+    category: "football",
+    image: "images/paul-pogba.jpeg"
+},
+{
+    word: "EDEN HAZARD",
+    wordAr: "إيدين هازارد",
+    hints: ["Belgian winger", "Retired", "Chelsea legend"],
+    hintsAr: ["جناح بلجيكي", "معتزل", "أسطورة تشيلسي"],
+    category: "football",
+    image: "images/eden-hazard.jpeg"
+},
+{
+    word: "FRANK LAMPARD",
+    wordAr: "فرانك لامبارد",
+    hints: ["English legend", "Retired", "Chelsea top scorer"],
+    hintsAr: ["أسطورة إنجليزية", "معتزل", "هداف تشيلسي"],
+    category: "football",
+    image: "images/frank-lampard.jpeg"
+},
+{
+    word: "JOHN TERRY",
+    wordAr: "جون تيري",
+    hints: ["English defender", "Retired", "Chelsea captain"],
+    hintsAr: ["مدافع إنجليزي", "معتزل", "قائد تشيلسي"],
+    category: "football",
+    image: "images/john-terry.jpeg"
+},
+{
+    word: "DIDIER DROGBA",
+    wordAr: "ديديه دروجبا",
+    hints: ["Ivorian striker", "Retired", "Chelsea legend"],
+    hintsAr: ["مهاجم عاجي", "معتزل", "أسطورة تشيلسي"],
+    category: "football",
+    image: "images/didier-drogba.jpeg"
+},
+{
+    word: "PETR CECH",
+    wordAr: "بيتر تشيك",
+    hints: ["Czech goalkeeper", "Retired", "Chelsea legend"],
+    hintsAr: ["حارس تشيكي", "معتزل", "أسطورة تشيلسي"],
+    category: "football",
+    image: "images/petr-cech.jpeg"
+},
+{
+    word: "THIERRY HENRY",
+    wordAr: "تيري هنري",
+    hints: ["French legend", "Retired", "Arsenal top scorer"],
+    hintsAr: ["أسطورة فرنسية", "معتزل", "هداف آرسنال"],
+    category: "football",
+    image: "images/thierry-henry.jpeg"
+},
+{
+    word: "DENNIS BERGKAMP",
+    wordAr: "دينيس بيركامب",
+    hints: ["Dutch legend", "Retired", "Arsenal magician"],
+    hintsAr: ["أسطورة هولندية", "معتزل", "ساحر آرسنال"],
+    category: "football",
+    image: "images/dennis-bergkamp.jpeg"
+},
+{
+    word: "PATRICK VIEIRA",
+    wordAr: "باتريك فييرا",
+    hints: ["French legend", "Retired", "Arsenal captain"],
+    hintsAr: ["أسطورة فرنسية", "معتزل", "قائد آرسنال"],
+    category: "football",
+    image: "images/patrick-vieira.jpeg"
+},
+{
+    word: "ROBERTO CARLOS",
+    wordAr: "روبرتو كارلوس",
+    hints: ["Brazilian defender", "Retired", "Free-kick specialist"],
+    hintsAr: ["مدافع برازيلي", "معتزل", "خبير الركلات الحرة"],
+    category: "football",
+    image: "images/roberto-carlos.jpeg"
+},
+{
+    word: "RONALDO NAZARIO",
+    wordAr: "رونالدو نازاريو",
+    hints: ["Brazilian legend", "Retired", "El Fenomeno"],
+    hintsAr: ["أسطورة برازيلية", "معتزل", "الظاهرة"],
+    category: "football",
+    image: "images/ronaldo-nazario.jpeg"
+},
+
+{
+    word: "KAKA",
+    wordAr: "كاكا",
+    hints: ["Brazilian midfielder", "Retired", "Ballon d'Or 2007"],
+    hintsAr: ["لاعب وسط برازيلي", "معتزل", "الكرة الذهبية 2007"],
+    category: "football",
+    image: "images/kaka.jpeg"
+},
+{
+    word: "STEVEN GERRARD",
+    wordAr: "ستيفن جيرارد",
+    hints: ["English legend", "Retired", "Liverpool captain"],
+    hintsAr: ["أسطورة إنجليزية", "معتزل", "قائد ليفربول"],
+    category: "football",
+    image: "images/steven-gerrard.jpeg"
+},
+{
+    word: "FERNANDO TORRES",
+    wordAr: "فرناندو توريس",
+    hints: ["Spanish striker", "Retired", "Liverpool legend"],
+    hintsAr: ["مهاجم إسباني", "معتزل", "أسطورة ليفربول"],
+    category: "football",
+    image: "images/fernando-torres.jpeg"
+},
+{
+    word: "JAMIE CARRAGHER",
+    wordAr: "جيمي كاراغر",
+    hints: ["English defender", "Retired", "Liverpool legend"],
+    hintsAr: ["مدافع إنجليزي", "معتزل", "أسطورة ليفربول"],
+    category: "football",
+    image: "images/jamie-carragher.jpeg"
+},
+
+
+{
+    word: "OUSMANE DEMBELE",
+    wordAr: "عثمان ديمبلي",
+    hints: ["French winger", "PSG", "Barcelona product"],
+    hintsAr: ["جناح فرنسي", "باريس", "منتوج برشلونة"],
+    category: "football",
+    image: "images/ousmane-dembele.jpeg"
+},
+{
+    word: "FRENKIE DE JONG",
+    wordAr: "فرينكي دي يونغ",
+    hints: ["Dutch midfielder", "Barcelona", "Ajax product"],
+    hintsAr: ["لاعب وسط هولندي", "برشلونة", "منتوج أياكس"],
+    category: "football",
+    image: "images/frenkie-de-jong.jpeg"
+},
+{
+    word: "PEDRI",
+    wordAr: "بيدري",
+    hints: ["Spanish midfielder", "Barcelona", "Golden Boy"],
+    hintsAr: ["لاعب وسط إسباني", "برشلونة", "الفتى الذهبي"],
+    category: "football",
+    image: "images/pedri.jpeg"
+},
+{
+    word: "GAVI",
+    wordAr: "غافي",
+    hints: ["Spanish midfielder", "Barcelona", "Young talent"],
+    hintsAr: ["لاعب وسط إسباني", "برشلونة", "موهبة شابة"],
+    category: "football",
+    image: "images/gavi.jpeg"
+},
+{
+    word: "RONALD ARAUJO",
+    wordAr: "رونالد أراوجو",
+    hints: ["Uruguayan defender", "Barcelona", "Defensive rock"],
+    hintsAr: ["مدافع أوروغواياني", "برشلونة", "صخرة دفاعية"],
+    category: "football",
+    image: "images/ronald-araujo.jpeg"
+},
+{
+    word: "ALEJANDRO BALDE",
+    wordAr: "أليخاندرو بالدي",
+    hints: ["Spanish defender", "Barcelona", "Rising star"],
+    hintsAr: ["مدافع إسباني", "برشلونة", "نجم صاعد"],
+    category: "football",
+    image: "images/alejandro-balde.jpeg"
+},
+{
+    word: "ILKAY GUNDOGAN",
+    wordAr: "إلكاي غوندوغان",
+    hints: ["German midfielder", "Barcelona", "Manchester City legend"],
+    hintsAr: ["لاعب وسط ألماني", "برشلونة", "أسطورة مانشستر سيتي"],
+    category: "football",
+    image: "images/ilkay-gundogan.jpeg"
+},
+{
+    word: "JOAO FELIX",
+    wordAr: "جواو فيليكس",
+    hints: ["Portuguese forward", "Barcelona", "Atletico flop"],
+    hintsAr: ["مهاجم برتغالي", "برشلونة", "فشل أتلتيكو"],
+    category: "football",
+    image: "images/joao-felix.jpeg"
+},
+{
+    word: "JULES KOUNDE",
+    wordAr: "جوليس كوندي",
+    hints: ["French defender", "Barcelona", "Versatile defender"],
+    hintsAr: ["مدافع فرنسي", "برشلونة", "مدافع متعدد"],
+    category: "football",
+    image: "images/jules-kounde.jpeg"
+},
+{
+    word: "MARC ANDRE TER STEGEN",
+    wordAr: "مارك أندريه تير شتيغن",
+    hints: ["German goalkeeper", "Barcelona", "Sweeper keeper"],
+    hintsAr: ["حارس ألماني", "برشلونة", "حارس متقدم"],
+    category: "football",
+    image: "images/marc-andre-ter-stegen.jpeg"
+},
+{
+    word: "FEDERICO VALVERDE",
+    wordAr: "فيديريكو فالفيردي",
+    hints: ["Uruguayan midfielder", "Real Madrid", "Box-to-box"],
+    hintsAr: ["لاعب وسط أوروغواياني", "ريال مدريد", "شامل المهام"],
+    category: "football",
+    image: "images/federico-valverde.jpeg"
+},
+{
+    word: "AURELIEN TCHOUAMENI",
+    wordAr: "أورليان تشواميني",
+    hints: ["French midfielder", "Real Madrid", "Defensive shield"],
+    hintsAr: ["لاعب وسط فرنسي", "ريال مدريد", "درع دفاعي"],
+    category: "football",
+    image: "images/aurelien-tchouameni.jpeg"
+},
+{
+    word: "EDUARDO CAMAVINGA",
+    wordAr: "إدواردو كامافينجا",
+    hints: ["French midfielder", "Real Madrid", "Versatile talent"],
+    hintsAr: ["لاعب وسط فرنسي", "ريال مدريد", "موهبة متعددة"],
+    category: "football",
+    image: "images/eduardo-camavinga.jpeg"
+},
+{
+    word: "DAVID ALABA",
+    wordAr: "دافيد ألابا",
+    hints: ["Austrian defender", "Real Madrid", "Versatile defender"],
+    hintsAr: ["مدافع نمساوي", "ريال مدريد", "مدافع متعدد"],
+    category: "football",
+    image: "images/david-alaba.jpeg"
+},
+{
+    word: "JUDE BELLINGHAM",
+    wordAr: "جود بيلينغهام",
+    hints: ["English midfielder", "Real Madrid", "Golden Boy 2023"],
+    hintsAr: ["لاعب وسط إنجليزي", "ريال مدريد", "الفتى الذهبي 2023"],
+    category: "football",
+    image: "images/jude-bellingham.jpeg"
+},
+{
+    word: "ARDA GULER",
+    wordAr: "أردا غولر",
+    hints: ["Turkish midfielder", "Real Madrid", "Wonderkid"],
+    hintsAr: ["لاعب وسط تركي", "ريال مدريد", "طفل معجزة"],
+    category: "football",
+    image: "images/arda-guler.jpeg"
+},
+{
+    word: "BRYAN ZARAGOZA",
+    wordAr: "بريان سرقسطة",
+    hints: ["Spanish winger", "Bayern Munich", "Granada product"],
+    hintsAr: ["جناح إسباني", "بايرن ميونخ", "منتوج غرناطة"],
+    category: "football",
+    image: "images/bryan-zaragoza.jpeg"
+},
+{//
+    word: "LEROY SANE",
+    wordAr: "ليروي ساني",
+    hints: ["German winger", "Bayern Munich", "Manchester City product"],
+    hintsAr: ["جناح ألماني", "بايرن ميونخ", "منتوج مانشستر سيتي"],
+    category: "football",
+    image: "images/leroy-sane.jpeg"
+},
+{
+    word: "SERGE GNABRY",
+    wordAr: "سيرج جنابري",
+    hints: ["German winger", "Bayern Munich", "Arsenal product"],
+    hintsAr: ["جناح ألماني", "بايرن ميونخ", "منتوج آرسنال"],
+    category: "football",
+    image: "images/serge-gnabry.jpeg"
+},
+{
+    word: "ALPHONSO DAVIES",
+    wordAr: "ألفونسو ديفيز",
+    hints: ["Canadian defender", "Bayern Munich", "Speedster"],
+    hintsAr: ["مدافع كندي", "بايرن ميونخ", "سريع"],
+    category: "football",
+    image: "images/alphonso-davies.jpeg"
+},
+
+{
+    word: "BILAL EL KHANNUS",
+    wordAr: "بلال الخنوس",
+    hints: ["Moroccan midfielder", "Gent", "Rising talent"],
+    hintsAr: ["لاعب وسط مغربي", "جينت", "موهبة صاعدة"],
+    category: "football",
+    image: "images/bilal-el-khannus.jpeg"
+},
+
+{
+    word: "ANASS ZAROURY",
+    wordAr: "أنس زروري",
+    hints: ["Moroccan winger", "Burnley", "World Cup 2022"],
+    hintsAr: ["جناح مغربي", "بيرنلي", "كأس العالم 2022"],
+    category: "football",
+    image: "images/anass-zaroury.jpeg"
+},
+{
+    word: "ZAKARIA ABOUKHLA",
+    wordAr: "زكريا أبوخل",
+    hints: ["Moroccan striker", "Wydad", "Local talent"],
+    hintsAr: ["مهاجم مغربي", "الوداد", "موهبة محلية"],
+    category: "football",
+    image: "images/zakaria-aboukhla.jpeg"
 }
 
 

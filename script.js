@@ -43,6 +43,7 @@ const GRID_BACKGROUND_COLORS = [
 ];
 
 // ================= FOOTBALL PLAYERS IMAGES =================
+// ================= FOOTBALL PLAYERS IMAGES =================
 const FOOTBALL_PLAYERS = [
     { name: "Karim Benzema", image: "images/karim-benzema.jpeg" },
     { name: "Mohamed Salah", image: "images/mohamed-salah.jpeg" },
@@ -63,8 +64,102 @@ const FOOTBALL_PLAYERS = [
     { name: "Casemiro", image: "images/casemiro.jpeg" },
     { name: "Raheem Sterling", image: "images/raheem-sterling.jpeg" },
     { name: "Jan Oblak", image: "images/jan-oblak.jpeg" },
-    { name: "Marquinhos", image: "images/marquinhos.jpeg" }
+    { name: "Marquinhos", image: "images/marquinhos.jpeg" },
+    { name: "Lionel Messi", image: "images/lionel-messi.jpeg" },
+    { name: "Cristiano Ronaldo", image: "images/cristiano-ronaldo.jpeg" },
+    { name: "Neymar Jr", image: "images/neymar-jr.jpeg" },
+    { name: "Andrea Pirlo", image: "images/andrea-pirlo.jpeg" },
+    { name: "Zinedine Zidane", image: "images/zinedine-zidane.jpeg" },
+    { name: "Ronaldinho", image: "images/ronaldinho.jpeg" },
+    { name: "Luis Suarez", image: "images/luis-suarez.jpeg" },
+    { name: "Achraf Hakimi", image: "images/achraf-hakimi.jpeg" },
+    { name: "Yassine Bounou", image: "images/yassine-bounou.jpeg" },
+    { name: "Sofyan Amrabat", image: "images/sofyan-amrabat.jpeg" },
+    { name: "Ez Abde", image: "images/ez-abde.jpeg" },
+    { name: "Riyad Mahrez", image: "images/riyad-mahrez.jpeg" },
+    { name: "Islam Slimani", image: "images/islam-slimani.jpeg" },
+    { name: "Yacine Brahimi", image: "images/yacine-brahimi.jpeg" },
+    { name: "Paulo Dybala", image: "images/paulo-dybala.jpeg" },
+    { name: "Sergio Busquets", image: "images/sergio-busquets.jpeg" },
+    { name: "Jordi Alba", image: "images/jordi-alba.jpeg" },
+    { name: "Gerard Pique", image: "images/gerard-pique.jpeg" },
+    { name: "Andres Iniesta", image: "images/andres-iniesta.jpeg" },
+    { name: "Xavi Hernandez", image: "images/xavi-hernandez.jpeg" },
+    { name: "Iker Casillas", image: "images/iker-casillas.jpeg" },
+    { name: "Sergio Ramos", image: "images/sergio-ramos.jpeg" },
+    { name: "Karim Adeyemi", image: "images/karim-adeyemi.jpeg" },
+    { name: "Jamal Musiala", image: "images/jamal-musiala.jpeg" },
+    { name: "Phil Foden", image: "images/phil-foden.jpeg" },
+    { name: "Bukayo Saka", image: "images/bukayo-saka.jpeg" },
+    { name: "Martin Odegaard", image: "images/martin-odegaard.jpeg" },
+    { name: "Declan Rice", image: "images/declan-rice.jpeg" },
+    { name: "Alexander Isak", image: "images/alexander-isak.jpeg" },
+    { name: "Sandro Tonali", image: "images/sandro-tonali.jpeg" },
+    { name: "Julian Alvarez", image: "images/julian-alvarez.jpeg" },
+    { name: "Rodri", image: "images/rodri.jpeg" },
+    { name: "Jack Grealish", image: "images/jack-grealish.jpeg" },
+    { name: "Bernardo Silva", image: "images/bernardo-silva.jpeg" },
+    { name: "Ruben Dias", image: "images/ruben-dias.jpeg" },
+    { name: "João Cancelo", image: "images/joao-cancelo.jpeg" },
+    { name: "Robert Sanchez", image: "images/robert-sanchez.jpeg" },
+    { name: "Enzo Fernandez", image: "images/enzo-fernandez.jpeg" },
+    { name: "Nicolas Jackson", image: "images/nicolas-jackson.jpeg" },
+    { name: "Mychajlo Mudryk", image: "images/mychajlo-mudryk.jpeg" },
+    { name: "Christopher Nkunku", image: "images/christopher-nkunku.jpeg" },
+    { name: "Alexandre Lacazette", image: "images/alexandre-lacazette.jpeg" },
+    { name: "Antoine Griezmann", image: "images/antoine-griezmann.jpeg" },
+    { name: "Jan Vertonghen", image: "images/jan-vertonghen.jpeg" },
+    { name: "Toby Alderweireld", image: "images/toby-alderweireld.jpeg" },
+    { name: "Hugo Lloris", image: "images/hugo-lloris.jpeg" },
+    { name: "Son Heung Min", image: "images/son-heung-min.jpeg" },
+    { name: "Alvaro Morata", image: "images/alvaro-morata.jpeg" },
+    { name: "Angel Di Maria", image: "images/angel-di-maria.jpeg" },
+    { name: "David Beckham", image: "images/david-beckham.jpeg" },
+    { name: "Wayne Rooney", image: "images/wayne-rooney.jpeg" },
+    { name: "Paul Pogba", image: "images/paul-pogba.jpeg" },
+    { name: "Eden Hazard", image: "images/eden-hazard.jpeg" },
+    { name: "Frank Lampard", image: "images/frank-lampard.jpeg" },
+    { name: "John Terry", image: "images/john-terry.jpeg" },
+    { name: "Didier Drogba", image: "images/didier-drogba.jpeg" },
+    { name: "Petr Cech", image: "images/petr-cech.jpeg" },
+    { name: "Thierry Henry", image: "images/thierry-henry.jpeg" },
+    { name: "Dennis Bergkamp", image: "images/dennis-bergkamp.jpeg" },
+    { name: "Patrick Vieira", image: "images/patrick-vieira.jpeg" },
+    { name: "Roberto Carlos", image: "images/roberto-carlos.jpeg" },
+    { name: "Ronaldo Nazario", image: "images/ronaldo-nazario.jpeg" },
+    { name: "Kaka", image: "images/kaka.jpeg" },
+    { name: "Steven Gerrard", image: "images/steven-gerrard.jpeg" },
+    { name: "Fernando Torres", image: "images/fernando-torres.jpeg" },
+    { name: "Jamie Carragher", image: "images/jamie-carragher.jpeg" },
+    { name: "Ousmane Dembele", image: "images/ousmane-dembele.jpeg" },
+    { name: "Frenkie De Jong", image: "images/frenkie-de-jong.jpeg" },
+    { name: "Pedri", image: "images/pedri.jpeg" },
+    { name: "Gavi", image: "images/gavi.jpeg" },
+    { name: "Ronald Araujo", image: "images/ronald-araujo.jpeg" },
+    { name: "Alejandro Balde", image: "images/alejandro-balde.jpeg" },
+    { name: "Ilkay Gundogan", image: "images/ilkay-gundogan.jpeg" },
+    { name: "Joao Felix", image: "images/joao-felix.jpeg" },
+    { name: "Jules Kounde", image: "images/jules-kounde.jpeg" },
+    { name: "Marc Andre Ter Stegen", image: "images/marc-andre-ter-stegen.jpeg" },
+    { name: "Federico Valverde", image: "images/federico-valverde.jpeg" },
+    { name: "Aurelien Tchouameni", image: "images/aurelien-tchouameni.jpeg" },
+    { name: "Eduardo Camavinga", image: "images/eduardo-camavinga.jpeg" },
+    { name: "David Alaba", image: "images/david-alaba.jpeg" },
+    { name: "Jude Bellingham", image: "images/jude-bellingham.jpeg" },
+    { name: "Arda Guler", image: "images/arda-guler.jpeg" },
+    { name: "Bryan Zaragoza", image: "images/bryan-zaragoza.jpeg" },
+    { name: "Leroy Sane", image: "images/leroy-sane.jpeg" },
+    { name: "Serge Gnabry", image: "images/serge-gnabry.jpeg" },
+    { name: "Alphonso Davies", image: "images/alphonso-davies.jpeg" },
+    { name: "Bilal El Khannus", image: "images/bilal-el-khannus.jpeg" },
+    { name: "Anass Zaroury", image: "images/anass-zaroury.jpeg" },
+    { name: "Zakaria Aboukhla", image: "images/zakaria-aboukhla.jpeg" }
 ];
+// Debug: Check which images might be missing
+console.log(`Total football players: ${FOOTBALL_PLAYERS.length}`);
+FOOTBALL_PLAYERS.forEach(player => {
+    console.log(`Player: ${player.name}, Image: ${player.image}`);
+});
 
 // ================= JSONBin CONFIG =================
 const JSONBIN_CONFIG = {
@@ -159,6 +254,9 @@ function loadSettings() {
     updateTimerDisplay();
     updateCategoriesDisplay();
     selectGameMode(gameState.gameMode);
+        // ADD THIS LINE AT THE VERY END:
+    selectGameMode(gameState.gameMode); // This will set the correct timer display
+
 }
 
 function saveSettings() {
@@ -254,7 +352,6 @@ function saveTeam() {
     gameState.savedTeams.push(team);
     localStorage.setItem('savedTeams', JSON.stringify(gameState.savedTeams));
     updateSavedTeamsList();
-    // Removed alert for cleaner experience
 }
 
 function updateSavedTeamsList() {
@@ -288,7 +385,6 @@ function loadTeam(index) {
     gameState.players = [...team.players];
     updatePlayersList();
     updateUI();
-    // Removed confirmation alert for faster experience
 }
 
 function deleteTeam(index) {
@@ -328,21 +424,49 @@ function selectGameMode(mode) {
     }
     
     document.getElementById('gameModeText').textContent = modeText;
+    
+    // Update timer display based on mode
+    if (mode === 'images') {
+        // For Guess the Image, show special message
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) {
+            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
+        }
+    } else {
+        // For other modes, show normal timer
+        updateTimerDisplay();
+    }
+    
+    // Update UI
+    updateUI();
     saveSettings();
 }
 
 function selectTimer(seconds) {
-    document.querySelectorAll('.timer-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    // Always save the timer value
+    gameState.timer = seconds;
     
-    const selectedBtn = document.querySelector(`.timer-btn[data-time="${seconds}"]`);
-    if (selectedBtn) {
-        selectedBtn.classList.add('active');
+    // But only show/update UI if NOT in Guess the Image mode
+    if (gameState.gameMode === 'images') {
+        // Just show message and return
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) {
+            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
+        }
+    } else {
+        // Normal timer selection for other modes
+        document.querySelectorAll('.timer-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        const selectedBtn = document.querySelector(`.timer-btn[data-time="${seconds}"]`);
+        if (selectedBtn) {
+            selectedBtn.classList.add('active');
+        }
+        
+        updateTimerDisplay();
     }
     
-    gameState.timer = seconds;
-    updateTimerDisplay();
     saveSettings();
 }
 
@@ -350,6 +474,14 @@ function updateTimerDisplay() {
     const timerText = gameState.timer === 0 ? 'No timer' : formatTime(gameState.timer);
     document.getElementById('timerText').textContent = timerText;
     document.getElementById('currentTimerText').textContent = timerText;
+    
+    // Only update the timerDisplay if NOT in Guess the Image mode
+    if (gameState.gameMode !== 'images') {
+        const timerDisplay = document.getElementById('timerDisplay');
+        if (timerDisplay) {
+            timerDisplay.innerHTML = `<span id="currentTimerText">${timerText}</span>`;
+        }
+    }
 }
 
 function updateCategories() {
@@ -395,7 +527,6 @@ function updateUI() {
     updatePlayCountDisplay();
 }
 
-// ================= EVENT LISTENERS =================
 // ================= EVENT LISTENERS =================
 function setupEventListeners() {
     console.log('Setting up event listeners...');
@@ -460,20 +591,26 @@ function setupEventListeners() {
     const timerGroup = document.querySelector('.setting-group:nth-child(2)');
     const categoriesGroup = document.querySelector('.setting-group:nth-child(3)');
     
-    if (timerGroup) {
-        timerGroup.addEventListener('click', function(e) {
-            if (e.target.classList.contains('timer-btn') || 
-                e.target.closest('.timer-btn')) {
-                return;
-            }
-            
-            const buttons = document.getElementById('timerButtons');
-            const expandIcon = document.getElementById('timerExpand');
-            const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
-            buttons.style.display = isHidden ? 'grid' : 'none';
-            expandIcon.classList.toggle('expanded', isHidden);
-        });
-    }
+   // In setupEventListeners, find the timerGroup section and update it:
+if (timerGroup) {
+    timerGroup.addEventListener('click', function(e) {
+        if (e.target.classList.contains('timer-btn') || 
+            e.target.closest('.timer-btn')) {
+            return;
+        }
+        
+        // Don't expand timer in Guess the Image mode
+        if (gameState.gameMode === 'images') {
+            return;
+        }
+        
+        const buttons = document.getElementById('timerButtons');
+        const expandIcon = document.getElementById('timerExpand');
+        const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
+        buttons.style.display = isHidden ? 'grid' : 'none';
+        expandIcon.classList.toggle('expanded', isHidden);
+    });
+}
     
     if (categoriesGroup) {
         categoriesGroup.addEventListener('click', function(e) {
@@ -928,7 +1065,7 @@ function backToLobby() {
     document.querySelector('.social-buttons').style.display = 'flex';
 }
 
-// ================= UPDATED IMAGE MATCH FUNCTIONS =================
+// ================= IMAGE MATCH FUNCTIONS (FIXED) =================
 function generateImageGrid() {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '<div class="loading-images">Loading images...</div>';
@@ -952,7 +1089,7 @@ function generateImageGrid() {
             // Use words array for other categories
             const categoryWords = words.filter(w => w.category === category);
             categoryWords.forEach(word => {
-                if (word.image && (word.image.includes('images/') || word.image.includes('.jpeg') || word.image.includes('.jpg') || word.image.includes('.png'))) {
+                if (word.image && (word.image.includes('images/') || word.image.includes('.jpg') || word.image.includes('.jpeg') || word.image.includes('.png'))) {
                     // This is an actual image file
                     imagePool.push({
                         type: 'image',
@@ -981,7 +1118,6 @@ function generateImageGrid() {
     
     // Make sure we have enough items
     if (imagePool.length < itemCount) {
-        // If not enough items, show message
         imageGrid.innerHTML = `
             <div class="loading-images" style="color: #ef4444;">
                 Not enough images in selected categories.<br>
@@ -1008,7 +1144,7 @@ function renderImageGrid(items) {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '';
     
-    // Responsive grid: 3 columns on mobile, 4 on desktop
+    // Responsive grid
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 4;
     const rows = isMobile ? 6 : 4;
@@ -1041,9 +1177,10 @@ function renderImageGrid(items) {
         content.style.alignItems = 'center';
         content.style.justifyContent = 'center';
         content.style.overflow = 'hidden';
+        content.style.backgroundColor = '#1a1a2e'; // Fallback background
         
+        // IMAGE LOADING WITH ERROR HANDLING - FIXED
         if (item.type === 'football' || item.type === 'image') {
-            // For actual images (football players and other image files)
             const img = document.createElement('img');
             img.src = item.image;
             img.alt = item.name;
@@ -1052,8 +1189,12 @@ function renderImageGrid(items) {
             img.style.width = '100%';
             img.style.height = '100%';
             img.style.borderRadius = '4px';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            
+            // Enhanced error handling
             img.onerror = function() {
-                // If image fails to load, show a fallback
+                console.error('Failed to load image:', this.src);
                 this.style.display = 'none';
                 const fallback = document.createElement('div');
                 fallback.className = 'emoji-display';
@@ -1065,8 +1206,16 @@ function renderImageGrid(items) {
                 fallback.style.justifyContent = 'center';
                 fallback.style.height = '100%';
                 fallback.style.width = '100%';
+                fallback.style.backgroundColor = '#2d3748';
+                fallback.style.borderRadius = '4px';
                 content.appendChild(fallback);
             };
+            
+            // Add load event
+            img.onload = function() {
+                console.log('Image loaded successfully:', this.src);
+            };
+            
             content.appendChild(img);
         } else {
             // For emojis
@@ -1080,6 +1229,8 @@ function renderImageGrid(items) {
             emojiDisplay.style.alignItems = 'center';
             emojiDisplay.style.justifyContent = 'center';
             emojiDisplay.style.padding = '10px';
+            emojiDisplay.style.backgroundColor = '#2d3748';
+            emojiDisplay.style.borderRadius = '4px';
             content.appendChild(emojiDisplay);
         }
         
@@ -1547,8 +1698,6 @@ function confirmSecret() {
                 <p>✔ will appear. Pass to next player when done.</p>
             `;
         }
-        
-        // Removed alert for cleaner experience
     } else {
         gameState.imageGame.currentPlayerIndex = 0;
         gameState.imageGame.turnPhase = 'guessing';
@@ -1558,7 +1707,6 @@ function confirmSecret() {
         
         updatePlayerDisplay();
         autoSelectNextPlayer();
-        // Removed alert for cleaner experience
     }
 }
 
@@ -1706,8 +1854,6 @@ function processGuess(targetPlayer, guessNum) {
             gameState.imageGame.playerPredictions[targetPlayer] = [];
         }
         
-        // Removed alert for cleaner experience
-        
         if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
             setTimeout(endImageGame, 1500);
             return;
@@ -1716,7 +1862,6 @@ function processGuess(targetPlayer, guessNum) {
         autoSelectNextPlayer();
         endTurn();
     } else {
-        // Removed alert for cleaner experience
         autoSelectNextPlayer();
         endTurn();
     }
