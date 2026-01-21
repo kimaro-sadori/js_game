@@ -856,15 +856,22 @@ function stopNameRoller() {
 
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
-    document.getElementById('describerWord').textContent = 'Your Mission';
-    document.getElementById('describerHint').textContent = 'Describe it to your team without saying the word';
     
+    // Get references to all elements
+    const describerWordElement = document.getElementById('describerWord');
+    const describerHintElement = document.getElementById('describerHint');
     const wordDisplay = document.getElementById('describerWordDisplay');
+    
+    // Initially show the mission text and hide the word display
+    describerWordElement.textContent = 'Your Mission';
+    describerHintElement.textContent = 'Describe it to your team without saying the word';
+    describerWordElement.style.display = 'block';
+    describerHintElement.style.display = 'block';
     wordDisplay.style.display = 'none';
     
     // Clear any existing word content
-    const arabicWordElement = document.getElementById('describerWordAr');
-    const englishWordElement = document.getElementById('describerWordEn');
+    const arabicWordElement = document.getElementById('describerWordEn'); // This is actually for Arabic
+    const englishWordElement = document.getElementById('describerWordAr'); // This is actually for English
     
     if (arabicWordElement) {
         arabicWordElement.textContent = '';
@@ -903,32 +910,43 @@ function showDescriberWord() {
     
     // Add click handler for Show Word button
     button.onclick = function() {
-        const wordDisplay = document.getElementById('describerWordDisplay');
-        wordDisplay.style.display = 'block';
-        
         const filteredWords = words.filter(w => gameState.categories.includes(w.category));
         if (filteredWords.length > 0) {
             const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
-            gameState.word = random.word;
-            gameState.wordAr = random.wordAr;
+            gameState.word = random.word; // English word
+            gameState.wordAr = random.wordAr; // Arabic word
             
             const hintIndex = Math.floor(Math.random() * random.hints.length);
             gameState.hint = random.hints[hintIndex];
             gameState.hintAr = random.hintsAr[hintIndex];
             
-            // Set both Arabic and English words
-            const arabicWordElement = document.getElementById('describerWordAr');
-            const englishWordElement = document.getElementById('describerWordEn');
+            // NOTE: The element IDs are confusingly named:
+            // - describerWordEn is for Arabic (has dir="rtl")
+            // - describerWordAr is for English
+            const arabicWordElement = document.getElementById('describerWordEn'); // Arabic word element
+            const englishWordElement = document.getElementById('describerWordAr'); // English word element
             
-            if (arabicWordElement) {
-                arabicWordElement.textContent = gameState.wordAr;
+            if (arabicWordElement && gameState.wordAr) {
+                arabicWordElement.textContent = gameState.wordAr; // Arabic text
                 arabicWordElement.style.display = 'block';
+                arabicWordElement.dir = 'rtl'; // Ensure right-to-left for Arabic
+                arabicWordElement.style.fontSize = '2.5rem';
+                arabicWordElement.style.fontWeight = 'bold';
+                arabicWordElement.style.color = 'var(--accent)';
             }
             
-            if (englishWordElement) {
-                englishWordElement.textContent = gameState.word;
+            if (englishWordElement && gameState.word) {
+                englishWordElement.textContent = gameState.word; // English text
                 englishWordElement.style.display = 'block';
+                englishWordElement.style.fontSize = '1.4rem';
+                englishWordElement.style.fontWeight = 'bold';
+                englishWordElement.style.color = 'var(--text-secondary)';
             }
+            
+            // HIDE the mission text and SHOW the word display
+            describerWordElement.style.display = 'none';
+            describerHintElement.style.display = 'none';
+            wordDisplay.style.display = 'block';
         }
         
         // Hide the Show Word button
