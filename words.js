@@ -1041,22 +1041,7 @@ const words = [
     category: "food",
     image: "🥤"
 },
-{
-    word: "BEER",
-    wordAr: "بيرة",
-    hints: ["Fermented cereal", "Hops bitterness", "Carbonation natural"],
-    hintsAr: ["حبوب مخمرة", "مرارة الجنجل", "تكرير طبيعي"],
-    category: "food",
-    image: "🍺"
-},
-{
-    word: "WINE",
-    wordAr: "نبيذ",
-    hints: ["Fermented grapes", "Aging barrels", "Terroir influence"],
-    hintsAr: ["عنب مخمر", "تقادم في البراميل", "تأثير التربة والمناخ"],
-    category: "food",
-    image: "🍷"
-},
+
 {
     word: "COCKTAIL",
     wordAr: "كوكتيل",
@@ -1065,14 +1050,7 @@ const words = [
     category: "food",
     image: "🍸"
 },
-{
-    word: "SAKE",
-    wordAr: "ساكي",
-    hints: ["Japanese rice wine", "Koji mold fermentation", "Polished rice grains"],
-    hintsAr: ["نبيذ أرز ياباني", "تخمير فطر الكوجي", "حبوب أرز مصقولة"],
-    category: "food",
-    image: "🍶"
-},
+
 
 {
     word: "VEGETABLE OIL",

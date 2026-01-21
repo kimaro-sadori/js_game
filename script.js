@@ -13,6 +13,11 @@ let gameState = {
     wordAr: '',
     hintAr: '',
     
+    // Teams for describe mode
+    redTeam: [],
+    blueTeam: [],
+    describerTeam: '',
+    
     // Stats
     gamesPlayed: 0,
     
@@ -20,7 +25,11 @@ let gameState = {
     imageGame: null,
     
     // Saved teams
-    savedTeams: []
+    savedTeams: [],
+    
+    // Timer intervals
+    timerInterval: null,
+    rollerInterval: null
 };
 
 // Player colors for image grid
@@ -154,11 +163,6 @@ const FOOTBALL_PLAYERS = [
     { name: "Anass Zaroury", image: "images/anass-zaroury.jpeg" },
     { name: "Zakaria Aboukhla", image: "images/zakaria-aboukhla.jpeg" }
 ];
-// Debug: Check which images might be missing
-console.log(`Total football players: ${FOOTBALL_PLAYERS.length}`);
-FOOTBALL_PLAYERS.forEach(player => {
-    console.log(`Player: ${player.name}, Image: ${player.image}`);
-});
 
 // ================= JSONBin CONFIG =================
 const JSONBIN_CONFIG = {
@@ -858,31 +862,46 @@ function showDescriberWord() {
     const wordDisplay = document.getElementById('describerWordDisplay');
     wordDisplay.style.display = 'none';
     
-    // Get or create the button
-    let button = document.getElementById('showWordBtn');
-    if (!button) {
-        button = document.createElement('button');
-        button.id = 'showWordBtn';
-        button.className = 'btn btn-secondary';
-        button.style.marginTop = '10px';
-        button.style.marginBottom = '20px';
-        button.style.width = '100%';
-        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
-        
-        const roleCard = document.querySelector('#describeWordScreen .role-card');
-        if (roleCard) {
-            roleCard.parentNode.insertBefore(button, roleCard.nextSibling);
-        }
-    } else {
-        button.id = 'showWordBtn';
-        button.className = 'btn btn-secondary';
-        button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+    // Clear any existing word content
+    const arabicWordElement = document.getElementById('describerWordAr');
+    const englishWordElement = document.getElementById('describerWordEn');
+    
+    if (arabicWordElement) {
+        arabicWordElement.textContent = '';
+        arabicWordElement.style.display = 'none';
     }
     
-    // Clear any existing onclick handlers
-    button.onclick = null;
+    if (englishWordElement) {
+        englishWordElement.textContent = '';
+        englishWordElement.style.display = 'none';
+    }
     
-    // Add new click handler
+    // Remove any existing buttons
+    const existingShowBtn = document.getElementById('showWordBtn');
+    const existingStartBtn = document.getElementById('startDescribeBtn');
+    
+    if (existingShowBtn) {
+        existingShowBtn.remove();
+    }
+    if (existingStartBtn) {
+        existingStartBtn.remove();
+    }
+    
+    // Create new Show Word button
+    const button = document.createElement('button');
+    button.id = 'showWordBtn';
+    button.className = 'btn btn-secondary';
+    button.style.marginTop = '10px';
+    button.style.marginBottom = '20px';
+    button.style.width = '100%';
+    button.innerHTML = '<i class="fas fa-eye"></i> Show Word';
+    
+    const roleCard = document.querySelector('#describeWordScreen .role-card');
+    if (roleCard) {
+        roleCard.parentNode.insertBefore(button, roleCard.nextSibling);
+    }
+    
+    // Add click handler for Show Word button
     button.onclick = function() {
         const wordDisplay = document.getElementById('describerWordDisplay');
         wordDisplay.style.display = 'block';
@@ -896,17 +915,39 @@ function showDescriberWord() {
             const hintIndex = Math.floor(Math.random() * random.hints.length);
             gameState.hint = random.hints[hintIndex];
             gameState.hintAr = random.hintsAr[hintIndex];
+            
+            // Set both Arabic and English words
+            const arabicWordElement = document.getElementById('describerWordAr');
+            const englishWordElement = document.getElementById('describerWordEn');
+            
+            if (arabicWordElement) {
+                arabicWordElement.textContent = gameState.wordAr;
+                arabicWordElement.style.display = 'block';
+            }
+            
+            if (englishWordElement) {
+                englishWordElement.textContent = gameState.word;
+                englishWordElement.style.display = 'block';
+            }
         }
         
-        document.getElementById('describerActualWord').textContent = gameState.word;
+        // Hide the Show Word button
+        this.style.display = 'none';
         
-        // Change button to start describing
-        this.innerHTML = '<i class="fas fa-play"></i> Start Describing';
-        this.id = 'startDescribeBtn';
-        this.className = 'btn btn-primary';
+        // Create Start Describing button
+        const startBtn = document.createElement('button');
+        startBtn.id = 'startDescribeBtn';
+        startBtn.className = 'btn btn-primary';
+        startBtn.style.marginTop = '10px';
+        startBtn.style.marginBottom = '20px';
+        startBtn.style.width = '100%';
+        startBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
         
-        // Add new click handler for start describing
-        this.onclick = function() {
+        // Add Start Describing button after the Show Word button
+        this.parentNode.insertBefore(startBtn, this.nextSibling);
+        
+        // Add click handler for Start Describing button
+        startBtn.onclick = function() {
             document.getElementById('describeWordScreen').style.display = 'none';
             
             const mode = document.querySelector('.mode-btn.active')?.dataset.mode || 'speech';
@@ -1020,13 +1061,36 @@ function showResults() {
 function revealImposter() {
     if (gameState.gameMode === 'classic') {
         const imposter = gameState.players[gameState.imposter];
-        document.getElementById('imposterName').textContent = imposter;
-        document.getElementById('correctWord').textContent = gameState.word;
-        document.getElementById('arabicWord').textContent = gameState.wordAr;
+        
+        // Check if elements exist before setting text
+        const imposterNameElement = document.getElementById('imposterName');
+        const correctWordElement = document.getElementById('correctWord');
+        const arabicWordElement = document.getElementById('arabicWord');
+        
+        if (imposterNameElement) {
+            imposterNameElement.textContent = imposter;
+        }
+        if (correctWordElement) {
+            correctWordElement.textContent = gameState.word;
+        }
+        if (arabicWordElement) {
+            arabicWordElement.textContent = gameState.wordAr;
+        }
     } else {
-        document.getElementById('imposterName').textContent = gameState.describerTeam;
-        document.getElementById('correctWord').textContent = gameState.word;
-        document.getElementById('arabicWord').textContent = gameState.wordAr;
+        // For describe mode
+        const describerTeamElement = document.getElementById('imposterName');
+        const correctWordElement = document.getElementById('correctWord');
+        const arabicWordElement = document.getElementById('arabicWord');
+        
+        if (describerTeamElement) {
+            describerTeamElement.textContent = gameState.describerTeam;
+        }
+        if (correctWordElement) {
+            correctWordElement.textContent = gameState.word;
+        }
+        if (arabicWordElement) {
+            arabicWordElement.textContent = gameState.wordAr;
+        }
     }
     
     document.getElementById('secretCard').style.display = 'none';
@@ -1069,6 +1133,10 @@ function playAgain() {
 function backToLobby() {
     clearInterval(gameState.timerInterval);
     
+    if (gameState.rollerInterval) {
+        clearInterval(gameState.rollerInterval);
+    }
+    
     if (gameState.imageGame && gameState.imageGame.timerInterval) {
         clearInterval(gameState.imageGame.timerInterval);
     }
@@ -1080,6 +1148,63 @@ function backToLobby() {
     document.querySelector('.dashboard').style.display = 'block';
     document.querySelector('.start-section').style.display = 'block';
     document.querySelector('.social-buttons').style.display = 'flex';
+}
+
+// ================= RESTART GAME =================
+// ================= RESTART GAME =================
+function restartGame() {
+    if (gameState.gameMode === 'classic') {
+        // Clear any intervals
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+        }
+        
+        // Reset game state
+        gameState.currentPlayer = 0;
+        gameState.imposter = Math.floor(Math.random() * gameState.players.length);
+        
+        // Get a new random word
+        const filteredWords = words.filter(w => gameState.categories.includes(w.category));
+        if (filteredWords.length > 0) {
+            const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
+            gameState.word = random.word;
+            gameState.wordAr = random.wordAr;
+            
+            const hintIndex = Math.floor(Math.random() * random.hints.length);
+            gameState.hint = random.hints[hintIndex];
+            gameState.hintAr = random.hintsAr[hintIndex];
+        }
+        
+        // Hide all screens
+        document.querySelectorAll('.game-screen').forEach(screen => {
+            screen.style.display = 'none';
+        });
+        
+        // Start classic game
+        document.getElementById('classicGame').style.display = 'block';
+        showCurrentPlayer();
+        
+    } else if (gameState.gameMode === 'describe') {
+        // Clear any intervals
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+        }
+        if (gameState.rollerInterval) {
+            clearInterval(gameState.rollerInterval);
+        }
+        
+        // Hide all screens
+        document.querySelectorAll('.game-screen').forEach(screen => {
+            screen.style.display = 'none';
+        });
+        
+        // Restart describe game
+        startDescribeGame();
+        
+    } else if (gameState.gameMode === 'images') {
+        // Restart image game
+        restartImageGame();
+    }
 }
 
 // ================= IMAGE MATCH FUNCTIONS =================
@@ -2244,7 +2369,15 @@ async function updateJSONBinInBackground(newCount) {
         
         let currentData = { playCount: 0 };
         if (getResponse.ok) {
-            currentData = await getResponse.json();
+            const responseData = await getResponse.json();
+            // Handle different response structures
+            if (responseData.record) {
+                // New JSONBin v3 structure
+                currentData = responseData.record;
+            } else {
+                // Old structure or direct data
+                currentData = responseData;
+            }
         }
         
         const currentBinCount = currentData.playCount || 0;
@@ -2269,7 +2402,9 @@ async function updateJSONBinInBackground(newCount) {
         });
         
         if (putResponse.ok) {
-            const updatedData = await putResponse.json();
+            const updatedResponse = await putResponse.json();
+            // Handle different response structures
+            const updatedData = updatedResponse.record || updatedResponse;
             console.log('✅ JSONBin updated to:', updatedData.playCount);
             
             if (updatedData.playCount > gameState.gamesPlayed) {
@@ -2532,7 +2667,7 @@ function testModeSwitching() {
 // ================= GLOBAL FUNCTIONS =================
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
-window.restartGame = playAgain;
+window.restartGame = restartGame;
 window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
