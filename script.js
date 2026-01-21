@@ -43,7 +43,6 @@ const GRID_BACKGROUND_COLORS = [
 ];
 
 // ================= FOOTBALL PLAYERS IMAGES =================
-// ================= FOOTBALL PLAYERS IMAGES =================
 const FOOTBALL_PLAYERS = [
     { name: "Karim Benzema", image: "images/karim-benzema.jpeg" },
     { name: "Mohamed Salah", image: "images/mohamed-salah.jpeg" },
@@ -207,6 +206,7 @@ function loadSettings() {
         
         gameState.timer = typeof settings.timer === 'number' ? settings.timer : 120;
         gameState.categories = settings.categories || [];
+        gameState.gameMode = settings.gameMode || 'classic'; // Load saved mode or default to classic
         
         // Upgrade old categories
         ALL_CATEGORIES.forEach(category => {
@@ -237,7 +237,7 @@ function loadSettings() {
         }
     } else {
         gameState.categories = ALL_CATEGORIES;
-        gameState.gameMode = 'images';
+        gameState.gameMode = 'classic'; // Default to classic mode
         
         saveSettings();
         
@@ -251,18 +251,17 @@ function loadSettings() {
         }
     }
     
-    updateTimerDisplay();
-    updateCategoriesDisplay();
+    // Apply the loaded game mode
     selectGameMode(gameState.gameMode);
-        // ADD THIS LINE AT THE VERY END:
-    selectGameMode(gameState.gameMode); // This will set the correct timer display
-
+    
+    updateCategoriesDisplay();
 }
 
 function saveSettings() {
     const settings = {
         timer: gameState.timer,
         categories: gameState.categories,
+        gameMode: gameState.gameMode, // Save the game mode
         lastPlayed: new Date().toISOString()
     };
     localStorage.setItem('imposterSettings', JSON.stringify(settings));
@@ -397,8 +396,10 @@ function deleteTeam(index) {
 
 // ================= GAME SETTINGS =================
 function selectGameMode(mode) {
+    console.log('Changing mode to:', mode);
     gameState.gameMode = mode;
     
+    // Update active mode button
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -408,6 +409,7 @@ function selectGameMode(mode) {
         selectedBtn.classList.add('active');
     }
     
+    // Update mode text display
     let modeText = '';
     switch(mode) {
         case 'classic':
@@ -423,47 +425,63 @@ function selectGameMode(mode) {
             modeText = 'Classic';
     }
     
-    document.getElementById('gameModeText').textContent = modeText;
+    const gameModeTextElement = document.getElementById('gameModeText');
+    if (gameModeTextElement) {
+        gameModeTextElement.textContent = modeText;
+    }
     
     // Update timer display based on mode
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerTextElement = document.getElementById('timerText');
+    
     if (mode === 'images') {
-        // For Guess the Image, show special message
-        const timerDisplay = document.getElementById('timerDisplay');
+        // For Guess the Image mode ONLY: show special message
         if (timerDisplay) {
             timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
         }
+        if (timerTextElement) {
+            timerTextElement.textContent = 'No timer';
+        }
+        console.log('Set special message for Guess the Image mode');
     } else {
-        // For other modes, show normal timer
+        // For Classic and Describe It modes: show NORMAL timer
         updateTimerDisplay();
+        console.log('Set normal timer for mode:', mode, 'Timer value:', gameState.timer);
     }
     
-    // Update UI
+    // Update UI and save
     updateUI();
     saveSettings();
 }
 
 function selectTimer(seconds) {
-    // Always save the timer value
+    // Save the timer value
     gameState.timer = seconds;
     
-    // But only show/update UI if NOT in Guess the Image mode
+    // Update active timer button
+    document.querySelectorAll('.timer-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    const selectedBtn = document.querySelector(`.timer-btn[data-time="${seconds}"]`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('active');
+    }
+    
+    // Check current mode before updating display
+    const timerDisplay = document.getElementById('timerDisplay');
+    const timerTextElement = document.getElementById('timerText');
+    
     if (gameState.gameMode === 'images') {
-        // Just show message and return
-        const timerDisplay = document.getElementById('timerDisplay');
+        // If we're in Guess the Image mode, KEEP showing special message
         if (timerDisplay) {
             timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
         }
-    } else {
-        // Normal timer selection for other modes
-        document.querySelectorAll('.timer-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        const selectedBtn = document.querySelector(`.timer-btn[data-time="${seconds}"]`);
-        if (selectedBtn) {
-            selectedBtn.classList.add('active');
+        if (timerTextElement) {
+            timerTextElement.textContent = 'No timer';
         }
-        
+    } else {
+        // If we're in Classic or Describe It mode, show normal timer
         updateTimerDisplay();
     }
     
@@ -472,16 +490,20 @@ function selectTimer(seconds) {
 
 function updateTimerDisplay() {
     const timerText = gameState.timer === 0 ? 'No timer' : formatTime(gameState.timer);
-    document.getElementById('timerText').textContent = timerText;
-    document.getElementById('currentTimerText').textContent = timerText;
     
-    // Only update the timerDisplay if NOT in Guess the Image mode
-    if (gameState.gameMode !== 'images') {
-        const timerDisplay = document.getElementById('timerDisplay');
-        if (timerDisplay) {
-            timerDisplay.innerHTML = `<span id="currentTimerText">${timerText}</span>`;
-        }
+    // Update ONLY the timerText element
+    const timerTextElement = document.getElementById('timerText');
+    const timerDisplay = document.getElementById('timerDisplay');
+    
+    if (timerTextElement) {
+        timerTextElement.textContent = timerText;
     }
+    
+    // Update timerDisplay if NOT in Guess the Image mode
+    if (gameState.gameMode !== 'images' && timerDisplay) {
+        timerDisplay.innerHTML = timerText; // Just set the text
+    }
+    // If it IS images mode, leave the special message alone
 }
 
 function updateCategories() {
@@ -591,26 +613,21 @@ function setupEventListeners() {
     const timerGroup = document.querySelector('.setting-group:nth-child(2)');
     const categoriesGroup = document.querySelector('.setting-group:nth-child(3)');
     
-   // In setupEventListeners, find the timerGroup section and update it:
-if (timerGroup) {
-    timerGroup.addEventListener('click', function(e) {
-        if (e.target.classList.contains('timer-btn') || 
-            e.target.closest('.timer-btn')) {
-            return;
-        }
-        
-        // Don't expand timer in Guess the Image mode
-        if (gameState.gameMode === 'images') {
-            return;
-        }
-        
-        const buttons = document.getElementById('timerButtons');
-        const expandIcon = document.getElementById('timerExpand');
-        const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
-        buttons.style.display = isHidden ? 'grid' : 'none';
-        expandIcon.classList.toggle('expanded', isHidden);
-    });
-}
+    // Timer group click handler - ALWAYS allow clicking to expand, regardless of mode
+    if (timerGroup) {
+        timerGroup.addEventListener('click', function(e) {
+            if (e.target.classList.contains('timer-btn') || 
+                e.target.closest('.timer-btn')) {
+                return;
+            }
+            
+            const buttons = document.getElementById('timerButtons');
+            const expandIcon = document.getElementById('timerExpand');
+            const isHidden = buttons.style.display === 'none' || buttons.style.display === '';
+            buttons.style.display = isHidden ? 'grid' : 'none';
+            expandIcon.classList.toggle('expanded', isHidden);
+        });
+    }
     
     if (categoriesGroup) {
         categoriesGroup.addEventListener('click', function(e) {
@@ -1065,7 +1082,7 @@ function backToLobby() {
     document.querySelector('.social-buttons').style.display = 'flex';
 }
 
-// ================= IMAGE MATCH FUNCTIONS (FIXED) =================
+// ================= IMAGE MATCH FUNCTIONS =================
 function generateImageGrid() {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '<div class="loading-images">Loading images...</div>';
@@ -1179,7 +1196,7 @@ function renderImageGrid(items) {
         content.style.overflow = 'hidden';
         content.style.backgroundColor = '#1a1a2e'; // Fallback background
         
-        // IMAGE LOADING WITH ERROR HANDLING - FIXED
+        // IMAGE LOADING WITH ERROR HANDLING
         if (item.type === 'football' || item.type === 'image') {
             const img = document.createElement('img');
             img.src = item.image;
@@ -2460,6 +2477,58 @@ function getImagesHelp() {
     `;
 }
 
+// ================= DEBUGGING FUNCTIONS =================
+function debugTimerElements() {
+    console.log('=== Debugging Timer Elements ===');
+    
+    // Check all possible timer-related elements
+    const elementIds = [
+        'timerText', 
+        'currentTimerText', 
+        'timerDisplay',
+        'gameModeText',
+        'timerButtons'
+    ];
+    
+    elementIds.forEach(id => {
+        const element = document.getElementById(id);
+        console.log(`Element "${id}":`, element ? 'FOUND' : 'NOT FOUND');
+        if (element) {
+            console.log(`  - Content: ${element.innerHTML || element.textContent}`);
+            console.log(`  - Tag: ${element.tagName}`);
+            console.log(`  - ID: ${element.id}`);
+        }
+    });
+}
+
+function testModeSwitching() {
+    console.log('=== Testing Mode Switching ===');
+    console.log('Current mode:', gameState.gameMode);
+    console.log('Current timer:', gameState.timer);
+    console.log('Timer display content:', document.getElementById('timerDisplay').innerHTML);
+    
+    // Test switching to each mode
+    setTimeout(() => {
+        console.log('\nSwitching to Classic...');
+        selectGameMode('classic');
+    }, 1000);
+    
+    setTimeout(() => {
+        console.log('\nSwitching to Describe It...');
+        selectGameMode('describe');
+    }, 2000);
+    
+    setTimeout(() => {
+        console.log('\nSwitching to Guess the Image...');
+        selectGameMode('images');
+    }, 3000);
+    
+    setTimeout(() => {
+        console.log('\nSwitching back to Classic...');
+        selectGameMode('classic');
+    }, 4000);
+}
+
 // ================= GLOBAL FUNCTIONS =================
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
@@ -2468,3 +2537,5 @@ window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
 window.restartImageGame = restartImageGame;
+window.debugTimerElements = debugTimerElements;
+window.testModeSwitching = testModeSwitching;
