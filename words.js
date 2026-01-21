@@ -160,6 +160,333 @@ const words = [
         category: "animals",
         image: "🐋"
     },
+    {
+    word: "OCTOPUS",
+    wordAr: "أخطبوط",
+    hints: ["Three hearts", "Camouflage chromatophores", "Distributed intelligence"],
+    hintsAr: ["ثلاثة قلوب", "خلايا تمويه لونية", "ذكاء موزع"],
+    category: "animals",
+    image: "🐙"
+},
+{
+    word: "GORILLA",
+    wordAr: "غوريلا",
+    hints: ["Knuckle walking", "Silverback leadership", "Herbivorous ape"],
+    hintsAr: ["مشي على المفاصل", "قيادة ظهر فضي", "قرد نباتي"],
+    category: "animals",
+    image: "🦍"
+},
+{
+    word: "RHINO",
+    wordAr: "كركدن",
+    hints: ["Keratin horn", "Thick folded skin", "Poor eyesight"],
+    hintsAr: ["قرن كيراتيني", "جلد سميك مطوي", "ضعف البصر"],
+    category: "animals",
+    image: "🦏"
+},
+{
+    word: "HIPPO",
+    wordAr: "فرس النهر",
+    hints: ["Semi-aquatic grazing", "Territorial aggression", "Submerged walking"],
+    hintsAr: ["رعي شبه مائي", "عدوانية إقليمية", "مشي مغمور"],
+    category: "animals",
+    image: "🦛"
+},
+{
+    word: "PLATYPUS",
+    wordAr: "خلد الماء",
+    hints: ["Egg-laying mammal", "Electrolocation bill", "Venomous spur"],
+    hintsAr: ["ثدي يبيض", "منقار كاشف كهربائي", "مهماز سام"],
+    category: "animals",
+    image: "🦆"
+},
+{
+    word: "CHAMELEON",
+    wordAr: "حرباء",
+    hints: ["Independent eye movement", "Projectile tongue", "Color-changing skin"],
+    hintsAr: ["حركة عين مستقلة", "لسان قذفي", "جلد متغير اللون"],
+    category: "animals",
+    image: "🦎"
+},
+{
+    word: "ARMADILLO",
+    wordAr: "أرماديلو",
+    hints: ["Bony armored plates", "Burrowing specialist", "Curling defense"],
+    hintsAr: ["صفائح عظمية مدرعة", "متخصص في الحفر", "دفاع بالالتفاف"],
+    category: "animals",
+    image: "🦔"
+},
+{
+    word: "FENNEC",
+    wordAr: "فنك",
+    hints: ["Desert adaptation", "Large ears", "Nocturnal forager"],
+    hintsAr: ["تكيف صحراوي", "آذان كبيرة", "قنص ليلي"],
+    category: "animals",
+    image: "🦊"
+},
+{
+    word: "JELLYFISH",
+    wordAr: "قنديل البحر",
+    hints: ["Radial symmetry", "Stinging nematocysts", "Gelatinous body"],
+    hintsAr: ["تماثل شعاعي", "خلايا لاسعة", "جسم هلامي"],
+    category: "animals",
+    image: "🎐"
+},
+{
+    word: "ANTEATER",
+    wordAr: "آكل النمل",
+    hints: ["Elongated snout", "Sticky tongue", "Powerful digging claws"],
+    hintsAr: ["خطم طويل", "لسان لزج", "مخالب حفر قوية"],
+    category: "animals",
+    image: "🐜"
+},
+{
+    word: "ORCA",
+    wordAr: "أوركا",
+    hints: ["Apex predator", "Matrilineal pods", "Echolocating clicks"],
+    hintsAr: ["مفترس رئيسي", "قطيع أمومي", "نقر تحديد موقع"],
+    category: "animals",
+    image: "🐋"
+},
+{
+    word: "MEERKAT",
+    wordAr: "سوريكات",
+    hints: ["Sentinel behavior", "Burrow colonies", "Social grooming"],
+    hintsAr: ["سلوك حراسة", "مستعمرات جحور", "تنظيف اجتماعي"],
+    category: "animals",
+    image: "🐾"
+},
+{
+    word: "MANATEE",
+    wordAr: "خروف البحر",
+    hints: ["Aquatic herbivore", "Slow metabolism", "Paddle-shaped tail"],
+    hintsAr: ["عشباء مائية", "معدل أيض بطيء", "ذيل مجدافي"],
+    category: "animals",
+    image: "🌊"
+},
+{
+    word: "KOALA",
+    wordAr: "كوالا",
+    hints: ["Eucalyptus diet", "Arboreal marsupial", "Reduced brain size"],
+    hintsAr: ["نظام غذائي من الأوكالبتوس", "جرابي شجري", "دماغ صغير الحجم"],
+    category: "animals",
+    image: "🐨"
+},
+{
+    word: "LEMUR",
+    wordAr: "ليمور",
+    hints: ["Ringed tail", "Primate of Madagascar", "Social grooming groups"],
+    hintsAr: ["ذيل حلقي", "رباحي من مدغشقر", "مجموعات تنظيف اجتماعي"],
+    category: "animals",
+    image: "🐒"
+},
+{
+    word: "MOOSE",
+    wordAr: "موظ",
+    hints: ["Palmate antlers", "Wading herbivore", "Solitary temperament"],
+    hintsAr: ["قرون مروحية", "عشباء سائرة", "طبع انعزالي"],
+    category: "animals",
+    image: "🦌"
+},
+{
+    word: "WALRUS",
+    wordAr: "فظ",
+    hints: ["Tusks for ice hauling", "Bristled whiskers", "Blubber insulation"],
+    hintsAr: ["أنياب للتسلق على الجليد", "شوارب خشنة", "عزل بالدهن"],
+    category: "animals",
+    image: "🐘"
+},
+{
+    word: "SLOTH",
+    wordAr: "كسلان",
+    hints: ["Arboreal lethargy", "Algae symbiotic fur", "Slow digestion"],
+    hintsAr: ["خمول شجري", "فراء تكافلي مع الطحالب", "هضم بطيء"],
+    category: "animals",
+    image: "🦥"
+},
+{
+    word: "FALCON",
+    wordAr: "صقر",
+    hints: ["Diving stoop", "Notched beak", "Aerial agility"],
+    hintsAr: ["غوص انحداري", "منقار ذو نتوء", "رشاقة جوية"],
+    category: "animals",
+    image: "🦅"
+},
+{
+    word: "LION",
+    wordAr: "أسد",
+    hints: ["Social felid", "Mane display", "Cooperative hunting"],
+    hintsAr: ["سنور اجتماعي", "عرض اللبدة", "صيد تعاوني"],
+    category: "animals",
+    image: "🦁"
+},{
+    word: "ZEBRA",
+    wordAr: "حمار وحشي",
+    hints: ["Disruptive coloration", "Social striping", "Mobbing defense"],
+    hintsAr: ["تلوين مشتت", "خطوط اجتماعية", "دفاع جماعي"],
+    category: "animals",
+    image: "🦓"
+},
+{
+    word: "PARROT",
+    wordAr: "ببغاء",
+    hints: ["Vocal mimicry", "Zygodactyl feet", "Seed-cracking beak"],
+    hintsAr: ["تقليد صوتي", "أقدام متقابلة الأصابع", "منقار كاسر للبذور"],
+    category: "animals",
+    image: "🦜"
+},
+{
+    word: "RACCOON",
+    wordAr: "راقون",
+    hints: ["Dexterous forepaws", "Nocturnal scavenging", "Facial mask"],
+    hintsAr: ["أقدام أمامية ماهرة", "تنقيب ليلي", "قناع وجهي"],
+    category: "animals",
+    image: "🦝"
+},
+{
+    word: "LLAMA",
+    wordAr: "لاما",
+    hints: ["Andean pack animal", "Spit defense", "Double-coated wool"],
+    hintsAr: ["حيوان حمل أنديزي", "دفاع بالبصق", "صوف مزدوج الطبقات"],
+    category: "animals",
+    image: "🦙"
+},
+{
+    word: "PEACOCK",
+    wordAr: "طاووس",
+    hints: ["Iridescent train", "Lek mating display", "Eyespot patterns"],
+    hintsAr: ["ريش ذيل لامع", "عرض تزاوج جماعي", "أنماط عينية"],
+    category: "animals",
+    image: "🦚"
+},
+{
+    word: "LOBSTER",
+    wordAr: "كركند",
+    hints: ["Decapod crustacean", "Chemical sensing antennae", "Regenerative limbs"],
+    hintsAr: ["قشريات عشارية الأرجل", "هوائيات استشعار كيميائي", "أطراف متجددة"],
+    category: "animals",
+    image: "🦞"
+},
+{
+    word: "SCORPION",
+    wordAr: "عقرب",
+    hints: ["Pectine sensory organs", "Venomous telson", "Fluorescent exoskeleton"],
+    hintsAr: ["أعضاء استشعار مشطية", "ذيل سام", "هيكل خارجي متألق"],
+    category: "animals",
+    image: "🦂"
+},
+{
+    word: "CRAB",
+    wordAr: "سلطعون",
+    hints: ["Decapod sideways walk", "Cheliped asymmetry", "Burrowing behavior"],
+    hintsAr: ["مشي جانبي بعشر أرجل", "عدم تناظر الكلابيات", "سلوك حفري"],
+    category: "animals",
+    image: "🦀"
+},
+{
+    word: "FLAMINGO",
+    wordAr: "نحام",
+    hints: ["Filter-feeding beak", "Carotenoid pigmentation", "Unipedal resting"],
+    hintsAr: ["منقار ترشيحي", "تلوين كاروتيني", "راحة أحادية القدم"],
+    category: "animals",
+    image: "🦩"
+},
+{
+    word: "BUTTERFLY",
+    wordAr: "فراشة",
+    hints: ["Complete metamorphosis", "Scaled wings", "Proboscis feeding"],
+    hintsAr: ["تحول كامل", "أجنحة مقشرة", "تغذية بالخرطوم"],
+    category: "animals",
+    image: "🦋"
+},
+{
+    word: "SPIDER",
+    wordAr: "عنكبوت",
+    hints: ["Silk-spinning spinnerets", "Eight-legged arachnid", "Venom-injecting fangs"],
+    hintsAr: ["مغازل لغزل الحرير", "عنكبوتي ذو ثمانية أرجل", "أنياب حقن السم"],
+    category: "animals",
+    image: "🕷️"
+},
+{
+    word: "SQUIRREL",
+    wordAr: "سنجاب",
+    hints: ["Scatter-hoarding", "Bushy tail balance", "Dentition for gnawing"],
+    hintsAr: ["تخزين متناثر", "توازن بالذيل الكث", "أسنان للقرض"],
+    category: "animals",
+    image: "🐿️"
+},
+{
+    word: "BEAVER",
+    wordAr: "قندس",
+    hints: ["Dam construction", "Iron-enameled teeth", "Lodge building"],
+    hintsAr: ["بناء سدود", "أسنان مطلية بالحديد", "بناء أكواخ"],
+    category: "animals",
+    image: "🦫"
+},
+{
+    word: "BISON",
+    wordAr: "ثور أمريكي",
+    hints: ["Herd migration", "Woolly winter coat", "Wallowing behavior"],
+    hintsAr: ["هجرة جماعية", "معطف شتوي صوفي", "سلوك التمرغ"],
+    category: "animals",
+    image: "🦬"
+},
+{
+    word: "SEAL",
+    wordAr: "فقمة",
+    hints: ["Pinniped amphibiousness", "Blubber insulation", "Vibrissae sensing"],
+    hintsAr: ["برمائية زعنفية القدم", "عزل بالدهن", "استشعار بالشوارب"],
+    category: "animals",
+    image: "🦭"
+},
+{
+    word: "TURTLE",
+    wordAr: "سلحفاة",
+    hints: ["Bony carapace", "Temperature-dependent sex", "Aquatic-terrestrial duality"],
+    hintsAr: ["درع عظمي", "جنس يعتمد على الحرارة", "ازدواجية مائية برية"],
+    category: "animals",
+    image: "🐢"
+},
+{
+    word: "SNAIL",
+    wordAr: "حلزون",
+    hints: ["Calcareous shell", "Muscular foot locomotion", "Radula feeding"],
+    hintsAr: ["صدفة كلسية", "حركة بالقدم العضلية", "تغذية بالمبرد"],
+    category: "animals",
+    image: "🐌"
+},
+{
+    word: "LADYBUG",
+    wordAr: "خنفساء الدعسوقة",
+    hints: ["Aposematic coloration", "Aphid predation", "Reflex bleeding"],
+    hintsAr: ["تلوين تحذيري", "افتراس المن", "نزف انعكاسي"],
+    category: "animals",
+    image: "🐞"
+},
+{
+    word: "ANT",
+    wordAr: "نملة",
+    hints: ["Eusocial colonies", "Pheromone trails", "Mandible strength"],
+    hintsAr: ["مستعمرات اجتماعية عالية", "مسارات فرمونية", "قوة الفك"],
+    category: "animals",
+    image: "🐜"
+},
+{
+    word: "BEE",
+    wordAr: "نحلة",
+    hints: ["Waggle dance communication", "Hexagonal comb construction", "Pollination vector"],
+    hintsAr: ["تواصل برقصة الاهتزاز", "بناء أقراص سداسية", "ناقل للتلقيح"],
+    category: "animals",
+    image: "🐝"
+},
+{
+    word: "FROG",
+    wordAr: "ضفدع",
+    hints: ["Biphasic life cycle", "Permeable skin respiration", "Tympanic membranes"],
+    hintsAr: ["دورة حياة ثنائية الطور", "تنفس عبر الجلد النافذ", "أغشية طبلة"],
+    category: "animals",
+    image: "🐸"
+},
 
     // ===================== Food =====================
     {
@@ -322,400 +649,1936 @@ const words = [
         category: "food",
         image: "🍎"
     },
+    {
+    word: "BANANA",
+    wordAr: "موز",
+    hints: ["Potassium-rich", "Tropical berry", "Clustered phalanx"],
+    hintsAr: ["غني بالبوتاسيوم", "توت استوائي", "عنقود إصبعي"],
+    category: "food",
+    image: "🍌"
+},
+{
+    word: "GRAPES",
+    wordAr: "عنب",
+    hints: ["Viticulture fruit", "Cluster formation", "Fermentation base"],
+    hintsAr: ["فاكهة الكروم", "تشكل عنقودي", "قاعدة تخمير"],
+    category: "food",
+    image: "🍇"
+},
+{
+    word: "STRAWBERRY",
+    wordAr: "فراولة",
+    hints: ["Aggregate accessory fruit", "Achene seeds", "Fragaria genus"],
+    hintsAr: ["فاكهة ملحقة مجمعة", "بذور ثمرة جافة", "جنس الفراولة"],
+    category: "food",
+    image: "🍓"
+},
+{
+    word: "WATERMELON",
+    wordAr: "بطيخ",
+    hints: ["Pepo classification", "High water content", "Picnic summer fruit"],
+    hintsAr: ["تصنيف يقطيني", "محتوى مائي عال", "فاكهة الصيف النزهية"],
+    category: "food",
+    image: "🍉"
+},
+{
+    word: "CHERRY",
+    wordAr: "كرز",
+    hints: ["Stone fruit", "Prunus genus", "Drupe classification"],
+    hintsAr: ["فاكهة ذات نواة", "جنس البرقوق", "تصنيف دروبي"],
+    category: "food",
+    image: "🍒"
+},
+{
+    word: "PEACH",
+    wordAr: "خوخ",
+    hints: ["Fuzzy skin", "Clingstone varieties", "Rosaceae family"],
+    hintsAr: ["جلد زغبي", "أصناف ملتصقة النواة", "عائلة الورديات"],
+    category: "food",
+    image: "🍑"
+},
+{
+    word: "PEAR",
+    wordAr: "كمثرى",
+    hints: ["Pyrus genus", "Gritty stone cells", "Bell-shaped fruit"],
+    hintsAr: ["جنس الإجاص", "خلايا حجرية خشنة", "فاكهة جرسية الشكل"],
+    category: "food",
+    image: "🍐"
+},
+{
+    word: "ORANGE",
+    wordAr: "برتقال",
+    hints: ["Citrus hybrid", "Hesperidium fruit", "Winter vitamin C source"],
+    hintsAr: ["هجين حمضي", "فاكهة ليمونية", "مصدر فيتامين سي شتوي"],
+    category: "food",
+    image: "🍊"
+},
+{
+    word: "PINEAPPLE",
+    wordAr: "أناناس",
+    hints: ["Multiple fruit", "Bromelain enzyme", "Tropical monocot"],
+    hintsAr: ["فاكهة متعددة", "إنزيم البروميلين", "نبات استوائي أحادي الفلقة"],
+    category: "food",
+    image: "🍍"
+},
+{
+    word: "COCONUT",
+    wordAr: "جوز الهند",
+    hints: ["Drupe with fibrous husk", "Endosperm liquid", "Palm family fruit"],
+    hintsAr: ["ثمرة دروبية بقشرة ليفية", "سائل السويداء", "فاكهة النخيل"],
+    category: "food",
+    image: "🥥"
+},
+{
+    word: "AVOCADO",
+    wordAr: "أفوكادو",
+    hints: ["Single-seeded berry", "High monounsaturated fat", "Climacteric ripening"],
+    hintsAr: ["توت أحادي البذرة", "دهون أحادية غير مشبعة عالية", "نضج مناخي"],
+    category: "food",
+    image: "🥑"
+},
+{
+    word: "EGGPLANT",
+    wordAr: "باذنجان",
+    hints: ["Nightshade berry", "Spongy texture", "Solanum melongena"],
+    hintsAr: ["توت الباذنجان", "نسيج إسفنجي", "سولانوم ميلونجينا"],
+    category: "food",
+    image: "🍆"
+},
+{
+    word: "CARROT",
+    wordAr: "جزر",
+    hints: ["Taproot storage", "Beta-carotene", "Biennial growth"],
+    hintsAr: ["تخزين الجذر الرئيسي", "بيتا كاروتين", "نمو ثنائي الحول"],
+    category: "food",
+    image: "🥕"
+},
+{
+    word: "CORN",
+    wordAr: "ذرة",
+    hints: ["Monocot cereal", "Maize kernels", "C4 photosynthesis"],
+    hintsAr: ["حبوب أحادية الفلقة", "حبوب الذرة", "تمثيل ضوئي رباعي الكربون"],
+    category: "food",
+    image: "🌽"
+},
+{
+    word: "CUCUMBER",
+    wordAr: "خيار",
+    hints: ["Pepo fruit", "High water content", "Cucurbitaceae family"],
+    hintsAr: ["فاكهة يقطينية", "محتوى مائي عال", "عائلة القرعيات"],
+    category: "food",
+    image: "🥒"
+},
+{
+    word: "BROCCOLI",
+    wordAr: "بروكلي",
+    hints: ["Edible flower buds", "Brassica oleracea", "Sulforaphane compound"],
+    hintsAr: ["براعم زهور صالحة للأكل", "براسيكا أوليراسيا", "مركب سلفورافان"],
+    category: "food",
+    image: "🥦"
+},
+{
+    word: "MUSHROOM",
+    wordAr: "فطر",
+    hints: ["Fungal fruiting body", "Mycelium network", "Spore dispersal"],
+    hintsAr: ["جسم مثمر فطري", "شبكة ميسيليوم", "تشتت الأبواغ"],
+    category: "food",
+    image: "🍄"
+},
+{
+    word: "PEANUT",
+    wordAr: "فول سوداني",
+    hints: ["Legume pod", "Geocarpy reproduction", "Arachis hypogaea"],
+    hintsAr: ["قرن بقولي", "تكاثر أرضي الثمار", "أراكيس هيبوغايا"],
+    category: "food",
+    image: "🥜"
+},
+{
+    word: "CHESTNUT",
+    wordAr: "كستناء",
+    hints: ["Starchy nut", "Castanea genus", "Roasting tradition"],
+    hintsAr: ["جوز نشوي", "جنس الكستناء", "تقنية التحميص"],
+    category: "food",
+    image: "🌰"
+},
+{
+    word: "BELL PEPPER",
+    wordAr: "فلفل رومي",
+    hints: ["Capsicum annuum", "Zero capsaicin", "Color ripening stages"],
+    hintsAr: ["كبسيكوم أنوم", "خالي من الكابسيسين", "مراحل نضج اللون"],
+    category: "food",
+    image: "🫑"
+},
+{
+    word: "HOT PEPPER",
+    wordAr: "فلفل حار",
+    hints: ["Capsaicin content", "Scoville scale", "Capsicum genus"],
+    hintsAr: ["محتوى كابسيسين", "مقياس سكوفيل", "جنس الفليفلة"],
+    category: "food",
+    image: "🌶️"
+},
+{
+    word: "LEAFY GREENS",
+    wordAr: "خضروات ورقية",
+    hints: ["Photosynthetic tissues", "High chlorophyll", "Dark pigmentation"],
+    hintsAr: ["أنسجة ضوئية", "كلوروفيل عالي", "تلوين داكن"],
+    category: "food",
+    image: "🥬"
+},
+{
+    word: "MEAT",
+    wordAr: "لحم",
+    hints: ["Animal muscle tissue", "Protein source", "Myoglobin content"],
+    hintsAr: ["نسيج عضلي حيواني", "مصدر بروتين", "محتوى الميوجلوبين"],
+    category: "food",
+    image: "🥩"
+},
+{
+    word: "POULTRY",
+    wordAr: "دواجن",
+    hints: ["Avian meat", "White-dark distinction", "Lean protein"],
+    hintsAr: ["لحم طيور", "تمييز أبيض-داكن", "بروتين قليل الدهن"],
+    category: "food",
+    image: "🍗"
+},
+{
+    word: "BACON",
+    wordAr: "لحم مقدد",
+    hints: ["Cured pork belly", "Smoking preservation", "Nitrite curing"],
+    hintsAr: ["لحم بطن خنزير معالج", "حفظ بالتدخين", "معالجة بالنتريت"],
+    category: "food",
+    image: "🥓"
+},
+{
+    word: "HAMBURGER",
+    wordAr: "هامبرغر",
+    hints: ["Ground meat patty", "Bun sandwich", "Fast food icon"],
+    hintsAr: ["قرص لحم مفروم", "شطيرة كعك", "رمز الوجبات السريعة"],
+    category: "food",
+    image: "🍔"
+},
+{
+    word: "PIZZA",
+    wordAr: "بيتزا",
+    hints: ["Leavened dough base", "Tomato sauce layer", "Melted cheese topping"],
+    hintsAr: ["قاعدة عجين مخمر", "طبقة صلصة الطماطم", "طبقة جبن مذابة"],
+    category: "food",
+    image: "🍕"
+},
+{
+    word: "SUSHI",
+    wordAr: "سوشي",
+    hints: ["Vinegared rice", "Nori seaweed wrap", "Raw fish topping"],
+    hintsAr: ["أرز مع الخل", "لفة أعشاب بحرية نوري", "طبقة سمك نيء"],
+    category: "food",
+    image: "🍣"
+},
+{
+    word: "DONUT",
+    wordAr: "دونات",
+    hints: ["Fried dough ring", "Yeast or cake type", "Glaze topping"],
+    hintsAr: ["حلقة عجين مقلية", "نوع خميرة أو كيك", "طبقة صقيل"],
+    category: "food",
+    image: "🍩"
+},
+{
+    word: "CAKE",
+    wordAr: "كعكة",
+    hints: ["Leavened batter", "Celebration dessert", "Layered structure"],
+    hintsAr: ["خليط مخمر", "حلوى احتفالية", "هيكل طبقي"],
+    category: "food",
+    image: "🍰"
+},
+{
+    word: "COOKIE",
+    wordAr: "بسكويت",
+    hints: ["Small baked treat", "Butter-sugar base", "Crisp texture"],
+    hintsAr: ["حلوى مخبوزة صغيرة", "قاعدة زبدة-سكر", "قوام مقرمش"],
+    category: "food",
+    image: "🍪"
+},
+{
+    word: "ICE CREAM",
+    wordAr: "آيس كريم",
+    hints: ["Frozen dairy dessert", "Air incorporation", "Fat emulsification"],
+    hintsAr: ["حلوى ألبان مجمدة", "دمج الهواء", "استحلاب الدهون"],
+    category: "food",
+    image: "🍨"
+},
+{
+    word: "LOLLIPOP",
+    wordAr: "مصاصة",
+    hints: ["Hard candy on stick", "Sugar crystallization", "Child confection"],
+    hintsAr: ["حلوى صلبة على عصا", "تبلور السكر", "حلوى للأطفال"],
+    category: "food",
+    image: "🍭"
+},
+{
+    word: "CANDY",
+    wordAr: "حلوى",
+    hints: ["Sugar concentrate", "Crystalline structure", "Sweet tooth satisfaction"],
+    hintsAr: ["مركز سكري", "هيكل بلوري", "إشباع الرغبة في الحلويات"],
+    category: "food",
+    image: "🍬"
+},
+{
+    word: "POPCORN",
+    wordAr: "فشار",
+    hints: ["Exploded corn kernel", "Steam pressure cooking", "Theater snack"],
+    hintsAr: ["حبة ذرة منفجرة", "طهي بضغط البخار", "وجبة خفيفة في السينما"],
+    category: "food",
+    image: "🍿"
+},
+{
+    word: "BUTTER",
+    wordAr: "زبدة",
+    hints: ["Churned cream", "Milk fat separation", "Water-in-fat emulsion"],
+    hintsAr: ["قشدة مخفوقة", "فصل دهن الحليب", "مستحلب ماء في دهن"],
+    category: "food",
+    image: "🧈"
+},
+{
+    word: "MAPLE SYRUP",
+    wordAr: "شراب القيقب",
+    hints: ["Xylem sap reduction", "Sucrose solution", "Spring harvest"],
+    hintsAr: ["تقليل نسغ الخشب", "محلول سكروز", "حصاد الربيع"],
+    category: "food",
+    image: "🥞"
+},
+{
+    word: "WAFFLE",
+    wordAr: "وافل",
+    hints: ["Grid-patterned batter", "Pressing cooking", "Breakfast staple"],
+    hintsAr: ["خليط بنمط شبكي", "طهي بالضغط", "وجبة فطور أساسية"],
+    category: "food",
+    image: "🧇"
+},
+{
+    word: "PANCAKES",
+    wordAr: "بان كيك",
+    hints: ["Flat batter cake", "Griddle cooking", "Stack serving"],
+    hintsAr: ["كعكة خليط مسطحة", "طهي على صاج", "تقديم على شكل كومة"],
+    category: "food",
+    image: "🥞"
+},
+{
+    word: "BAGEL",
+    wordAr: "كعكة الخبز",
+    hints: ["Boiled then baked", "Dough ring", "Chewy texture"],
+    hintsAr: ["مسلوق ثم مخبوز", "حلقة عجين", "قوام مطاطي"],
+    category: "food",
+    image: "🥯"
+},
+{
+    word: "CROISSANT",
+    wordAr: "كرواسون",
+    hints: ["Laminated dough", "French viennoiserie", "Butter layer folding"],
+    hintsAr: ["عجين رقائقي", "معجنات فيينا فرنسية", "طي طبقات الزبدة"],
+    category: "food",
+    image: "🥐"
+},
+{
+    word: "TACO",
+    wordAr: "تاكو",
+    hints: ["Folded tortilla", "Mexican street food", "Varied fillings"],
+    hintsAr: ["تورتييا مطوية", "طعام الشارع المكسيكي", "حشوات متنوعة"],
+    category: "food",
+    image: "🌮"
+},
+{
+    word: "BURRITO",
+    wordAr: "بوريتو",
+    hints: ["Wrapped tortilla", "Cylindrical shape", "Multiple ingredient bundle"],
+    hintsAr: ["تورتييا ملفوفة", "شكل أسطواني", "حزمة مكونات متعددة"],
+    category: "food",
+    image: "🌯"
+},
+{
+    word: "SPAGHETTI",
+    wordAr: "سباغيتي",
+    hints: ["Long thin pasta", "Wheat semolina", "Italian staple"],
+    hintsAr: ["معكرونة طويلة رفيعة", "سميد القمح", "طعام أساسي إيطالي"],
+    category: "food",
+    image: "🍝"
+},
+{
+    word: "SOUP",
+    wordAr: "شوربة",
+    hints: ["Liquid food", "Broth base", "Vegetable infusion"],
+    hintsAr: ["طعام سائل", "قاعدة مرقة", "نقع الخضروات"],
+    category: "food",
+    image: "🍲"
+},
+{
+    word: "SALAD",
+    wordAr: "سلطة",
+    hints: ["Raw vegetable mix", "Dressing coated", "Cold dish"],
+    hintsAr: ["خليط خضروات نيئة", "مغطى بالصلصة", "طبق بارد"],
+    category: "food",
+    image: "🥗"
+},
+{
+    word: "SANDWICH",
+    wordAr: "ساندويتش",
+    hints: ["Bread enclosure", "Portable meal", "Layered construction"],
+    hintsAr: ["إغلاق بالخبز", "وجبة محمولة", "بناء طبقي"],
+    category: "food",
+    image: "🥪"
+},
+{
+    word: "FRENCH FRIES",
+    wordAr: "بطاطس مقلية",
+    hints: ["Deep-fried potatoes", "Battonet cut", "Fast food side"],
+    hintsAr: ["بطاطس مقلية بعمق", "قطع عصوية", "طبق جانبي للوجبات السريعة"],
+    category: "food",
+    image: "🍟"
+},
+{
+    word: "SOFT DRINK",
+    wordAr: "مشروب غازي",
+    hints: ["Carbonated beverage", "High fructose corn syrup", "Bubbly texture"],
+    hintsAr: ["مشروب مكربن", "شراب ذرة عالي الفركتوز", "قوام فقاعي"],
+    category: "food",
+    image: "🥤"
+},
+{
+    word: "BEER",
+    wordAr: "بيرة",
+    hints: ["Fermented cereal", "Hops bitterness", "Carbonation natural"],
+    hintsAr: ["حبوب مخمرة", "مرارة الجنجل", "تكرير طبيعي"],
+    category: "food",
+    image: "🍺"
+},
+{
+    word: "WINE",
+    wordAr: "نبيذ",
+    hints: ["Fermented grapes", "Aging barrels", "Terroir influence"],
+    hintsAr: ["عنب مخمر", "تقادم في البراميل", "تأثير التربة والمناخ"],
+    category: "food",
+    image: "🍷"
+},
+{
+    word: "COCKTAIL",
+    wordAr: "كوكتيل",
+    hints: ["Mixed alcoholic drink", "Spirit base", "Garnish finish"],
+    hintsAr: ["مشروب كحولي مختلط", "قاعدة روح", "زخرفة نهائية"],
+    category: "food",
+    image: "🍸"
+},
+{
+    word: "SAKE",
+    wordAr: "ساكي",
+    hints: ["Japanese rice wine", "Koji mold fermentation", "Polished rice grains"],
+    hintsAr: ["نبيذ أرز ياباني", "تخمير فطر الكوجي", "حبوب أرز مصقولة"],
+    category: "food",
+    image: "🍶"
+},
+
+{
+    word: "VEGETABLE OIL",
+    wordAr: "زيت نباتي",
+    hints: ["Plant lipid extraction", "Cooking medium", "Fatty acid profile"],
+    hintsAr: ["استخلاص دهون النبات", "وسيط للطبخ", "ملف الأحماض الدهنية"],
+    category: "food",
+    image: "🫒"
+},
+{
+    word: "VINEGAR",
+    wordAr: "خل",
+    hints: ["Acetic acid solution", "Double fermentation", "Preservative liquid"],
+    hintsAr: ["محلول حمض الأسيتيك", "تخمير مزدوج", "سائل حافظ"],
+    category: "food",
+    image: "🍾"
+},
+{
+    word: "SOY SAUCE",
+    wordAr: "صلصة الصويا",
+    hints: ["Fermented soybean", "Wheat addition", "Umami flavor"],
+    hintsAr: ["فول الصويا المخمر", "إضافة القمح", "نكهة أومامي"],
+    category: "food",
+    image: "🍶"
+},
+{
+    word: "MUSTARD",
+    wordAr: "خردل",
+    hints: ["Ground seeds emulsion", "Sinigrin compound", "Yellow condiment"],
+    hintsAr: ["مستحلب بذور مطحونة", "مركب السينيغرين", "توابل صفراء"],
+    category: "food",
+    image: "🟡"
+},
+{
+    word: "KETCHUP",
+    wordAr: "كاتشب",
+    hints: ["Tomato concentrate", "Vinegar-sugar balance", "Bottle dispensing"],
+    hintsAr: ["مركز الطماطم", "توازن الخل والسكر", "توزيع بالزجاجة"],
+    category: "food",
+    image: "🍅"
+},
+{
+    word: "MAYONNAISE",
+    wordAr: "مايونيز",
+    hints: ["Oil-water emulsion", "Egg yolk emulsifier", "Creamy spread"],
+    hintsAr: ["مستحلب زيت-ماء", "مستحلب صفار البيض", "دهان كريمي"],
+    category: "food",
+    image: "🥚"
+},
+{
+    word: "JAM",
+    wordAr: "مربى",
+    hints: ["Fruit preserve", "Pectin setting", "Sugar concentration"],
+    hintsAr: ["فاكهة محفوظة", "تثبيت البكتين", "تركيز السكر"],
+    category: "food",
+    image: "🍓"
+},
 
     // ===================== Movies =====================
-    {
-        word: "TITANIC",
-        wordAr: "تايتانيك",
-        hints: ["Ship disaster", "Iceberg collision", "1997 romance"],
-        hintsAr: ["كارثة سفينة", "اصطدام جبل جليدي", "رومانسية 1997"],
-        category: "movies",
-        image: "🚢"
-    },
-    {
-        word: "JURASSIC PARK",
-        wordAr: "الحديقة الجوراسية",
-        hints: ["Cloned dinosaurs", "Chaos theory", "Michael Crichton adaptation"],
-        hintsAr: ["ديناصورات مستنسخة", "نظرية الفوضى", "تعديل مايكل كرايتون"],
-        category: "movies",
-        image: "🦖"
-    },
-    {
-        word: "MATRIX",
-        wordAr: "ماتريكس",
-        hints: ["Simulated reality", "Red pill choice", "Bullet time effects"],
-        hintsAr: ["واقع محاكي", "اختيار الحبة الحمراء", "تأثيرات زمن الرصاص"],
-        category: "movies",
-        image: "🕶️"
-    },
-    {
-        word: "STAR WARS",
-        wordAr: "حرب النجوم",
-        hints: ["The Force", "Lightsaber duels", "Galactic empire"],
-        hintsAr: ["القوة", "مبارزات سيف ضوئي", "إمبراطورية مجرية"],
-        category: "movies",
-        image: "⚔️"
-    },
-    {
-        word: "AVATAR",
-        wordAr: "أفاتار",
-        hints: ["Pandora planet", "Na'vi people", "James Cameron epic"],
-        hintsAr: ["كوكب باندورا", "شعب نافي", "ملحمة جيمس كاميرون"],
-        category: "movies",
-        image: "🌀"
-    },
-    {
-        word: "INCEPTION",
-        wordAr: "ابدأ",
-        hints: ["Dream within dream", "Spinning top", "Christopher Nolan"],
-        hintsAr: ["حلم داخل حلم", "قطعة دوارة", "كريستوفر نولان"],
-        category: "movies",
-        image: "🌀"
-    },
-    {
-        word: "FROZEN",
-        wordAr: "متجمد",
-        hints: ["Ice powers", "Let It Go song", "Disney animation"],
-        hintsAr: ["قوى جليدية", "أغنية Let It Go", "رسوم متحركة ديزني"],
-        category: "movies",
-        image: "❄️"
-    },
-    {
-        word: "JOKER",
-        wordAr: "جوكر",
-        hints: ["Arthur Fleck", "Mental illness", "Todd Phillips direction"],
-        hintsAr: ["آرثر فليك", "مرض عقلي", "إخراج تود فيليبس"],
-        category: "movies",
-        image: "🃏"
-    },
-    {
-        word: "GLADIATOR",
-        wordAr: "جلاديتر",
-        hints: ["Maximus Decimus", "Colosseum battles", "Roman revenge"],
-        hintsAr: ["ماكسيوس ديسيموس", "معارك الكولوسيوم", "انتقام روماني"],
-        category: "movies",
-        image: "🗡️"
-    },
-    {
-        word: "INTERSTELLAR",
-        wordAr: "بين النجوم",
-        hints: ["Wormhole travel", "Time dilation", "Matthew McConaughey"],
-        hintsAr: ["سفر عبر الثقب الدودي", "تمدد الزمن", "ماثيو ماكونهي"],
-        category: "movies",
-        image: "🚀"
-    },
-    {
-        word: "PARASITE",
-        wordAr: "طفيلي",
-        hints: ["Social inequality", "Oscar winner", "Bong Joon-ho"],
-        hintsAr: ["عدم المساواة الاجتماعية", "فائز بجائزة الأوسكار", "بونج جون هو"],
-        category: "movies",
-        image: "🏆"
-    },
-    {
-        word: "PULP FICTION",
-        wordAr: "باب فيكشن",
-        hints: ["Nonlinear narrative", "Royale with cheese", "Quentin Tarantino"],
-        hintsAr: ["سرد غير خطي", "رويال مع جبن", "كوينتن تارانتينو"],
-        category: "movies",
-        image: "💉"
-    },
+   {
+    word: "TITANIC",
+    wordAr: "تايتانيك",
+    hints: ["Ship disaster", "Iceberg collision", "1997 romance"],
+    hintsAr: ["كارثة سفينة", "اصطدام جبل جليدي", "رومانسية 1997"],
+    category: "movies",
+    image: "images/movies/titanic.jpg"
+},
+{
+    word: "JURASSIC PARK",
+    wordAr: "الحديقة الجوراسية",
+    hints: ["Cloned dinosaurs", "Chaos theory", "Michael Crichton adaptation"],
+    hintsAr: ["ديناصورات مستنسخة", "نظرية الفوضى", "تعديل مايكل كرايتون"],
+    category: "movies",
+    image: "images/movies/jurassic_park.jpg"
+},
+{
+    word: "THE MATRIX",
+    wordAr: "ماتريكس",
+    hints: ["Simulated reality", "Red pill choice", "Bullet time effects"],
+    hintsAr: ["واقع محاكي", "اختيار الحبة الحمراء", "تأثيرات زمن الرصاص"],
+    category: "movies",
+    image: "images/movies/matrix.jpg"
+},
 
-    // ===================== Places =====================
-    {
-        word: "EVEREST",
-        wordAr: "إيفرست",
-        hints: ["Highest peak", "Death zone", "Himalayan range"],
-        hintsAr: ["أعلى قمة", "منطقة الموت", "سلسلة جبال الهيمالايا"],
-        category: "places",
-        image: "🏔️"
-    },
-    {
-        word: "AMAZON",
-        wordAr: "أمازون",
-        hints: ["Tropical rainforest", "River basin", "Biodiversity hotspot"],
-        hintsAr: ["غابة مطيرة استوائية", "حوض نهر", "منطقة تنوع بيولوجي"],
-        category: "places",
-        image: "🌴"
-    },
-    {
-        word: "SAHARA",
-        wordAr: "صحراء",
-        hints: ["Largest hot desert", "Erg formations", "Trans-Saharan trade"],
-        hintsAr: ["أكبر صحراء حارة", "تشكيلات رملية", "تجارة عبر الصحراء"],
-        category: "places",
-        image: "🏜️"
-    },
-    {
-        word: "PARIS",
-        wordAr: "باريس",
-        hints: ["Eiffel Tower", "City of Light", "Seine River"],
-        hintsAr: ["برج إيفل", "مدينة النور", "نهر السين"],
-        category: "places",
-        image: "🗼"
-    },
-    {
-        word: "TOKYO",
-        wordAr: "طوكيو",
-        hints: ["Megacity", "Cherry blossoms", "Shinkansen trains"],
-        hintsAr: ["مدينة ضخمة", "أزهار الكرز", "قطارات شينكانسن"],
-        category: "places",
-        image: "🗾"
-    },
-    {
-        word: "ROME",
-        wordAr: "روما",
-        hints: ["Colosseum", "Ancient empire", "Seven hills"],
-        hintsAr: ["الكولوسيوم", "إمبراطورية قديمة", "سبعة تلال"],
-        category: "places",
-        image: "🏛️"
-    },
-    {
-        word: "SYDNEY",
-        wordAr: "سيدني",
-        hints: ["Opera House", "Harbour Bridge", "Australia"],
-        hintsAr: ["دار الأوبرا", "جسر الميناء", "أستراليا"],
-        category: "places",
-        image: "🎭"
-    },
-    {
-        word: "CAIRO",
-        wordAr: "القاهرة",
-        hints: ["Nile River", "Pyramids nearby", "Ancient capital"],
-        hintsAr: ["نهر النيل", "أهرامات قريبة", "عاصمة قديمة"],
-        category: "places",
-        image: "🌅"
-    },
-    {
-        word: "NEW YORK",
-        wordAr: "نيويورك",
-        hints: ["Statue of Liberty", "Times Square", "Five boroughs"],
-        hintsAr: ["تمثال الحرية", "تايمز سكوير", "خمس أحياء"],
-        category: "places",
-        image: "🗽"
-    },
-    {
-        word: "LONDON",
-        wordAr: "لندن",
-        hints: ["Big Ben", "Thames River", "Underground Tube"],
-        hintsAr: ["بيج بن", "نهر التايمز", "مترو الأنفاق"],
-        category: "places",
-        image: "🎡"
-    },
-    {
-        word: "DUBAI",
-        wordAr: "دبي",
-        hints: ["Burj Khalifa", "Desert city", "Artificial islands"],
-        hintsAr: ["برج خليفة", "مدينة صحراوية", "جزر اصطناعية"],
-        category: "places",
-        image: "🏙️"
-    },
-    {
-        word: "MECCA",
-        wordAr: "مكة",
-        hints: ["Kaaba shrine", "Pilgrimage destination", "Islamic holy city"],
-        hintsAr: ["ضريح الكعبة", "وجهة الحج", "مدينة مقدسة إسلامية"],
-        category: "places",
-        image: "🕋"
-    },
+{
+    word: "AVATAR",
+    wordAr: "أفاتار",
+    hints: ["Pandora planet", "Na'vi people", "James Cameron epic"],
+    hintsAr: ["كوكب باندورا", "شعب نافي", "ملحمة جيمس كاميرون"],
+    category: "movies",
+    image: "images/movies/avatar.jpg"
+},
+{
+    word: "INCEPTION",
+    wordAr: "ابدأ",
+    hints: ["Dream within dream", "Spinning top", "Christopher Nolan"],
+    hintsAr: ["حلم داخل حلم", "قطعة دوارة", "كريستوفر نولان"],
+    category: "movies",
+    image: "images/movies/inception.jpg"
+},
+{
+    word: "FROZEN",
+    wordAr: "متجمد",
+    hints: ["Ice powers", "Let It Go song", "Disney animation"],
+    hintsAr: ["قوى جليدية", "أغنية Let It Go", "رسوم متحركة ديزني"],
+    category: "movies",
+    image: "images/movies/frozen.jpg"
+},
+{
+    word: "JOKER",
+    wordAr: "جوكر",
+    hints: ["Arthur Fleck", "Mental illness", "Todd Phillips direction"],
+    hintsAr: ["آرثر فليك", "مرض عقلي", "إخراج تود فيليبس"],
+    category: "movies",
+    image: "images/movies/joker.jpg"
+},
+{
+    word: "GLADIATOR",
+    wordAr: "جلاديتر",
+    hints: ["Maximus Decimus", "Colosseum battles", "Roman revenge"],
+    hintsAr: ["ماكسيوس ديسيموس", "معارك الكولوسيوم", "انتقام روماني"],
+    category: "movies",
+    image: "images/movies/gladiator.jpg"
+},
+{
+    word: "INTERSTELLAR",
+    wordAr: "بين النجوم",
+    hints: ["Wormhole travel", "Time dilation", "Matthew McConaughey"],
+    hintsAr: ["سفر عبر الثقب الدودي", "تمدد الزمن", "ماثيو ماكونهي"],
+    category: "movies",
+    image: "images/movies/interstellar.jpg"
+},
+{
+    word: "PARASITE",
+    wordAr: "طفيلي",
+    hints: ["Social inequality", "Oscar winner", "Bong Joon-ho"],
+    hintsAr: ["عدم المساواة الاجتماعية", "فائز بجائزة الأوسكار", "بونج جون هو"],
+    category: "movies",
+    image: "images/movies/parasite.jpg"
+},
+{
+    word: "PULP FICTION",
+    wordAr: "باب فيكشن",
+    hints: ["Nonlinear narrative", "Royale with cheese", "Quentin Tarantino"],
+    hintsAr: ["سرد غير خطي", "رويال مع جبن", "كوينتن تارانتينو"],
+    category: "movies",
+    image: "images/movies/pulp_fiction.jpg"
+},
+{
+    word: "THE GODFATHER",
+    wordAr: "العراب",
+    hints: ["Mafia family", "Offer you can't refuse", "Marlon Brando"],
+    hintsAr: ["عائلة مافيا", "عرض لا يمكن رفضه", "مارلون براندو"],
+    category: "movies",
+    image: "images/movies/godfather.jpg"
+},
+{
+    word: "THE SIXTH SENSE",
+    wordAr: "الحاسة السادسة",
+    hints: ["I see dead people", "Plot twist", "Bruce Willis"],
+    hintsAr: ["أرى أشخاصاً أمواتاً", "مفاجأة سينمائية", "بروس ويليس"],
+    category: "movies",
+    image: "images/movies/sixth_sense.jpg"
+},
+{
+    word: "GET OUT",
+    wordAr: "اخرج",
+    hints: ["Sunken place", "Social horror", "Jordan Peele"],
+    hintsAr: ["المكان الغارق", "رعب اجتماعي", "جوردان بيل"],
+    category: "movies",
+    image: "images/movies/get_out.jpg"
+},
+{
+    word: "CITY OF GOD",
+    wordAr: "مدينة الله",
+    hints: ["Brazilian favela", "Rocket's story", "Gang violence"],
+    hintsAr: ["حي فقير برازيلي", "قصة راكيت", "عنف عصابات"],
+    category: "movies",
+    image: "images/movies/city_of_god.jpg"
+},
+{
+    word: "TOP GUN",
+    wordAr: "توب غان",
+    hints: ["Naval aviators", "Danger zone", "Tom Cruise"],
+    hintsAr: ["طيارو البحرية", "منطقة الخطر", "توم كروز"],
+    category: "movies",
+    image: "images/movies/top_gun.jpg"
+},
+{
+    word: "TENET",
+    wordAr: "تينيت",
+    hints: ["Time inversion", "Protagonist", "Christopher Nolan"],
+    hintsAr: ["انعكاس الزمن", "بطل الرواية", "كريستوفر نولان"],
+    category: "movies",
+    image: "images/movies/tenet.jpg"
+},
+{
+    word: "GREYHOUND",
+    wordAr: "سلوقي",
+    hints: ["Naval warfare", "Atlantic convoy", "Tom Hanks"],
+    hintsAr: ["حرب بحرية", "قافلة الأطلسي", "توم هانكس"],
+    category: "movies",
+    image: "images/movies/greyhound.jpg"
+},
+{
+    word: "FURY",
+    wordAr: "فيوري",
+    hints: ["World War II tank", "Brad Pitt", "Crew of five"],
+    hintsAr: ["دبابة الحرب العالمية الثانية", "براد بيت", "طاقم من خمسة"],
+    category: "movies",
+    image: "images/movies/fury.jpg"
+},
+{
+    word: "EDGE OF TOMORROW",
+    wordAr: "حافة الغد",
+    hints: ["Time loop", "Mimics aliens", "Live Die Repeat"],
+    hintsAr: ["حلقة زمنية", "مخلوقات مقلدة", "عِشْ مُتْ كرر"],
+    category: "movies",
+    image: "images/movies/edge_of_tomorrow.jpg"
+},
+{
+    word: "PRIMAL FEAR",
+    wordAr: "خوف بدائي",
+    hints: ["Courtroom drama", "Aaron Stampler", "Richard Gere"],
+    hintsAr: ["دراما قاعة المحكمة", "آرون ستامبلر", "ريتشارد جير"],
+    category: "movies",
+    image: "images/movies/primal_fear.jpg"
+},
+{
+    word: "THE AMATEUR",
+    wordAr: "الهاوي",
+    hints: ["CIA revenge", "Charles Heller", "1981 thriller"],
+    hintsAr: ["انتقام سي آي إيه", "تشارلز هيلر", "إثارة 1981"],
+    category: "movies",
+    image: "images/movies/the_amateur.jpg"
+},
+{
+    word: "THE COVENANT",
+    wordAr: "الميثاق",
+    hints: ["Afghanistan war", "Interpreter rescue", "Guy Ritchie"],
+    hintsAr: ["حرب أفغانستان", "إنقاذ مترجم", "غي ريتشي"],
+    category: "movies",
+    image: "images/movies/the_covenant.jpg"
+},
+{
+    word: "SILENCED",
+    wordAr: "الصامتون",
+    hints: ["Korean drama", "School abuse", "Gong Yoo"],
+    hintsAr: ["دراما كورية", "إساءة مدرسية", "غونغ يو"],
+    category: "movies",
+    image: "images/movies/silenced.jpg"
+},
+{
+    word: "TRIANGLE",
+    wordAr: "مثلث",
+    hints: ["Time loop mystery", "Yacht accident", "Psychological horror"],
+    hintsAr: ["لغز حلقة زمنية", "حادث يخت", "رعب نفسي"],
+    category: "movies",
+    image: "images/movies/triangle.jpg"
+},
+{
+    word: "THE SHAWSHANK REDEMPTION",
+    wordAr: "هروب شاوشانك",
+    hints: ["Prison escape", "Andy Dufresne", "Hope motif"],
+    hintsAr: ["هروب من السجن", "آندي دوفريزن", "موتيف الأمل"],
+    category: "movies",
+    image: "images/movies/shawshank.jpg"
+},
+{
+    word: "THE DARK KNIGHT",
+    wordAr: "الفارس المظلم",
+    hints: ["Why so serious?", "Gotham chaos", "Heath Ledger Joker"],
+    hintsAr: ["لماذا الجدية؟", "فوضى غوثام", "جوكر هيث ليدجر"],
+    category: "movies",
+    image: "images/movies/dark_knight.jpg"
+},
+{
+    word: "FIGHT CLUB",
+    wordAr: "نادي القتال",
+    hints: ["First rule", "Tyler Durden", "Consumerism critique"],
+    hintsAr: ["القاعدة الأولى", "تايلر دوردن", "نقد الاستهلاكية"],
+    category: "movies",
+    image: "images/movies/fight_club.jpg"
+},
+{
+    word: "FORREST GUMP",
+    wordAr: "فورست غامب",
+    hints: ["Life is like a box of chocolates", "Run Forrest run", "Historical events"],
+    hintsAr: ["الحياة مثل علبة شوكولاتة", "اركض فورست اركض", "أحداث تاريخية"],
+    category: "movies",
+    image: "images/movies/forrest_gump.jpg"
+},
+{
+    word: "SCHINDLER'S LIST",
+    wordAr: "قائمة شيندلر",
+    hints: ["Holocaust savior", "Red coat girl", "Black and white"],
+    hintsAr: ["منقذ الهولوكوست", "الفتاة ذات المعطف الأحمر", "أبيض وأسود"],
+    category: "movies",
+    image: "images/movies/schindlers_list.jpg"
+},
+{
+    word: "THE LORD OF THE RINGS",
+    wordAr: "سيد الخواتم",
+    hints: ["One Ring", "Middle-earth", "Frodo Baggins"],
+    hintsAr: ["الخاتم الواحد", "الأرض الوسطى", "فرودو باغنز"],
+    category: "movies",
+    image: "images/movies/lord_of_rings.jpg"
+},
+{
+    word: "HARRY POTTER",
+    wordAr: "هاري بوتر",
+    hints: ["Wizarding world", "Hogwarts School", "Voldemort"],
+    hintsAr: ["عالم السحر", "مدرسة هوغوورتس", "فولدمورت"],
+    category: "movies",
+    image: "images/movies/harry_potter.jpg"
+},
+{
+    word: "SPIDER-MAN",
+    wordAr: "سبايدرمان",
+    hints: ["With great power", "Web slinging", "Peter Parker"],
+    hintsAr: ["مع القوة الكبيرة", "القذف بالشبكة", "بيتر باركر"],
+    category: "movies",
+    image: "images/movies/spiderman.jpg"
+},
+{
+    word: "THE LION KING",
+    wordAr: "الأسد الملك",
+    hints: ["Circle of life", "Hakuna Matata", "Simba"],
+    hintsAr: ["دائرة الحياة", "هاكونا ماتاتا", "سيمبا"],
+    category: "movies",
+    image: "images/movies/lion_king.jpg"
+},
+{
+    word: "TOY STORY",
+    wordAr: "قصة لعبة",
+    hints: ["Animated toys", "Andy's room", "Buzz Lightyear"],
+    hintsAr: ["ألعاب متحركة", "غرفة آندي", "باز لايتيير"],
+    category: "movies",
+    image: "images/movies/toy_story.jpg"
+},
+{
+    word: "AVENGERS",
+    wordAr: "المنتقمون",
+    hints: ["Marvel superheroes", "Infinity Stones", "Thanos"],
+    hintsAr: ["أبطال خارقون من مارفل", "حجارة اللانهاية", "ثانوس"],
+    category: "movies",
+    image: "images/movies/avengers.jpg"
+},
+{
+    word: "BLADE RUNNER",
+    wordAr: "بليد رانر",
+    hints: ["Replicants", "Future Los Angeles", "Tears in rain"],
+    hintsAr: ["المتماثلات", "لوس أنجلوس المستقبلية", "دموع في المطر"],
+    category: "movies",
+    image: "images/movies/blade_runner.jpg"
+},
+{
+    word: "BACK TO THE FUTURE",
+    wordAr: "العودة إلى المستقبل",
+    hints: ["DeLorean time machine", "Great Scott!", "Marty McFly"],
+    hintsAr: ["آلة الزمن دي لوريان", "يا إلهي!", "مارتي ماكفلاي"],
+    category: "movies",
+    image: "images/movies/back_to_future.jpg"
+},
+
+{
+    word: "SAVING PRIVATE RYAN",
+    wordAr: "إنقاذ الجندي رايان",
+    hints: ["D-Day opening", "Captain Miller", "War brutality"],
+    hintsAr: ["افتتاحية يوم النصر", "الكابتن ميلر", "وحشية الحرب"],
+    category: "movies",
+    image: "images/movies/saving_private_ryan.jpg"
+},
+{
+    word: "THE SILENCE OF THE LAMBS",
+    wordAr: "صمت الحملان",
+    hints: ["Hannibal Lecter", "Clarice Starling", "Census taker"],
+    hintsAr: ["هانيبال ليكتر", "كلاريس ستارلينغ", "عامل الإحصاء"],
+    category: "movies",
+    image: "images/movies/silence_lambs.jpg"
+},
+
+{
+    word: "BLACK PANTHER",
+    wordAr: "النمر الأسود",
+    hints: ["Wakanda forever", "Vibranium", "Chadwick Boseman"],
+    hintsAr: ["واكاندا للأبد", "الفبرانيوم", "تشادويك بوسمان"],
+    category: "movies",
+    image: "images/movies/black_panther.jpg"
+},
+{
+    word: "MAD MAX: FURY ROAD",
+    wordAr: "ماد ماكس: طريق الغضب",
+    hints: ["Post-apocalyptic", "War rig", "Immortan Joe"],
+    hintsAr: ["ما بعد نهاية العالم", "سيارة الحرب", "إمورتان جو"],
+    category: "movies",
+    image: "images/movies/mad_max.jpg"
+},
+{
+    word: "WHIPLASH",
+    wordAr: "وابل",
+    hints: ["Not quite my tempo", "Jazz drummer", "Terence Fletcher"],
+    hintsAr: ["ليس إيقاعي تماماً", "عازف طبول جاز", "تيرينس فليتشر"],
+    category: "movies",
+    image: "images/movies/whiplash.jpg"
+},
+{
+    word: "1917",
+    wordAr: "1917",
+    hints: ["One-shot technique", "World War I", "Sam Mendes"],
+    hintsAr: ["تقنية اللقطة الواحدة", "الحرب العالمية الأولى", "سام مينديز"],
+    category: "movies",
+    image: "images/movies/1917.jpg"
+},
+{
+    word: "THE SOCIAL NETWORK",
+    wordAr: "الشبكة الاجتماعية",
+    hints: ["Facebook founding", "Mark Zuckerberg", "Aaron Sorkin script"],
+    hintsAr: ["تأسيس فيسبوك", "مارك زوكربيرغ", "نص آرون سوركين"],
+    category: "movies",
+    image: "images/movies/social_network.jpg"
+},
+{
+    word: "THE DEPARTED",
+    wordAr: "الغادرون",
+    hints: ["Boston undercover", "Rat in the police", "Martin Scorsese"],
+    hintsAr: ["عميل سري بوسطن", "جاسوس في الشرطة", "مارتن سكورسيزي"],
+    category: "movies",
+    image: "images/movies/departed.jpg"
+},
+{
+    word: "NO COUNTRY FOR OLD MEN",
+    wordAr: "لا وطن للعجائز",
+    hints: ["Anton Chigurh", "Coin toss", "Cormac McCarthy"],
+    hintsAr: ["أنتون شيغير", "قرعة العملة", "كورماك مكارثي"],
+    category: "movies",
+    image: "images/movies/no_country.jpg"
+},
+{
+    word: "THE REVENANT",
+    wordAr: "المنتقم",
+    hints: ["Bear attack", "Hugh Glass", "Leonardo DiCaprio"],
+    hintsAr: ["هجوم دب", "هيو غلاس", "ليوناردو دي كابريو"],
+    category: "movies",
+    image: "images/movies/revenant.jpg"
+},
+{
+    word: "GRAVITY",
+    wordAr: "جاذبية",
+    hints: ["Space survival", "Drifting astronaut", "Sandra Bullock"],
+    hintsAr: ["بقاء في الفضاء", "رائد فضاء طافي", "ساندرا بولوك"],
+    category: "movies",
+    image: "images/movies/gravity.jpg"
+},
+
+{
+    word: "MOONLIGHT",
+    wordAr: "ضوء القمر",
+    hints: ["Three-act structure", "Coming of age", "Oscar winner"],
+    hintsAr: ["هيكل من ثلاثة فصول", "نضج", "فائز بجائزة الأوسكار"],
+    category: "movies",
+    image: "images/movies/moonlight.jpg"
+},
+{
+    word: "THE GRAND BUDAPEST HOTEL",
+    wordAr: "فندق بودابست الكبير",
+    hints: ["Wes Anderson style", "M. Gustave", "Pink aesthetic"],
+    hintsAr: ["أسلوب ويس أندرسون", "إم غوستاف", "جمالية وردية"],
+    category: "movies",
+    image: "images/movies/grand_budapest.jpg"
+},
+{
+    word: "ARRIVAL",
+    wordAr: "الوصول",
+    hints: ["Linguistic sci-fi", "Heptapods", "Amy Adams"],
+    hintsAr: ["خيال علمي لغوي", "سباعيات الأرجل", "إيمي آدامز"],
+    category: "movies",
+    image: "images/movies/arrival.jpg"
+},
+{
+    word: "DUNE",
+    wordAr: "كثيب",
+    hints: ["Desert planet", "Spice Melange", "Frank Herbert adaptation"],
+    hintsAr: ["كوكب صحراوي", "توابل ميلانج", "تعديل فرانك هربرت"],
+    category: "movies",
+    image: "images/movies/dune.jpg"
+},
+{
+    word: "OPPENHEIMER",
+    wordAr: "أوبنهايمر",
+    hints: ["Atomic bomb", "Manhattan Project", "Christopher Nolan"],
+    hintsAr: ["القنبلة الذرية", "مشروع مانهاتن", "كريستوفر نولان"],
+    category: "movies",
+    image: "images/movies/oppenheimer.jpg"
+},
+
+  // ===================== Places =====================
+{
+    word: "EVEREST",
+    wordAr: "إيفرست",
+    hints: ["Highest peak", "Death zone", "Himalayan range"],
+    hintsAr: ["أعلى قمة", "منطقة الموت", "سلسلة جبال الهيمالايا"],
+    category: "places",
+    image: "🏔️"
+},
+{
+    word: "AMAZON",
+    wordAr: "أمازون",
+    hints: ["Tropical rainforest", "River basin", "Biodiversity hotspot"],
+    hintsAr: ["غابة مطيرة استوائية", "حوض نهر", "منطقة تنوع بيولوجي"],
+    category: "places",
+    image: "🌴"
+},
+{
+    word: "SAHARA",
+    wordAr: "الصحراء الكبرى",
+    hints: ["Largest hot desert", "Erg formations", "Trans-Saharan trade"],
+    hintsAr: ["أكبر صحراء حارة", "تشكيلات رملية", "تجارة عبر الصحراء"],
+    category: "places",
+    image: "🏜️"
+},
+{
+    word: "PARIS",
+    wordAr: "باريس",
+    hints: ["Eiffel Tower", "City of Light", "Seine River"],
+    hintsAr: ["برج إيفل", "مدينة النور", "نهر السين"],
+    category: "places",
+    image: "🗼"
+},
+{
+    word: "TOKYO",
+    wordAr: "طوكيو",
+    hints: ["Megacity", "Cherry blossoms", "Shinkansen trains"],
+    hintsAr: ["مدينة ضخمة", "أزهار الكرز", "قطارات شينكانسن"],
+    category: "places",
+    image: "🗾"
+},
+{
+    word: "ROME",
+    wordAr: "روما",
+    hints: ["Colosseum", "Ancient empire", "Seven hills"],
+    hintsAr: ["الكولوسيوم", "إمبراطورية قديمة", "سبعة تلال"],
+    category: "places",
+    image: "🏛️"
+},
+{
+    word: "SYDNEY",
+    wordAr: "سيدني",
+    hints: ["Opera House", "Harbour Bridge", "Australia"],
+    hintsAr: ["دار الأوبرا", "جسر الميناء", "أستراليا"],
+    category: "places",
+    image: "🎭"
+},
+{
+    word: "CAIRO",
+    wordAr: "القاهرة",
+    hints: ["Nile River", "Pyramids nearby", "Ancient capital"],
+    hintsAr: ["نهر النيل", "أهرامات قريبة", "عاصمة قديمة"],
+    category: "places",
+    image: "🌅"
+},
+{
+    word: "NEW YORK",
+    wordAr: "نيويورك",
+    hints: ["Statue of Liberty", "Times Square", "Five boroughs"],
+    hintsAr: ["تمثال الحرية", "تايمز سكوير", "خمس أحياء"],
+    category: "places",
+    image: "🗽"
+},
+{
+    word: "LONDON",
+    wordAr: "لندن",
+    hints: ["Big Ben", "Thames River", "Underground Tube"],
+    hintsAr: ["بيج بن", "نهر التايمز", "مترو الأنفاق"],
+    category: "places",
+    image: "🎡"
+},
+{
+    word: "DUBAI",
+    wordAr: "دبي",
+    hints: ["Burj Khalifa", "Desert city", "Artificial islands"],
+    hintsAr: ["برج خليفة", "مدينة صحراوية", "جزر اصطناعية"],
+    category: "places",
+    image: "🏙️"
+},
+{
+    word: "MECCA",
+    wordAr: "مكة",
+    hints: ["Kaaba shrine", "Pilgrimage destination", "Islamic holy city"],
+    hintsAr: ["الكعبة", "وجهة الحج", "مدينة مقدسة"],
+    category: "places",
+    image: "🕋"
+},
+{
+    word: "VENICE",
+    wordAr: "البندقية",
+    hints: ["Canals", "Gondolas", "Floating city"],
+    hintsAr: ["قنوات مائية", "جندول", "مدينة عائمة"],
+    category: "places",
+    image: "🚤"
+},
+{
+    word: "BARCELONA",
+    wordAr: "برشلونة",
+    hints: ["Gaudi architecture", "Mediterranean coast", "La Rambla"],
+    hintsAr: ["عمارة غاودي", "ساحل البحر المتوسط", "لارامبلا"],
+    category: "places",
+    image: "🏖️"
+},
+{
+    word: "RIO",
+    wordAr: "ريو دي جانيرو",
+    hints: ["Carnival", "Christ the Redeemer", "Copacabana"],
+    hintsAr: ["كرنفال", "تمثال المسيح", "كوباكابانا"],
+    category: "places",
+    image: "🎉"
+},
+{
+    word: "MALDIVES",
+    wordAr: "المالديف",
+    hints: ["Coral islands", "Luxury resorts", "Clear waters"],
+    hintsAr: ["جزر مرجانية", "منتجعات فاخرة", "مياه صافية"],
+    category: "places",
+    image: "🏝️"
+},
+{
+    word: "ANTARCTICA",
+    wordAr: "القارة القطبية الجنوبية",
+    hints: ["Frozen continent", "Penguins", "Extreme cold"],
+    hintsAr: ["قارة متجمدة", "بطاريق", "برد قارس"],
+    category: "places",
+    image: "🐧"
+},
+{
+    word: "MACHU PICCHU",
+    wordAr: "ماتشو بيتشو",
+    hints: ["Inca ruins", "Mountain citadel", "Peru"],
+    hintsAr: ["آثار الإنكا", "مدينة جبلية", "بيرو"],
+    category: "places",
+    image: "🗿"
+},
+{
+    word: "PETRA",
+    wordAr: "البتراء",
+    hints: ["Rose city", "Rock-cut architecture", "Jordan"],
+    hintsAr: ["المدينة الوردية", "منحوتة في الصخر", "الأردن"],
+    category: "places",
+    image: "⛰️"
+},
+{
+    word: "GREAT WALL",
+    wordAr: "سور الصين العظيم",
+    hints: ["Ancient fortification", "Visible from space myth", "China"],
+    hintsAr: ["تحصين قديم", "أسطورة الرؤية من الفضاء", "الصين"],
+    category: "places",
+    image: "🧱"
+},
+{
+    word: "MOUNT FUJI",
+    wordAr: "جبل فوجي",
+    hints: ["Volcano", "Sacred mountain", "Japan"],
+    hintsAr: ["بركان", "جبل مقدس", "اليابان"],
+    category: "places",
+    image: "🗻"
+},
+{
+    word: "BALI",
+    wordAr: "بالي",
+    hints: ["Island paradise", "Rice terraces", "Temples"],
+    hintsAr: ["جزيرة استوائية", "مدرجات أرز", "معابد"],
+    category: "places",
+    image: "🌺"
+},
+{
+    word: "ATHENS",
+    wordAr: "أثينا",
+    hints: ["Acropolis", "Ancient Greece", "Philosophy"],
+    hintsAr: ["الأكروبوليس", "اليونان القديمة", "الفلسفة"],
+    category: "places",
+    image: "🏺"
+},
+{
+    word: "MOSCOW",
+    wordAr: "موسكو",
+    hints: ["Red Square", "Kremlin", "Russian capital"],
+    hintsAr: ["الساحة الحمراء", "الكرملين", "عاصمة روسيا"],
+    category: "places",
+    image: "🎠"
+},
+{
+    word: "ISTANBUL",
+    wordAr: "إسطنبول",
+    hints: ["Two continents", "Hagia Sophia", "Bosphorus"],
+    hintsAr: ["قارتان", "آيا صوفيا", "مضيق البوسفور"],
+    category: "places",
+    image: "🌉"
+},
+{
+    word: "TAJ MAHAL",
+    wordAr: "تاج محل",
+    hints: ["Marble mausoleum", "Symbol of love", "India"],
+    hintsAr: ["ضريح رخامي", "رمز الحب", "الهند"],
+    category: "places",
+    image: "🕌"
+},
+{
+    word: "SANTORINI",
+    wordAr: "سانتوريني",
+    hints: ["Greek island", "White buildings", "Blue domes"],
+    hintsAr: ["جزيرة يونانية", "مباني بيضاء", "قباب زرقاء"],
+    category: "places",
+    image: "🏘️"
+},
+{
+    word: "GRAND CANYON",
+    wordAr: "غراند كانيون",
+    hints: ["Natural wonder", "Arizona", "Colorado River"],
+    hintsAr: ["عجيبة طبيعية", "أريزونا", "نهر كولورادو"],
+    category: "places",
+    image: "🌄"
+},
+{
+    word: "YELLOWSTONE",
+    wordAr: "يلوستون",
+    hints: ["National park", "Geysers", "Old Faithful"],
+    hintsAr: ["متنزه وطني", "ينابيع حارة", "أولد فيثفول"],
+    category: "places",
+    image: "♨️"
+},
+{
+    word: "AMSTERDAM",
+    wordAr: "أمستردام",
+    hints: ["Canals", "Bicycles", "Tulips"],
+    hintsAr: ["قنوات مائية", "دراجات هوائية", "توليب"],
+    category: "places",
+    image: "🚲"
+},
+{
+    word: "KYOTO",
+    wordAr: "كيوتو",
+    hints: ["Ancient capital", "Geisha district", "Zen gardens"],
+    hintsAr: ["العاصمة القديمة", "حي الغيشا", "حدائق زن"],
+    category: "places",
+    image: "🎎"
+},
+{
+    word: "CAPE TOWN",
+    wordAr: "كيب تاون",
+    hints: ["Table Mountain", "Cape of Good Hope", "South Africa"],
+    hintsAr: ["جبل الطاولة", "رأس الرجاء الصالح", "جنوب أفريقيا"],
+    category: "places",
+    image: "⛰️"
+},
+{
+    word: "HONG KONG",
+    wordAr: "هونغ كونغ",
+    hints: ["Skyscrapers", "Victoria Harbour", "Financial hub"],
+    hintsAr: ["ناطحات سحاب", "ميناء فيكتوريا", "مركز مالي"],
+    category: "places",
+    image: "🌃"
+},
+{
+    word: "PRAGUE",
+    wordAr: "براغ",
+    hints: ["Charles Bridge", "Old Town Square", "Gothic architecture"],
+    hintsAr: ["جسر تشارلز", "ساحة البلدة القديمة", "عمارة قوطية"],
+    category: "places",
+    image: "🌉"
+},
+{
+    word: "BANGKOK",
+    wordAr: "بانكوك",
+    hints: ["Floating markets", "Buddhist temples", "Street food"],
+    hintsAr: ["أسواق عائمة", "معابد بوذية", "طعام الشارع"],
+    category: "places",
+    image: "🛶"
+},
+{
+    word: "VATICAN",
+    wordAr: "الفاتيكان",
+    hints: ["Smallest country", "Sistine Chapel", "Catholic Church"],
+    hintsAr: ["أصغر دولة", "كنيسة سيستينا", "الكنيسة الكاثوليكية"],
+    category: "places",
+    image: "⛪"
+},
+{
+    word: "STONEHENGE",
+    wordAr: "ستونهنج",
+    hints: ["Prehistoric monument", "Stone circles", "England"],
+    hintsAr: ["نصب ما قبل التاريخ", "دوائر حجرية", "إنجلترا"],
+    category: "places",
+    image: "🪨"
+},
+{
+    word: "MARRAKESH",
+    wordAr: "مراكش",
+    hints: ["Red city", "Souk markets", "Morocco"],
+    hintsAr: ["المدينة الحمراء", "أسواق السوق", "المغرب"],
+    category: "places",
+    image: "🕌"
+},
 
     // ===================== Objects =====================
-    {
-        word: "GUITAR",
-        wordAr: "جيتار",
-        hints: ["Six strings", "Fretboard", "Acoustic resonance"],
-        hintsAr: ["ستة أوتار", "لوح الأصابع", "رنين صوتي"],
-        category: "objects",
-        image: "🎸"
-    },
-    {
-        word: "WATCH",
-        wordAr: "ساعة",
-        hints: ["Timekeeping device", "Wrist-worn", "Mechanical movement"],
-        hintsAr: ["جهاز قياس الوقت", "ترتدى على المعصم", "حركة ميكانيكية"],
-        category: "objects",
-        image: "⌚"
-    },
-    {
-        word: "CAMERA",
-        wordAr: "كاميرا",
-        hints: ["Lens aperture", "Shutter speed", "Image sensor"],
-        hintsAr: ["فتحة العدسة", "سرعة الغالق", "مستشعر الصورة"],
-        category: "objects",
-        image: "📷"
-    },
-    {
-        word: "BOOK",
-        wordAr: "كتاب",
-        hints: ["Bound pages", "Printed text", "ISBN identifier"],
-        hintsAr: ["صفحات مجلدة", "نص مطبوع", "معرف ISBN"],
-        category: "objects",
-        image: "📚"
-    },
-    {
-        word: "PHONE",
-        wordAr: "هاتف",
-        hints: ["Mobile communication", "Touchscreen", "App ecosystem"],
-        hintsAr: ["اتصالات محمولة", "شاشة لمس", "نظام التطبيقات"],
-        category: "objects",
-        image: "📱"
-    },
-    {
-        word: "KEY",
-        wordAr: "مفتاح",
-        hints: ["Lock mechanism", "Unique cuts", "Security device"],
-        hintsAr: ["آلية القفل", "تشكيلات فريدة", "جهاز أمني"],
-        category: "objects",
-        image: "🔑"
-    },
-    {
-        word: "UMBRELLA",
-        wordAr: "مظلة",
-        hints: ["Rain protection", "Collapsible frame", "Waterproof canopy"],
-        hintsAr: ["حماية من المطر", "إطار قابل للطي", "مظلة مقاومة للماء"],
-        category: "objects",
-        image: "☔"
-    },
-    {
-        word: "GLASSES",
-        wordAr: "نظارات",
-        hints: ["Vision correction", "Lens prescription", "Frame temples"],
-        hintsAr: ["تصحيح الرؤية", "وصفة العدسات", "أذرع الإطار"],
-        category: "objects",
-        image: "👓"
-    },
-    {
-        word: "CHAIR",
-        wordAr: "كرسي",
-        hints: ["Seating furniture", "Four legs", "Back support"],
-        hintsAr: ["أثاث جلوس", "أربع أرجل", "دعم الظهر"],
-        category: "objects",
-        image: "🪑"
-    },
-    {
-        word: "LAMP",
-        wordAr: "مصباح",
-        hints: ["Light source", "Electrical fixture", "Shade diffuser"],
-        hintsAr: ["مصدر ضوء", "تركيبة كهربائية", "موزع ظل"],
-        category: "objects",
-        image: "💡"
-    },
-    {
-        word: "BICYCLE",
-        wordAr: "دراجة",
-        hints: ["Two wheels", "Pedal propulsion", "Chain drive"],
-        hintsAr: ["عجلتان", "دفع بدواسة", "ناقل سلسلة"],
-        category: "objects",
-        image: "🚲"
-    },
-    {
-        word: "COMPUTER",
-        wordAr: "حاسوب",
-        hints: ["Processing unit", "Input devices", "Digital operations"],
-        hintsAr: ["وحدة معالجة", "أجهزة إدخال", "عمليات رقمية"],
-        category: "objects",
-        image: "💻"
-    },
+   // ===================== Objects (Large Library) =====================
+{
+    word: "GUITAR",
+    wordAr: "جيتار",
+    hints: ["Six strings", "Rock and roll", "Strumming sound"],
+    hintsAr: ["ستة أوتار", "موسيقى الروك", "صوت العزف"],
+    category: "objects",
+    image: "🎸"
+},
+{
+    word: "WATCH",
+    wordAr: "ساعة",
+    hints: ["Time on wrist", "Ticking sound", "Analog or digital"],
+    hintsAr: ["الوقت على المعصم", "صوت التكتكة", "عقارب أو رقمية"],
+    category: "objects",
+    image: "⌚"
+},
+{
+    word: "CAMERA",
+    wordAr: "كاميرا",
+    hints: ["Say cheese!", "Capture moments", "Flash pop"],
+    hintsAr: ["قولوا شيز!", "التقاط اللحظات", "فلاش يضيء"],
+    category: "objects",
+    image: "📷"
+},
+{
+    word: "BOOK",
+    wordAr: "كتاب",
+    hints: ["Turn pages", "Library treasure", "Bedtime story"],
+    hintsAr: ["قلب الصفحات", "كنز المكتبة", "قصة قبل النوم"],
+    category: "objects",
+    image: "📚"
+},
+{
+    word: "PHONE",
+    wordAr: "هاتف",
+    hints: ["Pocket computer", "Selfie machine", "Ringtone sounds"],
+    hintsAr: ["كمبيوتر جيب", "آلة السيلفي", "أصوات النغمات"],
+    category: "objects",
+    image: "📱"
+},
+{
+    word: "KEY",
+    wordAr: "مفتاح",
+    hints: ["Opens locks", "Jingle jangle", "Lost often"],
+    hintsAr: ["يفتح الأقفال", "صوت رنين", "يضيع كثيراً"],
+    category: "objects",
+    image: "🔑"
+},
+{
+    word: "UMBRELLA",
+    wordAr: "مظلة",
+    hints: ["Rain protection", "Wind turns inside out", "Mary Poppins"],
+    hintsAr: ["حماية من المطر", "الرياح تقلبه", "ماري بوبينز"],
+    category: "objects",
+    image: "☂️"
+},
+{
+    word: "GLASSES",
+    wordAr: "نظارات",
+    hints: ["Four eyes", "See clearly", "Fog up"],
+    hintsAr: ["أربع عيون", "انظر بوضوح", "تعتيم بالبخار"],
+    category: "objects",
+    image: "👓"
+},
+{
+    word: "CHAIR",
+    wordAr: "كرسي",
+    hints: ["Take a seat", "Musical game", "Rocking version"],
+    hintsAr: ["اجلس", "لعبة الكراسي الموسيقية", "نسخة هزاز"],
+    category: "objects",
+    image: "🪑"
+},
+{
+    word: "LAMP",
+    wordAr: "مصباح",
+    hints: ["Light switch", "Bedside reading", "Genie inside"],
+    hintsAr: ["مفتاح الضوء", "قراءة بجانب السرير", "جني بالداخل"],
+    category: "objects",
+    image: "💡"
+},
+{
+    word: "BICYCLE",
+    wordAr: "دراجة",
+    hints: ["Two wheels", "Training wheels", "Ring the bell"],
+    hintsAr: ["عجلتان", "عجلات التدريب", "دق الجرس"],
+    category: "objects",
+    image: "🚲"
+},
+{
+    word: "COMPUTER",
+    wordAr: "حاسوب",
+    hints: ["Desktop setup", "Keyboard clicks", "Screen glow"],
+    hintsAr: ["إعداد مكتبي", "نقرات لوحة المفاتيح", "توهج الشاشة"],
+    category: "objects",
+    image: "💻"
+},
+{
+    word: "REMOTE",
+    wordAr: "ريموت",
+    hints: ["Couch control", "Lost in cushions", "Volume buttons"],
+    hintsAr: ["تحكم الأريكة", "مفقود في الوسائد", "أزرار الصوت"],
+    category: "objects",
+    image: "📺"
+},
+{
+    word: "BACKPACK",
+    wordAr: "حقيبة ظهر",
+    hints: ["School carry", "Zipper compartments", "Shoulder straps"],
+    hintsAr: ["حمل المدرسة", "أقسام بالسحاب", "أحزمة الكتف"],
+    category: "objects",
+    image: "🎒"
+},
+{
+    word: "WALLET",
+    wordAr: "محفظة",
+    hints: ["Money holder", "Credit cards", "Leather or fabric"],
+    hintsAr: ["حامل النقود", "بطاقات ائتمان", "جلد أو قماش"],
+    category: "objects",
+    image: "👛"
+},
+{
+    word: "SUNGLASSES",
+    wordAr: "نظارات شمسية",
+    hints: ["Cool shades", "Sun protection", "Celebrity style"],
+    hintsAr: ["نظارات رائعة", "حماية من الشمس", "أسلوب المشاهير"],
+    category: "objects",
+    image: "🕶️"
+},
+{
+    word: "CALCULATOR",
+    wordAr: "آلة حاسبة",
+    hints: ["Math helper", "Button pressing", "Solar powered"],
+    hintsAr: ["مساعد الرياضيات", "ضغط الأزرار", "يعمل بالطاقة الشمسية"],
+    category: "objects",
+    image: "🧮"
+},
+{
+    word: "MICROSCOPE",
+    wordAr: "ميكروسكوب",
+    hints: ["Small things big", "Science class", "Slide viewer"],
+    hintsAr: ["أشياء صغيرة كبيرة", "صف العلوم", "عارض الشرائح"],
+    category: "objects",
+    image: "🔬"
+},
+{
+    word: "TELESCOPE",
+    wordAr: "تلسكوب",
+    hints: ["Star gazing", "Tripod stand", "Moon viewing"],
+    hintsAr: ["مراقبة النجوم", "حامل ثلاثي القوائم", "رؤية القمر"],
+    category: "objects",
+    image: "🔭"
+},
+{
+    word: "PEN",
+    wordAr: "قلم",
+    hints: ["Ink flows", "Click sound", "Writing tool"],
+    hintsAr: ["تدفق الحبر", "صوت النقر", "أداة الكتابة"],
+    category: "objects",
+    image: "🖊️"
+},
+{
+    word: "PENCIL",
+    wordAr: "قلم رصاص",
+    hints: ["Eraser end", "Sharp point", "Drawing tool"],
+    hintsAr: ["نهاية ممحاة", "طرف حاد", "أداة الرسم"],
+    category: "objects",
+    image: "✏️"
+},
+{
+    word: "SCISSORS",
+    wordAr: "مقص",
+    hints: ["Cutting tool", "Blade crossing", "Paper craft"],
+    hintsAr: ["أداة القص", "تقاطع الشفرات", "الحرف الورقية"],
+    category: "objects",
+    image: "✂️"
+},
+{
+    word: "RULER",
+    wordAr: "مسطرة",
+    hints: ["Straight edge", "Measuring inches", "School supply"],
+    hintsAr: ["حافة مستقيمة", "قياس البوصات", "مستلزمات المدرسة"],
+    category: "objects",
+    image: "📏"
+},
+{
+    word: "BALLOON",
+    wordAr: "بالون",
+    hints: ["Birthday party", "Helium floats", "Pop sound"],
+    hintsAr: ["حفلة عيد ميلاد", "يطفو بالهيليوم", "صوت فرقعة"],
+    category: "objects",
+    image: "🎈"
+},
+{
+    word: "KITE",
+    wordAr: "طائرة ورقية",
+    hints: ["Wind powered", "String control", "Sky dancer"],
+    hintsAr: ["تعمل بالرياح", "تحكم بالخيط", "راقصة السماء"],
+    category: "objects",
+    image: "🪁"
+},
+{
+    word: "TEDDY BEAR",
+    wordAr: "دبدوب",
+    hints: ["Cuddly toy", "Childhood friend", "Button eyes"],
+    hintsAr: ["لعبة محشوة", "صديق الطفولة", "عيون زرية"],
+    category: "objects",
+    image: "🧸"
+},
+{
+    word: "DOLL",
+    wordAr: "دمية",
+    hints: ["Toy person", "Brushable hair", "Dress up"],
+    hintsAr: ["لعبة شخص", "شعر قابل للتمشيط", "تغيير الملابس"],
+    category: "objects",
+    image: "👧"
+},
+{
+    word: "LEGO",
+    wordAr: "ليغو",
+    hints: ["Colorful bricks", "Stepping hazard", "Creative building"],
+    hintsAr: ["قطع ملونة", "خطر الدوس", "بناء إبداعي"],
+    category: "objects",
+    image: "🧱"
+},
+{
+    word: "PUZZLE",
+    wordAr: "لغز",
+    hints: ["Jigsaw pieces", "Table activity", "Complete picture"],
+    hintsAr: ["قطع بازل", "نشاط الطاولة", "صورة مكتملة"],
+    category: "objects",
+    image: "🧩"
+},
+{
+    word: "YO-YO",
+    wordAr: "يويو",
+    hints: ["Up and down", "String toy", "Tricks performer"],
+    hintsAr: ["أعلى وأسفل", "لعبة بخيط", "مؤدي الحيل"],
+    category: "objects",
+    image: "🪀"
+},
+{
+    word: "DICE",
+    wordAr: "نرد",
+    hints: ["Six sides", "Board games", "Rolling chance"],
+    hintsAr: ["ستة جوانب", "ألعاب الطاولة", "فرصة التدحرج"],
+    category: "objects",
+    image: "🎲"
+},
+{
+    word: "CHESS",
+    wordAr: "شطرنج",
+    hints: ["Black and white", "King and queen", "Strategic game"],
+    hintsAr: ["أسود وأبيض", "ملك وملكة", "لعبة استراتيجية"],
+    category: "objects",
+    image: "♟️"
+},
+{
+    word: "DOMINO",
+    wordAr: "الدومينو",
+    hints: ["Dotted tiles", "Line them up", "Chain reaction"],
+    hintsAr: ["بلاط منقط", "اصطفافها", "تفاعل متسلسل"],
+    category: "objects",
+    image: "🀄"
+},
+{
+    word: "MICROPHONE",
+    wordAr: "ميكروفون",
+    hints: ["Karaoke night", "Voice amplifier", "Stage performer"],
+    hintsAr: ["ليلة الكاريوكي", "مضخم الصوت", "مؤدي على المسرح"],
+    category: "objects",
+    image: "🎤"
+},
+{
+    word: "HEADPHONES",
+    wordAr: "سماعات رأس",
+    hints: ["Music private", "Noise canceling", "Over-ear style"],
+    hintsAr: ["موسيقى خاصة", "إلغاء الضوضاء", "نمط فوق الأذن"],
+    category: "objects",
+    image: "🎧"
+},
+{
+    word: "SPEAKER",
+    wordAr: "مكبر صوت",
+    hints: ["Sound box", "Volume knob", "Party music"],
+    hintsAr: ["صندوق صوت", "مقبض الصوت", "موسيقى الحفلات"],
+    category: "objects",
+    image: "🔊"
+},
+{
+    word: "DRUM",
+    wordAr: "طبل",
+    hints: ["Beat rhythm", "Sticks needed", "Band instrument"],
+    hintsAr: ["إيقاع النبض", "يحتاج إلى عصي", "آلة موسيقية في الفرقة"],
+    category: "objects",
+    image: "🥁"
+},
+{
+    word: "TRUMPET",
+    wordAr: "بوق",
+    hints: ["Brass instrument", "Jazz sound", "Three valves"],
+    hintsAr: ["آلة نحاسية", "صوت الجاز", "ثلاثة صمامات"],
+    category: "objects",
+    image: "🎺"
+},
+{
+    word: "VIOLIN",
+    wordAr: "كمان",
+    hints: ["String instrument", "Bow hair", "Classical music"],
+    hintsAr: ["آلة وترية", "شعر القوس", "موسيقى كلاسيكية"],
+    category: "objects",
+    image: "🎻"
+},
+{
+    word: "PIANO",
+    wordAr: "بيانو",
+    hints: ["Black and white keys", "Grand style", "Music lessons"],
+    hintsAr: ["مفاتيح سوداء وبيضاء", "نمط جراند", "دروس الموسيقى"],
+    category: "objects",
+    image: "🎹"
+},
+{
+    word: "HARMONICA",
+    wordAr: "هارمونيكا",
+    hints: ["Pocket instrument", "Blow and draw", "Blues sound"],
+    hintsAr: ["آلة جيب", "نفخ وسحب", "صوت البلوز"],
+    category: "objects",
+    image: "🎵"
+},
+{
+    word: "FLASHLIGHT",
+    wordAr: "مصباح يدوي",
+    hints: ["Beam of light", "Battery powered", "Dark exploration"],
+    hintsAr: ["حزمة ضوئية", "يعمل بالبطارية", "استكشاف الظلام"],
+    category: "objects",
+    image: "🔦"
+},
+{
+    word: "BATTERY",
+    wordAr: "بطارية",
+    hints: ["Power source", "Positive negative", "Rechargeable type"],
+    hintsAr: ["مصدر طاقة", "موجب سالب", "نوع قابل للشحن"],
+    category: "objects",
+    image: "🔋"
+},
+{
+    word: "MAGNIFYING GLASS",
+    wordAr: "عدسة مكبرة",
+    hints: ["Sherlock Holmes", "Small details", "Sun focusing"],
+    hintsAr: ["شارلوك هولمز", "تفاصيل صغيرة", "تركيز الشمس"],
+    category: "objects",
+    image: "🔍"
+},
+{
+    word: "LOCK",
+    wordAr: "قفل",
+    hints: ["Security device", "Combination numbers", "Padlock style"],
+    hintsAr: ["جهاز أمني", "أرقام التركيبة", "نمط القفل المعلق"],
+    category: "objects",
+    image: "🔒"
+},
+{
+    word: "BELL",
+    wordAr: "جرس",
+    hints: ["Ring sound", "School warning", "Service desk"],
+    hintsAr: ["صوت الرنين", "تحذير المدرسة", "مكتب الخدمة"],
+    category: "objects",
+    image: "🔔"
+},
+{
+    word: "ALARM CLOCK",
+    wordAr: "منبه",
+    hints: ["Morning wake-up", "Snooze button", "Loud ringing"],
+    hintsAr: ["استيقاظ الصباح", "زر الغفوة", "رنين عالي"],
+    category: "objects",
+    image: "⏰"
+},
+{
+    word: "HOURGLASS",
+    wordAr: "ساعة رملية",
+    hints: ["Time running out", "Sand falls", "Game timer"],
+    hintsAr: ["الوقت ينفد", "سقوط الرمل", "مؤقت اللعبة"],
+    category: "objects",
+    image: "⏳"
+},
+{
+    word: "THERMOMETER",
+    wordAr: "ميزان حرارة",
+    hints: ["Temperature check", "Mercury rises", "Fever detector"],
+    hintsAr: ["فحص درجة الحرارة", "ارتفاع الزئبق", "كاشف الحمى"],
+    category: "objects",
+    image: "🌡️"
+},
+{
+    word: "COMPASS",
+    wordAr: "بوصلة",
+    hints: ["North pointer", "Outdoor navigation", "Magnetic needle"],
+    hintsAr: ["مؤشر الشمال", "ملاحة خارجية", "إبرة مغناطيسية"],
+    category: "objects",
+    image: "🧭"
+},
+{
+    word: "MAP",
+    wordAr: "خريطة",
+    hints: ["Road guide", "Treasure location", "Foldable paper"],
+    hintsAr: ["دليل الطريق", "موقع الكنز", "ورق قابل للطي"],
+    category: "objects",
+    image: "🗺️"
+},
+{
+    word: "GLOBE",
+    wordAr: "كرة أرضية",
+    hints: ["World sphere", "Spin around", "Geography learning"],
+    hintsAr: ["كرة العالم", "تدور حول نفسها", "تعلم الجغرافيا"],
+    category: "objects",
+    image: "🌍"
+},
+{
+    word: "BINOCULARS",
+    wordAr: "منظار",
+    hints: ["Bird watching", "Two lenses", "Theater use"],
+    hintsAr: ["مراقبة الطيور", "عدستان", "استخدام المسرح"],
+    category: "objects",
+    image: "👀"
+},
+{
+    word: "CAMERA FILM",
+    wordAr: "فيلم كاميرا",
+    hints: ["Old school photos", "Develop needed", "Roll of memories"],
+    hintsAr: ["صور قديمة", "يحتاج تطوير", "لفة ذكريات"],
+    category: "objects",
+    image: "🎞️"
+},
+{
+    word: "VIDEO TAPE",
+    wordAr: "شريط فيديو",
+    hints: ["Rewind needed", "VCR player", "Nostalgic media"],
+    hintsAr: ["يحتاج إعادة لف", "مشغل في سي آر", "وسائط حنين"],
+    category: "objects",
+    image: "📼"
+},
+{
+    word: "CD",
+    wordAr: "سي دي",
+    hints: ["Shiny disc", "Music storage", "Skip prone"],
+    hintsAr: ["قرص لامع", "تخزين الموسيقى", "عرضة للتخطي"],
+    category: "objects",
+    image: "💿"
+},
+{
+    word: "FLOPPY DISK",
+    wordAr: "قرص مرن",
+    hints: ["Save icon", "Old storage", "Click sound"],
+    hintsAr: ["أيقونة الحفظ", "تخزين قديم", "صوت النقر"],
+    category: "objects",
+    image: "💾"
+},
+{
+    word: "PRINTER",
+    wordAr: "طابعة",
+    hints: ["Paper out", "Ink cartridges", "Jam problem"],
+    hintsAr: ["انتهاء الورق", "خراطيش الحبر", "مشكلة التعطل"],
+    category: "objects",
+    image: "🖨️"
+},
+{
+    word: "SCANNER",
+    wordAr: "ماسح ضوئي",
+    hints: ["Document copy", "Flatbed style", "Digitization"],
+    hintsAr: ["نسخة المستند", "نمط المسطح", "رقمنة"],
+    category: "objects",
+    image: "📄"
+},
+{
+    word: "WEBCAM",
+    wordAr: "كاميرا ويب",
+    hints: ["Video calls", "Computer mounted", "Red light on"],
+    hintsAr: ["مكالمات الفيديو", "مثبت على الحاسوب", "الضوء الأحمر يعمل"],
+    category: "objects",
+    image: "📹"
+},
+{
+    word: "ROUTER",
+    wordAr: "موجه",
+    hints: ["WiFi signal", "Blinking lights", "Internet magic"],
+    hintsAr: ["إشارة واي فاي", "أضواء وامضة", "سحر الإنترنت"],
+    category: "objects",
+    image: "📡"
+},
+{
+    word: "HARD DRIVE",
+    wordAr: "قرص صلب",
+    hints: ["Data storage", "Spinning disk", "Click of death"],
+    hintsAr: ["تخزين البيانات", "قرص دوار", "نقر الموت"],
+    category: "objects",
+    image: "💽"
+},
+{
+    word: "USB",
+    wordAr: "يو إس بي",
+    hints: ["Flash drive", "Plug and play", "Tiny storage"],
+    hintsAr: ["محرك فلاش", "شغل وشغّل", "تخزين صغير"],
+    category: "objects",
+    image: "💾"
+},
+{
+    word: "MOUSE",
+    wordAr: "ماوس",
+    hints: ["Computer pointer", "Left click", "Scroll wheel"],
+    hintsAr: ["مؤشر الحاسوب", "نقر يسار", "عجلة التمرير"],
+    category: "objects",
+    image: "🖱️"
+},
+{
+    word: "KEYBOARD",
+    wordAr: "لوحة مفاتيح",
+    hints: ["QWERTY layout", "Clickety clack", "Backspace key"],
+    hintsAr: ["تخطيط كويرتي", "نقرات متتالية", "مفتاح مسافة للخلف"],
+    category: "objects",
+    image: "⌨️"
+},
+{
+    word: "MONITOR",
+    wordAr: "شاشة",
+    hints: ["Display screen", "HD resolution", "Power button"],
+    hintsAr: ["شاشة العرض", "دقة عالية", "زر الطاقة"],
+    category: "objects",
+    image: "🖥️"
+},
+{
+    word: "PROJECTOR",
+    wordAr: "عرض",
+    hints: ["Movie nights", "Focus knob", "Big screen image"],
+    hintsAr: ["ليالي الأفلام", "مقبض التركيز", "صورة شاشة كبيرة"],
+    category: "objects",
+    image: "📽️"
+},
+{
+    word: "VR HEADSET",
+    wordAr: "خوذة واقع افتراضي",
+    hints: ["Virtual world", "Head mounted", "360 view"],
+    hintsAr: ["عالم افتراضي", "مثبت على الرأس", "رؤية 360 درجة"],
+    category: "objects",
+    image: "🥽"
+},
+{
+    word: "GAMEPAD",
+    wordAr: "جهاز تحكم ألعاب",
+    hints: ["Joystick control", "Button mashing", "Console companion"],
+    hintsAr: ["تحكم عصا التحكم", "ضغط الأزرار", "رفيق الكونسول"],
+    category: "objects",
+    image: "🎮"
+},
+{
+    word: "JOYSTICK",
+    wordAr: "عصا تحكم",
+    hints: ["Arcade style", "Flight control", "Retro gaming"],
+    hintsAr: ["نمط الأركيد", "تحكم الطيران", "ألعاب رجعية"],
+    category: "objects",
+    image: "🕹️"
+},
+{
+    word: "CASHLESS",
+    wordAr: "دفع نقدي",
+    hints: ["Money payment", "Bill acceptor", "Change return"],
+    hintsAr: ["دفع المال", "قابلية فواتير", "إعادة الفكة"],
+    category: "objects",
+    image: "🏧"
+},
+{
+    word: "VENDING MACHINE",
+    wordAr: "آلة بيع",
+    hints: ["Snack dispenser", "Coin slot", "Spiral delivery"],
+    hintsAr: ["موزع الوجبات الخفيفة", "فتحة العملات", "توصيل لولبي"],
+    category: "objects",
+    image: "🥤"
+},
 
     // ===================== Celebrities =====================
+    
     {
-        word: "BEYONCE",
-        wordAr: "بيونسيه",
-        hints: ["American singer", "Destiny's Child", "Single Ladies dance"],
-        hintsAr: ["مغنية أمريكية", "دستينيز تشايلد", "رقصة سينجل لاديز"],
+        word: "IDRIS ELBA",
+        wordAr: "إدريس إلبا",
+        hints: ["British actor who played Nelson Mandela", "Starred in 'Luther' TV series", "Time magazine's 100 most influential people"],
+        hintsAr: ["ممثل بريطاني جسد شخصية نيلسون مانديلا", "بطَل مسلسل 'لوثر'", "ضمن قائمة مجلة تايم لأكثر 100 شخص تأثيراً"],
         category: "celebrities",
-        image: "👑"
+        image: "images/celebrities/idris_elba.jpg"
     },
     {
-        word: "LEBRON JAMES",
-        wordAr: "ليبرون جيمس",
-        hints: ["NBA superstar", "Four championships", "King James nickname"],
-        hintsAr: ["نجم NBA", "أربع بطولات", "لقب الملك جيمس"],
+        word: "MAHER ZAIN",
+        wordAr: "ماهر زين",
+        hints: ["Swedish-Lebanese Islamic singer", "His song 'Ya Nabi Salam Alayka' went viral", "Has over 10 million album sales worldwide"],
+        hintsAr: ["مغني إسلامي سويدي-لبناني", "أغنيته 'يا نبي سلام عليك' انتشرت على نطاق واسع", "بيع من ألبوماته أكثر من 10 ملايين نسخة عالمياً"],
         category: "celebrities",
-        image: "🏀"
+        image: "images/celebrities/maher_zain.jpg"
     },
     {
-        word: "CRISTIANO RONALDO",
-        wordAr: "كريستيانو رونالدو",
-        hints: ["Portuguese footballer", "Siu celebration", "Multiple Ballon d'Or"],
-        hintsAr: ["لاعب كرة قدم برتغالي", "احتفال سيو", "كرة ذهبية متعددة"],
+        word: "MOHAMMED ASSAF",
+        wordAr: "محمد عساف",
+        hints: ["Won Arab Idol season 2 in 2013", "Appointed UNRWA Regional Youth Ambassador", "Performed for Palestinian refugees"],
+        hintsAr: ["فاز بالموسم الثاني من أراب آيدول عام 2013", "عُين سفيراً إقليمياً للشباب في الأونروا", "غنى للاجئين الفلسطينيين"],
         category: "celebrities",
-        image: "⚽"
+        image: "images/celebrities/mohammed_assaf.jpg"
     },
     {
-        word: "LIONEL MESSI",
-        wordAr: "ليونيل ميسي",
-        hints: ["Argentine forward", "Barcelona legend", "Seven Ballon d'Or"],
-        hintsAr: ["مهاجم أرجنتيني", "أسطورة برشلونة", "سبع كرات ذهبية"],
+        word: "HAMDAN MOHAMMED",
+        wordAr: "حمدان محمد",
+        hints: ["Crown Prince of Dubai", "Known as Fazza the poet", "Deputy ruler and philanthropist"],
+        hintsAr: ["ولي عهد دبي", "معروف باسم الشاعر فزاع", "نائب الحاكم وراعي أعمال خيرية"],
         category: "celebrities",
-        image: "🌟"
+        image: "images/celebrities/hamdan_mohammed.jpg"
+    },
+  
+    {
+        word: "AHMED HELMY",
+        wordAr: "أحمد حلمي",
+        hints: ["Egyptian actor and UNICEF Goodwill Ambassador", "Known for family-friendly comedies", "Advocate for children's education"],
+        hintsAr: ["ممثل مصري وسفير النوايا الحسنة لليونيسف", "معروف بالكوميديا العائلية النظيفة", "مدافع عن تعليم الأطفال"],
+        category: "celebrities",
+        image: "images/celebrities/ahmed_helmy.jpg"
     },
     {
-        word: "TAYLOR SWIFT",
-        wordAr: "تايلور سويفت",
-        hints: ["Songwriter", "Era Tours", "Country to pop transition"],
-        hintsAr: ["كاتبة أغاني", "جولات العصور", "انتقال من الريف إلى البوب"],
+        word: "TARIQ RAMADAN",
+        wordAr: "طارق رمضان",
+        hints: ["Swiss Muslim academic and philosopher", "Grandson of Hassan al-Banna", "Professor of Contemporary Islamic Studies at Oxford"],
+        hintsAr: ["أكاديمي وفيلسوف مسلم سويسري", "حفيد حسن البنا", "أستاذ الدراسات الإسلامية المعاصرة في أكسفورد"],
         category: "celebrities",
-        image: "🎤"
+        image: "images/celebrities/tariq_ramadan.jpg"
+    },
+   
+  
+    {
+        word: "KEANU REEVES",
+        wordAr: "كيانو ريفز",
+        hints: ["Actor who played Neo in 'The Matrix'", "Founded charity for cancer research", "Known for riding subway like regular person"],
+        hintsAr: ["ممثل جسد شخصية نيو في 'المصفوفة'", "أسس جمعية خيرية لأبحاث السرطان","معروف بركوب المترو مثل الشخص العادي"],
+        category: "celebrities",
+        image: "images/celebrities/keanu_reeves.jpg"
+    },
+    //
+    
+    {
+        word: "SHEIKH ABDULRAHMAN AL-SUDAIS",
+        wordAr: "الشيخ عبد الرحمن السديس",
+        hints: ["Imam of Masjid al-Haram", "Known for emotional Quran recitations", "Led Taraweeh prayers at the Kaaba"],
+        hintsAr: ["إمام الحرم المكي", "معروف بتلاوات القرآن المؤثرة", "أم صلاة التراويح بالكعبة"],
+        category: "celebrities",
+        image: "images/celebrities/alsudais.jpg"
     },
     {
-        word: "ELON MUSK",
-        wordAr: "إيلون ماسك",
-        hints: ["Tesla CEO", "SpaceX founder", "Twitter acquisition"],
-        hintsAr: ["رئيس Tesla", "مؤسس SpaceX", "استحواذ تويتر"],
+        word: "SHEIKH MISHARY AL-AFASY",
+        wordAr: "الشيخ مشاري العفاسي",
+        hints: ["Kuwaiti Quran reciter", "Voice of Quran radio stations", "Millions follow his recitations"],
+        hintsAr: ["قارئ قرآن كويتي", "صوت إذاعات القرآن", "ملايين يتابعون تلاواته"],
         category: "celebrities",
-        image: "🚀"
+        image: "images/celebrities/afasy.jpg"
     },
     {
-        word: "ROBERT DOWNEY JR",
-        wordAr: "روبرت داوني جونيور",
-        hints: ["Iron Man role", "MCU actor", "Oscar nominee"],
-        hintsAr: ["دور الرجل الحديدي", "ممثل MCU", "مرشح للأوسكار"],
+        word: "SALIH AL-JAAFARAOUI",
+        wordAr: "صالح الجعفراوي",
+        hints: ["Palestinian journalist killed in 2024", "Covered Gaza conflict", "Worked for Al Jazeera"],
+        hintsAr: ["صحفي فلسطيني استشهد 2024", "غطى حرب غزة", "عمل لقناة الجزيرة"],
         category: "celebrities",
-        image: "🦸"
+        image: "images/celebrities/salah_aljaafar.jpg"
     },
     {
-        word: "OPRAH WINFREY",
-        wordAr: "أوبرا وينفري",
-        hints: ["Talk show host", "Media empire", "Book club influence"],
-        hintsAr: ["مضيف برنامج حواري", "إمبراطورية إعلامية", "تأثير نادي الكتاب"],
+        word: "ADEL EMAM",
+        wordAr: "عادل إمام",
+        hints: ["Egyptian comedy legend", "Starred in 'The Yacoubian Building'", "UN Goodwill Ambassador"],
+        hintsAr: ["أسطورة الكوميديا المصرية", "بطَل فيلم 'عمارة يعقوبيان'", "سفير أممي"],
         category: "celebrities",
-        image: "📺"
+        image: "images/celebrities/adel_emam.jpg"
+    },
+ 
+    {
+        word: "JIM CARREY",
+        wordAr: "جيم كاري",
+        hints: ["Canadian comedy actor", "Known for 'The Mask'", "Famous facial expressions"],
+        hintsAr: ["ممثل كوميدي كندي", "معروف بفيلم 'القناع'", "تعبيرات وجهه شهيرة"],
+        category: "celebrities",
+        image: "images/celebrities/jim_carrey.jpg"
     },
     {
-        word: "TOM CRUISE",
-        wordAr: "توم كروز",
-        hints: ["Mission Impossible", "Stunt performing", "Scientology association"],
-        hintsAr: ["مهمة مستحيلة", "أداء حركات بهلوانية", "ارتباط بالساينتولوجي"],
+        word: "JACKIE CHAN",
+        wordAr: "جاكي شان",
+        hints: ["Hong Kong action star", "Does his own stunts", "UNICEF Goodwill Ambassador"],
+        hintsAr: ["نجم الأكشن من هونغ كونغ", "يؤدي مشاهد الخطورة بنفسه", "سفير يونيسف"],
         category: "celebrities",
-        image: "🎬"
+        image: "images/celebrities/jackie_chan.jpg"
     },
     {
-        word: "BRAD PITT",
-        wordAr: "براد بيت",
-        hints: ["Fight Club", "Oscar winner", "Plan B Productions"],
-        hintsAr: ["نادي القتال", "فائز بجائزة الأوسكار", "إنتاجات Plan B"],
+        word: "MORGAN FREEMAN",
+        wordAr: "مورجان فريمان",
+        hints: ["American actor with deep voice", "Narrated many documentaries", "Oscar winner at age 67"],
+        hintsAr: ["ممثل أمريكي بصوت عميق", "روى العديد من الوثائقيات", "فاز بأوسكار بعمر 67"],
         category: "celebrities",
-        image: "🎭"
+        image: "images/celebrities/morgan_freeman.jpg"
     },
-    {
-        word: "ANGELINA JOLIE",
-        wordAr: "أنجلينا جولي",
-        hints: ["Tomb Raider", "UNHCR ambassador", "Brangelina relationship"],
-        hintsAr: ["تومب رايدر", "سفيرة UNHCR", "علاقة برانجلينا"],
-        category: "celebrities",
-        image: "🦸♀️"
-    },
-    {
-        word: "KANYE WEST",
-        wordAr: "كانييه ويست",
-        hints: ["Yeezy brand", "Grammy awards", "Controversial figure"],
-        hintsAr: ["علامة Yeezy", "جوائز Grammy", "شخصية مثيرة للجدل"],
-        category: "celebrities",
-        image: "🎧"
-    },
+  
+  
+
     // ===================== Flags =====================
-{
+,{
   word: "BOLIVIA FLAG",
   wordAr: "علم بوليفيا",
   hints: ["Red yellow green", "Horizontal stripes", "South America"],
@@ -1198,6 +3061,336 @@ const words = [
     category: "sports",
     image: "⛷️"
 },
+{
+    word: "BASEBALL",
+    wordAr: "بيسبول",
+    hints: ["Nine innings", "Home run", "Batter and pitcher"],
+    hintsAr: ["تسع أشواط", "ضربة منزلية", "ضارب الكرة وراميها"],
+    category: "sports",
+    image: "⚾"
+},
+{
+    word: "RUGBY",
+    wordAr: "رجبي",
+    hints: ["Oval ball", "Try scoring", "Physical contact"],
+    hintsAr: ["كرة بيضاوية", "تسجيل المحاولة", "اتصال جسدي"],
+    category: "sports",
+    image: "🏉"
+},
+{
+    word: "TABLE TENNIS",
+    wordAr: "تنس الطاولة",
+    hints: ["Ping pong", "Small paddle", "Fast rallies"],
+    hintsAr: ["بينغ بونغ", "مضرب صغير", "تبادلات سريعة"],
+    category: "sports",
+    image: "🏓"
+},
+{
+    word: "BADMINTON",
+    wordAr: "ريشة الطائر",
+    hints: ["Shuttlecock", "Light racket", "Net game"],
+    hintsAr: ["الريشة", "مضرب خفيف", "لعبة شبكة"],
+    category: "sports",
+    image: "🏸"
+},
+{
+    word: "HOCKEY",
+    wordAr: "هوكي",
+    hints: ["Ice surface", "Puck shooting", "Stick handling"],
+    hintsAr: ["سطح جليدي", "رمي القرص", "تحريك المضرب"],
+    category: "sports",
+    image: "🏒"
+},
+{
+    word: "GYMNASTICS",
+    wordAr: "جمباز",
+    hints: ["Balance beam", "Floor routine", "Olympic rings"],
+    hintsAr: ["عارضة التوازن", "تمرين الأرضية", "حلقات أولمبية"],
+    category: "sports",
+    image: "🤸"
+},
+{
+    word: "MARTIAL ARTS",
+    wordAr: "فنون قتالية",
+    hints: ["Karate belt", "Judo throws", "Kung fu moves"],
+    hintsAr: ["حزام الكاراتيه", "رميات الجودو", "حركات الكونغ فو"],
+    category: "sports",
+    image: "🥋"
+},
+{
+    word: "CYCLING",
+    wordAr: "سباق الدراجات",
+    hints: ["Tour de France", "Peloton formation", "Mountain stages"],
+    hintsAr: ["طواف فرنسا", "تشكيل البلوتون", "مراحل الجبل"],
+    category: "sports",
+    image: "🚴"
+},
+{
+    word: "ATHLETICS",
+    wordAr: "ألعاب القوى",
+    hints: ["Track and field", "Sprint races", "Long jump"],
+    hintsAr: ["المضمار والميدان", "سباقات العدو", "القفز الطويل"],
+    category: "sports",
+    image: "🏃"
+},
+{
+    word: "WEIGHTLIFTING",
+    wordAr: "رفع الأثقال",
+    hints: ["Snatch lift", "Clean and jerk", "Heavy barbells"],
+    hintsAr: ["رفعة الخطف", "النتر والدفع", "أثقال ثقيلة"],
+    category: "sports",
+    image: "🏋️"
+},
+{
+    word: "SURFING",
+    wordAr: "ركوب الأمواج",
+    hints: ["Ocean waves", "Surfboard", "Pipeline break"],
+    hintsAr: ["أمواج المحيط", "لوح ركوب الأمواج", "كسر الأنبوب"],
+    category: "sports",
+    image: "🏄"
+},
+{
+    word: "SNOWBOARDING",
+    wordAr: "التزلج على اللوح",
+    hints: ["Halfpipe tricks", "Mountain slopes", "Winter X Games"],
+    hintsAr: ["حركات النصف الأنبوب", "منحدرات الجبل", "ألعاب الشتاء X"],
+    category: "sports",
+    image: "🏂"
+},
+{
+    word: "SKATEBOARDING",
+    wordAr: "التزلج على الألواح",
+    hints: ["Ollie trick", "Skatepark rails", "Street style"],
+    hintsAr: ["حركة أولي", "قضبان ملعب التزلج", "نمط الشارع"],
+    category: "sports",
+    image: "🛹"
+},
+{
+    word: "CLIMBING",
+    wordAr: "تسلق",
+    hints: ["Rock faces", "Carabiner clips", "Bouldering problems"],
+    hintsAr: ["وجوه الصخور", "مشابك الكارابينر", "مشاكل التسلق على الصخور"],
+    category: "sports",
+    image: "🧗"
+},
+{
+    word: "ARCHERY",
+    wordAr: "رماية",
+    hints: ["Bow and arrow", "Bullseye target", "Robin Hood legend"],
+    hintsAr: ["قوس وسهم", "هدف مركز الهدف", "أسطورة روبن هود"],
+    category: "sports",
+    image: "🏹"
+},
+{
+    word: "FENCING",
+    wordAr: "مبارزة",
+    hints: ["Foil weapon", "En garde position", "Touch scoring"],
+    hintsAr: ["سلاح الشيش", "وضع الاستعداد", "تسجيل اللمسات"],
+    category: "sports",
+    image: "🤺"
+},
+{
+    word: "HANDBALL",
+    wordAr: "كرة اليد",
+    hints: ["7 players", "Court game", "Throw goals"],
+    hintsAr: ["7 لاعبين", "لعبة ملعب", "رمي الأهداف"],
+    category: "sports",
+    image: "🤾"
+},
+{
+    word: "WRESTLING",
+    wordAr: "مصارعة",
+    hints: ["Mat combat", "Pin fall", "Greco-Roman style"],
+    hintsAr: ["قتال على الحصيرة", "سقوط التدبيس", "أسلوب يوناني روماني"],
+    category: "sports",
+    image: "🤼"
+},
+{
+    word: "JAVELIN",
+    wordAr: "رمي الرمح",
+    hints: ["Long throw", "Athletics event", "Running approach"],
+    hintsAr: ["رمية طويلة", "حدث ألعاب القوى", "اقتراب الجري"],
+    category: "sports",
+    image: "🎯"
+},
+{
+    word: "DISCUS",
+    wordAr: "رمي القرص",
+    hints: ["Circle spin", "Ancient Greek", "Heavy disc"],
+    hintsAr: ["دوران الدائرة", "يوناني قديم", "قرص ثقيل"],
+    category: "sports",
+    image: "🥏"
+},
+{
+    word: "BOWLING",
+    wordAr: "بولينغ",
+    hints: ["10 pins", "Alley lane", "Strike spare"],
+    hintsAr: ["10 دبابيس", "ممر الصالة", "ضربة احتياطية"],
+    category: "sports",
+    image: "🎳"
+},
+{
+    word: "DARTS",
+    wordAr: "سهام",
+    hints: ["Pub game", "Triple 20", "Bullseye aim"],
+    hintsAr: ["لعبة الحانة", "ثلاثي 20", "توجيه نحو مركز الهدف"],
+    category: "sports",
+    image: "🎯"
+},
+{
+    word: "HORSE RACING",
+    wordAr: "سباق الخيل",
+    hints: ["Jockey rider", "Derby event", "Finish line"],
+    hintsAr: ["الفارس", "حدث الديربي", "خط النهاية"],
+    category: "sports",
+    image: "🏇"
+},
+{
+    word: "ROWING",
+    wordAr: "تجذيف",
+    hints: ["Crew team", "Oar blades", "River racing"],
+    hintsAr: ["فريق الطاقم", "شفرات المجذاف", "سباق النهر"],
+    category: "sports",
+    image: "🚣"
+},
+{
+    word: "SAILING",
+    wordAr: "إبحار",
+    hints: ["Wind power", "Regatta race", "Sail trimming"],
+    hintsAr: ["طاقة الرياح", "سباق ريجاتا", "تقليم الشراع"],
+    category: "sports",
+    image: "⛵"
+},
+{
+    word: "DIVING",
+    wordAr: "غطس",
+    hints: ["Platform height", "Synchronized pairs", "Olympic sport"],
+    hintsAr: ["ارتفاع المنصة", "أزواج متزامنة", "رياضة أولمبية"],
+    category: "sports",
+    image: "🤿"
+},
+{
+    word: "TRIATHLON",
+    wordAr: "ثلاثي",
+    hints: ["Swim bike run", "Ironman event", "Endurance test"],
+    hintsAr: ["سباحة دراجة جري", "حدث رجل حديدي", "اختبار التحمل"],
+    category: "sports",
+    image: "🏊🚴🏃"
+},
+{
+    word: "MOUNTAIN BIKING",
+    wordAr: "سباق الجبال",
+    hints: ["Trail riding", "Downhill speed", "Suspension bikes"],
+    hintsAr: ["ركوب الدروب", "سرعة النزول", "دراجات معلقة"],
+    category: "sports",
+    image: "🚵"
+},
+{
+    word: "PARACHUTING",
+    wordAr: "القفز المظلي",
+    hints: ["Skydiving", "Free fall", "Parachute deployment"],
+    hintsAr: ["القفز الحر", "سقوط حر", "نشر المظلة"],
+    category: "sports",
+    image: "🪂"
+},
+{
+    word: "KAYAKING",
+    wordAr: "التجديف",
+    hints: ["Paddle sport", "Whitewater rapids", "Solo or tandem"],
+    hintsAr: ["رياضة التجديف", "منحدرات المياه البيضاء", "فردي أو ثنائي"],
+    category: "sports",
+    image: "🛶"
+},
+{
+    word: "BIATHLON",
+    wordAr: "البياثلون",
+    hints: ["Ski and shoot", "Winter sport", "Rifle carrying"],
+    hintsAr: ["تزلج واطلاق", "رياضة شتوية", "حمل البندقية"],
+    category: "sports",
+    image: "🎿🎯"
+},
+{
+    word: "CURLING",
+    wordAr: "كيرلنغ",
+    hints: ["Ice sliding", "Stone polishing", "Sweeping brooms"],
+    hintsAr: ["انزلاق الجليد", "تلميع الحجر", "مكانس الكنس"],
+    category: "sports",
+    image: "🥌"
+},
+{
+    word: "LUGE",
+    wordAr: "الزحافات",
+    hints: ["Ice track", "Lying down", "Winter sliding"],
+    hintsAr: ["مسار جليدي", "الاستلقاء", "انزلاق شتوي"],
+    category: "sports",
+    image: "🛷"
+},
+{
+    word: "BOBSLED",
+    wordAr: "الزلاجة الجماعية",
+    hints: ["Team sled", "Ice chute", "Winter Olympics"],
+    hintsAr: ["مزلقة الفريق", "مزلق جليدي", "الألعاب الأولمبية الشتوية"],
+    category: "sports",
+    image: "🛷"
+},
+{
+    word: "POLO",
+    wordAr: "بولو",
+    hints: ["Horse sport", "Mallet hitting", "Equestrian game"],
+    hintsAr: ["رياضة الخيل", "ضرب المطرقة", "لعبة الفروسية"],
+    category: "sports",
+    image: "🐎"
+},
+{
+    word: "LACROSSE",
+    wordAr: "لاكروس",
+    hints: ["Stick with net", "Field game", "Native American origin"],
+    hintsAr: ["عصا بشبكة", "لعبة ميدان", "أصل أمريكي أصلي"],
+    category: "sports",
+    image: "🥍"
+},
+{
+    word: "PING PONG",
+    wordAr: "بينغ بونغ",
+    hints: ["Table tennis", "Fast exchanges", "Small ball"],
+    hintsAr: ["تنس الطاولة", "تبادلات سريعة", "كرة صغيرة"],
+    category: "sports",
+    image: "🏓"
+},
+{
+    word: "TAEKWONDO",
+    wordAr: "التايكوندو",
+    hints: ["Korean martial art", "Kicking focused", "Colored belts"],
+    hintsAr: ["فنون قتالية كورية", "مركز على الركل", "أحزمة ملونة"],
+    category: "sports",
+    image: "🥋"
+},
+{
+    word: "JUDO",
+    wordAr: "الجودو",
+    hints: ["Throwing techniques", "Japanese origin", "Gi uniform"],
+    hintsAr: ["تقنيات الرمي", "أصل ياباني", "زي الجي"],
+    category: "sports",
+    image: "🥋"
+},
+{
+    word: "KARATE",
+    wordAr: "الكاراتيه",
+    hints: ["Striking art", "Kata forms", "Black belt"],
+    hintsAr: ["فن الضرب", "أشكال الكاتا", "الحزام الأسود"],
+    category: "sports",
+    image: "🥋"
+},
+{
+    word: "SUMO",
+    wordAr: "السومو",
+    hints: ["Japanese wrestling", "Heavy athletes", "Ring out"],
+    hintsAr: ["مصارعة يابانية", "رياضيون ثقيلون", "خارج الحلبة"],
+    category: "sports",
+    image: "👘"
+},
+
+
 // ===================== Anime =====================
 {
     word: "DRAGON BALL",
@@ -1205,7 +3398,7 @@ const words = [
     hints: ["Goku protagonist", "Super Saiyan", "Dragon Balls wish"],
     hintsAr: ["بطل غوكو", "سوبر سايان", "أمنية كرات التنين"],
     category: "anime",
-    image: "🐉"
+    image: "images/anime/dragonball.jpg"
 },
 {
     word: "NARUTO",
@@ -1213,7 +3406,7 @@ const words = [
     hints: ["Ninja academy", "Rasengan technique", "Hokage dream"],
     hintsAr: ["أكاديمية النينجا", "تقنية الراسينغان", "حلم الهوكاجي"],
     category: "anime",
-    image: "🍥"
+    image: "images/anime/naruto.jpg"
 },
 {
     word: "ONE PIECE",
@@ -1221,7 +3414,7 @@ const words = [
     hints: ["Straw Hat crew", "Devil Fruits", "Finding One Piece"],
     hintsAr: ["طاقم قبعة القش", "فواكه الشيطان", "البحث عن الكنز"],
     category: "anime",
-    image: "🏴‍☠️"
+    image: "images/anime/onepiece.jpg"
 },
 {
     word: "ATTACK ON TITAN",
@@ -1229,7 +3422,7 @@ const words = [
     hints: ["Eren Yeager", "Titan shifters", "Wall Maria"],
     hintsAr: ["إيرين ييغر", "محوّلو العمالقة", "جدار ماريا"],
     category: "anime",
-    image: "👹"
+    image: "images/anime/attackontitan.jpg"
 },
 {
     word: "DEATH NOTE",
@@ -1237,7 +3430,7 @@ const words = [
     hints: ["Light Yagami", "Shinigami Ryuk", "Write names to kill"],
     hintsAr: ["لايت ياغامي", "شينغامي ريو", "كتابة الأسماء للقتل"],
     category: "anime",
-    image: "📓"
+    image: "images/anime/deathnote.jpg"
 },
 {
     word: "DEMON SLAYER",
@@ -1245,7 +3438,7 @@ const words = [
     hints: ["Tanjiro Kamado", "Breathing techniques", "Nezuko sister"],
     hintsAr: ["تانجيرو كامادو", "تقنيات التنفس", "الأخت نيزوكو"],
     category: "anime",
-    image: "🗡️"
+    image: "images/anime/demonslayer.jpg"
 },
 {
     word: "MY HERO ACADEMIA",
@@ -1253,7 +3446,7 @@ const words = [
     hints: ["Izuku Midoriya", "One For All quirk", "U.A. High School"],
     hintsAr: ["إيزوكو ميدوريا", "قوة ون فور أول", "مدرسة يو أيه الثانوية"],
     category: "anime",
-    image: "🎓"
+    image: "images/anime/myheroacademia.jpg"
 },
 {
     word: "POKEMON",
@@ -1261,7 +3454,7 @@ const words = [
     hints: ["Ash Ketchum", "Gotta catch 'em all", "Pikachu mascot"],
     hintsAr: ["آش كاتشوم", "اصطدهم جميعًا", "تميمة بيكاتشو"],
     category: "anime",
-    image: "⚡"
+    image: "images/anime/pokemon.jpg"
 },
 {
     word: "SPY X FAMILY",
@@ -1269,7 +3462,7 @@ const words = [
     hints: ["Loid Forger", "Anya mind-reading", "Found family comedy"],
     hintsAr: ["لُويد فورجر", "أنيا قارئة الأفكار", "كوميديا عائلة"],
     category: "anime",
-    image: "👨‍👩‍👧"
+    image: "images/anime/spyxfamily.jpg"
 },
 {
     word: "JUJUTSU KAISEN",
@@ -1277,12 +3470,351 @@ const words = [
     hints: ["Yuji Itadori", "Sukuna fingers", "Cursed energy"],
     hintsAr: ["يوجي إيتادوري", "أصابع سكونا", "الطاقة الملعونة"],
     category: "anime",
-    image: "👊"
+    image: "images/anime/jujutsukaisen.jpg"
+},
+{
+    word: "MIRAI NIKKI",
+    wordAr: "مذكرات المستقبل",
+    hints: ["Yuno Gasai", "Survival game", "Future diaries"],
+    hintsAr: ["يونو غاساي", "لعبة بقاء", "مذكرات المستقبل"],
+    category: "anime",
+    image: "images/anime/mirainikki.jpg"
+},
+{
+    word: "FIRE FORCE",
+    wordAr: "فرقة الإطفاء",
+    hints: ["Shinra Kusakabe", "Spontaneous combustion", "Fire soldiers"],
+    hintsAr: ["شينرا كوساكابي", "الاحتراق التلقائي", "جنود النار"],
+    category: "anime",
+    image: "images/anime/fireforce.jpg"
+},
+{
+    word: "KILL LA KILL",
+    wordAr: "كيل لا كيل",
+    hints: ["Ryuko Matoi", "Life fibers", "Scissor blade"],
+    hintsAr: ["ريوكو ماتوي", "ألياف الحياة", "شفرة المقص"],
+    category: "anime",
+    image: "images/anime/killlakill.jpg"
+},
+{
+    word: "RAGNA CRIMSON",
+    wordAr: "راغنا كريمسون",
+    hints: ["Ragna", "Dragon hunters", "Silverine princess"],
+    hintsAr: ["راغنا", "صيادو التنين", "الأميرة الفضية"],
+    category: "anime",
+    image: "images/anime/ragnacrimson.jpg"
+},
+{
+    word: "BLUE LOCK",
+    wordAr: "بلو لوك",
+    hints: ["Soccer survival", "Egoist strikers", "Isagi Yoichi"],
+    hintsAr: ["بقاء كرة القدم", "مهاجمون أنانيون", "إيساغي يوتشي"],
+    category: "anime",
+    image: "images/anime/bluelock.jpg"
+},
+{
+    word: "DETECTIVE CONAN",
+    wordAr: "المحقق كونان",
+    hints: ["Shrunken detective", "Mystery cases", "APTX 4869"],
+    hintsAr: ["محقق متقلص", "قضايا غامضة", "دواء التصغير"],
+    category: "anime",
+    image: "images/anime/detectiveconan.jpg"
+},
+{
+    word: "ONE PUNCH MAN",
+    wordAr: "ون بانش مان",
+    hints: ["Saitama", "Bald hero", "One punch victory"],
+    hintsAr: ["سايتاما", "بطل أصلع", "فوز بلكمة واحدة"],
+    category: "anime",
+    image: "images/anime/onepunchman.jpg"
+},
+{
+    word: "FULLMETAL ALCHEMIST",
+    wordAr: "الخيميائي الفولاذي",
+    hints: ["Elric brothers", "Equivalent exchange", "State alchemist"],
+    hintsAr: ["أخوة إلريك", "المقايضة المتكافئة", "خيميائي الدولة"],
+    category: "anime",
+    image: "images/anime/fullmetalalchemist.jpg"
+},
+{
+    word: "SWORD ART ONLINE",
+    wordAr: "سورد آرت أونلاين",
+    hints: ["VRMMORPG trap", "Kirito protagonist", "Aincrad floors"],
+    hintsAr: ["فخ لعبة واقع افتراضي", "بطل كيريتو", "طوابق أينكراد"],
+    category: "anime",
+    image: "images/anime/swordartonline.jpg"
+},
+{
+    word: "HUNTER X HUNTER",
+    wordAr: "هانتر × هانتر",
+    hints: ["Gon Freecss", "Hunter exam", "Nen abilities"],
+    hintsAr: ["غون فريكس", "امتحان الصياد", "قدرات النين"],
+    category: "anime",
+    image: "images/anime/hunterxhunter.jpg"
+},
+{
+    word: "TOKYO GHOUL",
+    wordAr: "طوكيو غول",
+    hints: ["Ken Kaneki", "Half-ghoul", "Coffee shop Anteiku"],
+    hintsAr: ["كين كانيكي", "نصف غول", "مقهى أنتيكو"],
+    category: "anime",
+    image: "images/anime/tokyoghoul.jpg"
+},
+{
+    word: "STEINS GATE",
+    wordAr: "شتاينز غيت",
+    hints: ["Time travel", "Mad scientist", "D-mails"],
+    hintsAr: ["السفر عبر الزمن", "عالم مجنون", "رسائل الزمن"],
+    category: "anime",
+    image: "images/anime/steinsgate.jpg"
+},
+{
+    word: "RE ZERO",
+    wordAr: "ري:زيرو",
+    hints: ["Subaru Natsuki", "Return by death", "Emilia half-elf"],
+    hintsAr: ["سوبارو ناتسوكي", "العودة بالموت", "إميليا نصف جنية"],
+    category: "anime",
+    image: "images/anime/rezero.jpg"
+},
+{
+    word: "NORAGAMI",
+    wordAr: "نوراغامي",
+    hints: ["God without shrine", "Yato god", "Regalia weapons"],
+    hintsAr: ["إله بدون ضريح", "الإله ياتو", "أسلحة ريغاليا"],
+    category: "anime",
+    image: "images/anime/noragami.jpg"
+},
+{
+    word: "AKAME GA KILL",
+    wordAr: "أكامة غا كيل",
+    hints: ["Night Raid assassins", "Imperial Arms", "Revolutionary army"],
+    hintsAr: ["قتلة نايت رايد", "أسلحة إمبراطورية", "جيش الثورة"],
+    category: "anime",
+    image: "images/anime/akamegakill.jpg"
+},
+{
+    word: "BLEACH",
+    wordAr: "بليتش",
+    hints: ["Ichigo Kurosaki", "Soul Reaper", "Zanpakuto sword"],
+    hintsAr: ["إيتشيجو كوروساكي", "جالب الأرواح", "سيف زانباكتو"],
+    category: "anime",
+    image: "images/anime/bleach.jpg"
+},
+{
+    word: "THE PROMISED NEVERLAND",
+    wordAr: "الأرض الموعودة",
+    hints: ["Grace Field House", "Demons farm", "Emma protagonist"],
+    hintsAr: ["دار غراس فيلد", "مزرعة الشياطين", "البطلة إيما"],
+    category: "anime",
+    image: "images/anime/thepromisedneverland.jpg"
+},
+{
+    word: "DR STONE",
+    wordAr: "دكتور ستون",
+    hints: ["Senku Ishigami", "Stone world", "Reviving civilization"],
+    hintsAr: ["سينكو إيشيغامي", "عالم حجري", "إحياء الحضارة"],
+    category: "anime",
+    image: "images/anime/drstone.jpg"
+},
+{
+    word: "DEATH PARADE",
+    wordAr: "موكب الموت",
+    hints: ["Quindecim bar", "Judging souls", "Arbiter Decim"],
+    hintsAr: ["حانة كوينديسيم", "محاكمة الأرواح", "الحكم ديسيم"],
+    category: "anime",
+    image: "images/anime/deathparade.jpg"
+},
+{
+    word: "BLACK CLOVER",
+    wordAr: "بلاك كلوفير",
+    hints: ["Asta no magic", "Yuno rival", "Magic knights"],
+    hintsAr: ["أستا بلا سحر", "المنافس يونو", "فرسان السحر"],
+    category: "anime",
+    image: "images/anime/blackclover.jpg"
+},
+{
+    word: "VINLAND SAGA",
+    wordAr: "ملحمة فاينلاند",
+    hints: ["Viking era", "Thorfinn revenge", "Askeladd mentor"],
+    hintsAr: ["عصر الفايكنغ", "ثورفينن المنتقم", "المعلم أسكلاد"],
+    category: "anime",
+    image: "images/anime/vinlandsaga.jpg"
+},
+{
+    word: "ANOTHER",
+    wordAr: "أنذر",
+    hints: ["Class 3 curse", "Mei Misaki", "Mystery deaths"],
+    hintsAr: ["لعنة الصف الثالث", "مي ميساكي", "وفيات غامضة"],
+    category: "anime",
+    image: "images/anime/another.jpg"
+},
+{
+    word: "FATE SERIES",
+    wordAr: "سلسلة فايت",
+    hints: ["Holy Grail War", "Servants summon", "Shirou Emiya"],
+    hintsAr: ["حرب الكأس المقدسة", "استدعاء الخدم", "شيرو إيميا"],
+    category: "anime",
+    image: "images/anime/fate.jpg"
+},
+{
+    word: "HAIKYUU",
+    wordAr: "هايكيو",
+    hints: ["Volleyball anime", "Hinata Shoyo", "Karasuno team"],
+    hintsAr: ["أنمي الكرة الطائرة", "هيناتا شويو", "فريق كاراسونو"],
+    category: "anime",
+    image: "images/anime/haikyuu.jpg"
+},
+{
+    word: "BUNGOU STRAY DOGS",
+    wordAr: "كلاب الشوارع الضالة",
+    hints: ["Armed Detective Agency", "Ability users", "Osamu Dazai"],
+    hintsAr: ["وكالة المحققين المسلحين", "مستخدمو القدرات", "أوسامو دازاي"],
+    category: "anime",
+    image: "images/anime/bungoustraydogs.jpg"
+},
+{
+    word: "DORORO",
+    wordAr: "دورورو",
+    hints: ["Hyakkimaru", "Stolen body parts", "Demon slayer"],
+    hintsAr: ["هياكيمارو", "أعضاء جسم مسروقة", "قاتل الشياطين"],
+    category: "anime",
+    image: "images/anime/dororo.jpg"
+},
+{
+    word: "KUROKO'S BASKETBALL",
+    wordAr: "كرة سلة كوروكو",
+    hints: ["Generation of Miracles", "Phantom sixth man", "Seirin High"],
+    hintsAr: ["جيل المعجزات", "اللاعب السادس الشبح", "ثانوية سيرين"],
+    category: "anime",
+    image: "images/anime/kurokosbasketball.jpg"
+},
+{
+    word: "ZANKYOU NO TERROR",
+    wordAr: "إرهاب الرنين",
+    hints: ["Tokyo terrorism", "Sphinx puzzles", "Nine and Twelve"],
+    hintsAr: ["إرهاب طوكيو", "ألغاز سفنكس", "ناين وتويلف"],
+    category: "anime",
+    image: "images/anime/zankyounoterror.jpg"
+},
+{
+    word: "BAKI",
+    wordAr: "باكي",
+    hints: ["Martial arts", "Underground arena", "Baki Hanma"],
+    hintsAr: ["فنون قتالية", "ساحة تحت الأرض", "باكي هانما"],
+    category: "anime",
+    image: "images/anime/baki.jpg"
+},
+{
+    word: "HAJIME NO IPPO",
+    wordAr: "هاجيمي نو إيبو",
+    hints: ["Boxing anime", "Makunouchi Ippo", "Dempsey Roll"],
+    hintsAr: ["أنمي الملاكمة", "ماكونوتشي إيبو", "لفة ديمبسي"],
+    category: "anime",
+    image: "images/anime/hajimenoippo.jpg"
+},
+{
+    word: "COWBOY BEBOP",
+    wordAr: "كاوبوي بيبوب",
+    hints: ["Space bounty hunters", "Jazz soundtrack", "Spike Spiegel"],
+    hintsAr: ["صيادو جوائز فضائيون", "موسيقى الجاز", "سبايك شبيغل"],
+    category: "anime",
+    image: "images/anime/cowboybebop.jpg"
 },
 
+{
+    word: "CODE GEASS",
+    wordAr: "كود جياس",
+    hints: ["Lelouch vi Britannia", "Geass power", "Knightmare frames"],
+    hintsAr: ["ليلوش في بريتانيا", "قوة الجياس", "أطر نايت مير"],
+    category: "anime",
+    image: "images/anime/codegeass.jpg"
+},
+{
+    word: "MOB PSYCHO 100",
+    wordAr: "موب سايكو 100",
+    hints: ["Shigeo Kageyama", "Esper powers", "100% emotion meter"],
+    hintsAr: ["شيغيو كاغياما", "قدرات نفسية", "مقياس عاطفة 100%"],
+    category: "anime",
+    image: "images/anime/mobpsycho100.jpg"
+},
+{
+    word: "CHAINSAW MAN",
+    wordAr: "تشاينسو مان",
+    hints: ["Denji protagonist", "Pochita devil", "Devil hunters"],
+    hintsAr: ["البطل دينجي", "الشيطان بوتشيتا", "صيادو الشياطين"],
+    category: "anime",
+    image: "images/anime/chainsawman.jpg"
+},
+{
+    word: "KIMETSU NO YAIBA",
+    wordAr: "نصل القضاء على الشياطين",
+    hints: ["Demon slayer corps", "Water breathing", "Hashira masters"],
+    hintsAr: ["فيلق قتلة الشياطين", "تنفس الماء", "سادة الهاشيرا"],
+    category: "anime",
+    image: "images/anime/kimetsunoyaiba.jpg"
+},
+{
+    word: "YOUR NAME",
+    wordAr: "اسمك",
+    hints: ["Body swapping", "Mitsuha Miyamizu", "Taki Tachibana"],
+    hintsAr: ["تبادل الأجساد", "ميتسوها مياميزو", "تاكي تاتشيبانا"],
+    category: "anime",
+    image: "images/anime/yourname.jpg"
+},
+{
+    word: "A SILENT VOICE",
+    wordAr: "صوت صامت",
+    hints: ["Shoya Ishida", "Shoko Nishimiya", "Bullying redemption"],
+    hintsAr: ["شويا إيشيدا", "شوكو نيشيميا", "توبة التنمر"],
+    category: "anime",
+    image: "images/anime/asilentvoice.jpg"
+},
+{
+    word: "VIOLET EVERGARDEN",
+    wordAr: "فيوليت إيفرغاردن",
+    hints: ["Auto Memory Doll", "Letter writer", "Post-war recovery"],
+    hintsAr: ["دمية الذاكرة الآلية", "كاتبة الرسائل", "الشفاء بعد الحرب"],
+    category: "anime",
+    image: "images/anime/violetevergarden.jpg"
+},
+{
+    word: "MADE IN ABYSS",
+    wordAr: "صنع في الهاوية",
+    hints: ["Abyss exploration", "Riko protagonist", "Curse of the abyss"],
+    hintsAr: ["استكشاف الهاوية", "البطلة ريكو", "لعنة الهاوية"],
+    category: "anime",
+    image: "images/anime/madeinabyss.jpg"
+},
+
+{
+    word: "BERSERK",
+    wordAr: "بيرسيرك",
+    hints: ["Guts swordsman", "Band of the Hawk", "Eclipse event"],
+    hintsAr: ["غاتس المبارز", "فرقة الصقر", "حدث الكسوف"],
+    category: "anime",
+    image: "images/anime/berserk.jpg"
+},
+
+{
+    word: "JOJO'S BIZARRE ADVENTURE",
+    wordAr: "مغامرات جوجو الغريبة",
+    hints: ["Stand powers", "Multiple generations", "Dio villain"],
+    hintsAr: ["قدرات الستاند", "أجيال متعددة", "الشرير ديو"],
+    category: "anime",
+    image: "images/anime/jojo.jpg"
+},
+
+{
+    word: "INUYASHA",
+    wordAr: "إينوياشا",
+    hints: ["Half-demon protagonist", "Shikon Jewel", "Kagome Higurashi"],
+    hintsAr: ["بطل نصف شيطان", "جوهرة الشيكون", "كاغومي هيغوراشي"],
+    category: "anime",
+    image: "images/anime/inuyasha.jpg"
+},
 
 ////// FOOTBALL PLAYERS //////
-
+// i will install the football players images later 
 {
     word: "KARIM BENZEMA",
     wordAr: "كريم بنزيما",

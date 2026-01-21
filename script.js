@@ -935,9 +935,10 @@ function generateImageGrid() {
     
     let imagePool = [];
     
-    // Create image pool
+    // Create image pool from ALL categories including football
     gameState.categories.forEach(category => {
         if (category === 'football') {
+            // Use FOOTBALL_PLAYERS array for football images
             FOOTBALL_PLAYERS.forEach(player => {
                 imagePool.push({
                     type: 'football',
@@ -948,22 +949,48 @@ function generateImageGrid() {
                 });
             });
         } else {
+            // Use words array for other categories
             const categoryWords = words.filter(w => w.category === category);
             categoryWords.forEach(word => {
-                imagePool.push({
-                    type: 'emoji',
-                    name: word.word,
-                    image: word.image || '❓',
-                    category: category,
-                    displayName: word.word // Removed Arabic text
-                });
+                if (word.image && (word.image.includes('images/') || word.image.includes('.jpeg') || word.image.includes('.jpg') || word.image.includes('.png'))) {
+                    // This is an actual image file
+                    imagePool.push({
+                        type: 'image',
+                        name: word.word,
+                        image: word.image,
+                        category: category,
+                        displayName: word.word
+                    });
+                } else {
+                    // This is an emoji or text
+                    imagePool.push({
+                        type: 'emoji',
+                        name: word.word,
+                        image: word.image || '❓',
+                        category: category,
+                        displayName: word.word
+                    });
+                }
             });
         }
     });
     
-    // Get 18 random items for 3x6 grid on mobile
+    // Get random items (18 for 3x6 grid on mobile, 16 for 4x4 on desktop)
     const isMobile = window.innerWidth <= 768;
-    const itemCount = isMobile ? 18 : 16; // 3x6 on mobile, 4x4 on desktop
+    const itemCount = isMobile ? 18 : 16;
+    
+    // Make sure we have enough items
+    if (imagePool.length < itemCount) {
+        // If not enough items, show message
+        imageGrid.innerHTML = `
+            <div class="loading-images" style="color: #ef4444;">
+                Not enough images in selected categories.<br>
+                Please select more categories or add more images.
+            </div>
+        `;
+        return;
+    }
+    
     const selectedItems = [...imagePool].sort(() => Math.random() - 0.5).slice(0, itemCount);
     
     // Initialize game state
@@ -1013,8 +1040,10 @@ function renderImageGrid(items) {
         content.style.display = 'flex';
         content.style.alignItems = 'center';
         content.style.justifyContent = 'center';
+        content.style.overflow = 'hidden';
         
-        if (item.type === 'football') {
+        if (item.type === 'football' || item.type === 'image') {
+            // For actual images (football players and other image files)
             const img = document.createElement('img');
             img.src = item.image;
             img.alt = item.name;
@@ -1024,21 +1053,29 @@ function renderImageGrid(items) {
             img.style.height = '100%';
             img.style.borderRadius = '4px';
             img.onerror = function() {
+                // If image fails to load, show a fallback
                 this.style.display = 'none';
                 const fallback = document.createElement('div');
                 fallback.className = 'emoji-display';
-                fallback.textContent = '⚽';
+                fallback.textContent = item.type === 'football' ? '⚽' : '🖼️';
                 fallback.style.fontSize = isMobile ? '2.5rem' : '3rem';
                 fallback.style.padding = '10px';
+                fallback.style.display = 'flex';
+                fallback.style.alignItems = 'center';
+                fallback.style.justifyContent = 'center';
+                fallback.style.height = '100%';
+                fallback.style.width = '100%';
                 content.appendChild(fallback);
             };
             content.appendChild(img);
         } else {
+            // For emojis
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
             emojiDisplay.textContent = item.image;
             emojiDisplay.style.fontSize = isMobile ? '2.5rem' : '3rem';
             emojiDisplay.style.height = '100%';
+            emojiDisplay.style.width = '100%';
             emojiDisplay.style.display = 'flex';
             emojiDisplay.style.alignItems = 'center';
             emojiDisplay.style.justifyContent = 'center';
@@ -1089,7 +1126,7 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Name label - Only English, no Arabic
+        // Name label
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
         nameLabel.style.cssText = `
