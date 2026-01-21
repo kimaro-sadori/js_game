@@ -436,11 +436,13 @@ function selectGameMode(mode) {
     
     // Update timer display based on mode
     const timerDisplay = document.getElementById('timerDisplay');
+    const currentTimerText = document.getElementById('currentTimerText');
     const timerTextElement = document.getElementById('timerText');
     
     if (mode === 'images') {
         // For Guess the Image mode ONLY: show special message
-        if (timerDisplay) {
+        if (timerDisplay && currentTimerText) {
+            // Replace the entire content
             timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
         }
         if (timerTextElement) {
@@ -495,19 +497,29 @@ function selectTimer(seconds) {
 function updateTimerDisplay() {
     const timerText = gameState.timer === 0 ? 'No timer' : formatTime(gameState.timer);
     
-    // Update ONLY the timerText element
+    // Update timerText in start-section
     const timerTextElement = document.getElementById('timerText');
-    const timerDisplay = document.getElementById('timerDisplay');
-    
     if (timerTextElement) {
         timerTextElement.textContent = timerText;
     }
     
-    // Update timerDisplay if NOT in Guess the Image mode
-    if (gameState.gameMode !== 'images' && timerDisplay) {
-        timerDisplay.innerHTML = timerText; // Just set the text
+    // Update timerDisplay in settings panel - but handle Guess the Image mode
+    const timerDisplay = document.getElementById('timerDisplay');
+    if (timerDisplay) {
+        if (gameState.gameMode === 'images') {
+            // Don't update - keep special message
+            return;
+        }
+        
+        // For other modes, update normally
+        const currentTimerText = document.getElementById('currentTimerText');
+        if (currentTimerText) {
+            currentTimerText.textContent = timerText;
+        } else {
+            // Fallback: set innerHTML
+            timerDisplay.innerHTML = timerText;
+        }
     }
-    // If it IS images mode, leave the special message alone
 }
 
 function updateCategories() {
