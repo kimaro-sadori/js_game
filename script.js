@@ -2737,6 +2737,7 @@ function testModeSwitching() {
     }, 4000);
 }
 
+
 // ================= GLOBAL FUNCTIONS =================
 window.removePlayer = removePlayer;
 window.backToLobby = backToLobby;
