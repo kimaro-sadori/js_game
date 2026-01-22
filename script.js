@@ -436,13 +436,11 @@ function selectGameMode(mode) {
     
     // Update timer display based on mode
     const timerDisplay = document.getElementById('timerDisplay');
-    const currentTimerText = document.getElementById('currentTimerText');
     const timerTextElement = document.getElementById('timerText');
     
     if (mode === 'images') {
         // For Guess the Image mode ONLY: show special message
-        if (timerDisplay && currentTimerText) {
-            // Replace the entire content
+        if (timerDisplay) {
             timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
         }
         if (timerTextElement) {
@@ -1181,7 +1179,6 @@ function backToLobby() {
 }
 
 // ================= RESTART GAME =================
-// ================= RESTART GAME =================
 function restartGame() {
     if (gameState.gameMode === 'classic') {
         // Clear any intervals
@@ -1305,7 +1302,7 @@ function generateImageGrid() {
     gameState.imageGame = gameState.imageGame || {};
     gameState.imageGame.images = selectedItems;
     gameState.imageGame.selections = {};
-    gameState.imageGame.guesses = {};
+    gameState.imageGame.guesses = {}; // This will store the player-specific guess history
     gameState.imageGame.playerMarks = {};
     gameState.imageGame.playerPredictions = {};
     
@@ -1766,7 +1763,7 @@ function startImageMatch() {
         currentPlayerIndex: 0,
         turnPhase: 'selection',
         selections: {},
-        guesses: {},
+        guesses: {}, // Initialize guesses object to track player-specific guess history
         revealedPlayers: [],
         playerMarks: {},
         playerPredictions: {},
@@ -1942,6 +1939,16 @@ function showNumberSelection(targetPlayer) {
     modal.style.display = 'flex';
     
     const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
+    const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
+    
+    // Get numbers this player has already guessed for THIS SPECIFIC target
+    // FIXED: Check guesses[guessingPlayer][targetPlayer] instead of global marks
+    const alreadyGuessed = [];
+    
+    if (gameState.imageGame.guesses[guessingPlayer] && 
+        gameState.imageGame.guesses[guessingPlayer][targetPlayer]) {
+        alreadyGuessed.push(...gameState.imageGame.guesses[guessingPlayer][targetPlayer]);
+    }
     
     modal.innerHTML = `
         <div class="modal-content" style="max-width: 500px;">
@@ -1954,18 +1961,29 @@ function showNumberSelection(targetPlayer) {
                     Select the image number you think <strong>${targetPlayer}</strong> chose:
                 </p>
                 <div class="number-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0;">
-                    ${Array.from({length: gameState.imageGame.images.length}, (_, i) => `
-                        <button class="number-btn" data-number="${i + 1}" 
-                            style="padding: 15px; border: 2px solid ${playerColor}; 
-                                   border-radius: 10px; background: rgba(255,255,255,0.05); 
-                                   color: ${playerColor}; font-size: 1.1rem; font-weight: bold; 
-                                   cursor: pointer; transition: all 0.2s;">
-                            ${i + 1}
-                        </button>
-                    `).join('')}
+                    ${Array.from({length: gameState.imageGame.images.length}, (_, i) => {
+                        const isAlreadyGuessed = alreadyGuessed.includes(i);
+                        const buttonText = isAlreadyGuessed ? '❌' : (i + 1);
+                        const buttonColor = isAlreadyGuessed ? '#666' : playerColor;
+                        const cursorStyle = isAlreadyGuessed ? 'not-allowed' : 'pointer';
+                        const opacity = isAlreadyGuessed ? 0.5 : 1;
+                        
+                        return `
+                            <button class="number-btn" data-number="${i + 1}" 
+                                data-index="${i}"
+                                style="padding: 15px; border: 2px solid ${buttonColor}; 
+                                       border-radius: 10px; background: rgba(255,255,255,0.05); 
+                                       color: ${buttonColor}; font-size: 1.1rem; font-weight: bold; 
+                                       cursor: ${cursorStyle}; transition: all 0.2s; opacity: ${opacity};"
+                                ${isAlreadyGuessed ? 'disabled' : ''}>
+                                ${buttonText}
+                            </button>
+                        `;
+                    }).join('')}
                 </div>
                 <p style="text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
-                    Click a number to make your guess
+                    ${alreadyGuessed.length > 0 ? '❌ = Already guessed this number for ${targetPlayer}<br>' : ''}
+                    Click an available number to make your guess
                 </p>
             </div>
         </div>
@@ -1983,7 +2001,7 @@ function showNumberSelection(targetPlayer) {
         }
     });
     
-    modal.querySelectorAll('.number-btn').forEach(btn => {
+    modal.querySelectorAll('.number-btn:not([disabled])').forEach(btn => {
         btn.addEventListener('click', function() {
             const guessNum = parseInt(this.dataset.number) - 1;
             processGuess(targetPlayer, guessNum);
@@ -2007,6 +2025,20 @@ function processGuess(targetPlayer, guessNum) {
     const actualIndex = gameState.imageGame.selections[targetPlayer];
     const isCorrect = guessNum === actualIndex;
     
+    // Initialize guesses structure if needed
+    if (!gameState.imageGame.guesses[guessingPlayer]) {
+        gameState.imageGame.guesses[guessingPlayer] = {};
+    }
+    if (!gameState.imageGame.guesses[guessingPlayer][targetPlayer]) {
+        gameState.imageGame.guesses[guessingPlayer][targetPlayer] = [];
+    }
+    
+    // Record this guess for this specific target
+    if (!gameState.imageGame.guesses[guessingPlayer][targetPlayer].includes(guessNum)) {
+        gameState.imageGame.guesses[guessingPlayer][targetPlayer].push(guessNum);
+    }
+    
+    // Add visual mark
     addPlayerMark(guessNum, guessingPlayer, '❌');
     
     if (isCorrect) {
@@ -2020,20 +2052,31 @@ function processGuess(targetPlayer, guessNum) {
         indicator.style.background = 'rgba(239, 68, 68, 0.9)';
         indicator.style.animation = 'pulse 1s infinite';
         
+        // Add correct mark
         addPlayerMark(actualIndex, guessingPlayer, '✅');
         
+        // Remove predictions for revealed player
         if (gameState.imageGame.playerPredictions[targetPlayer]) {
             gameState.imageGame.playerPredictions[targetPlayer] = [];
         }
         
+        // Remove target from guesses (can't guess eliminated player anymore)
+        if (gameState.imageGame.guesses[guessingPlayer][targetPlayer]) {
+            delete gameState.imageGame.guesses[guessingPlayer][targetPlayer];
+        }
+        
+        // Check if game is over
         if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
             setTimeout(endImageGame, 1500);
             return;
         }
         
+        // Player gets another turn since they guessed correctly
         autoSelectNextPlayer();
-        endTurn();
+        // Do NOT call endTurn() - player gets another chance
+        updatePlayerDisplay();
     } else {
+        // Wrong guess - turn passes to next player
         autoSelectNextPlayer();
         endTurn();
     }
