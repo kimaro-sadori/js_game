@@ -1684,3 +1684,746 @@ body:has(#timerDisplay span) .timer-btn {
     cursor: not-allowed;
     pointer-events: none;
 }
+
+/* Rumble Mode Styles - EXTRA LARGE FULL SCREEN */
+
+
+.rumble-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.rumble-title {
+    font-size: 1.5rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.rumble-top-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.rumble-top-buttons .action-btn {
+    padding: 10px 20px;
+    background: rgba(99, 102, 241, 0.2);
+    border: 2px solid var(--primary);
+    color: var(--text);
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.rumble-top-buttons .action-btn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+.rumble-name-display {
+    margin: 30px auto;
+    padding: 25px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 15px;
+    border: 2px solid var(--primary);
+    max-width: 800px;
+    width: 90%;
+    backdrop-filter: blur(10px);
+}
+
+.rumble-name-display h2 {
+    font-size: 3rem; /* Very large title */
+    color: var(--text);
+    margin-bottom: 15px;
+    word-break: break-word;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.rumble-name-display h3 {
+    font-size: 2rem; /* Large subtitle */
+    color: var(--text-secondary);
+    font-weight: normal;
+    word-break: break-word;
+}
+
+
+/* For emoji displays in rumble - HUGE */
+
+
+/* Football emoji special styling */
+.rumble-image-container .emoji-display:contains("⚽") {
+    font-size: 22rem !important;
+}
+
+/* Animation for image changing */
+@keyframes slideOut {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-100%); opacity: 0; }
+}
+
+@keyframes slideIn {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+.rumble-image-container img.changing-out {
+    animation: slideOut 0.5s ease-out forwards;
+}
+
+.rumble-image-container img.changing-in {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.rumble-image-container .emoji-display.changing-out {
+    animation: slideOut 0.5s ease-out forwards;
+}
+
+.rumble-image-container .emoji-display.changing-in {
+    animation: slideIn 0.5s ease-out forwards, pulse 3s infinite alternate 0.5s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .rumble-image-container {
+        height: 65vh;
+    }
+    
+    .rumble-name-display h2 {
+        font-size: 2.5rem;
+    }
+    
+    .rumble-name-display h3 {
+        font-size: 1.8rem;
+    }
+    
+    .rumble-image-container .emoji-display {
+        font-size: 16rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .rumble-header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .rumble-title {
+        font-size: 1.3rem;
+    }
+    
+    .rumble-top-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .rumble-image-container {
+        height: 60vh;
+        width: 98vw;
+    }
+
+    
+
+
+    
+    .rumble-image-container .emoji-display {
+        font-size: 12rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .rumble-image-container {
+        height: 55vh;
+        border-width: 3px;
+    }
+    
+    .rumble-name-display h2 {
+        font-size: 1.8rem;
+    }
+    
+    .rumble-name-display h3 {
+        font-size: 1.3rem;
+    }
+    
+    .rumble-image-container .emoji-display {
+        font-size: 10rem !important;
+    }
+    
+    .rumble-top-buttons .action-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+/* Rumble animations */
+@keyframes slideOut {
+    0% { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateX(-100%); 
+        opacity: 0; 
+    }
+}
+
+@keyframes slideIn {
+    0% { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+.changing-out {
+    animation: slideOut 0.5s ease-out forwards !important;
+}
+
+.changing-in {
+    animation: slideIn 0.5s ease-out forwards !important;
+}
+/* Rumble animations */
+@keyframes slideOut {
+    0% { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateX(-100%); 
+        opacity: 0; 
+    }
+}
+
+@keyframes slideIn {
+    0% { 
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    100% { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+.changing-out {
+    animation: slideOut 0.5s ease-out forwards !important;
+}
+
+.changing-in {
+    animation: slideIn 0.5s ease-out forwards !important;
+}
+
+/* Rumble Container */
+.rumble-container {
+    max-width: 100% !important;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    padding: 0 !important;
+}
+
+/* Rumble Content */
+.rumble-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+/* Rumble Image Container - Now with 4px margin */
+.rumble-image-container {
+    width: calc(100% - 8px); /* 4px margin on each side */
+    height: 60vh; /* Adjust this value to make it "longer" */
+    margin: 4px auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--primary);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+/* Make images fill the container */
+.rumble-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Show full image without cropping */
+    padding: 15px;
+    pointer-events: none;
+}
+
+/* For emoji displays in rumble */
+.rumble-image-container .emoji-display {
+    font-size: 12rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Rumble Name Display */
+.rumble-name-display {
+    margin: 20px 4px;
+    padding: 20px;
+    background: rgba(99, 102, 241, 0.15);
+    border-radius: 12px;
+    border: 2px solid var(--primary);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.rumble-name-display h2 {
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.rumble-name-display h3 {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+    word-break: break-word;
+}
+
+/* Rumble Info */
+.rumble-info {
+    margin: 10px 4px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.rumble-info i {
+    color: var(--primary);
+    margin-right: 8px;
+}
+
+/* Spinner animation for loading */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Animation for image change */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.changing-image {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .rumble-image-container {
+        height: 55vh;
+    }
+    
+    .rumble-name-display h2 {
+        font-size: 1.8rem;
+    }
+    
+    .rumble-name-display h3 {
+        font-size: 1.3rem;
+    }
+    
+    .rumble-image-container .emoji-display {
+        font-size: 10rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .rumble-image-container {
+        height: 50vh;
+        width: calc(100% - 8px);
+    }
+    
+    .rumble-name-display h2 {
+        font-size: 1.5rem;
+    }
+    
+    .rumble-name-display h3 {
+        font-size: 1.1rem;
+    }
+    
+    .rumble-image-container .emoji-display {
+        font-size: 8rem !important;
+    }
+    
+    .rumble-content {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rumble-image-container {
+        height: 45vh;
+    }
+    
+    .rumble-name-display h2 {
+        font-size: 1.3rem;
+    }
+    
+    .rumble-name-display h3 {
+        font-size: 1rem;
+    }
+    
+    .rumble-image-container .emoji-display {
+        font-size: 6rem !important;
+    }
+}
+/* Rumble Mode Improvements */
+.rumble-start-area {
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.9; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+/* Smooth image transitions */
+.rumble-image-container {
+    transition: opacity 0.5s ease;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+/* Better PC design */
+@media (min-width: 1024px) {
+    .rumble-container {
+        max-width: 800px !important;
+        margin: 20px auto;
+    }
+    
+    .rumble-header {
+        padding: 20px 30px !important;
+    }
+    
+    .rumble-start-area h2 {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* Clickable area */
+.rumble-content {
+    cursor: pointer;
+    min-height: calc(100vh - 150px);
+}
+/* PC Optimization for Rumble */
+@media (min-width: 1024px) {
+    .rumble-container {
+        max-width: 900px !important;
+        height: 90vh;
+        margin: 5vh auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .rumble-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: 15px 15px 0 0;
+        margin-bottom: 0;
+    }
+    
+    .rumble-content {
+        background: rgba(30, 41, 59, 0.8);
+        border-radius: 0 0 15px 15px;
+    }
+    
+    .rumble-image-container {
+        height: 400px !important;
+        margin: 30px auto;
+        max-width: 800px;
+    }
+    
+    .rumble-name-display {
+        max-width: 800px;
+        margin: 0 auto 30px;
+    }
+}
+/* Simple Rumble Mode CSS */
+.rumble-container {
+    max-width: 800px !important;
+    margin: 20px auto !important;
+    height: auto !important;
+    min-height: 90vh;
+}
+
+/* PC design improvements */
+@media (min-width: 1024px) {
+    .rumble-container {
+        max-width: 900px !important;
+    }
+    
+    #rumbleImageContainer,
+    #rumbleImageContainerActive {
+        height: 400px !important;
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    #rumbleImageContainer,
+    #rumbleImageContainerActive {
+        height: 50vh !important;
+    }
+    
+    #rumbleNameDisplay h2,
+    #rumbleNameDisplayActive h2 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Add simple fade animation */
+@keyframes fadeIn {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+#rumbleImageContainerActive img,
+#rumbleImageContainerActive .emoji-display {
+    animation: fadeIn 0.3s ease-in;
+}
+@keyframes shineSweep {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+/* Expand/Collapse functionality */
+.setting-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+}
+
+.setting-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.setting-header i:first-child {
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-right: 12px;
+}
+
+.setting-header span {
+    flex: 1;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.setting-header span:last-child {
+    color: var(--text-secondary);
+    font-weight: normal;
+    margin-right: 15px;
+}
+
+.expand-icon {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.expand-icon.expanded {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+/* Timer buttons grid */
+.timer-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+    padding: 0 10px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.timer-btn {
+    padding: 12px;
+    background: var(--bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.timer-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent);
+}
+
+.timer-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    font-weight: bold;
+}
+
+/* Categories grid */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+    padding: 0 10px;
+    animation: slideDown 0.3s ease-out;
+}
+
+.category-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.category-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent);
+}
+
+.category-option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.category-option label {
+    color: var(--text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+#selectAllBtn {
+    grid-column: 1 / -1;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+#selectAllBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+}
+
+/* Animations */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

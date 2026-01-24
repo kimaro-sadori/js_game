@@ -2724,14 +2724,7 @@ const words = [
   category: "flags",
   image: "🇮🇪"
 },
-{
-  word: "ISRAEL FLAG",
-  wordAr: "علم إسرائيل",
-  hints: ["Blue white", "Star of David", "Middle East"],
-  hintsAr: ["أزرق أبيض", "نجمة داوود", "الشرق الأوسط"],
-  category: "flags",
-  image: "🇮🇱"
-},
+
 {
   word: "JAMAICA FLAG",
   wordAr: "علم جامايكا",

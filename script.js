@@ -24,6 +24,9 @@ let gameState = {
     // Image game specific
     imageGame: null,
     
+    // Rumble game specific
+    rumbleGame: null,
+    
     // Saved teams
     savedTeams: [],
     
@@ -210,7 +213,7 @@ function loadSettings() {
         
         gameState.timer = typeof settings.timer === 'number' ? settings.timer : 120;
         gameState.categories = settings.categories || [];
-        gameState.gameMode = settings.gameMode || 'classic'; // Load saved mode or default to classic
+        gameState.gameMode = settings.gameMode || 'classic';
         
         // Upgrade old categories
         ALL_CATEGORIES.forEach(category => {
@@ -241,7 +244,7 @@ function loadSettings() {
         }
     } else {
         gameState.categories = ALL_CATEGORIES;
-        gameState.gameMode = 'classic'; // Default to classic mode
+        gameState.gameMode = 'classic';
         
         saveSettings();
         
@@ -265,7 +268,7 @@ function saveSettings() {
     const settings = {
         timer: gameState.timer,
         categories: gameState.categories,
-        gameMode: gameState.gameMode, // Save the game mode
+        gameMode: gameState.gameMode,
         lastPlayed: new Date().toISOString()
     };
     localStorage.setItem('imposterSettings', JSON.stringify(settings));
@@ -403,7 +406,6 @@ function selectGameMode(mode) {
     console.log('Changing mode to:', mode);
     gameState.gameMode = mode;
     
-    // Update active mode button
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -413,7 +415,6 @@ function selectGameMode(mode) {
         selectedBtn.classList.add('active');
     }
     
-    // Update mode text display
     let modeText = '';
     switch(mode) {
         case 'classic':
@@ -425,6 +426,9 @@ function selectGameMode(mode) {
         case 'images':
             modeText = 'Guess the Image';
             break;
+        case 'rumble':
+            modeText = 'Rumble';
+            break;
         default:
             modeText = 'Classic';
     }
@@ -434,35 +438,27 @@ function selectGameMode(mode) {
         gameModeTextElement.textContent = modeText;
     }
     
-    // Update timer display based on mode
     const timerDisplay = document.getElementById('timerDisplay');
     const timerTextElement = document.getElementById('timerText');
     
-    if (mode === 'images') {
-        // For Guess the Image mode ONLY: show special message
+    if (mode === 'images' || mode === 'rumble') {
         if (timerDisplay) {
-            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
+            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Special mode!</span>';
         }
         if (timerTextElement) {
             timerTextElement.textContent = 'No timer';
         }
-        console.log('Set special message for Guess the Image mode');
     } else {
-        // For Classic and Describe It modes: show NORMAL timer
         updateTimerDisplay();
-        console.log('Set normal timer for mode:', mode, 'Timer value:', gameState.timer);
     }
     
-    // Update UI and save
     updateUI();
     saveSettings();
 }
 
 function selectTimer(seconds) {
-    // Save the timer value
     gameState.timer = seconds;
     
-    // Update active timer button
     document.querySelectorAll('.timer-btn').forEach(btn => {
         btn.classList.remove('active');
     });
@@ -472,20 +468,17 @@ function selectTimer(seconds) {
         selectedBtn.classList.add('active');
     }
     
-    // Check current mode before updating display
     const timerDisplay = document.getElementById('timerDisplay');
     const timerTextElement = document.getElementById('timerText');
     
-    if (gameState.gameMode === 'images') {
-        // If we're in Guess the Image mode, KEEP showing special message
+    if (gameState.gameMode === 'images' || gameState.gameMode === 'rumble') {
         if (timerDisplay) {
-            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Play until last player stands!</span>';
+            timerDisplay.innerHTML = '<span style="color: var(--accent); font-size: 0.9rem;">⏱️ No timer - Special mode!</span>';
         }
         if (timerTextElement) {
             timerTextElement.textContent = 'No timer';
         }
     } else {
-        // If we're in Classic or Describe It mode, show normal timer
         updateTimerDisplay();
     }
     
@@ -495,26 +488,21 @@ function selectTimer(seconds) {
 function updateTimerDisplay() {
     const timerText = gameState.timer === 0 ? 'No timer' : formatTime(gameState.timer);
     
-    // Update timerText in start-section
     const timerTextElement = document.getElementById('timerText');
     if (timerTextElement) {
         timerTextElement.textContent = timerText;
     }
     
-    // Update timerDisplay in settings panel - but handle Guess the Image mode
     const timerDisplay = document.getElementById('timerDisplay');
     if (timerDisplay) {
-        if (gameState.gameMode === 'images') {
-            // Don't update - keep special message
+        if (gameState.gameMode === 'images' || gameState.gameMode === 'rumble') {
             return;
         }
         
-        // For other modes, update normally
         const currentTimerText = document.getElementById('currentTimerText');
         if (currentTimerText) {
             currentTimerText.textContent = timerText;
         } else {
-            // Fallback: set innerHTML
             timerDisplay.innerHTML = timerText;
         }
     }
@@ -567,7 +555,6 @@ function updateUI() {
 function setupEventListeners() {
     console.log('Setting up event listeners...');
     
-    // Player management
     document.getElementById('addPlayerBtn').addEventListener('click', addPlayer);
     document.getElementById('playerNameInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') addPlayer();
@@ -575,7 +562,6 @@ function setupEventListeners() {
     document.getElementById('clearPlayersBtn').addEventListener('click', clearPlayers);
     document.getElementById('saveTeamBtn').addEventListener('click', saveTeam);
     
-    // Game mode selection
     document.querySelectorAll('.mode-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             selectGameMode(this.dataset.mode);
@@ -589,7 +575,6 @@ function setupEventListeners() {
         });
     });
     
-    // Timer selection
     document.querySelectorAll('.timer-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -602,7 +587,6 @@ function setupEventListeners() {
         });
     });
     
-    // Categories selection
     const checkboxes = document.querySelectorAll('.category-checkbox');
     checkboxes.forEach(cb => {
         cb.addEventListener('change', updateCategories);
@@ -623,11 +607,9 @@ function setupEventListeners() {
         });
     }
     
-    // Expandable sections
     const timerGroup = document.querySelector('.setting-group:nth-child(2)');
     const categoriesGroup = document.querySelector('.setting-group:nth-child(3)');
     
-    // Timer group click handler - ALWAYS allow clicking to expand, regardless of mode
     if (timerGroup) {
         timerGroup.addEventListener('click', function(e) {
             if (e.target.classList.contains('timer-btn') || 
@@ -660,33 +642,21 @@ function setupEventListeners() {
         });
     }
     
-    // Game controls
     document.getElementById('startGameBtn').addEventListener('click', startGame);
-    
-    // Classic game controls
     document.getElementById('roleCard').addEventListener('click', revealRole);
     document.getElementById('nextPlayerBtn').addEventListener('click', nextPlayer);
-    
-    // Describe game controls
     document.getElementById('stopRollerBtn').addEventListener('click', stopNameRoller);
-    
-    // Discussion controls
     document.getElementById('revealImposterBtn').addEventListener('click', revealImposterEarly);
     document.getElementById('endDiscussionBtn').addEventListener('click', endDiscussion);
-    
-    // Results controls
     document.getElementById('secretCard').addEventListener('click', revealImposter);
     document.getElementById('playAgainBtn').addEventListener('click', playAgain);
     document.getElementById('newGameBtn').addEventListener('click', backToLobby);
-    
-    // Social buttons
     document.getElementById('shareBtn').addEventListener('click', showShareModal);
     document.getElementById('feedbackBtn').addEventListener('click', showFeedbackModal);
     document.getElementById('copyLinkBtn').addEventListener('click', copyGameLink);
     
     setupFeedbackListeners();
     
-    // Modal close buttons
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.addEventListener('click', function() {
             const modal = this.closest('.modal');
@@ -696,7 +666,6 @@ function setupEventListeners() {
         });
     });
     
-    // Share buttons
     document.querySelectorAll('.social-btn[data-share]').forEach(btn => {
         btn.addEventListener('click', function() {
             shareGame(this.dataset.share);
@@ -718,6 +687,9 @@ function startGame() {
         }
         
         startImageMatch();
+        return;
+    } else if (gameState.gameMode === 'rumble') {
+        startRumbleGame();
         return;
     } else if (gameState.gameMode === 'classic' || gameState.gameMode === 'describe') {
         if (gameState.players.length < 3) {
@@ -755,6 +727,334 @@ function startGame() {
     } else if (gameState.gameMode === 'describe') {
         startDescribeGame();
     }
+}
+
+// ================= RUMBLE GAME FUNCTIONS - FIXED =================
+function startRumbleGame() {
+    console.log('Starting Rumble Game...');
+    
+    if (gameState.players.length < 1) {
+        alert('Rumble mode needs at least 1 player!');
+        backToLobby();
+        return;
+    }
+    
+    if (gameState.categories.length === 0) {
+        alert('Please select at least one category for Rumble mode!');
+        return;
+    }
+    
+    incrementPlayCount();
+    
+    document.querySelector('.dashboard').style.display = 'none';
+    document.querySelector('.start-section').style.display = 'none';
+    document.querySelector('.social-buttons').style.display = 'none';
+    
+    gameState.rumbleGame = {
+        isRumbling: false,
+        currentImage: null,
+        imagePool: [],
+        animationInterval: null,
+        animationSpeed: 80,
+        finalImageIndex: -1,
+        isSpinning: false
+    };
+    
+    showRumbleStartScreen();
+}
+
+function showRumbleStartScreen() {
+    console.log('Showing Rumble Start Screen...');
+    
+    document.querySelectorAll('.game-screen').forEach(screen => {
+        screen.style.display = 'none';
+    });
+    
+    const rumbleScreen = document.getElementById('rumbleScreen');
+    rumbleScreen.style.display = 'block';
+    
+    // Reset to start state
+    gameState.rumbleGame.isRumbling = false;
+    gameState.rumbleGame.isSpinning = false;
+    gameState.rumbleGame.currentImage = null;
+    gameState.rumbleGame.finalImageIndex = -1;
+    
+    // Show start area, hide game area
+    document.getElementById('rumbleStartArea').style.display = 'flex';
+    document.getElementById('rumbleGameArea').style.display = 'none';
+    
+    // Clear any previous content
+    document.getElementById('spinningWheel').innerHTML = '';
+    document.getElementById('rumbleFinalContainer').innerHTML = '';
+    document.getElementById('rumbleNameDisplayActive').innerHTML = '';
+    
+    // Show placeholder
+    document.getElementById('spinPlaceholder').style.display = 'flex';
+    document.getElementById('spinRing').style.display = 'none';
+    
+    // Update start text
+    const nameDisplay = document.getElementById('rumbleNameDisplay');
+    if (nameDisplay) {
+        nameDisplay.innerHTML = `
+            <h2 style="color: var(--text); font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; text-shadow: 0 2px 10px rgba(99, 102, 241, 0.5);">Click Anywhere to Spin</h2>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 10px;">Click to spin the wheel and see what you get!</p>
+        `;
+    }
+    
+    // Build image pool
+    buildRumbleImagePool();
+    
+    // Add click event to start rumble
+    const rumbleContent = document.getElementById('rumbleContent');
+    if (rumbleContent) {
+        rumbleContent.onclick = function(e) {
+            if (!e.target.closest('.action-buttons') && !gameState.rumbleGame.isRumbling) {
+                startRumbleSpin();
+            }
+        };
+    }
+    
+    // Setup restart button
+    const restartBtn = document.getElementById('rumbleRestartBtn');
+    if (restartBtn) {
+        restartBtn.onclick = function() {
+            showRumbleStartScreen();
+        };
+    }
+}
+
+function buildRumbleImagePool() {
+    gameState.rumbleGame.imagePool = [];
+    
+    gameState.categories.forEach(category => {
+        if (category === 'football') {
+            FOOTBALL_PLAYERS.forEach(player => {
+                gameState.rumbleGame.imagePool.push({
+                    type: 'football',
+                    name: player.name,
+                    image: player.image,
+                    category: 'football',
+                    displayName: player.name,
+                    arabicName: ''
+                });
+            });
+        } else {
+            const categoryWords = words.filter(w => w.category === category);
+            categoryWords.forEach(word => {
+                if (word.image) {
+                    gameState.rumbleGame.imagePool.push({
+                        type: word.image.includes('images/') || word.image.includes('.jpg') || word.image.includes('.jpeg') || word.image.includes('.png') ? 'image' : 'emoji',
+                        name: word.word,
+                        image: word.image,
+                        category: category,
+                        displayName: word.word,
+                        arabicName: word.wordAr || ''
+                    });
+                }
+            });
+        }
+    });
+    
+    // Add fallback if pool is empty
+    if (gameState.rumbleGame.imagePool.length === 0) {
+        console.warn('No images found in selected categories, adding fallback items');
+        gameState.rumbleGame.imagePool = [
+            { type: 'emoji', name: 'Question', image: '❓', category: 'misc', displayName: 'Mystery Item', arabicName: '' },
+            { type: 'emoji', name: 'Star', image: '⭐', category: 'misc', displayName: 'Star', arabicName: '' },
+            { type: 'emoji', name: 'Heart', image: '❤️', category: 'misc', displayName: 'Heart', arabicName: '' },
+            { type: 'emoji', name: 'Smile', image: '😊', category: 'misc', displayName: 'Smile', arabicName: '' },
+            { type: 'emoji', name: 'Fire', image: '🔥', category: 'misc', displayName: 'Fire', arabicName: '' }
+        ];
+    }
+    
+    shuffleArray(gameState.rumbleGame.imagePool);
+    console.log('Built rumble image pool with', gameState.rumbleGame.imagePool.length, 'items');
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function startRumbleSpin() {
+    console.log('Starting rumble spin...');
+    
+    if (gameState.rumbleGame.imagePool.length === 0) {
+        buildRumbleImagePool();
+    }
+    
+    gameState.rumbleGame.isRumbling = true;
+    gameState.rumbleGame.isSpinning = true;
+    
+    // Hide start area, show game area
+    document.getElementById('rumbleStartArea').style.display = 'none';
+    document.getElementById('rumbleGameArea').style.display = 'flex';
+    document.getElementById('rumbleFinalContainer').style.display = 'none';
+    document.getElementById('rumbleRestartSection').style.display = 'none';
+    
+    const spinningWheel = document.getElementById('spinningWheel');
+    spinningWheel.innerHTML = '';
+    spinningWheel.style.display = 'block';
+    
+    // Add spinning effect
+    spinningWheel.classList.add('spinning-fast');
+    
+    // Create flashing images effect during spin
+    const imagesToShow = Math.min(9, gameState.rumbleGame.imagePool.length);
+    for (let i = 0; i < imagesToShow; i++) {
+        const randomImage = gameState.rumbleGame.imagePool[
+            Math.floor(Math.random() * gameState.rumbleGame.imagePool.length)
+        ];
+        
+        const imageBox = document.createElement('div');
+        imageBox.style.position = 'absolute';
+        imageBox.style.width = '100%';
+        imageBox.style.height = '100%';
+        imageBox.style.display = 'flex';
+        imageBox.style.alignItems = 'center';
+        imageBox.style.justifyContent = 'center';
+        imageBox.style.opacity = '0.7';
+        imageBox.style.animation = `flash ${0.1 + Math.random() * 0.2}s infinite`;
+        
+        if (randomImage.type === 'football' || randomImage.type === 'image') {
+            const img = document.createElement('img');
+            img.src = randomImage.image;
+            img.alt = randomImage.name;
+            img.style.width = '80%';
+            img.style.height = '80%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '10px';
+            img.style.transform = `rotate(${Math.random() * 360}deg)`;
+            img.onerror = function() {
+                // Fallback to emoji if image fails to load
+                const emoji = document.createElement('div');
+                emoji.textContent = '🖼️';
+                emoji.style.fontSize = '3rem';
+                imageBox.appendChild(emoji);
+            };
+            imageBox.appendChild(img);
+        } else {
+            const emoji = document.createElement('div');
+            emoji.textContent = randomImage.image;
+            emoji.style.fontSize = '3rem';
+            emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
+            imageBox.appendChild(emoji);
+        }
+        
+        spinningWheel.appendChild(imageBox);
+    }
+    
+    // Determine spin duration
+    const spinDuration = 2000 + Math.random() * 1500;
+    let currentTime = 0;
+    const spinInterval = 100;
+    
+    const spinIntervalId = setInterval(() => {
+        currentTime += spinInterval;
+        
+        // Gradually slow down
+        if (currentTime > spinDuration * 0.7) {
+            spinningWheel.classList.remove('spinning-fast');
+            spinningWheel.classList.add('spinning-medium');
+        }
+        
+        if (currentTime > spinDuration * 0.9) {
+            spinningWheel.classList.remove('spinning-medium');
+            spinningWheel.classList.add('spinning-slow');
+        }
+        
+        if (currentTime >= spinDuration) {
+            clearInterval(spinIntervalId);
+            finishRumbleSpin();
+        }
+    }, spinInterval);
+    
+    // Store interval for cleanup
+    gameState.rumbleGame.animationInterval = spinIntervalId;
+}
+
+function finishRumbleSpin() {
+    console.log('Finishing rumble spin...');
+    
+    // Stop spinning animation
+    const spinningWheel = document.getElementById('spinningWheel');
+    spinningWheel.classList.remove('spinning-fast', 'spinning-medium', 'spinning-slow');
+    spinningWheel.style.display = 'none';
+    
+    // Select random final image
+    const finalIndex = Math.floor(Math.random() * gameState.rumbleGame.imagePool.length);
+    const finalImage = gameState.rumbleGame.imagePool[finalIndex];
+    gameState.rumbleGame.finalImageIndex = finalIndex;
+    gameState.rumbleGame.currentImage = finalImage;
+    
+    // Show final container
+    const finalContainer = document.getElementById('rumbleFinalContainer');
+    finalContainer.style.display = 'flex';
+    finalContainer.innerHTML = '';
+    
+    // Add reveal animation
+    finalContainer.classList.add('reveal-animation');
+    
+    // Display the final image
+    if (finalImage.type === 'football' || finalImage.type === 'image') {
+        const img = document.createElement('img');
+        img.src = finalImage.image;
+        img.alt = finalImage.name;
+        img.style.maxWidth = '90%';
+        img.style.maxHeight = '90%';
+        img.style.objectFit = 'contain';
+        img.style.borderRadius = '15px';
+        img.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        
+        img.onerror = function() {
+            // Fallback to emoji
+            const emoji = document.createElement('div');
+            emoji.textContent = '🖼️';
+            emoji.style.fontSize = '5rem';
+            emoji.style.margin = '20px';
+            finalContainer.appendChild(emoji);
+        };
+        
+        finalContainer.appendChild(img);
+    } else {
+        const emoji = document.createElement('div');
+        emoji.textContent = finalImage.image;
+        emoji.style.fontSize = '6rem';
+        emoji.style.margin = '20px';
+        finalContainer.appendChild(emoji);
+    }
+    
+    // Show name display
+    const nameDisplay = document.getElementById('rumbleNameDisplayActive');
+    nameDisplay.style.display = 'block';
+    nameDisplay.innerHTML = `
+        <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 10px; font-weight: bold;">${finalImage.displayName}</h3>
+        ${finalImage.arabicName ? `<p style="color: var(--accent); font-size: 1.5rem; direction: rtl; margin-bottom: 10px;">${finalImage.arabicName}</p>` : ''}
+        <div style="background: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; font-size: 0.9rem; margin-top: 10px;">
+            <i class="fas fa-tag"></i> ${finalImage.category}
+        </div>
+    `;
+    
+    // Show restart section
+    document.getElementById('rumbleRestartSection').style.display = 'block';
+    
+    // Update game state
+    gameState.rumbleGame.isRumbling = false;
+    gameState.rumbleGame.isSpinning = false;
+}
+
+function restartRumbleGame() {
+    console.log('Restarting Rumble Game...');
+    
+    // Clear any existing intervals
+    if (gameState.rumbleGame && gameState.rumbleGame.animationInterval) {
+        clearInterval(gameState.rumbleGame.animationInterval);
+    }
+    
+    showRumbleStartScreen();
 }
 
 // ================= CLASSIC GAME =================
@@ -867,21 +1167,18 @@ function stopNameRoller() {
 function showDescriberWord() {
     document.getElementById('describerTeam').textContent = gameState.describerTeam;
     
-    // Get references to all elements
     const describerWordElement = document.getElementById('describerWord');
     const describerHintElement = document.getElementById('describerHint');
     const wordDisplay = document.getElementById('describerWordDisplay');
     
-    // Initially show the mission text and hide the word display
     describerWordElement.textContent = 'Your Mission';
     describerHintElement.textContent = 'Describe it to your team without saying the word';
     describerWordElement.style.display = 'block';
     describerHintElement.style.display = 'block';
     wordDisplay.style.display = 'none';
     
-    // Clear any existing word content
-    const arabicWordElement = document.getElementById('describerWordEn'); // This is actually for Arabic
-    const englishWordElement = document.getElementById('describerWordAr'); // This is actually for English
+    const arabicWordElement = document.getElementById('describerWordEn');
+    const englishWordElement = document.getElementById('describerWordAr');
     
     if (arabicWordElement) {
         arabicWordElement.textContent = '';
@@ -893,7 +1190,6 @@ function showDescriberWord() {
         englishWordElement.style.display = 'none';
     }
     
-    // Remove any existing buttons
     const existingShowBtn = document.getElementById('showWordBtn');
     const existingStartBtn = document.getElementById('startDescribeBtn');
     
@@ -904,7 +1200,6 @@ function showDescriberWord() {
         existingStartBtn.remove();
     }
     
-    // Create new Show Word button
     const button = document.createElement('button');
     button.id = 'showWordBtn';
     button.className = 'btn btn-secondary';
@@ -918,51 +1213,44 @@ function showDescriberWord() {
         roleCard.parentNode.insertBefore(button, roleCard.nextSibling);
     }
     
-    // Add click handler for Show Word button
     button.onclick = function() {
         const filteredWords = words.filter(w => gameState.categories.includes(w.category));
         if (filteredWords.length > 0) {
             const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
-            gameState.word = random.word; // English word
-            gameState.wordAr = random.wordAr; // Arabic word
+            gameState.word = random.word;
+            gameState.wordAr = random.wordAr;
             
             const hintIndex = Math.floor(Math.random() * random.hints.length);
             gameState.hint = random.hints[hintIndex];
             gameState.hintAr = random.hintsAr[hintIndex];
             
-            // NOTE: The element IDs are confusingly named:
-            // - describerWordEn is for Arabic (has dir="rtl")
-            // - describerWordAr is for English
-            const arabicWordElement = document.getElementById('describerWordEn'); // Arabic word element
-            const englishWordElement = document.getElementById('describerWordAr'); // English word element
+            const arabicWordElement = document.getElementById('describerWordEn');
+            const englishWordElement = document.getElementById('describerWordAr');
             
             if (arabicWordElement && gameState.wordAr) {
-                arabicWordElement.textContent = gameState.wordAr; // Arabic text
+                arabicWordElement.textContent = gameState.wordAr;
                 arabicWordElement.style.display = 'block';
-                arabicWordElement.dir = 'rtl'; // Ensure right-to-left for Arabic
+                arabicWordElement.dir = 'rtl';
                 arabicWordElement.style.fontSize = '2.5rem';
                 arabicWordElement.style.fontWeight = 'bold';
                 arabicWordElement.style.color = 'var(--accent)';
             }
             
             if (englishWordElement && gameState.word) {
-                englishWordElement.textContent = gameState.word; // English text
+                englishWordElement.textContent = gameState.word;
                 englishWordElement.style.display = 'block';
                 englishWordElement.style.fontSize = '1.4rem';
                 englishWordElement.style.fontWeight = 'bold';
                 englishWordElement.style.color = 'var(--text-secondary)';
             }
             
-            // HIDE the mission text and SHOW the word display
             describerWordElement.style.display = 'none';
             describerHintElement.style.display = 'none';
             wordDisplay.style.display = 'block';
         }
         
-        // Hide the Show Word button
         this.style.display = 'none';
         
-        // Create Start Describing button
         const startBtn = document.createElement('button');
         startBtn.id = 'startDescribeBtn';
         startBtn.className = 'btn btn-primary';
@@ -971,10 +1259,8 @@ function showDescriberWord() {
         startBtn.style.width = '100%';
         startBtn.innerHTML = '<i class="fas fa-play"></i> Start Describing';
         
-        // Add Start Describing button after the Show Word button
         this.parentNode.insertBefore(startBtn, this.nextSibling);
         
-        // Add click handler for Start Describing button
         startBtn.onclick = function() {
             document.getElementById('describeWordScreen').style.display = 'none';
             
@@ -1090,7 +1376,6 @@ function revealImposter() {
     if (gameState.gameMode === 'classic') {
         const imposter = gameState.players[gameState.imposter];
         
-        // Check if elements exist before setting text
         const imposterNameElement = document.getElementById('imposterName');
         const correctWordElement = document.getElementById('correctWord');
         const arabicWordElement = document.getElementById('arabicWord');
@@ -1105,7 +1390,6 @@ function revealImposter() {
             arabicWordElement.textContent = gameState.wordAr;
         }
     } else {
-        // For describe mode
         const describerTeamElement = document.getElementById('imposterName');
         const correctWordElement = document.getElementById('correctWord');
         const arabicWordElement = document.getElementById('arabicWord');
@@ -1169,6 +1453,10 @@ function backToLobby() {
         clearInterval(gameState.imageGame.timerInterval);
     }
     
+    if (gameState.rumbleGame && gameState.rumbleGame.animationInterval) {
+        clearInterval(gameState.rumbleGame.animationInterval);
+    }
+    
     document.querySelectorAll('.game-screen').forEach(screen => {
         screen.style.display = 'none';
     });
@@ -1181,16 +1469,13 @@ function backToLobby() {
 // ================= RESTART GAME =================
 function restartGame() {
     if (gameState.gameMode === 'classic') {
-        // Clear any intervals
         if (gameState.timerInterval) {
             clearInterval(gameState.timerInterval);
         }
         
-        // Reset game state
         gameState.currentPlayer = 0;
         gameState.imposter = Math.floor(Math.random() * gameState.players.length);
         
-        // Get a new random word
         const filteredWords = words.filter(w => gameState.categories.includes(w.category));
         if (filteredWords.length > 0) {
             const random = filteredWords[Math.floor(Math.random() * filteredWords.length)];
@@ -1202,17 +1487,14 @@ function restartGame() {
             gameState.hintAr = random.hintsAr[hintIndex];
         }
         
-        // Hide all screens
         document.querySelectorAll('.game-screen').forEach(screen => {
             screen.style.display = 'none';
         });
         
-        // Start classic game
         document.getElementById('classicGame').style.display = 'block';
         showCurrentPlayer();
         
     } else if (gameState.gameMode === 'describe') {
-        // Clear any intervals
         if (gameState.timerInterval) {
             clearInterval(gameState.timerInterval);
         }
@@ -1220,17 +1502,16 @@ function restartGame() {
             clearInterval(gameState.rollerInterval);
         }
         
-        // Hide all screens
         document.querySelectorAll('.game-screen').forEach(screen => {
             screen.style.display = 'none';
         });
         
-        // Restart describe game
         startDescribeGame();
         
     } else if (gameState.gameMode === 'images') {
-        // Restart image game
         restartImageGame();
+    } else if (gameState.gameMode === 'rumble') {
+        restartRumbleGame();
     }
 }
 
@@ -1241,10 +1522,8 @@ function generateImageGrid() {
     
     let imagePool = [];
     
-    // Create image pool from ALL categories including football
     gameState.categories.forEach(category => {
         if (category === 'football') {
-            // Use FOOTBALL_PLAYERS array for football images
             FOOTBALL_PLAYERS.forEach(player => {
                 imagePool.push({
                     type: 'football',
@@ -1255,11 +1534,9 @@ function generateImageGrid() {
                 });
             });
         } else {
-            // Use words array for other categories
             const categoryWords = words.filter(w => w.category === category);
             categoryWords.forEach(word => {
                 if (word.image && (word.image.includes('images/') || word.image.includes('.jpg') || word.image.includes('.jpeg') || word.image.includes('.png'))) {
-                    // This is an actual image file
                     imagePool.push({
                         type: 'image',
                         name: word.word,
@@ -1268,7 +1545,6 @@ function generateImageGrid() {
                         displayName: word.word
                     });
                 } else {
-                    // This is an emoji or text
                     imagePool.push({
                         type: 'emoji',
                         name: word.word,
@@ -1281,11 +1557,9 @@ function generateImageGrid() {
         }
     });
     
-    // Get random items (18 for 3x6 grid on mobile, 16 for 4x4 on desktop)
     const isMobile = window.innerWidth <= 768;
     const itemCount = isMobile ? 18 : 16;
     
-    // Make sure we have enough items
     if (imagePool.length < itemCount) {
         imageGrid.innerHTML = `
             <div class="loading-images" style="color: #ef4444;">
@@ -1298,11 +1572,10 @@ function generateImageGrid() {
     
     const selectedItems = [...imagePool].sort(() => Math.random() - 0.5).slice(0, itemCount);
     
-    // Initialize game state
     gameState.imageGame = gameState.imageGame || {};
     gameState.imageGame.images = selectedItems;
     gameState.imageGame.selections = {};
-    gameState.imageGame.guesses = {}; // This will store the player-specific guess history
+    gameState.imageGame.guesses = {};
     gameState.imageGame.playerMarks = {};
     gameState.imageGame.playerPredictions = {};
     
@@ -1313,7 +1586,6 @@ function renderImageGrid(items) {
     const imageGrid = document.getElementById('imageGrid');
     imageGrid.innerHTML = '';
     
-    // Responsive grid
     const isMobile = window.innerWidth <= 768;
     const columns = isMobile ? 3 : 4;
     const rows = isMobile ? 6 : 4;
@@ -1329,7 +1601,6 @@ function renderImageGrid(items) {
         imageCell.dataset.index = index;
         imageCell.dataset.category = item.category;
         
-        // Apply player-specific color if it's their turn
         if (gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
             const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
             imageCell.style.borderColor = playerColor;
@@ -1337,7 +1608,6 @@ function renderImageGrid(items) {
             imageCell.style.boxShadow = `0 0 10px ${playerColor}40`;
         }
         
-        // Image content
         const content = document.createElement('div');
         content.className = 'image-content';
         content.style.height = isMobile ? '65%' : '70%';
@@ -1346,9 +1616,8 @@ function renderImageGrid(items) {
         content.style.alignItems = 'center';
         content.style.justifyContent = 'center';
         content.style.overflow = 'hidden';
-        content.style.backgroundColor = '#1a1a2e'; // Fallback background
+        content.style.backgroundColor = '#1a1a2e';
         
-        // IMAGE LOADING WITH ERROR HANDLING
         if (item.type === 'football' || item.type === 'image') {
             const img = document.createElement('img');
             img.src = item.image;
@@ -1361,7 +1630,6 @@ function renderImageGrid(items) {
             img.loading = 'lazy';
             img.decoding = 'async';
             
-            // Enhanced error handling
             img.onerror = function() {
                 console.error('Failed to load image:', this.src);
                 this.style.display = 'none';
@@ -1380,14 +1648,12 @@ function renderImageGrid(items) {
                 content.appendChild(fallback);
             };
             
-            // Add load event
             img.onload = function() {
                 console.log('Image loaded successfully:', this.src);
             };
             
             content.appendChild(img);
         } else {
-            // For emojis
             const emojiDisplay = document.createElement('div');
             emojiDisplay.className = 'emoji-display';
             emojiDisplay.textContent = item.image;
@@ -1403,7 +1669,6 @@ function renderImageGrid(items) {
             content.appendChild(emojiDisplay);
         }
         
-        // Center ❌ Prediction
         const centerPrediction = document.createElement('div');
         centerPrediction.className = 'center-prediction';
         centerPrediction.dataset.playerIndex = gameState.imageGame.currentPlayerIndex;
@@ -1423,7 +1688,6 @@ function renderImageGrid(items) {
         centerPrediction.textContent = '❌';
         content.appendChild(centerPrediction);
         
-        // Number label
         const numberLabel = document.createElement('div');
         numberLabel.className = 'image-number';
         numberLabel.textContent = index + 1;
@@ -1446,7 +1710,6 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Name label
         const nameLabel = document.createElement('div');
         nameLabel.className = 'player-name-label';
         nameLabel.style.cssText = `
@@ -1477,7 +1740,6 @@ function renderImageGrid(items) {
             </div>
         `;
         
-        // Selection indicator
         const selectionIndicator = document.createElement('div');
         selectionIndicator.className = 'selection-indicator';
         selectionIndicator.style.cssText = `
@@ -1498,7 +1760,6 @@ function renderImageGrid(items) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         `;
         
-        // Player marks container
         const marksContainer = document.createElement('div');
         marksContainer.className = 'player-marks-container';
         marksContainer.style.cssText = `
@@ -1520,7 +1781,6 @@ function renderImageGrid(items) {
         imageCell.appendChild(marksContainer);
         imageGrid.appendChild(imageCell);
         
-        // Make image cell clickable for center ❌ toggle
         imageCell.addEventListener('click', function(e) {
             if (gameState.imageGame && gameState.imageGame.turnPhase === 'guessing') {
                 const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
@@ -1529,7 +1789,6 @@ function renderImageGrid(items) {
             }
         });
         
-        // Handle selection phase clicks
         imageCell.addEventListener('click', handleImageClick);
     });
     
@@ -1579,7 +1838,6 @@ function addResetPredictionsButton() {
                 gameState.imageGame.playerPredictions[currentPlayer] = [];
             }
             
-            // Hide all center predictions for current player
             document.querySelectorAll('.center-prediction').forEach(x => {
                 x.style.display = 'none';
             });
@@ -1618,12 +1876,10 @@ function toggleCenterPrediction(imageIndex, playerName, cellElement) {
 }
 
 function updatePlayerPredictionsDisplay() {
-    // Clear all center predictions first
     document.querySelectorAll('.center-prediction').forEach(x => {
         x.style.display = 'none';
     });
     
-    // Show only current player's predictions
     if (gameState.imageGame && gameState.imageGame.currentPlayerIndex !== undefined) {
         const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
         const predictions = gameState.imageGame.playerPredictions[currentPlayer] || [];
@@ -1722,7 +1978,6 @@ function handleImageClick(event) {
     const index = parseInt(cell.dataset.index);
     const currentPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
     
-    // SELECTION PHASE
     if (gameState.imageGame.turnPhase === 'selection') {
         const selectedIndex = gameState.imageGame.selections[currentPlayer];
         
@@ -1763,7 +2018,7 @@ function startImageMatch() {
         currentPlayerIndex: 0,
         turnPhase: 'selection',
         selections: {},
-        guesses: {}, // Initialize guesses object to track player-specific guess history
+        guesses: {},
         revealedPlayers: [],
         playerMarks: {},
         playerPredictions: {},
@@ -1941,8 +2196,6 @@ function showNumberSelection(targetPlayer) {
     const playerColor = PLAYER_COLORS[gameState.imageGame.currentPlayerIndex % PLAYER_COLORS.length];
     const guessingPlayer = gameState.imageGame.players[gameState.imageGame.currentPlayerIndex];
     
-    // Get numbers this player has already guessed for THIS SPECIFIC target
-    // FIXED: Check guesses[guessingPlayer][targetPlayer] instead of global marks
     const alreadyGuessed = [];
     
     if (gameState.imageGame.guesses[guessingPlayer] && 
@@ -2025,7 +2278,6 @@ function processGuess(targetPlayer, guessNum) {
     const actualIndex = gameState.imageGame.selections[targetPlayer];
     const isCorrect = guessNum === actualIndex;
     
-    // Initialize guesses structure if needed
     if (!gameState.imageGame.guesses[guessingPlayer]) {
         gameState.imageGame.guesses[guessingPlayer] = {};
     }
@@ -2033,12 +2285,10 @@ function processGuess(targetPlayer, guessNum) {
         gameState.imageGame.guesses[guessingPlayer][targetPlayer] = [];
     }
     
-    // Record this guess for this specific target
     if (!gameState.imageGame.guesses[guessingPlayer][targetPlayer].includes(guessNum)) {
         gameState.imageGame.guesses[guessingPlayer][targetPlayer].push(guessNum);
     }
     
-    // Add visual mark
     addPlayerMark(guessNum, guessingPlayer, '❌');
     
     if (isCorrect) {
@@ -2052,31 +2302,24 @@ function processGuess(targetPlayer, guessNum) {
         indicator.style.background = 'rgba(239, 68, 68, 0.9)';
         indicator.style.animation = 'pulse 1s infinite';
         
-        // Add correct mark
         addPlayerMark(actualIndex, guessingPlayer, '✅');
         
-        // Remove predictions for revealed player
         if (gameState.imageGame.playerPredictions[targetPlayer]) {
             gameState.imageGame.playerPredictions[targetPlayer] = [];
         }
         
-        // Remove target from guesses (can't guess eliminated player anymore)
         if (gameState.imageGame.guesses[guessingPlayer][targetPlayer]) {
             delete gameState.imageGame.guesses[guessingPlayer][targetPlayer];
         }
         
-        // Check if game is over
         if (gameState.imageGame.revealedPlayers.length >= gameState.imageGame.players.length - 1) {
             setTimeout(endImageGame, 1500);
             return;
         }
         
-        // Player gets another turn since they guessed correctly
         autoSelectNextPlayer();
-        // Do NOT call endTurn() - player gets another chance
         updatePlayerDisplay();
     } else {
-        // Wrong guess - turn passes to next player
         autoSelectNextPlayer();
         endTurn();
     }
@@ -2211,10 +2454,8 @@ function setupImageGameListeners() {
     }
 }
 
-// Handle window resize for responsive image grid
 window.addEventListener('resize', function() {
     if (gameState.imageGame && document.getElementById('imageMatchScreen').style.display === 'block') {
-        // Re-render the grid with correct columns
         if (gameState.imageGame.images) {
             renderImageGrid(gameState.imageGame.images);
         }
@@ -2443,12 +2684,9 @@ async function updateJSONBinInBackground(newCount) {
         let currentData = { playCount: 0 };
         if (getResponse.ok) {
             const responseData = await getResponse.json();
-            // Handle different response structures
             if (responseData.record) {
-                // New JSONBin v3 structure
                 currentData = responseData.record;
             } else {
-                // Old structure or direct data
                 currentData = responseData;
             }
         }
@@ -2476,7 +2714,6 @@ async function updateJSONBinInBackground(newCount) {
         
         if (putResponse.ok) {
             const updatedResponse = await putResponse.json();
-            // Handle different response structures
             const updatedData = updatedResponse.record || updatedResponse;
             console.log('✅ JSONBin updated to:', updatedData.playCount);
             
@@ -2570,6 +2807,9 @@ function showHelp(mode) {
     } else if (mode === 'images') {
         content = getImagesHelp();
         title = '🖼️ Guess the Image';
+    } else if (mode === 'rumble') {
+        content = getRumbleHelp();
+        title = '🎲 Rumble Mode';
     } else {
         content = getClassicHelp();
         title = 'Game Help';
@@ -2685,58 +2925,32 @@ function getImagesHelp() {
     `;
 }
 
-// ================= DEBUGGING FUNCTIONS =================
-function debugTimerElements() {
-    console.log('=== Debugging Timer Elements ===');
-    
-    // Check all possible timer-related elements
-    const elementIds = [
-        'timerText', 
-        'currentTimerText', 
-        'timerDisplay',
-        'gameModeText',
-        'timerButtons'
-    ];
-    
-    elementIds.forEach(id => {
-        const element = document.getElementById(id);
-        console.log(`Element "${id}":`, element ? 'FOUND' : 'NOT FOUND');
-        if (element) {
-            console.log(`  - Content: ${element.innerHTML || element.textContent}`);
-            console.log(`  - Tag: ${element.tagName}`);
-            console.log(`  - ID: ${element.id}`);
-        }
-    });
+function getRumbleHelp() {
+    return `
+        <div class="help-steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text" style="font-size: 0.9rem;">Click anywhere to start the <strong>rumble animation</strong></div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text" style="font-size: 0.9rem;">Images will shuffle rapidly before stopping on one</div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text" style="font-size: 0.9rem;">See the <strong>final random image</strong> with its details</div>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <div class="step-text" style="font-size: 0.9rem;">Click the image or use buttons to rumble again</div>
+            </div>
+            <div class="step">
+                <div class="step-num">☆</div>
+                <div class="step-text" style="font-size: 0.9rem;"><strong>Perfect for:</strong> quick fun, decision making, random picks</div>
+            </div>
+        </div>
+    `;
 }
-
-function testModeSwitching() {
-    console.log('=== Testing Mode Switching ===');
-    console.log('Current mode:', gameState.gameMode);
-    console.log('Current timer:', gameState.timer);
-    console.log('Timer display content:', document.getElementById('timerDisplay').innerHTML);
-    
-    // Test switching to each mode
-    setTimeout(() => {
-        console.log('\nSwitching to Classic...');
-        selectGameMode('classic');
-    }, 1000);
-    
-    setTimeout(() => {
-        console.log('\nSwitching to Describe It...');
-        selectGameMode('describe');
-    }, 2000);
-    
-    setTimeout(() => {
-        console.log('\nSwitching to Guess the Image...');
-        selectGameMode('images');
-    }, 3000);
-    
-    setTimeout(() => {
-        console.log('\nSwitching back to Classic...');
-        selectGameMode('classic');
-    }, 4000);
-}
-
 
 // ================= GLOBAL FUNCTIONS =================
 window.removePlayer = removePlayer;
@@ -2746,5 +2960,4 @@ window.hideModal = hideModal;
 window.loadTeam = loadTeam;
 window.deleteTeam = deleteTeam;
 window.restartImageGame = restartImageGame;
-window.debugTimerElements = debugTimerElements;
-window.testModeSwitching = testModeSwitching;
+window.restartRumbleGame = restartRumbleGame;

@@ -35,7 +35,156 @@
                 grid-template-columns: repeat(4, 1fr) !important;
             }
         }
-    </style>
+        /* Existing styles... */
+    
+    /* New animations for Rumble mode */
+    @keyframes rumbleShake {
+        0%, 100% { transform: translateX(0) rotate(0deg); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px) rotate(-1deg); }
+        20%, 40%, 60%, 80% { transform: translateX(5px) rotate(1deg); }
+    }
+    
+    @keyframes particleFloat {
+        0% { 
+            transform: translate(0, 0) scale(0);
+            opacity: 0.8;
+        }
+        25% {
+            transform: translate(100px, -50px) scale(1);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translate(-80px, -100px) scale(0.8);
+            opacity: 0.4;
+        }
+        75% {
+            transform: translate(120px, -150px) scale(0.6);
+            opacity: 0.2;
+        }
+        100% {
+            transform: translate(0, -200px) scale(0);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes sparkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    @keyframes slideInBounce {
+        0% { transform: translateY(100px) scale(0.8); opacity: 0; }
+        70% { transform: translateY(-10px) scale(1.05); opacity: 1; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    
+    .rumble-shake {
+        animation: rumbleShake 0.5s ease-in-out;
+    }
+    
+    .sparkle-effect {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: gold;
+        border-radius: 50%;
+        animation: sparkle 1s infinite;
+        pointer-events: none;
+    }
+    
+    .slide-in-bounce {
+        animation: slideInBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+    
+    /* Existing styles... */
+    
+    /* Rumble Spinning Animations */
+    @keyframes spinFast {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes spinSlow {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes flash {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+    
+    @keyframes rapidFlash {
+        0%, 20%, 40%, 60%, 80%, 100% { opacity: 0.2; }
+        10%, 30%, 50%, 70%, 90% { opacity: 1; }
+    }
+    
+    @keyframes glowPulse {
+        0%, 100% { opacity: 0.2; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.05); }
+    }
+    
+    @keyframes wheelStretch {
+        0% { transform: scale(1); border-radius: 50%; }
+        50% { transform: scale(1.05); border-radius: 30%; }
+        100% { transform: scale(1); border-radius: 20px; }
+    }
+    
+    @keyframes revealFromCenter {
+        0% { transform: scale(0); opacity: 0; }
+        70% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes bounceIn {
+        0% { transform: translateY(100px) scale(0.8); opacity: 0; }
+        60% { transform: translateY(-20px) scale(1.05); opacity: 1; }
+        80% { transform: translateY(10px) scale(0.95); opacity: 1; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    
+    @keyframes slideUpFadeIn {
+        0% { transform: translateY(50px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes sparkleTrail {
+        0% { transform: translateX(-100%) rotate(0deg); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateX(100%) rotate(360deg); opacity: 0; }
+    }
+    
+    .spinning-fast {
+        animation: spinFast 0.1s linear infinite;
+    }
+    
+    .spinning-medium {
+        animation: spinSlow 0.3s linear infinite;
+    }
+    
+    .spinning-slow {
+        animation: spinSlow 0.8s linear infinite;
+    }
+    
+    .flashing-images {
+        animation: rapidFlash 0.1s infinite;
+    }
+    
+    .reveal-animation {
+        animation: revealFromCenter 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+    
+    .bounce-in {
+        animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+    
+    .slide-up {
+        animation: slideUpFadeIn 0.5s ease-out 0.3s forwards;
+        opacity: 0;
+    }
+</style>
+    
 </head>
 <body>
     <!-- Header - Removed sticky positioning -->
@@ -132,13 +281,24 @@
                         <div class="mode-container">
                             <button class="mode-btn active" data-mode="images">
                                 <div class="mode-icon">🖼️</div>
-                                <div class="mode-label">Guess the image</div>
+                                <div class="mode-label">Guess image</div>
                                 <small>Who / What Am I?</small>
                             </button>
                             <button class="mode-help-btn" data-help="images">
                                 <i class="fas fa-question-circle"></i>
                             </button>
                         </div>
+                        <!-- Add this with the other mode containers in settings -->
+<div class="mode-container">
+    <button class="mode-btn" data-mode="rumble">
+        <div class="mode-icon">🎲</div>
+        <div class="mode-label">Rumble</div>
+        <small>One random image</small>
+    </button>
+    <button class="mode-help-btn" data-help="rumble">
+        <i class="fas fa-question-circle"></i>
+    </button>
+</div>
                     </div>
                 </div>
                 
@@ -266,7 +426,96 @@
             </div>
         </div>
     </main>
-
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen - SIMPLIFIED -->
+<!-- Rumble Game Screen -->
+<!-- Rumble Game Screen - UPDATED -->
+<!-- Rumble Game Screen - SPINNING WHEEL EFFECT -->
+<div id="rumbleScreen" class="game-screen" style="display: none;">
+    <div class="game-container rumble-container" style="padding: 10px; height: 100vh; display: flex; flex-direction: column;">
+        <!-- Header with only home button -->
+        <div class="game-header" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--card); border-radius: 10px; margin-bottom: 10px;">
+            <div class="game-title">
+                <i class="fas fa-dice" style="color: var(--primary);"></i>
+                <span>Random Rumble</span>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="restartGame()">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                <button class="action-btn" onclick="backToLobby()" title="Back to Menu">
+                    <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main content area -->
+        <div id="rumbleContent" style="flex: 1; display: flex; flex-direction: column; padding: 10px; cursor: pointer;">
+            <!-- Start area - Shows initially -->
+            <div id="rumbleStartArea" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%;">
+                <!-- Spinning wheel container -->
+                <div id="rumbleSpinContainer" style="width: 100%; height: 60vh; min-height: 300px; max-height: 500px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(0,0,0,0.1)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 10px 0; border: 3px dashed var(--primary); position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(99, 102, 241, 0.3);">
+                   
+                    
+                    <!-- Spinning ring with images (hidden initially) -->
+                    <div id="spinRing" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; display: none;">
+                        <!-- Images will be positioned around the ring -->
+                    </div>
+                    
+                    <!-- Initial placeholder -->
+                    <div id="spinPlaceholder" style="font-size: 5rem; color: var(--primary); z-index: 5;">
+                        🎲
+                    </div>
+                    
+                    <!-- Spinning glow effect -->
+                    <div class="spin-glow" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, transparent 60%, var(--primary) 100%); opacity: 0.3; animation: glowPulse 2s infinite;"></div>
+                </div>
+                
+                <div id="rumbleNameDisplay" style="padding: 20px; text-align: center;">
+                    <h2 style="color: var(--text); font-size: 2.5rem; margin-bottom: 10px; font-weight: 800; text-shadow: 0 2px 10px rgba(99, 102, 241, 0.5);">Click Anywhere to Spin</h2>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 10px;">Click to spin the wheel and see what you get!</p>
+                    
+                   
+                </div>
+            </div>
+            
+            <!-- Game area - Shows after spin -->
+            <div id="rumbleGameArea" style="display: none; flex: 1; flex-direction: column; height: 100%;">
+                <!-- The spinning wheel that slows down -->
+                <div id="spinningWheel" style="width: 100%; height: 60vh; min-height: 300px; max-height: 500px; position: relative; overflow: hidden; border-radius: 20px; margin: 10px 0;">
+                    <!-- Images will flash here during spin -->
+                </div>
+                
+                <!-- Final image container -->
+                <div id="rumbleFinalContainer" style="width: 100%; height: 60vh; min-height: 400px; max-height: 600px; background: rgba(0,0,0,0.1); border-radius: 20px; display: none; align-items: center; justify-content: center; margin: 10px 0; border: 3px solid var(--primary); position: relative; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4);">
+                    <!-- Final image will appear here -->
+                </div>
+                
+                <!-- Name display -->
+                <div id="rumbleNameDisplayActive" style="padding: 20px; background: rgba(99, 102, 241, 0.15); border-radius: 15px; border: 2px solid var(--primary); text-align: center; margin: 15px 0; backdrop-filter: blur(10px); min-height: 100px; display: none;">
+                    <!-- The name will appear here -->
+                </div>
+                
+                <!-- Restart button - Only shows after spin completes -->
+                <div id="rumbleRestartSection" style="display: none; margin-top: 20px;">
+                    <button id="rumbleRestartBtn" style="width: 100%; padding: 20px; background: linear-gradient(135deg, var(--primary), #8B5CF6); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 15px; box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);">
+                        <i class="fas fa-redo"></i> Click to Spin Again
+                    </button>
+                    <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 15px;">
+                        <i class="fas fa-info-circle"></i> Takes you back to "Click Anywhere to Start" screen
+                    </p>
+                </div>
+                
+                <!-- Instructions -->
+                
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Start Game Button -->
     <div class="start-section">
         <div class="game-summary">
@@ -278,7 +527,7 @@
             <div class="summary-item">
                 <i class="fas fa-gamepad"></i>
                 <span>Mode:</span>
-                <span class="summary-value" id="gameModeText">Guess the Image</span>
+                <span class="summary-value" id="gameModeText">Guess the image</span>
             </div>
             
             <div class="summary-item">
