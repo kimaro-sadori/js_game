@@ -3098,7 +3098,7 @@ function getRumbleHelp() {
                         Groups? Make a circle! P1→P2→P3→P1
                     </div>
                     <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
-                        جماعة؟ كونوا دائرة! ل1→ل2→ل3→ل1
+                        جماعة؟ كونوا دائرة! ل1→ل3→ل2→ل1
                     </div>
                 </div>
             </div>
