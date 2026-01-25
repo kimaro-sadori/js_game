@@ -2625,6 +2625,7 @@ function formatTime(seconds) {
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
+
 function startRumbleSpin() {
     console.log('Starting cinema reel animation...');
 
@@ -2768,62 +2769,53 @@ function startRumbleSpin() {
     const initialOffset = (spinningWheel.offsetWidth / 2) - (cardTotalWidth / 2);
     const targetPosition = -(targetPositionInReel * cardTotalWidth) + initialOffset;
 
-    // ===== Progressive deceleration physics =====
-    let currentPosition = 1200; // off-screen right
-    let velocity = 42; // initial speed
-    const minVelocity = 0.8; // stop threshold
+    // ===== FAST CINEMATIC SPIN (GUARANTEED QUICK STOP) =====
+// ===== ULTRA SMOOTH CINEMATIC SPIN =====
 
-    const startTime = performance.now();
-    const slowDownStart = 2200; // ms
-    const friction = 0.985; // smooth gradual slow-down (9→8→7→6 style)
-    let finished = false;
+const startOffset = 1200;
+reelContainer.style.transform = `translateX(${startOffset}px)`;
 
-    function animateReel(now) {
-        const elapsed = now - startTime;
+// force layout reflow
+reelContainer.getBoundingClientRect();
 
-        // Start slowing after time
-        if (elapsed > slowDownStart) {
-            velocity *= friction; // gradual continuous deceleration
-        }
+// animation duration
+const spinDuration = 4600;
 
-        // Clamp
-        if (velocity < minVelocity) velocity = minVelocity;
+// GPU smooth easing
+reelContainer.style.transition = `
+    transform ${spinDuration}ms cubic-bezier(0.08, 0.82, 0.17, 1)
+`;
 
-        // Continuous movement
-        currentPosition -= velocity;
+// move to final target
+requestAnimationFrame(() => {
+    reelContainer.style.transform = `translateX(${targetPosition}px)`;
+});
 
-        // Final smooth lock
-        if (!finished && Math.abs(currentPosition - targetPosition) < 1.5 && velocity <= 1.2) {
-            finished = true;
-            reelContainer.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
-            reelContainer.style.transform = `translateX(${targetPosition}px)`;
-
-            // Highlight
-            setTimeout(() => {
-                const centerCard = reelContainer.children[targetPositionInReel];
-                if (centerCard) {
-                    centerCard.style.transform = 'scale(1.1)';
-                    centerCard.style.border = '3px solid #fbbf24';
-                    centerCard.style.boxShadow = '0 0 40px rgba(251, 191, 36, 0.8)';
-                    setTimeout(() => centerCard.style.transform = 'scale(1)', 300);
-                }
-            }, 200);
-
-            setTimeout(() => finishRumbleSpin(), 900);
-            return;
-        }
-
-        reelContainer.style.transform = `translateX(${currentPosition}px)`;
-        requestAnimationFrame(animateReel);
+// highlight center card
+setTimeout(() => {
+    const centerCard = reelContainer.children[targetPositionInReel];
+    if (centerCard) {
+        centerCard.style.transition = 'transform 300ms ease, box-shadow 300ms ease';
+        centerCard.style.transform = 'scale(1.12)';
+        centerCard.style.border = '3px solid #fbbf24';
+        centerCard.style.boxShadow = '0 0 45px rgba(251, 191, 36, 0.9)';
+        setTimeout(() => {
+            centerCard.style.transform = 'scale(1)';
+        }, 300);
     }
+}, spinDuration - 350);
 
-    requestAnimationFrame(animateReel);
+// final reveal
+setTimeout(() => {
+    finishRumbleSpin();
+}, spinDuration + 150);
+
 
     // ===== Final reveal =====
     function finishRumbleSpin() {
         setTimeout(() => {
             spinningWheel.style.display = 'none';
-        }, 200);
+        }, 150);
 
         const finalContainer = document.getElementById('rumbleFinalContainer');
         finalContainer.style.display = 'flex';

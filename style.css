@@ -2472,3 +2472,7 @@ body:has(#timerDisplay span) .timer-btn {
     flex: 1;
     min-width: 0;
 }
+#reelContainer {
+    will-change: transform;
+    transform: translateZ(0);
+}
