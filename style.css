@@ -2476,3 +2476,7 @@ body:has(#timerDisplay span) .timer-btn {
     will-change: transform;
     transform: translateZ(0);
 }
+@keyframes textReveal {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

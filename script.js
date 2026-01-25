@@ -2812,36 +2812,121 @@ setTimeout(() => {
 
 
     // ===== Final reveal =====
-    function finishRumbleSpin() {
-        setTimeout(() => {
-            spinningWheel.style.display = 'none';
-        }, 150);
+  function finishRumbleSpin() {
+    setTimeout(() => {
+        spinningWheel.style.display = 'none';
+    }, 150);
 
-        const finalContainer = document.getElementById('rumbleFinalContainer');
-        finalContainer.style.display = 'flex';
-        finalContainer.innerHTML = '';
+    const finalContainer = document.getElementById('rumbleFinalContainer');
+    finalContainer.style.display = 'flex';
+    finalContainer.style.flexDirection = 'column';
+    finalContainer.style.alignItems = 'center';
+    finalContainer.style.justifyContent = 'center';
+    finalContainer.innerHTML = '';
 
-        const imageWrapper = document.createElement('div');
-        imageWrapper.style.cssText = `display:flex;align-items:center;justify-content:center;width:100%;height:100%;`;
+    // 1. Image - BIG and UNCHANGED (90% height)
+    const imageWrapper = document.createElement('div');
+    imageWrapper.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 90%;  // Keep it big!
+    `;
 
-        if (finalImage.type === 'football' || finalImage.type === 'image') {
-            const img = document.createElement('img');
-            img.src = finalImage.image;
-            img.style.cssText = `max-width:90%;max-height:80%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.7);border:4px solid rgba(251,191,36,0.5);`;
-            imageWrapper.appendChild(img);
-        } else {
-            const emoji = document.createElement('div');
-            emoji.textContent = finalImage.image;
-            emoji.style.fontSize = '7rem';
-            imageWrapper.appendChild(emoji);
-        }
-
-        finalContainer.appendChild(imageWrapper);
-        document.getElementById('rumbleRestartSection').style.display = 'block';
-
-        gameState.rumbleGame.isRumbling = false;
-        gameState.rumbleGame.isSpinning = false;
+    if (finalImage.type === 'football' || finalImage.type === 'image') {
+        const img = document.createElement('img');
+        img.src = finalImage.image;
+        img.style.cssText = `
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+            border: 4px solid rgba(251,191,36,0.5);
+        `;
+        imageWrapper.appendChild(img);
+    } else {
+        const emoji = document.createElement('div');
+        emoji.textContent = finalImage.image;
+        emoji.style.fontSize = '7rem';
+        imageWrapper.appendChild(emoji);
     }
+
+    finalContainer.appendChild(imageWrapper);
+
+    // 2. Update the EXISTING name display area with names (REPLACES "🎯 RESULT")
+    const nameDisplayActive = document.getElementById('rumbleNameDisplayActive');
+    nameDisplayActive.style.display = 'block';
+    nameDisplayActive.innerHTML = `
+        <div style="text-align: center; padding: 15px 10px; height: 100%;">
+            <!-- English Name with animation -->
+            <div style="
+                font-size: 2.2rem;
+                font-weight: 800;
+                color: #fbbf24;
+                margin-bottom: 8px;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideUpName 0.6s ease-out 0.3s forwards;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            ">
+                ${finalImage.displayName || finalImage.name}
+            </div>
+            
+            <!-- Arabic Name (if exists) -->
+            ${finalImage.arabicName && finalImage.arabicName.trim() ? `
+            <div style="
+                font-size: 1.6rem;
+                color: rgba(255,255,255,0.9);
+                direction: rtl;
+                margin-bottom: 8px;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideUpName 0.6s ease-out 0.5s forwards;
+                padding: 0 10px;
+            ">
+                ${finalImage.arabicName}
+            </div>
+            ` : ''}
+            
+            <!-- Category Badge -->
+            <div style="
+                font-size: 0.9rem;
+                color: #94a3b8;
+                background: rgba(30, 41, 59, 0.6);
+                padding: 6px 15px;
+                border-radius: 20px;
+                display: inline-block;
+                letter-spacing: 1px;
+                border: 1px solid rgba(255,255,255,0.1);
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideUpName 0.6s ease-out 0.7s forwards;
+                margin-top: 5px;
+            ">
+                ${finalImage.category.toUpperCase()}
+            </div>
+        </div>
+    `;
+
+    // 3. Add CSS animation for the names
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideUpName {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // 4. Show restart button area
+    document.getElementById('rumbleRestartSection').style.display = 'block';
+
+    gameState.rumbleGame.isRumbling = false;
+    gameState.rumbleGame.isSpinning = false;
+}
 }
 
 // ================= HELP MODAL FUNCTIONS =================
