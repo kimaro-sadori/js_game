@@ -607,8 +607,8 @@ function setupEventListeners() {
         });
     }
     
-    const timerGroup = document.querySelector('.setting-group:nth-child(2)');
-    const categoriesGroup = document.querySelector('.setting-group:nth-child(3)');
+    const timerGroup = document.querySelector('.setting-group:nth-child(3)');
+    const categoriesGroup = document.querySelector('.setting-group:nth-child(2)');
     
     if (timerGroup) {
         timerGroup.addEventListener('click', function(e) {
@@ -2848,20 +2848,40 @@ function getClassicHelp() {
     return `
         <div class="help-steps">
             <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text" style="font-size: 0.9rem;">One player is secretly the <strong>Imposter</strong></div>
+                <div class="step-num">🎭</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">1 Imposter hides among innocents! Find them!</div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        1 مخادع يختبئ بين الأبرياء! اكتشفوه!
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text" style="font-size: 0.9rem;">Innocents see the <strong>word</strong>, Imposter sees a <strong>hint</strong></div>
+                <div class="step-num">🤫</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">Innocents see WORD, Imposter sees HINT</div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        الأبرياء يرون كلمة، المخادع يرى تلميح
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text" style="font-size: 0.9rem;">All players describe the word (Imposter tries to blend in)</div>
+                <div class="step-num">🗣️</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">Everyone describes, Imposter blends in</div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        الجميع يصف، المخادع يندمج
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">4</div>
-                <div class="step-text" style="font-size: 0.9rem;">Discuss and vote to find the Imposter!</div>
+                <div class="step-num">🤔</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">Vote who's sus! Catch the Imposter!</div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        صوتوا على المشبوه! القوا القبض على المخادع!
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -2871,24 +2891,48 @@ function getDescribeHelp() {
     return `
         <div class="help-steps">
             <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text" style="font-size: 0.9rem;">Players split into <strong class="red">Red</strong> and <strong class="blue">Blue</strong> teams</div>
+                <div class="step-num">🎲</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        <strong>Pro Tip:</strong> Just 2 players? Use Rumble mode!
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        <strong>نصيحة:</strong> فقط لاعبين؟ استخدم وضع الرمبل!
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text" style="font-size: 0.9rem;">A <strong>Describer</strong> is randomly chosen from a team</div>
+                <div class="step-num">🔴🔵</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Teams compete: Red vs Blue
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        فرق تتنافس: أحمر ضد أزرق
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text" style="font-size: 0.9rem;">Describer sees a secret word</div>
+                <div class="step-num">🎤</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Describer gets secret word, describes without saying it
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        الموصف يحصل على كلمة سرية، يصفها بدون قولها
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">4</div>
-                <div class="step-text" style="font-size: 0.9rem;">Describer explains the word (speech or gestures only)</div>
-            </div>
-            <div class="step">
-                <div class="step-num">5</div>
-                <div class="step-text" style="font-size: 0.9rem;">Teams race to guess the word first!</div>
+                <div class="step-num">🏆</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        First team to guess wins! Race against time!
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        أول فريق يخمن يفوز! تسابقوا ضد الوقت!
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -2898,28 +2942,48 @@ function getImagesHelp() {
     return `
         <div class="help-steps">
             <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text" style="font-size: 0.9rem;">All players see a <strong>list of images</strong> from selected categories</div>
+                <div class="step-num">🖼️</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Each player secretly picks one image
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        كل لاعب يختار صورة سرية
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text" style="font-size: 0.9rem;">Race to <strong>guess what's in the image</strong> first</div>
+                <div class="step-num">🤔</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Guess others' picks. Right = they're out!
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        خمّن اختيارات الآخرين. صح = يخرجون!
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text" style="font-size: 0.9rem;">Correct guess <strong>eliminates</strong> another player</div>
+                <div class="step-num">👑</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Last player standing wins! No time limit!
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        آخر لاعب باقٍ يفوز! بدون حد زمني!
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">4</div>
-                <div class="step-text" style="font-size: 0.9rem;">Eliminated players sit out, <strong>circle continues</strong> with remaining players</div>
-            </div>
-            <div class="step">
-                <div class="step-num">5</div>
-                <div class="step-text" style="font-size: 0.9rem;">Infinite time until the last player standing <strong>wins!</strong></div>
-            </div>
-            <div class="step">
-                <div class="step-num">☆</div>
-                <div class="step-text" style="font-size: 0.9rem;"><strong>Minimum players: </strong> two</div>
+                <div class="step-num">🎮</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        <strong>Need:</strong> 2+ players, any categories
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        <strong>يلزم:</strong> لاعبين أو أكثر، أي فئة
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -2929,24 +2993,70 @@ function getRumbleHelp() {
     return `
         <div class="help-steps">
             <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text" style="font-size: 0.9rem;">Click anywhere to start the <strong>rumble animation</strong></div>
+                <div class="step-num">📱</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        <strong>Perfect for 2 players!</strong> Show phone to friend
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        <strong>مثالي لـ2 لاعبين!</strong> أظهر هاتفك لصديق
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text" style="font-size: 0.9rem;">Images will shuffle rapidly before stopping on one</div>
+                <div class="step-num">🙈</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        DON'T look at your phone! Only your friend sees it
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        لا تنظر إلى هاتفك! فقط صديقك يراه
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text" style="font-size: 0.9rem;">See the <strong>final random image</strong> with its details</div>
+                <div class="step-num">❓</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Ask questions to guess YOUR image! "Is it red? Animal?"
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        اسأل أسئلة لتخمين صورتك! "هل هو أحمر؟ حيوان؟"
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">4</div>
-                <div class="step-text" style="font-size: 0.9rem;">Click the image or use buttons to rumble again</div>
+                <div class="step-num">🔄</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Take turns! You guess yours, friend guesses theirs
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        تناوبوا! أنت تخمن صورتك، صديقك يخمن صورته
+                    </div>
+                </div>
             </div>
             <div class="step">
-                <div class="step-num">☆</div>
-                <div class="step-text" style="font-size: 0.9rem;"><strong>Perfect for:</strong> quick fun, decision making, random picks</div>
+                <div class="step-num">👥</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        Groups? Make a circle! P1→P2→P3→P1
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        جماعة؟ كونوا دائرة! ل1→ل2→ل3→ل1
+                    </div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">🎭</div>
+                <div class="step-text-container">
+                    <div class="step-text-en" style="font-size: 0.9rem;">
+                        <strong>No peeking!</strong> The fun is in guessing blind! 😂
+                    </div>
+                    <div class="step-text-ar" style="font-size: 0.9rem; color: var(--accent); direction: rtl; text-align: right;">
+                        <strong>لا تختلس النظر!</strong> المتعة في التخمين الأعمى! 😂
+                    </div>
+                </div>
             </div>
         </div>
     `;

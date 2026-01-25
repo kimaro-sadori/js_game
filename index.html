@@ -302,25 +302,7 @@
                     </div>
                 </div>
                 
-                <!-- Timer - Minimal with expand option -->
-                <div class="setting-group">
-                    <div class="setting-title" for="timerExpand">
-                        <i class="fas fa-clock"></i>
-                        <h3>Timer <span class="expand-toggle" id="timerExpand"> </span></h3>
-                    </div>
-                    <div id="timerButtons" class="timer-buttons" style="display: none; font-weight: bold;">
-                        <button class="timer-btn" data-time="30">30s</button>
-                        <button class="timer-btn" data-time="60">1m</button>
-                        <button class="timer-btn active" data-time="120">2m</button>
-                        <button class="timer-btn" data-time="180">3m</button>
-                        <button class="timer-btn" data-time="300">5m</button>
-                        <button class="timer-btn" data-time="0">No Timer</button>
-                    </div>
-                    <br>
-                    <div id="timerDisplay" class="timer-display-mini" style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center;">
-                        <span id="currentTimerText">2:00</span>
-                    </div>
-                </div>
+               
                 
                 <!-- Categories - Minimal with expand option -->
                 <div class="setting-group">
@@ -337,6 +319,45 @@
                         </div>
                         
                         <!-- Categories with right-aligned checkboxes -->
+                         <label class="category-option">
+                            <input type="checkbox" class="category-checkbox" name="category" value="football" checked>
+                            <div class="category-label">
+                                <span class="category-icon">⚽</span>
+                                <span class="category-text">Football Players</span>
+                            </div>
+                        </label>
+                         <label class="category-option">
+                            <input type="checkbox" class="category-checkbox" name="category" value="flags" checked>
+                            <div class="category-label">
+                                <span class="category-icon">🇺🇸</span>
+                                <span class="category-text">Flags</span>
+                            </div>
+                        </label>
+
+                           <label class="category-option">
+                            <input type="checkbox" class="category-checkbox" name="category" value="movies" checked>
+                            <div class="category-label">
+                                <span class="category-icon">🎬</span>
+                                <span class="category-text">Movies</span>
+                            </div>
+                        </label>
+
+                         <label class="category-option">
+                            <input type="checkbox" class="category-checkbox" name="category" value="anime" checked>
+                            <div class="category-label">
+                                <span class="category-icon">🎌</span>
+                                <span class="category-text">Anime</span>
+                            </div>
+                        </label>
+
+                           <label class="category-option">
+                            <input type="checkbox" class="category-checkbox" name="category" value="celebrities" checked>
+                            <div class="category-label">
+                                <span class="category-icon">🌟</span>
+                                <span class="category-text">Celebrities</span>
+                            </div>
+                        </label>
+
                         <label class="category-option">
                             <input type="checkbox" class="category-checkbox" name="category" value="animals" checked>
                             <div class="category-label">
@@ -353,13 +374,7 @@
                             </div>
                         </label>
                         
-                        <label class="category-option">
-                            <input type="checkbox" class="category-checkbox" name="category" value="movies" checked>
-                            <div class="category-label">
-                                <span class="category-icon">🎬</span>
-                                <span class="category-text">Movies</span>
-                            </div>
-                        </label>
+                        
                         
                         <label class="category-option">
                             <input type="checkbox" class="category-checkbox" name="category" value="places" checked>
@@ -376,23 +391,7 @@
                                 <span class="category-text">Objects</span>
                             </div>
                         </label>
-                        
-                        <label class="category-option">
-                            <input type="checkbox" class="category-checkbox" name="category" value="celebrities" checked>
-                            <div class="category-label">
-                                <span class="category-icon">🌟</span>
-                                <span class="category-text">Celebrities</span>
-                            </div>
-                        </label>
-                        
-                        <label class="category-option">
-                            <input type="checkbox" class="category-checkbox" name="category" value="flags" checked>
-                            <div class="category-label">
-                                <span class="category-icon">🇺🇸</span>
-                                <span class="category-text">Flags</span>
-                            </div>
-                        </label>
-                        
+                  
                         <label class="category-option">
                             <input type="checkbox" class="category-checkbox" name="category" value="sports" checked>
                             <div class="category-label">
@@ -400,27 +399,31 @@
                                 <span class="category-text">Sports</span>
                             </div>
                         </label>
-                        
-                        <label class="category-option">
-                            <input type="checkbox" class="category-checkbox" name="category" value="anime" checked>
-                            <div class="category-label">
-                                <span class="category-icon">🎌</span>
-                                <span class="category-text">Anime</span>
-                            </div>
-                        </label>
-                        
-                        <label class="category-option">
-                            <input type="checkbox" class="category-checkbox" name="category" value="football" checked>
-                            <div class="category-label">
-                                <span class="category-icon">⚽</span>
-                                <span class="category-text">Football Players</span>
-                            </div>
-                        </label>
+               
                         <br>
                     </div>
                     
                     <div id="categoriesDisplay" class="categories-display-mini" style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">
                         <span id="selectedCategoriesText">All categories selected</span>
+                    </div>
+                </div>
+                 <!-- Timer - Minimal with expand option -->
+                <div class="setting-group">
+                    <div class="setting-title" for="timerExpand">
+                        <i class="fas fa-clock"></i>
+                        <h3>Timer <span class="expand-toggle" id="timerExpand"> </span></h3>
+                    </div>
+                    <div id="timerButtons" class="timer-buttons" style="display: none; font-weight: bold;">
+                        <button class="timer-btn" data-time="30">30s</button>
+                        <button class="timer-btn" data-time="60">1m</button>
+                        <button class="timer-btn active" data-time="120">2m</button>
+                        <button class="timer-btn" data-time="180">3m</button>
+                        <button class="timer-btn" data-time="300">5m</button>
+                        <button class="timer-btn" data-time="0">No Timer</button>
+                    </div>
+                    <br>
+                    <div id="timerDisplay" class="timer-display-mini" style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px; text-align: center;">
+                        <span id="currentTimerText">2:00</span>
                     </div>
                 </div>
             </div>
