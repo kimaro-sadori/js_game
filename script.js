@@ -879,172 +879,9 @@ function shuffleArray(array) {
     return array;
 }
 
-function startRumbleSpin() {
-    console.log('Starting rumble spin...');
-    
-    if (gameState.rumbleGame.imagePool.length === 0) {
-        buildRumbleImagePool();
-    }
-    
-    gameState.rumbleGame.isRumbling = true;
-    gameState.rumbleGame.isSpinning = true;
-    
-    // Hide start area, show game area
-    document.getElementById('rumbleStartArea').style.display = 'none';
-    document.getElementById('rumbleGameArea').style.display = 'flex';
-    document.getElementById('rumbleFinalContainer').style.display = 'none';
-    document.getElementById('rumbleRestartSection').style.display = 'none';
-    
-    const spinningWheel = document.getElementById('spinningWheel');
-    spinningWheel.innerHTML = '';
-    spinningWheel.style.display = 'block';
-    
-    // Add spinning effect
-    spinningWheel.classList.add('spinning-fast');
-    
-    // Create flashing images effect during spin
-    const imagesToShow = Math.min(9, gameState.rumbleGame.imagePool.length);
-    for (let i = 0; i < imagesToShow; i++) {
-        const randomImage = gameState.rumbleGame.imagePool[
-            Math.floor(Math.random() * gameState.rumbleGame.imagePool.length)
-        ];
-        
-        const imageBox = document.createElement('div');
-        imageBox.style.position = 'absolute';
-        imageBox.style.width = '100%';
-        imageBox.style.height = '100%';
-        imageBox.style.display = 'flex';
-        imageBox.style.alignItems = 'center';
-        imageBox.style.justifyContent = 'center';
-        imageBox.style.opacity = '0.7';
-        imageBox.style.animation = `flash ${0.1 + Math.random() * 0.2}s infinite`;
-        
-        if (randomImage.type === 'football' || randomImage.type === 'image') {
-            const img = document.createElement('img');
-            img.src = randomImage.image;
-            img.alt = randomImage.name;
-            img.style.width = '80%';
-            img.style.height = '80%';
-            img.style.objectFit = 'cover';
-            img.style.borderRadius = '10px';
-            img.style.transform = `rotate(${Math.random() * 360}deg)`;
-            img.onerror = function() {
-                // Fallback to emoji if image fails to load
-                const emoji = document.createElement('div');
-                emoji.textContent = '🖼️';
-                emoji.style.fontSize = '3rem';
-                imageBox.appendChild(emoji);
-            };
-            imageBox.appendChild(img);
-        } else {
-            const emoji = document.createElement('div');
-            emoji.textContent = randomImage.image;
-            emoji.style.fontSize = '3rem';
-            emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
-            imageBox.appendChild(emoji);
-        }
-        
-        spinningWheel.appendChild(imageBox);
-    }
-    
-    // Determine spin duration
-    const spinDuration = 2000 + Math.random() * 1500;
-    let currentTime = 0;
-    const spinInterval = 100;
-    
-    const spinIntervalId = setInterval(() => {
-        currentTime += spinInterval;
-        
-        // Gradually slow down
-        if (currentTime > spinDuration * 0.7) {
-            spinningWheel.classList.remove('spinning-fast');
-            spinningWheel.classList.add('spinning-medium');
-        }
-        
-        if (currentTime > spinDuration * 0.9) {
-            spinningWheel.classList.remove('spinning-medium');
-            spinningWheel.classList.add('spinning-slow');
-        }
-        
-        if (currentTime >= spinDuration) {
-            clearInterval(spinIntervalId);
-            finishRumbleSpin();
-        }
-    }, spinInterval);
-    
-    // Store interval for cleanup
-    gameState.rumbleGame.animationInterval = spinIntervalId;
-}
 
-function finishRumbleSpin() {
-    console.log('Finishing rumble spin...');
-    
-    // Stop spinning animation
-    const spinningWheel = document.getElementById('spinningWheel');
-    spinningWheel.classList.remove('spinning-fast', 'spinning-medium', 'spinning-slow');
-    spinningWheel.style.display = 'none';
-    
-    // Select random final image
-    const finalIndex = Math.floor(Math.random() * gameState.rumbleGame.imagePool.length);
-    const finalImage = gameState.rumbleGame.imagePool[finalIndex];
-    gameState.rumbleGame.finalImageIndex = finalIndex;
-    gameState.rumbleGame.currentImage = finalImage;
-    
-    // Show final container
-    const finalContainer = document.getElementById('rumbleFinalContainer');
-    finalContainer.style.display = 'flex';
-    finalContainer.innerHTML = '';
-    
-    // Add reveal animation
-    finalContainer.classList.add('reveal-animation');
-    
-    // Display the final image
-    if (finalImage.type === 'football' || finalImage.type === 'image') {
-        const img = document.createElement('img');
-        img.src = finalImage.image;
-        img.alt = finalImage.name;
-        img.style.maxWidth = '90%';
-        img.style.maxHeight = '90%';
-        img.style.objectFit = 'contain';
-        img.style.borderRadius = '15px';
-        img.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
-        
-        img.onerror = function() {
-            // Fallback to emoji
-            const emoji = document.createElement('div');
-            emoji.textContent = '🖼️';
-            emoji.style.fontSize = '5rem';
-            emoji.style.margin = '20px';
-            finalContainer.appendChild(emoji);
-        };
-        
-        finalContainer.appendChild(img);
-    } else {
-        const emoji = document.createElement('div');
-        emoji.textContent = finalImage.image;
-        emoji.style.fontSize = '6rem';
-        emoji.style.margin = '20px';
-        finalContainer.appendChild(emoji);
-    }
-    
-    // Show name display
-    const nameDisplay = document.getElementById('rumbleNameDisplayActive');
-    nameDisplay.style.display = 'block';
-    nameDisplay.innerHTML = `
-        <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 10px; font-weight: bold;">${finalImage.displayName}</h3>
-        ${finalImage.arabicName ? `<p style="color: var(--accent); font-size: 1.5rem; direction: rtl; margin-bottom: 10px;">${finalImage.arabicName}</p>` : ''}
-        <div style="background: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; font-size: 0.9rem; margin-top: 10px;">
-            <i class="fas fa-tag"></i> ${finalImage.category}
-        </div>
-    `;
-    
-    // Show restart section
-    document.getElementById('rumbleRestartSection').style.display = 'block';
-    
-    // Update game state
-    gameState.rumbleGame.isRumbling = false;
-    gameState.rumbleGame.isSpinning = false;
-}
+
+
 
 function restartRumbleGame() {
     console.log('Restarting Rumble Game...');
@@ -2787,6 +2624,232 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+function startRumbleSpin() {
+    console.log('Starting cinema reel animation...');
+
+    if (gameState.rumbleGame.imagePool.length === 0) {
+        buildRumbleImagePool();
+    }
+
+    gameState.rumbleGame.isRumbling = true;
+    gameState.rumbleGame.isSpinning = true;
+
+    // UI setup
+    document.getElementById('rumbleStartArea').style.display = 'none';
+    document.getElementById('rumbleGameArea').style.display = 'flex';
+    document.getElementById('rumbleFinalContainer').style.display = 'none';
+    document.getElementById('rumbleNameDisplayActive').style.display = 'none';
+    document.getElementById('rumbleRestartSection').style.display = 'none';
+
+    const spinningWheel = document.getElementById('spinningWheel');
+    spinningWheel.innerHTML = '';
+    spinningWheel.style.display = 'flex';
+    spinningWheel.style.alignItems = 'center';
+    spinningWheel.style.justifyContent = 'center';
+    spinningWheel.style.position = 'relative';
+    spinningWheel.style.overflow = 'hidden';
+    spinningWheel.style.background = 'linear-gradient(135deg, #0f172a, #1e293b)';
+    spinningWheel.style.borderRadius = '15px';
+    spinningWheel.style.border = '3px solid rgba(99, 102, 241, 0.3)';
+
+    // Reel container
+    const reelContainer = document.createElement('div');
+    reelContainer.id = 'reelContainer';
+    reelContainer.style.cssText = `
+        position: absolute;
+        display: flex;
+        height: 70%;
+        top: 15%;
+        left: 0;
+        will-change: transform;
+    `;
+    spinningWheel.appendChild(reelContainer);
+
+    // Center indicator
+    const centerIndicator = document.createElement('div');
+    centerIndicator.style.cssText = `
+        position: absolute;
+        left: 50%;
+        top: 10%;
+        bottom: 10%;
+        width: 6px;
+        background: linear-gradient(to bottom, #fbbf24, #f59e0b, #fbbf24);
+        transform: translateX(-50%);
+        z-index: 20;
+        pointer-events: none;
+        border-radius: 3px;
+        box-shadow: 0 0 15px rgba(251, 191, 36, 0.7);
+    `;
+    spinningWheel.appendChild(centerIndicator);
+
+    // Center glow
+    const centerGlow = document.createElement('div');
+    centerGlow.style.cssText = `
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 150px;
+        background: linear-gradient(90deg, 
+            transparent 0%, 
+            rgba(99, 102, 241, 0.1) 20%, 
+            rgba(251, 191, 36, 0.2) 50%, 
+            rgba(99, 102, 241, 0.1) 80%, 
+            transparent 100%);
+        transform: translateX(-50%);
+        z-index: 10;
+        pointer-events: none;
+        opacity: 0.7;
+    `;
+    spinningWheel.appendChild(centerGlow);
+
+    // Pick final image
+    const randomIndex = Math.floor(Math.random() * gameState.rumbleGame.imagePool.length);
+    const finalImage = gameState.rumbleGame.imagePool[randomIndex];
+    gameState.rumbleGame.finalImageIndex = randomIndex;
+    gameState.rumbleGame.currentImage = finalImage;
+
+    // Build reel
+    const reelItemsCount = 60;
+    const reelItems = [];
+    for (let i = 0; i < reelItemsCount; i++) {
+        reelItems.push(
+            gameState.rumbleGame.imagePool[
+                Math.floor(Math.random() * gameState.rumbleGame.imagePool.length)
+            ]
+        );
+    }
+
+    const targetPositionInReel = Math.floor(reelItemsCount / 2);
+    reelItems[targetPositionInReel] = finalImage;
+
+    // Create cards
+    reelItems.forEach((item, index) => {
+        const imageCard = document.createElement('div');
+        imageCard.className = 'reel-card';
+        imageCard.style.cssText = `
+            width: 140px;
+            height: 100%;
+            margin: 0 8px;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 3px solid rgba(99, 102, 241, 0.4);
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        `;
+
+        if (index === targetPositionInReel) {
+            imageCard.style.border = '3px solid #fbbf24';
+            imageCard.style.boxShadow = '0 0 25px rgba(251, 191, 36, 0.5)';
+        }
+
+        if (item.type === 'football' || item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.image;
+            img.alt = item.name;
+            img.style.cssText = `width:100%;height:100%;object-fit:cover;`;
+            imageCard.appendChild(img);
+        } else {
+            const emoji = document.createElement('div');
+            emoji.textContent = item.image;
+            emoji.style.fontSize = '3rem';
+            imageCard.appendChild(emoji);
+        }
+        reelContainer.appendChild(imageCard);
+    });
+
+    // Positioning
+    const cardTotalWidth = 156;
+    const initialOffset = (spinningWheel.offsetWidth / 2) - (cardTotalWidth / 2);
+    const targetPosition = -(targetPositionInReel * cardTotalWidth) + initialOffset;
+
+    // ===== Progressive deceleration physics =====
+    let currentPosition = 1200; // off-screen right
+    let velocity = 42; // initial speed
+    const minVelocity = 0.8; // stop threshold
+
+    const startTime = performance.now();
+    const slowDownStart = 2200; // ms
+    const friction = 0.985; // smooth gradual slow-down (9→8→7→6 style)
+    let finished = false;
+
+    function animateReel(now) {
+        const elapsed = now - startTime;
+
+        // Start slowing after time
+        if (elapsed > slowDownStart) {
+            velocity *= friction; // gradual continuous deceleration
+        }
+
+        // Clamp
+        if (velocity < minVelocity) velocity = minVelocity;
+
+        // Continuous movement
+        currentPosition -= velocity;
+
+        // Final smooth lock
+        if (!finished && Math.abs(currentPosition - targetPosition) < 1.5 && velocity <= 1.2) {
+            finished = true;
+            reelContainer.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+            reelContainer.style.transform = `translateX(${targetPosition}px)`;
+
+            // Highlight
+            setTimeout(() => {
+                const centerCard = reelContainer.children[targetPositionInReel];
+                if (centerCard) {
+                    centerCard.style.transform = 'scale(1.1)';
+                    centerCard.style.border = '3px solid #fbbf24';
+                    centerCard.style.boxShadow = '0 0 40px rgba(251, 191, 36, 0.8)';
+                    setTimeout(() => centerCard.style.transform = 'scale(1)', 300);
+                }
+            }, 200);
+
+            setTimeout(() => finishRumbleSpin(), 900);
+            return;
+        }
+
+        reelContainer.style.transform = `translateX(${currentPosition}px)`;
+        requestAnimationFrame(animateReel);
+    }
+
+    requestAnimationFrame(animateReel);
+
+    // ===== Final reveal =====
+    function finishRumbleSpin() {
+        setTimeout(() => {
+            spinningWheel.style.display = 'none';
+        }, 200);
+
+        const finalContainer = document.getElementById('rumbleFinalContainer');
+        finalContainer.style.display = 'flex';
+        finalContainer.innerHTML = '';
+
+        const imageWrapper = document.createElement('div');
+        imageWrapper.style.cssText = `display:flex;align-items:center;justify-content:center;width:100%;height:100%;`;
+
+        if (finalImage.type === 'football' || finalImage.type === 'image') {
+            const img = document.createElement('img');
+            img.src = finalImage.image;
+            img.style.cssText = `max-width:90%;max-height:80%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.7);border:4px solid rgba(251,191,36,0.5);`;
+            imageWrapper.appendChild(img);
+        } else {
+            const emoji = document.createElement('div');
+            emoji.textContent = finalImage.image;
+            emoji.style.fontSize = '7rem';
+            imageWrapper.appendChild(emoji);
+        }
+
+        finalContainer.appendChild(imageWrapper);
+        document.getElementById('rumbleRestartSection').style.display = 'block';
+
+        gameState.rumbleGame.isRumbling = false;
+        gameState.rumbleGame.isSpinning = false;
+    }
 }
 
 // ================= HELP MODAL FUNCTIONS =================
